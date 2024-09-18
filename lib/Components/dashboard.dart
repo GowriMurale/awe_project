@@ -1,3 +1,4 @@
+import 'package:amplify_core/amplify_core.dart';
 import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/leave_view_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
@@ -41,6 +42,25 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
 
   String selectedValue = 'Last 3 months';
 
+  // Future<List<LeaveApplication>> fetchLeaveApplications() async {
+  //   try {
+  //     return await Amplify.DataStore.query(LeaveApplication.classType);
+  //   } catch (e) {
+  //     print("Error fetching leave applications: $e");
+  //     return [];
+  //   }
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchLeaveApplications().then((applications) {
+  //     setState(() {
+  //       _leaveApplications = applications;
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -61,9 +81,9 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           children: [
             SizedBox(width: 190,),
            container2('Present', '20.5', purple),
-            SizedBox(width: 125,),
+            SizedBox(width: 145,),
             container2('Absent Days', '2.5', green),
-            SizedBox(width: 125,),
+            SizedBox(width: 165,),
             container2('Available Leave', '6.5', brown),
             SizedBox(width: 135,),
             container2('Leave Request', '00', black),
@@ -125,6 +145,15 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
       ),
       ),
     ),
+      SizedBox(width: 120,),
+      Text(
+        'Upcoming holidays',
+        style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: FontWeight.bold),
+      ),
     ],
     ),
     Row(
@@ -174,7 +203,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                   minWidth: 130,
-                  height: 23,
+                  height: 30,
                   color: yellow,
                   child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
               )
@@ -262,7 +291,7 @@ class EmployeeTable extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        width: 865,
+        width: 900,
         height: 245,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

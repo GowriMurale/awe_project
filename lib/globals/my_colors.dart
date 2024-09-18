@@ -8,3 +8,4 @@ Color purple=Color(0xF78008D).withOpacity(1.0);
 Color green=Color(0xF337512).withOpacity(1.0);
 Color brown=Color(0xF7B0000).withOpacity(1.0);
 Color darkGrey=Color(0xF6A6D6B).withOpacity(1.0);
+Color bgColor=Color(0xFF4F4F4).withOpacity(1.0);

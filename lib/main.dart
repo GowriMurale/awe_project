@@ -1,19 +1,37 @@
-import 'package:awe_project/Components/leave_review.dart';
-import 'package:awe_project/Screens/apply_leave_screen.dart';
+import 'package:amplify_core/amplify_core.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
-import 'package:awe_project/Screens/login_button.dart';
-import 'package:awe_project/Screens/leave_history_screen.dart';
-import 'package:awe_project/Screens/leave_review_screen.dart';
-import 'package:awe_project/Screens/leave_view_screen.dart';
-import 'package:awe_project/Screens/login_screen.dart';
-import 'package:awe_project/Screens/practice_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_storage_s3/amplify_storage_s3.dart';
+import 'package:get/get.dart';
+import 'Screens/login_screen.dart';
+import 'amplifyconfiguration.dart'; // Make sure this file exists and contains your Amplify configuration
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await _configureAmplify();
+
   runApp(MyApp());
 }
+
+Future<void> _configureAmplify() async {
+  try {
+    // Add Amplify plugins
+    await Amplify.addPlugins([
+      AmplifyAuthCognito(),
+      // AmplifyDataStore(modelProvider: ModelProvider.instance),
+      AmplifyStorageS3(),
+    ]);
+
+    // Configure Amplify with the backend
+    await Amplify.configure(amplifyconfig);
+  } catch (e) {
+    print('An error occurred configuring Amplify: $e');
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -22,10 +40,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'AWE Project',
       theme: ThemeData(),
-      home: ApplyLeaveScreen(),
+      home: LoginScreen(),
     );
   }
 }
+
 
 
 

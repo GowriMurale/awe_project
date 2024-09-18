@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aweadinin-dev-502de-authRole",
+      "UnauthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweadinin-dev-502de-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweadinin-dev-502de-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-aweadinin-dev-502de-deployment",
+      "UnauthRoleName": "amplify-aweadinin-dev-502de-unauthRole",
+      "StackName": "amplify-aweadinin-dev-502de",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:050451362111:stack/amplify-aweadinin-dev-502de/4b42efd0-6ea2-11ef-b442-063b5296bd1b",
+      "AmplifyAppId": "d3jctfa416iyta"
+    },
+    "categories": {
+      "auth": {
+        "aweadininfa088a0e": {}
+      },
+      "function": {
+        "aweAdininLambda": {
+          "deploymentBucketName": "amplify-aweadinin-dev-502de-deployment",
+          "s3Key": "amplify-builds/aweAdininLambda-746a51777855616c776d-build.zip"
+        }
+      }
+    }
+  }
+}

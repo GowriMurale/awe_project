@@ -1,5 +1,7 @@
+import 'package:amplify_core/amplify_core.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 class ApplyLeave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,15 +18,87 @@ class ApplyLeave extends StatelessWidget {
     );
   }
 }
-class DesktopLeave extends StatelessWidget {
-  const DesktopLeave({super.key});
+
+class DesktopLeave extends StatefulWidget {
+  const DesktopLeave({super.key}); // Constructor with optional key
+
+  @override
+  State<DesktopLeave> createState() => _DesktopLeaveState(); // Create state without 'return'
+}
+
+class _DesktopLeaveState extends State<DesktopLeave> {
+  TextEditingController leave=TextEditingController();
+  TextEditingController from=TextEditingController();
+  TextEditingController to=TextEditingController();
+  TextEditingController reason=TextEditingController();
+  TextEditingController  days=TextEditingController();
+
+  final List<String> _leaveTypes = ['Casual', 'Sick', 'Medical'];
+  final List<String> _roles = ['Manager', 'TL', 'Supervisor'];
+  String? _selectedRole;
+  String? _selectedLeaveType;
+  DateTime? selectedDate;
+  bool isSelected=false;
+  DateTime? _fromDate;
+  DateTime? _toDate;
+
+  Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
+        controller.text = formattedDate;
+
+        // Set the appropriate date variable
+        if (isFromDate) {
+          _fromDate = pickedDate;
+        } else {
+          _toDate = pickedDate;
+        }
+
+        // Automatically calculate the number of days if both dates are selected
+        if (_fromDate != null && _toDate != null) {
+          _calculateDays();
+        }
+      });
+    }
+  }
+
+  // Method to calculate the difference in days between two dates
+  void _calculateDays() {
+    if (_fromDate != null && _toDate != null) {
+      int dayDifference = _toDate!.difference(_fromDate!).inDays + 1; // +1 to include both start and end dates
+      days.text = dayDifference.toString();
+    }
+  }
+  // Future<void> saveLeaveApplication() async {
+  //   final newLeaveApplication = LeaveApplication(
+  //     leaveType: _selectedLeaveType!,
+  //     fromDate: from.text,
+  //     toDate: to.text,
+  //     days: int.parse(days.text),
+  //     role: _selectedRole!,
+  //     reason: reason.text,
+  //     isHalfDay: isSelected,
+  //   );
+  //
+  //   try {
+  //     await Amplify.DataStore.save(newLeaveApplication);
+  //     print("Leave application saved successfully!");
+  //   } catch (e) {
+  //     print("Error saving leave application: $e");
+  //   }
+  // }
+
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController leave=TextEditingController();
-    TextEditingController from=TextEditingController();
-    TextEditingController to=TextEditingController();
-    TextEditingController reason=TextEditingController();
     return Column(
       children: [
         SizedBox(height: 30,),
@@ -33,24 +107,43 @@ class DesktopLeave extends StatelessWidget {
             SizedBox(width: 250,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 40,),
-            Container(
-              width: 350,
-              height: 35,
-              child: Material(
-                color: Colors.transparent,
-                child: TextField(
-                  controller: leave,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: black,),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0),
-                      borderSide: BorderSide(color: grey,width: 1)
-                    ),
-                  ),
+               Container(
+                width: 350,
+                height: 35,
+                 decoration: BoxDecoration(
+                     border: Border.all(color: grey,width: 1),
+                       borderRadius: BorderRadius.circular(2),
+                      color: Colors.white,
+                      ),
+                      child: Material(
+                  color: Colors.transparent,
+                  child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                    value: _selectedLeaveType,
+              hint: Text('', style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black)),
+              onChanged: (String? newValue) {
+          setState(() {
+             _selectedLeaveType = newValue;
+                });
+            },
+               items: _leaveTypes.map((String leaveType) {
+                  return DropdownMenuItem<String>(
+                 value: leaveType,
+                  child: Padding(
+                     padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                    leaveType,
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
+                 ),
                 ),
-              ),
-            )
-
+                  );
+              }).toList(),
+              icon: Icon(Icons.keyboard_arrow_down_outlined, size: 25, color: Colors.black),
+              isExpanded: true, // Ensures the dropdown takes full width
+               ),
+             ),
+               ),
+             ),
           ],
         ),
         SizedBox(height: 25,),
@@ -61,23 +154,32 @@ class DesktopLeave extends StatelessWidget {
             SizedBox(width: 65,),
             Container(
               width: 30,
-              height: 28,
+                height: 28,
               child: Material(
-                color: Colors.transparent,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0),
-                      borderSide: BorderSide(
-                        color: grey,width: 1
-                      ),
-                    )
+              color: Colors.transparent,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSelected = !isSelected; // Toggle selection state
+                 });
+                   },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(0),
+                border: Border.all(color: Colors.grey, width: 1),
+                  color: isSelected ? Colors.blue : Colors.transparent, // Optional: change color when selected
                   ),
-                ),
-              ),
-            )
+              child: Center(
+              child: isSelected
+             ? Icon(Icons.check, color: Colors.white, size: 20) // Show tick icon when selected
+        : null,
+          ),
+             ),
+            ),
+            ),
+          ),
           ],
-        ),
+           ),
         SizedBox(height: 40,),
         Row(
           children: [
@@ -104,13 +206,15 @@ class DesktopLeave extends StatelessWidget {
                   controller: from,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(5),
-                    hintText: '00/00/0000',
-                    suffixIcon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                      suffixIcon: IconButton(
+                        onPressed: ()=> _selectDate(context, from, true),
+                        icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                      ),
+                      hintText: '00/00/0000',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: grey,width: 1),
                       borderRadius: BorderRadius.circular(0),
                     )
-
                   ),
                 ),
               ),
@@ -126,12 +230,14 @@ class DesktopLeave extends StatelessWidget {
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                       hintText: '00/00/0000',
-                      suffixIcon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                      suffixIcon: IconButton(
+                        onPressed: () => _selectDate(context,to,false),
+                        icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                        ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: grey,width: 1),
                         borderRadius: BorderRadius.circular(0),
                       )
-
                   ),
                 ),
               ),
@@ -143,14 +249,14 @@ class DesktopLeave extends StatelessWidget {
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
-                  controller: to,
+                  controller: days,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: grey,width: 1),
                         borderRadius: BorderRadius.circular(0),
                       )
-
                   ),
+                  readOnly: true,
                 ),
               ),
             ),
@@ -163,25 +269,45 @@ class DesktopLeave extends StatelessWidget {
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 50,),
             Container(
-              width: 260,
+              width: 350,
               height: 35,
+              decoration: BoxDecoration(
+                border: Border.all(color: grey,width: 1),
+                borderRadius: BorderRadius.circular(2),
+                color: Colors.white,
+              ),
               child: Material(
                 color: Colors.transparent,
-                child: TextField(
-                  controller: leave,
-                  decoration: InputDecoration(
-                  hintText: 'Manager',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    contentPadding: EdgeInsets.all(5),
-                    suffixIcon: Icon(Icons.keyboard_arrow_down_outlined,size: 25,color: black,),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: BorderSide(color: grey,width: 1)
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _selectedRole,
+                    hint: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text('Manager', style: TextStyle(fontFamily: 'Inter', fontSize: 15, color:grey)),
                     ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedRole = newValue;
+                      });
+                    },
+                    items: _roles.map((String role) {
+                      return DropdownMenuItem<String>(
+                        value: role,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            role,
+                            style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    icon: Icon(Icons.keyboard_arrow_down_outlined, size: 25, color: Colors.black),
+                    isExpanded: true, // Ensures the dropdown takes full width
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
         SizedBox(height: 40,),

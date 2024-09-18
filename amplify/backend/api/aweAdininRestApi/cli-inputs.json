@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/hrportal": {
+      "name": "/hrportal",
+      "lambdaFunction": "aweAdininLambda",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
