@@ -1,4 +1,5 @@
 import 'package:amplify_core/amplify_core.dart';
+import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'AWE Project',
       theme: ThemeData(),
-      home: DashBoardScreeen(),
+      debugShowCheckedModeBanner: false,
+      home: ApplyLeaveScreen(),
     );
   }
 }

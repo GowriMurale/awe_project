@@ -99,12 +99,13 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        SizedBox(height: 30,),
+        SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: 250,),
+            SizedBox(width: size.width * 0.17,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 40,),
                Container(
@@ -149,7 +150,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: 25,),
         Row(
           children: [
-            SizedBox(width: 250,),
+            SizedBox(width: size.width * 0.17,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 65,),
             Container(
@@ -194,7 +195,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: 10,),
         Row(
           children: [
-            SizedBox(width: 250,),
+            SizedBox(width: size.width * 0.17,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 33,),
             Container(
@@ -265,7 +266,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: 40,),
         Row(
           children: [
-            SizedBox(width: 250,),
+            SizedBox(width: size.width * 0.17,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: 50,),
             Container(
@@ -316,7 +317,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: <Widget>[
        // Adjust space before the label as needed
             Padding(
-              padding: const EdgeInsets.only(left: 250,bottom: 90),
+              padding: const EdgeInsets.only(left: 255,bottom: 90),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -329,8 +330,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
             SizedBox(width: 56), // Adjust space between label and textfield as needed
             Container(
-            width: 540, // Specify the width of the TextField
-            height: 120,  // Specify the height of the TextField
+            width: size.width * 0.3, // Specify the width of the TextField
+            height: size.height * 0.1,  // Specify the height of the TextField
             child: TextField(
             controller: reason,
             style: TextStyle(fontSize: 16), // Adjust text size within the TextField

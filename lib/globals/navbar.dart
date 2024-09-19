@@ -35,7 +35,7 @@ class DesktopNavbar extends StatelessWidget {
     return Card(
       elevation: 1,
       child: Container(
-        height:size.height * 0.1,
+        height:size.height * 0.12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
@@ -54,7 +54,7 @@ class DesktopNavbar extends StatelessWidget {
             Row(
               children: <Widget>[
                Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
                  child: Column(
                    children: [
                      CircleAvatar(

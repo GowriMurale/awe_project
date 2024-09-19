@@ -21,10 +21,11 @@ class Navbar2 extends StatelessWidget {
 class DesktopNavbar2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Card(
       elevation: 1,
       child: Container(
-        height: 70,
+        height: size.height * 0.10,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
@@ -32,7 +33,7 @@ class DesktopNavbar2 extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: 430,),
+            SizedBox(width: size.width * 0.3,),
             Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold,color: black),),
 
           ],

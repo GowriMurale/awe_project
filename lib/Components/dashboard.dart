@@ -154,13 +154,13 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
         SizedBox(height: size.height * 0.035,),
         Row(
           children: [
-            SizedBox(width: 620,),
+            SizedBox(width: size.width * 0.43,),
               MaterialButton(
                   onPressed: (){
                     Get.to(()=>ApplyLeaveScreen());
                   },
-                  minWidth: 130,
-                  height: 32,
+                  minWidth: size.width * 0.025,
+                  height: size.height * 0.05,
                   color: yellow,
                   child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
               )
