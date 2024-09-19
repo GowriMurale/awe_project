@@ -152,7 +152,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: [
             SizedBox(width: size.width * 0.17,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 65,),
+            SizedBox(width: size.width * 0.042,),
             Container(
               width: 30,
                 height: 28,
@@ -181,26 +181,26 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           ),
           ],
            ),
-        SizedBox(height: 40,),
+        SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: 385,),
+            SizedBox(width: size.width * 0.26,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 210,),
+            SizedBox(width: size.width * 0.14,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 215,),
+            SizedBox(width: size.width * 0.14,),
             Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(height: size.height * 0.015,),
         Row(
           children: [
             SizedBox(width: size.width * 0.17,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 33,),
+            SizedBox(width: size.width * 0.022,),
             Container(
-              width: 210,
-              height: 35,
+              width: size.width * 0.14,
+              height: size.width * 0.024,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -220,10 +220,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ),
             ),
-            SizedBox(width: 40,),
+            SizedBox(width: size.width * 0.03,),
             Container(
-              width: 200,
-              height: 35,
+              width: size.width * 0.14,
+              height: size.width * 0.024,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -243,10 +243,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ),
             ),
-            SizedBox(width: 40,),
+            SizedBox(width: size.width * 0.025,),
             Container(
-              width: 210,
-              height: 35,
+              width: size.width * 0.14,
+              height: size.width * 0.024,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -263,7 +263,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: 40,),
+        SizedBox(height: size.height * 0.05,),
         Row(
           children: [
             SizedBox(width: size.width * 0.17,),
