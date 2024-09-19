@@ -30,5 +30,11 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     }
+  },
+  "storage": {
+    "aweAdininFiles": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }

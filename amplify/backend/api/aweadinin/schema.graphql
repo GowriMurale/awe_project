@@ -1,3 +1,26 @@
+type Training @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  trainingStatus: String!
+  courseFee: String!
+  purchaseOrder: String!
+  certificateExpiry: String!
+  startDate: String!
+  endDate: String!
+  eCertificate: String!
+  originalCertificate: String!
+}
+
+type EmployeeTrainee @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  courseCode: String!
+  courseName: String!
+  companyName: String!
+  conductedBy: String!
+  mrNo: String!
+}
+
 type EmployeeInfo @model @auth(rules: [{allow: public}]) {
   id: ID!
   empID: String
@@ -214,9 +237,9 @@ type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
   perInterviewStatus: String
   perInterviewDescription: String
   supportInfo: String
-  uploadResume: String!
-  uploadCertificate: String!
-  uploadPassport: String!
+  uploadResume: String
+  uploadCertificate: String
+  uploadPassport: String
   tempID: String!
   contractType: String!
   email: String!
