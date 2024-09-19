@@ -3,7 +3,6 @@ import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:get/get.dart';
 import 'Screens/login_screen.dart';
 import 'amplifyconfiguration.dart'; // Make sure this file exists and contains your Amplify configuration
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'AWE Project',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: DashBoardScreeen(),
     );
   }
 }
