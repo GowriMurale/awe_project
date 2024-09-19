@@ -107,10 +107,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: [
             SizedBox(width: size.width * 0.17,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 40,),
+            SizedBox(width: size.width * 0.025,),
                Container(
-                width: 350,
-                height: 35,
+                width: size.width * 0.2,
+                height: size.height * 0.05,
                  decoration: BoxDecoration(
                      border: Border.all(color: grey,width: 1),
                        borderRadius: BorderRadius.circular(2),
@@ -147,7 +147,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
              ),
           ],
         ),
-        SizedBox(height: 25,),
+        SizedBox(height: size.height * 0.04,),
         Row(
           children: [
             SizedBox(width: size.width * 0.17,),
@@ -331,7 +331,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: 56), // Adjust space between label and textfield as needed
             Container(
             width: size.width * 0.3, // Specify the width of the TextField
-            height: size.height * 0.1,  // Specify the height of the TextField
+            height: size.height * 0.18,  // Specify the height of the TextField
             child: TextField(
             controller: reason,
             style: TextStyle(fontSize: 16), // Adjust text size within the TextField
