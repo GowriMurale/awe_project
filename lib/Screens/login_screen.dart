@@ -16,41 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> _signIn(BuildContext context) async {
-    try {
-      SignInResult res = await Amplify.Auth.signIn(
-        username: userIdController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      if (res.isSignedIn) {
-        Get.to(() => DashBoardScreeen());
-      } else {
-        _showErrorDialog(context, 'Sign-in failed.');
-      }
-    } on AuthException catch (e) {
-      _showErrorDialog(context, e.message);
-    }
-  }
 
-  void _showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 30,),
                               MaterialButton(
                                 onPressed: (){
-                                  _signIn(context);
                                 },
                                 minWidth: 350,
                                 height: 40,
@@ -206,7 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 SizedBox(height: 30,),
                                 MaterialButton(
                                   onPressed: (){
-                                   _signIn(context);
                                   },
                                   minWidth: 350,
                                   height: 40,

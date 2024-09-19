@@ -25,63 +25,17 @@ class Navbar extends StatelessWidget {
 
 class DesktopNavbar extends StatelessWidget {
 
-  Future<void> _confirmSignOut(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Sign Out'),
-        content: Text('Are you sure you want to sign out?'),
-        actions: <Widget>[
-          TextButton(
-            child: Text('No'),
-            onPressed: () {
-              Navigator.of(ctx).pop(); // Just close the dialog
-            },
-          ),
-          TextButton(
-            child: Text('Yes'),
-            onPressed: () async {
-              Navigator.of(ctx).pop(); // Close the dialog before signing out
-              await _signOut(context); // Call the sign out method
-            },
-          ),
-        ],
-      ),
-    );
-  }
 
-  Future<void> _signOut(BuildContext context) async {
-    try {
-      await Amplify.Auth.signOut();
-      Get.offAll(() => LoginScreen()); // Redirect to login screen
-    } on AuthException catch (e) {
-      _showErrorDialog(context, e.message);
-    }
-  }
-  void _showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Error'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Okay'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Card(
       elevation: 1,
       child: Container(
-        height: 80,
+        height:size.height * 0.1,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
@@ -107,7 +61,6 @@ class DesktopNavbar extends StatelessWidget {
                        radius: 20,
                        child: GestureDetector(
                          onTap: (){
-                            _confirmSignOut(context);
                          },
                            child: Image.asset('assets/images/user image.png')),
                      ),

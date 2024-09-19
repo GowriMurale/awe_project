@@ -77,29 +77,29 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ],
           ),
         ),
-        SizedBox(height: 22,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: 210,),
+            SizedBox(width: size.width * 0.155,),
            container2('Present', '20.5', purple),
-            SizedBox(width: 90,),
+            SizedBox(width: size.width * 0.04,),
             container2('Absent Days', '2.5', green),
-            SizedBox(width: 90,),
+            SizedBox(width: size.width * 0.04,),
             container2('Available Leave', '6.5', brown),
-            SizedBox(width: 90,),
+            SizedBox(width: size.width * 0.04,),
             container2('Leave Request', '00', black),
 
           ],
         ),
-        SizedBox(height: 35,),
+        SizedBox(height: size.height * 0.07,),
           Row(
             children: [
-            SizedBox(width: 250),
+            SizedBox(width: size.width * 0.180),
               Text(
                   'My Recent Leave',
                     style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-              SizedBox(width: 580),
+              SizedBox(width: size.width * 0.390),
             Container(
               width: 145,
               height: 30,
@@ -151,7 +151,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ),
           ],
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: size.height * 0.035,),
         Row(
           children: [
             SizedBox(width: 620,),
@@ -251,6 +251,7 @@ class EmployeeTable extends StatelessWidget {
         width: 900,
         height: 245,
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.grey.shade500,

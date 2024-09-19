@@ -1,13 +1,14 @@
 
 import 'package:awe_project/Components/dashboard.dart';
 import 'package:awe_project/Screens/practice_screen.dart';
+import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar.dart';
 import 'package:flutter/material.dart';
 class DashBoardScreeen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       body: Container(
         decoration: BoxDecoration(
           // gradient: LinearGradient(
