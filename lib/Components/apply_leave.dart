@@ -7,9 +7,9 @@ class ApplyLeave extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 1200) {
+        if (constraints.maxWidth >= 1200) {
           return DesktopLeave();
-        } else if (constraints.maxWidth > 800 && constraints.maxWidth <= 1200) {
+        } else if (constraints.maxWidth >= 800 && constraints.maxWidth < 1200) {
           return TabletLeave();
         } else {
           return  MobileLeave();

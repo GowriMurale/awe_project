@@ -172,6 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 SizedBox(height: 30,),
                                 MaterialButton(
                                   onPressed: (){
+                                    Get.to(()=> DashBoardScreeen());
                                   },
                                   minWidth: 350,
                                   height: 40,

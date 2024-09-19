@@ -259,6 +259,9 @@ class EmployeeTable extends StatelessWidget {
           ),
         ),
         child: DataTable(
+        decoration: BoxDecoration(
+          border: Border.all(color: grey)
+        ),
           // Define the columns with the header text style
           columns: [
             DataColumn(

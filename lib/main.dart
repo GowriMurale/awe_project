@@ -3,7 +3,6 @@ import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:get/get.dart';
 import 'Screens/login_screen.dart';
@@ -22,8 +21,7 @@ Future<void> _configureAmplify() async {
     // Add Amplify plugins
     await Amplify.addPlugins([
       AmplifyAuthCognito(),
-      // AmplifyDataStore(modelProvider: ModelProvider.instance),
-      AmplifyStorageS3(),
+
     ]);
 
     // Configure Amplify with the backend
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'AWE Project',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: ApplyLeaveScreen(),
+      home: LoginScreen(),
     );
   }
 }
