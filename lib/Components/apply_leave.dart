@@ -186,9 +186,9 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: [
             SizedBox(width: size.width * 0.26,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.14,),
+            SizedBox(width: size.width * 0.145,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.14,),
+            SizedBox(width: size.width * 0.15,),
             Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
           ],
         ),
@@ -268,10 +268,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: [
             SizedBox(width: size.width * 0.17,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: 50,),
+            SizedBox(width: size.width * 0.035,),
             Container(
-              width: 350,
-              height: 35,
+              width: size.width * 0.22,
+              height: size.width * 0.024,
               decoration: BoxDecoration(
                 border: Border.all(color: grey,width: 1),
                 borderRadius: BorderRadius.circular(2),
@@ -311,7 +311,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: 40,),
+        SizedBox(height: size.height * 0.06,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center, // Ensures vertical alignment
           children: <Widget>[
@@ -328,7 +328,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ),
             ),
-            SizedBox(width: 56), // Adjust space between label and textfield as needed
+            SizedBox(width: size.width * 0.042), // Adjust space between label and textfield as needed
             Container(
             width: size.width * 0.3, // Specify the width of the TextField
             height: size.height * 0.18,  // Specify the height of the TextField
@@ -351,26 +351,26 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             )
           ],
         ),
-        SizedBox(height: 25,),
+        SizedBox(height: size.width * 0.02,),
         Row(
           children: [
-            SizedBox(width: 500,),
+            SizedBox(width: size.width * 0.34,),
             Material(
               borderRadius: BorderRadius.circular(45),
               color: Colors.transparent,
               child: MaterialButton(
                   onPressed: (){},
-                minWidth: 110,
-                height: 40,
+                minWidth: size.width * 0.08,
+                height: size.height * 0.06,
                 color: yellow,
                 child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
               ),
             ),
-            SizedBox(width: 60,),
+            SizedBox(width: size.width * 0.03,),
             OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
-                fixedSize: Size(100, 35),
+                fixedSize: Size(size.width * 0.07, size.height * 0.05),
                 side: BorderSide(color: grey, width: 2.0), // Outline border
                 shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0), // Rounded corners (optional)
