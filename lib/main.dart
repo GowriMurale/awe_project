@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'AWE Project',
       theme: ThemeData(),
-      home: LoginScreen(),
+      home: DashBoardScreeen(),
     );
   }
 }

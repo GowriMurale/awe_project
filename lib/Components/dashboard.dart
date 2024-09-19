@@ -63,147 +63,104 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
           child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
-              SizedBox(width: 20,),
+              SizedBox(width: size.width * 0.01,),
               Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
             ],
           ),
         ),
-        SizedBox(height: 25,),
+        SizedBox(height: 22,),
         Row(
           children: [
-            SizedBox(width: 190,),
+            SizedBox(width: 210,),
            container2('Present', '20.5', purple),
-            SizedBox(width: 145,),
+            SizedBox(width: 90,),
             container2('Absent Days', '2.5', green),
-            SizedBox(width: 165,),
+            SizedBox(width: 90,),
             container2('Available Leave', '6.5', brown),
-            SizedBox(width: 135,),
+            SizedBox(width: 90,),
             container2('Leave Request', '00', black),
 
           ],
         ),
         SizedBox(height: 35,),
-    Row(
-    children: [
-    SizedBox(width: 200),
-    Text(
-    'My Recent Leave',
-    style: TextStyle(
-    color: Colors.black,
-    fontFamily: 'Inter',
-    fontSize: 16,
-    fontWeight: FontWeight.bold),
-    ),
-    SizedBox(width: 530),
-    Container(
-      width: 145,
-      height: 35,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: grey,width: 1)
-      ),
-      child: DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-      value: selectedValue,
-      onChanged: (String? newValue) {
-      setState(() {
-      selectedValue = newValue!;
-      });
-      },
-      items: _dropdownItems.map((String value) {
-      return DropdownMenuItem<String>(
-      value: value,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Text(
-        value,
-        style: TextStyle(
-        fontFamily: 'Inter',
-        fontSize: 15,
-        color: Colors.black,
-        ),
-        ),
-      ),
-      );
-      }).toList(),
-      // Show the dropdown icon and no custom container needed
-      icon: Icon(
-      Icons.keyboard_arrow_down_rounded,
-      color: Colors.black,
-      size: 20,
-      ),
-      // Adjusting dropdown's appearance
-      dropdownColor: Colors.white, // Background color of dropdown
-      ),
-      ),
-    ),
-      SizedBox(width: 120,),
-      Text(
-        'Upcoming holidays',
-        style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
-      ),
-    ],
-    ),
-    Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 180,top: 10),
-              child: EmployeeTable(),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 65,top: 10),
-              child: Container(
-                width: 245,
-                height: 235,
+          Row(
+            children: [
+            SizedBox(width: 250),
+              Text(
+                  'My Recent Leave',
+                    style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+              SizedBox(width: 580),
+            Container(
+              width: 145,
+              height: 30,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  border: Border.all(color: grey,width: 1),
+                color: Colors.white,
+                  border: Border.all(color: grey,width: 1)
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 8,),
-                    container3(Colors.redAccent, 'Ak', 'Aravind'),
-                    SizedBox(height: 8,),
-                    container3(Colors.tealAccent, 'TN', 'Tamil'),
-                    SizedBox(height: 8,),
-                    container3(Colors.deepPurpleAccent, 'PY', 'Pondy'),
-                    SizedBox(height: 8,),
-                    container3(Colors.yellowAccent, 'AM', 'Amarnath'),
-                    SizedBox(height: 8,),
-                    container3(Colors.greenAccent, 'RP', 'Raju'),
-
-                  ],
-                ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+              value: selectedValue,
+              onChanged: (String? newValue) {
+              setState(() {
+              selectedValue = newValue!;
+              });
+            },
+            items: _dropdownItems.map((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+               child: Text(
+              value,
+              style: TextStyle(
+                fontFamily: 'Inter',
+              fontSize: 15,
+              color: Colors.black,
               ),
-            )
+            ),),
+            );
+         }).toList(),
+      // Show the dropdown icon and no custom container needed
+            icon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: Colors.black,
+          size: 20,
+          ),
+      // Adjusting dropdown's appearance
+          dropdownColor: Colors.white, // Background color of dropdown
+            ),
+          ),
+          ),
           ],
         ),
-        SizedBox(height: 18,),
+    Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 250,top: 10),
+              child: EmployeeTable(),
+            ),
+          ],
+        ),
+        SizedBox(height: 20,),
         Row(
           children: [
-            SizedBox(width: 550,),
+            SizedBox(width: 620,),
               MaterialButton(
                   onPressed: (){
                     Get.to(()=>ApplyLeaveScreen());
                   },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
                   minWidth: 130,
-                  height: 30,
+                  height: 32,
                   color: yellow,
                   child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
               )

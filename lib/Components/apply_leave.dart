@@ -33,8 +33,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   TextEditingController reason=TextEditingController();
   TextEditingController  days=TextEditingController();
 
-  final List<String> _leaveTypes = ['Casual', 'Sick', 'Medical'];
-  final List<String> _roles = ['Manager', 'TL', 'Supervisor'];
+  final List<String> _leaveTypes = ['Casual', 'Sick', 'Lop'];
+  final List<String> _roles = ['Manager'];
   String? _selectedRole;
   String? _selectedLeaveType;
   DateTime? selectedDate;

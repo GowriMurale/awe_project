@@ -1,5 +1,10 @@
+import 'package:amplify_core/amplify_core.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../Screens/login_screen.dart';
 
 class Navbar extends StatelessWidget {
   @override
@@ -19,6 +24,58 @@ class Navbar extends StatelessWidget {
 }
 
 class DesktopNavbar extends StatelessWidget {
+
+  Future<void> _confirmSignOut(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Sign Out'),
+        content: Text('Are you sure you want to sign out?'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('No'),
+            onPressed: () {
+              Navigator.of(ctx).pop(); // Just close the dialog
+            },
+          ),
+          TextButton(
+            child: Text('Yes'),
+            onPressed: () async {
+              Navigator.of(ctx).pop(); // Close the dialog before signing out
+              await _signOut(context); // Call the sign out method
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await Amplify.Auth.signOut();
+      Get.offAll(() => LoginScreen()); // Redirect to login screen
+    } on AuthException catch (e) {
+      _showErrorDialog(context, e.message);
+    }
+  }
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Error'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -36,7 +93,9 @@ class DesktopNavbar extends StatelessWidget {
               child: Container(
                 width: 190,
                   height: 90,
-                  child: Image.asset('assets/images/logo (2).png')),
+                  decoration: BoxDecoration(
+                  ),
+                  child: Image.asset('assets/images/logo (2).png',)),
             ),
             Row(
               children: <Widget>[
@@ -46,7 +105,11 @@ class DesktopNavbar extends StatelessWidget {
                    children: [
                      CircleAvatar(
                        radius: 20,
-                       child: Image.asset('assets/images/user image.png'),
+                       child: GestureDetector(
+                         onTap: (){
+                            _confirmSignOut(context);
+                         },
+                           child: Image.asset('assets/images/user image.png')),
                      ),
                      SizedBox(height: 5,),
                      Text('Log Out',style: TextStyle(color: black,fontFamily: 'Inter', fontSize: 14),),
