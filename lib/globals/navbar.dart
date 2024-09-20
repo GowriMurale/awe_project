@@ -1,4 +1,4 @@
-import 'package:amplify_core/amplify_core.dart';
+
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

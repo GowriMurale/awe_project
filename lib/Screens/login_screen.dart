@@ -1,5 +1,4 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_core/amplify_core.dart';
+
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
@@ -15,10 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -89,6 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(height: 30,),
                               MaterialButton(
                                 onPressed: (){
+                                  Get.to(() =>DashBoardScreeen());
                                 },
                                 minWidth: 350,
                                 height: 40,
@@ -172,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 SizedBox(height: 30,),
                                 MaterialButton(
                                   onPressed: (){
-                                    Get.to(()=> DashBoardScreeen());
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
                                   },
                                   minWidth: 350,
                                   height: 40,

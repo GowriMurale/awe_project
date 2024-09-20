@@ -1,4 +1,4 @@
-import 'package:amplify_core/amplify_core.dart';
+
 import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/leave_view_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
