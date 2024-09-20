@@ -21,23 +21,10 @@ class HelperClass extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth >= 1200) {
-          return Container(
-            width: size.width,
-            alignment: Alignment.center,
-            color: bgColor,
-            padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.18, horizontal: paddingWidth),
-            child: desktop,
-          );
+          return desktop;
         } else if (constraints.maxWidth >= 800 && constraints.maxWidth < 1200) {
-          return Container(
-            width: size.width,
-            alignment: Alignment.center,
-            color: bgColor,
-            padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.1, horizontal: paddingWidth),
-            child: tablet,
-          );
+          return
+            tablet;
         } else {
           return Container(
             width: size.width,

@@ -12,10 +12,10 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 1200) {
+        if (constraints.maxWidth >= 1200) {
           return DesktopDashboard();
-        } else if (constraints.maxWidth > 800 && constraints.maxWidth < 1200) {
-          return DesktopDashboard();
+        } else if (constraints.maxWidth >= 800 && constraints.maxWidth < 1200) {
+          return TabletDashboard();
         } else {
           return  MobileDashboard();
         }
@@ -171,6 +171,133 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
   }
 }
 
+class TabletDashboard extends StatefulWidget {
+  const TabletDashboard({super.key});
+
+
+  @override
+  State<TabletDashboard> createState() => _TabletDashboardState();
+}
+
+class _TabletDashboardState extends State<TabletDashboard> {
+  final List<String> _dropdownItems = [
+    'Last 3 months',
+    'Last 6 months',
+    'Last 12 months',
+  ];
+
+  String selectedValue = 'Last 3 months';
+  @override
+  Widget build(BuildContext context) {
+
+    final Size size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+              SizedBox(width: size.width * 0.01,),
+              Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+            ],
+          ),
+        ),
+        SizedBox(height: size.height * 0.03,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.105,),
+            container2('Present', '20.5', purple),
+            SizedBox(width: size.width * 0.04,),
+            container2('Absent Days', '2.5', green),
+            SizedBox(width: size.width * 0.04,),
+            container2('Available Leave', '6.5', brown),
+            SizedBox(width: size.width * 0.04,),
+            container2('Leave Request', '00', black),
+
+          ],
+        ),
+        SizedBox(height: size.height * 0.07,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.180),
+            Text(
+              'My Recent Leave',
+              style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(width: size.width * 0.390),
+            Container(
+              width: 145,
+              height: 30,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: grey,width: 1)
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedValue,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedValue = newValue!;
+                    });
+                  },
+                  items: _dropdownItems.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),),
+                    );
+                  }).toList(),
+                  // Show the dropdown icon and no custom container needed
+                  icon: Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                  // Adjusting dropdown's appearance
+                  dropdownColor: Colors.white, // Background color of dropdown
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: size.height * 0.02,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.1,),
+            EmployeeTable(),
+          ],
+        ),
+        SizedBox(height: size.height * 0.035,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.43,),
+            MaterialButton(
+              onPressed: (){
+                Get.to(()=>ApplyLeaveScreen());
+              },
+              minWidth: size.width * 0.025,
+              height: size.height * 0.05,
+              color: yellow,
+              child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
+
 class MobileDashboard extends StatelessWidget {
   const MobileDashboard({super.key});
 
@@ -206,7 +333,7 @@ Widget container2(String text,String no, Color color ){
     elevation: 2,
     child: Container(
       width: 180,
-      height: 80,
+      height: 90,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -248,8 +375,8 @@ class EmployeeTable extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
-        width: 900,
-        height: 245,
+        width: MediaQuery.of(context).size.width * 0.6,
+        height: MediaQuery.of(context).size.height * 0.35,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),

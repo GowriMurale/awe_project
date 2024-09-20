@@ -18,15 +18,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return HelperClass(
-      desktop: Container(
-        child: Row(
+      desktop:
+         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(flex: 1,
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 40,bottom: 30),
+                      padding: const EdgeInsets.only(right: 40,bottom: 30,top: 90,left: 10),
                       child: SizedBox(
                         width: 280,
                         height: 70,
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 45,top: 15),
+                      padding: const EdgeInsets.only(right: 45,top: 15,left: 10),
                       child: Container(
                         width: 430,
                         height: 320,
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20,),
+                      padding: const EdgeInsets.only(top: 90),
                       child: Card(
                         elevation: 3,
                         shadowColor: Colors.white,
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ))
           ],
         ),
-      ),
+
         tablet: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,

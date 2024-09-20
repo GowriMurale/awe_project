@@ -473,7 +473,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.13,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.025,),
             Container(
@@ -518,9 +518,9 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.04,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.13,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.042,),
+            SizedBox(width: size.width * 0.052,),
             Container(
               width: 30,
               height: 28,
@@ -554,30 +554,30 @@ class _TabletLeaveState extends State<TabletLeave> {
           children: [
             SizedBox(width: size.width * 0.26,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.145,),
+            SizedBox(width: size.width * 0.165,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.15,),
+            SizedBox(width: size.width * 0.19,),
             Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
           ],
         ),
         SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.13,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.022,),
+            SizedBox(width: size.width * 0.020,),
             Container(
-              width: size.width * 0.14,
-              height: size.width * 0.024,
+              width: size.width * 0.18,
+              height: size.width * 0.032,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
                   controller: from,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
+                      contentPadding: EdgeInsets.all(4),
                       suffixIcon: IconButton(
                         onPressed: ()=> _selectDate(context, from, true),
-                        icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                        icon: Icon(Icons.calendar_today_outlined,size: 18,color: black,),
                       ),
                       hintText: '00/00/0000',
                       border: OutlineInputBorder(
@@ -590,18 +590,18 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
             SizedBox(width: size.width * 0.03,),
             Container(
-              width: size.width * 0.14,
-              height: size.width * 0.024,
+              width: size.width * 0.18,
+              height: size.width * 0.032,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
                   controller: to,
                   decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(5),
+                      contentPadding: EdgeInsets.all(4),
                       hintText: '00/00/0000',
                       suffixIcon: IconButton(
                         onPressed: () => _selectDate(context,to,false),
-                        icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
+                        icon: Icon(Icons.calendar_today_outlined,size: 18,color: black,),
                       ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: grey,width: 1),
@@ -613,8 +613,8 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
             SizedBox(width: size.width * 0.025,),
             Container(
-              width: size.width * 0.14,
-              height: size.width * 0.024,
+              width: size.width * 0.16,
+              height: size.width * 0.032,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -634,12 +634,12 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.13,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.035,),
+            SizedBox(width: size.width * 0.042,),
             Container(
               width: size.width * 0.22,
-              height: size.width * 0.024,
+              height: size.height * 0.044,
               decoration: BoxDecoration(
                 border: Border.all(color: grey,width: 1),
                 borderRadius: BorderRadius.circular(2),
@@ -685,7 +685,7 @@ class _TabletLeaveState extends State<TabletLeave> {
           children: <Widget>[
             // Adjust space before the label as needed
             Padding(
-              padding: const EdgeInsets.only(left: 255,bottom: 90),
+              padding: const EdgeInsets.only(left: 125,bottom: 90),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -696,7 +696,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                 ),
               ),
             ),
-            SizedBox(width: size.width * 0.042), // Adjust space between label and textfield as needed
+            SizedBox(width: size.width * 0.048), // Adjust space between label and textfield as needed
             Container(
               width: size.width * 0.3, // Specify the width of the TextField
               height: size.height * 0.18,  // Specify the height of the TextField
@@ -722,29 +722,29 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.width * 0.02,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.34,),
+            SizedBox(width: size.width * 0.30,),
             Material(
               borderRadius: BorderRadius.circular(45),
               color: Colors.transparent,
               child: MaterialButton(
                 onPressed: (){},
-                minWidth: size.width * 0.08,
+                minWidth: size.width * 0.10,
                 height: size.height * 0.06,
                 color: yellow,
-                child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
               ),
             ),
-            SizedBox(width: size.width * 0.03,),
+            SizedBox(width: size.width * 0.02,),
             OutlinedButton(
               onPressed: () {},
               style: OutlinedButton.styleFrom(
-                fixedSize: Size(size.width * 0.07, size.height * 0.05),
+                fixedSize: Size(size.width * 0.10, size.height * 0.05),
                 side: BorderSide(color: grey, width: 2.0), // Outline border
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0), // Rounded corners (optional)
                 ),
               ),
-              child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+              child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
             )
           ],
         )

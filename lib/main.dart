@@ -1,32 +1,3 @@
-// import 'package:amplify_core/amplify_core.dart';
-// import 'package:awe_project/Screens/apply_leave_screen.dart';
-// import 'package:awe_project/Screens/dashboard_screen.dart';
-// import 'package:flutter/material.dart';
-// import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-// import 'package:get/get.dart';
-// import 'Screens/login_screen.dart';
-// import 'amplifyconfiguration.dart'; // Make sure this file exists and contains your Amplify configuration
-//
-// void main() async {
-//
-//
-//   runApp(MyApp());
-// }
-//
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       title: 'AWE Project',
-//       theme: ThemeData(),
-//       debugShowCheckedModeBanner: false,
-//       home: LoginScreen(),
-//     );
-//   }
-// }
 
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -34,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'Screens/login_screen.dart';
 import 'amplifyconfiguration.dart'; // Generated during the initialization
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures bindings are initialized for async code
@@ -50,19 +22,23 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    _configureAmplify(); // Configure Amplify when the app starts
   }
 
   Future<void> _configureAmplify() async {
-    // Add any Amplify plugins you want to use
-    final authPlugin = AmplifyAuthCognito();
-    await Amplify.addPlugin(authPlugin);
-
-    // Configure Amplify (can only be done once)
     try {
-      await Amplify.configure(amplifyconfig);
+      // Add Amplify plugins (in this case, the Cognito plugin for authentication)
+      final authPlugin = AmplifyAuthCognito();
+      await Amplify.addPlugin(authPlugin);
+
+      // Configure Amplify using the generated configuration
+      await Amplify.configure(amplifyconfig); // amplifyconfig is from 'amplifyconfiguration.dart'
+
+      print('Amplify configured successfully');
     } on AmplifyAlreadyConfiguredException {
-      print("Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+      print("Amplify has already been configured. This usually occurs on Android when the app is restarted.");
+    } catch (e) {
+      print('Failed to configure Amplify: $e');
     }
   }
 
@@ -70,6 +46,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home: LoginScreen(),
-      );
+    );
   }
 }
