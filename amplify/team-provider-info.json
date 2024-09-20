@@ -1,15 +1,15 @@
 {
-  "flutter": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-aweadininflutter-flutter-1fa32-authRole",
-      "UnauthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweadininflutter-flutter-1fa32-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweadininflutter-flutter-1fa32-authRole",
+      "AuthRoleName": "amplify-aweemploye-dev-f6683-authRole",
+      "UnauthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweemploye-dev-f6683-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::050451362111:role/amplify-aweemploye-dev-f6683-authRole",
       "Region": "ap-southeast-1",
-      "DeploymentBucketName": "amplify-aweadininflutter-flutter-1fa32-deployment",
-      "UnauthRoleName": "amplify-aweadininflutter-flutter-1fa32-unauthRole",
-      "StackName": "amplify-aweadininflutter-flutter-1fa32",
-      "StackId": "arn:aws:cloudformation:ap-southeast-1:050451362111:stack/amplify-aweadininflutter-flutter-1fa32/dbe59620-765c-11ef-906a-0294a882eab7",
-      "AmplifyAppId": "d1kusqa5ssbbxr"
+      "DeploymentBucketName": "amplify-aweemploye-dev-f6683-deployment",
+      "UnauthRoleName": "amplify-aweemploye-dev-f6683-unauthRole",
+      "StackName": "amplify-aweemploye-dev-f6683",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:050451362111:stack/amplify-aweemploye-dev-f6683/2f1e3ed0-7713-11ef-a12d-022c441acb73",
+      "AmplifyAppId": "d1kb9jv73t670l"
     }
   }
 }
