@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'AWE Project',
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: DashBoardScreeen(),
+      home: LoginScreen(),
     );
   }
 }
