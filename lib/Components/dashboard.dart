@@ -42,24 +42,6 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
 
   String selectedValue = 'Last 3 months';
 
-  // Future<List<LeaveApplication>> fetchLeaveApplications() async {
-  //   try {
-  //     return await Amplify.DataStore.query(LeaveApplication.classType);
-  //   } catch (e) {
-  //     print("Error fetching leave applications: $e");
-  //     return [];
-  //   }
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchLeaveApplications().then((applications) {
-  //     setState(() {
-  //       _leaveApplications = applications;
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

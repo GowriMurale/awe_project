@@ -77,24 +77,6 @@ class _DesktopLeaveState extends State<DesktopLeave> {
       days.text = dayDifference.toString();
     }
   }
-  // Future<void> saveLeaveApplication() async {
-  //   final newLeaveApplication = LeaveApplication(
-  //     leaveType: _selectedLeaveType!,
-  //     fromDate: from.text,
-  //     toDate: to.text,
-  //     days: int.parse(days.text),
-  //     role: _selectedRole!,
-  //     reason: reason.text,
-  //     isHalfDay: isSelected,
-  //   );
-  //
-  //   try {
-  //     await Amplify.DataStore.save(newLeaveApplication);
-  //     print("Leave application saved successfully!");
-  //   } catch (e) {
-  //     print("Error saving leave application: $e");
-  //   }
-  // }
 
 
   @override
@@ -445,24 +427,6 @@ class _TabletLeaveState extends State<TabletLeave> {
       days.text = dayDifference.toString();
     }
   }
-  // Future<void> saveLeaveApplication() async {
-  //   final newLeaveApplication = LeaveApplication(
-  //     leaveType: _selectedLeaveType!,
-  //     fromDate: from.text,
-  //     toDate: to.text,
-  //     days: int.parse(days.text),
-  //     role: _selectedRole!,
-  //     reason: reason.text,
-  //     isHalfDay: isSelected,
-  //   );
-  //
-  //   try {
-  //     await Amplify.DataStore.save(newLeaveApplication);
-  //     print("Leave application saved successfully!");
-  //   } catch (e) {
-  //     print("Error saving leave application: $e");
-  //   }
-  // }
 
 
   @override

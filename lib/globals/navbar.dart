@@ -24,11 +24,6 @@ class Navbar extends StatelessWidget {
 }
 
 class DesktopNavbar extends StatelessWidget {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
