@@ -4,6 +4,8 @@ name: Employee Portal
     # (1)
     branches:
       - "main"
+permissions:
+    contents: write
 jobs:
   build_and_deploy_web:
     name: Build & Deploy Flutter to Web
@@ -25,6 +27,10 @@ jobs:
       - name: 🏭 Build Web Application
         run: flutter build web --release
 
+      - name: Debug info
+        run: | 
+              git remote -v
+              whoami
       # (3)
       - name: Make copy of artifacts
         run: |
@@ -34,3 +40,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Commit the artifacts.
+          push: true
