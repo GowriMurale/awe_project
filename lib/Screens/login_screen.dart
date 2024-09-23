@@ -1,4 +1,5 @@
 
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
@@ -14,177 +15,209 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+
+  Future<void> _signIn(BuildContext context) async {
+    try {
+      SignInResult res = await Amplify.Auth.signIn(
+        username: userIdController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      if (res.isSignedIn) {
+        Get.to(() => DashBoardScreeen());
+      } else {
+        _showErrorDialog(context, 'Sign-in failed.');
+      }
+    } on AuthException catch (e) {
+      _showErrorDialog(context, e.message);
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return HelperClass(
-      desktop:
-         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(flex: 1,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 40,bottom: 30,top: 90,left: 10),
-                      child: SizedBox(
-                        width: 280,
-                        height: 70,
-                        child: Image.asset('assets/images/logo (2).png'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 45,top: 15,left: 10),
-                      child: Container(
-                        width: 430,
-                        height: 320,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/login.png'),
-                            )
-                        ),
-                      ),
-                    )
-                  ],
-                )),
-            Expanded(
-                flex: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 90),
-                      child: Card(
-                        elevation: 3,
-                        shadowColor: Colors.white,
-                        child: Container(
-                          width: 420,
-                          height: 440,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 80),
-                                child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
-                                child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                              ),
-                              MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
-                              SizedBox(height: 10,),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
-                                child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                              ),
-                              MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
-                              SizedBox(height: 30,),
-                              MaterialButton(
-                                onPressed: (){
-                                  Get.to(() =>DashBoardScreeen());
-                                },
-                                minWidth: 350,
-                                height: 40,
-                                color: yellow,
-                                splashColor: yellow,
-                                child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ))
-          ],
-        ),
-
-        tablet: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+      desktop: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Stack(
             children: [
-              Expanded(flex: 1,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 40,bottom: 30),
-                        child: SizedBox(
-                          width: 280,
-                          height: 70,
-                          child: Image.asset('assets/images/logo (2).png'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 45,top: 15),
-                        child: Container(
-                          width: 430,
-                          height: 320,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/login.png'),
-                              )
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
-              Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20,),
-                        child: Card(
-                          elevation: 3,
-                          shadowColor: Colors.white,
-                          child: Container(
-                            width: 420,
-                            height: 440,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 80),
-                                  child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
-                                  child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                                ),
-                                MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
-                                SizedBox(height: 10,),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
-                                  child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                                ),
-                                MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
-                                SizedBox(height: 30,),
-                                MaterialButton(
-                                  onPressed: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
-                                  },
-                                  minWidth: 350,
-                                  height: 40,
-                                  color: yellow,
-                                  splashColor: yellow,
-                                  child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ))
+             Align(
+               alignment: Alignment.topLeft,
+               child: SizedBox(
+                 width: 255,
+                   height: 260,
+                   child: Image.asset('assets/images/curve.png')),
+             )
             ],
           ),
+          SizedBox(width: size.width * 0.01,),
+          Column(
+            children: [
+              SizedBox(height: size.height * 0.17,),
+              SizedBox(
+                width: 250,
+                height: 100,
+                child: Image.asset('assets/images/logo (2).png'),
+              ),
+              SizedBox(height: size.height * 0.025,),
+              Container(
+                height: 320,
+                width: 420,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/login.png'),
+                  )
+                ),
+              )
+            ],
+          ),
+          SizedBox(width: size.width * 0.14,),
+          Card(
+            elevation: 3,
+            shadowColor: Colors.white,
+            child: Container(
+              width: 420,
+              height: 440,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 80),
+                    child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
+                    child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  ),
+                  MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
+                  SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
+                    child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  ),
+                  MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
+                  SizedBox(height: 30,),
+                  MaterialButton(
+                    onPressed: (){
+                     _signIn(context);
+                    },
+                    minWidth: 350,
+                    height: 40,
+                    color: yellow,
+                    splashColor: yellow,
+                    child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+
+
+
+        tablet: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: SizedBox(
+                      width: 255,
+                      height: 260,
+                      child: Image.asset('assets/images/curve.png')),
+                )
+              ],
+            ),
+            SizedBox(width: 10,),
+            Column(
+              children: [
+                SizedBox(height: 100,),
+                SizedBox(
+                  width: 250,
+                  height: 100,
+                  child: Image.asset('assets/images/logo (2).png'),
+                ),
+                SizedBox(height: 20,),
+                Container(
+                  height: 320,
+                  width: 420,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/login.png'),
+                      )
+                  ),
+                )
+              ],
+            ),
+            SizedBox(width: 200,),
+            Card(
+              elevation: 3,
+              shadowColor: Colors.white,
+              child: Container(
+                width: 420,
+                height: 440,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 80),
+                      child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
+                      child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                    ),
+                    MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
+                    SizedBox(height: 10,),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
+                      child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                    ),
+                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
+                    SizedBox(height: 30,),
+                    MaterialButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
+                      },
+                      minWidth: 350,
+                      height: 40,
+                      color: yellow,
+                      splashColor: yellow,
+                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
         mobile: Column(),
         paddingWidth: size.width * 0.1,
