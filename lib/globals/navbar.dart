@@ -81,7 +81,7 @@ class DesktopNavbar extends StatelessWidget {
     return Card(
       elevation: 1,
       child: Container(
-        height:size.height * 0.14,
+        height:size.height * 0.11,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
@@ -91,8 +91,8 @@ class DesktopNavbar extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5,top: 5),
               child: Container(
-                width: 190,
-                  height: 90,
+                width: 170,
+                  height: 85,
                   decoration: BoxDecoration(
                   ),
                   child: Image.asset('assets/images/logo (2).png',)),
@@ -100,11 +100,12 @@ class DesktopNavbar extends StatelessWidget {
             Row(
               children: <Widget>[
                Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                 padding: const EdgeInsets.only(
+                    right: 10,top: 10),
                  child: Column(
                    children: [
                      CircleAvatar(
-                       radius: 20,
+                       radius: 17,
                        child: GestureDetector(
                          onTap: (){
                            _confirmSignOut(context);

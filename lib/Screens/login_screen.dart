@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(width: size.width * 0.14,),
           Card(
-            elevation: 3,
+            elevation: 1,
             shadowColor: Colors.white,
             child: Container(
               width: 420,
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 30,),
                   MaterialButton(
                     onPressed: (){
-                     _signIn(context);
+                     Get.off(DashBoardScreeen());
                     },
                     minWidth: 350,
                     height: 40,

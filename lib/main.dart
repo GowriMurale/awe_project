@@ -1,3 +1,4 @@
+import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

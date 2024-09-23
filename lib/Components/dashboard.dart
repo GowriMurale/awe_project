@@ -49,7 +49,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 10),
           child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -59,10 +59,10 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ],
           ),
         ),
-        SizedBox(height: size.height * 0.03,),
+        SizedBox(height: size.height * 0.030,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.155,),
+            SizedBox(width: size.width * 0.165,),
            container2('Present', '20.5', purple),
             SizedBox(width: size.width * 0.04,),
             container2('Absent Days', '2.5', green),
@@ -73,10 +73,10 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
 
           ],
         ),
-        SizedBox(height: size.height * 0.07,),
+        SizedBox(height: size.height * 0.065,),
           Row(
             children: [
-            SizedBox(width: size.width * 0.180),
+            SizedBox(width: size.width * 0.185),
               Text(
                   'My Recent Leave',
                     style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
@@ -128,12 +128,12 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 250,top: 10),
+              padding: const EdgeInsets.only(left: 265,top: 10),
               child: EmployeeTable(),
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.035,),
+        SizedBox(height: size.height * 0.030,),
         Row(
           children: [
             SizedBox(width: size.width * 0.43,),
@@ -190,17 +190,17 @@ class _TabletDashboardState extends State<TabletDashboard> {
         Row(
           children: [
             SizedBox(width: size.width * 0.105,),
-            container2('Present', '20.5', purple),
+            tabcontainer2('Present', '20.5', purple),
             SizedBox(width: size.width * 0.04,),
-            container2('Absent Days', '2.5', green),
+            tabcontainer2('Absent Days', '2.5', green),
             SizedBox(width: size.width * 0.04,),
-            container2('Available Leave', '6.5', brown),
+            tabcontainer2('Available Leave', '6.5', brown),
             SizedBox(width: size.width * 0.04,),
-            container2('Leave Request', '00', black),
+            tabcontainer2('Leave Request', '00', black),
 
           ],
         ),
-        SizedBox(height: size.height * 0.07,),
+        SizedBox(height: size.height * 0.06,),
         Row(
           children: [
             SizedBox(width: size.width * 0.180),
@@ -210,8 +210,8 @@ class _TabletDashboardState extends State<TabletDashboard> {
             ),
             SizedBox(width: size.width * 0.390),
             Container(
-              width: 145,
-              height: 30,
+              width: size.width * 0.140,
+              height: size.height * 0.038,
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: grey,width: 1)
@@ -233,7 +233,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
                           value,
                           style: TextStyle(
                             fontFamily: 'Inter',
-                            fontSize: 15,
+                            fontSize: 14,
                             color: Colors.black,
                           ),
                         ),),
@@ -252,14 +252,14 @@ class _TabletDashboardState extends State<TabletDashboard> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.02,),
+        SizedBox(height: size.height * 0.015,),
         Row(
           children: [
             SizedBox(width: size.width * 0.1,),
-            EmployeeTable(),
+            TabEmployeeTable(),
           ],
         ),
-        SizedBox(height: size.height * 0.035,),
+        SizedBox(height: size.height * 0.030,),
         Row(
           children: [
             SizedBox(width: size.width * 0.43,),
@@ -330,6 +330,32 @@ Widget container2(String text,String no, Color color ){
           Text(text,style: TextStyle(color: color,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),),
           SizedBox(height: 3),
           Text(no,style: TextStyle(color: black,fontFamily: 'Inter',fontSize: 23,fontWeight: FontWeight.bold),)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget tabcontainer2(String text,String no, Color color ){
+  return Card(
+    elevation: 2,
+    child: Container(
+      width: 160,
+      height: 80,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: Border.all(
+              color: Colors.grey.shade400,
+              width: 1
+          )
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 7,),
+          Text(text,style: TextStyle(color: color,fontFamily: 'Inter',fontSize: 18,fontWeight: FontWeight.bold),),
+          SizedBox(height: 3),
+          Text(no,style: TextStyle(color: black,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),)
         ],
       ),
     ),
@@ -440,6 +466,110 @@ class EmployeeTable extends StatelessWidget {
   }
 }
 
+
+class TabEmployeeTable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Define the text style for the header row
+    TextStyle headerTextStyle = TextStyle(
+      fontFamily: 'Inter',
+      fontWeight: FontWeight.bold, // Bold font for header
+      fontSize: 12,
+      color: black,
+    );
+
+    // Define the text style for the balance rows
+    TextStyle rowTextStyle = TextStyle(
+      fontFamily: 'Inter',
+      fontSize: 11,
+      color: black,
+    );
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.78,
+        height: MediaQuery.of(context).size.height * 0.35,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.grey.shade500,
+            width: 1,
+          ),
+        ),
+        child: DataTable(
+          // Define the columns with the header text style
+          columns: [
+            DataColumn(
+              label: Text('Leave Type', style: headerTextStyle),
+            ),
+            DataColumn(
+              label: Text('From', style: headerTextStyle),
+            ),
+            DataColumn(
+              label: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text('To', style: headerTextStyle),
+              ),
+            ),
+            DataColumn(
+              label: Text('Days', style: headerTextStyle),
+            ),
+            DataColumn(
+              label: Text('Reason', style: headerTextStyle),
+            ),
+            DataColumn(
+              label: Text('Approved', style: headerTextStyle),
+            ),
+            DataColumn(
+              label: Text('Status', style: headerTextStyle),
+            ),
+          ],
+          // Define the rows with the balance row text style
+          rows: [
+            DataRow(cells: [
+              DataCell(Text('Casual', style: rowTextStyle)),
+              DataCell(Text('10/06/2024', style: rowTextStyle)),
+              DataCell(Text('12/06/2024', style: rowTextStyle)),
+              DataCell(Text('2', style: rowTextStyle)),
+              DataCell(Text('Traveling to Village', style: rowTextStyle)),
+              DataCell(Text('Hassan Ali', style: rowTextStyle)),
+              DataCell(Text('Pending', style: rowTextStyle)),
+            ]),
+            DataRow(cells: [
+              DataCell(Text('Monthly Leave', style: rowTextStyle)),
+              DataCell(Text('09/06/2024', style: rowTextStyle)),
+              DataCell(Text('11/06/2024', style: rowTextStyle)),
+              DataCell(Text('3', style: rowTextStyle)),
+              DataCell(Text('Fever', style: rowTextStyle)),
+              DataCell(Text('Muneeb Khan', style: rowTextStyle)),
+              DataCell(Text('Approved', style: rowTextStyle)),
+            ]),
+            DataRow(cells: [
+              DataCell(Text('Casual', style: rowTextStyle)),
+              DataCell(Text('08/06/2024', style: rowTextStyle)),
+              DataCell(Text('10/06/2024', style: rowTextStyle)),
+              DataCell(Text('2', style: rowTextStyle)),
+              DataCell(Text('Wedding', style: rowTextStyle)),
+              DataCell(Text('Ahmed Raza', style: rowTextStyle)),
+              DataCell(Text('Approved', style: rowTextStyle)),
+            ]),
+            DataRow(cells: [
+              DataCell(Text('Sick', style: rowTextStyle)),
+              DataCell(Text('09/06/2024', style: rowTextStyle)),
+              DataCell(Text('11/06/2024', style: rowTextStyle)),
+              DataCell(Text('3', style: rowTextStyle)),
+              DataCell(Text('Fever', style: rowTextStyle)),
+              DataCell(Text('Muneeb Khan', style: rowTextStyle)),
+              DataCell(Text('Approved', style: rowTextStyle)),
+            ]),
+          ],
+        ),
+      ),
+    );
+  }
+}
 Container container3(Color color, String text, String name){
   return Container(
     child: Row(
