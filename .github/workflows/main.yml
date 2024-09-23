@@ -25,6 +25,10 @@ jobs:
       - name: 🏭 Build Web Application
         run: flutter build web --release
 
+      - name: Debug info
+        run: | 
+              git remote -v
+              whoami
       # (3)
       - name: Make copy of artifacts
         run: |
