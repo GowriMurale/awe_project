@@ -24,18 +24,13 @@ class Navbar extends StatelessWidget {
 }
 
 class DesktopNavbar extends StatelessWidget {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Card(
       elevation: 1,
       child: Container(
-        height:size.height * 0.12,
+        height:size.height * 0.14,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
