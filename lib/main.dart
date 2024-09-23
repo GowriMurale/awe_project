@@ -1,11 +1,11 @@
-
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:awe_project/Screens/login_screen.dart';
+import 'package:awe_project/amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'Screens/login_screen.dart';
-import 'amplifyconfiguration.dart'; // Generated during the initialization
+import 'package:get/get.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 
+ // Import the generated configuration
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Ensures bindings are initialized for async code
@@ -49,3 +49,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
