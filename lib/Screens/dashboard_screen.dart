@@ -1,7 +1,6 @@
 
 import 'package:awe_project/Components/dashboard.dart';
 import 'package:awe_project/Components/helper_class.dart';
-import 'package:awe_project/Screens/practice_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar.dart';
 import 'package:flutter/material.dart';

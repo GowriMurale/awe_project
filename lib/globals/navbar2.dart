@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'my_colors.dart';
 class Navbar2 extends StatelessWidget {
   @override

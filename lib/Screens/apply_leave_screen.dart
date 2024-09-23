@@ -1,6 +1,5 @@
 import 'package:awe_project/Components/apply_leave.dart';
 import 'package:awe_project/Components/helper_class.dart';
-import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar2.dart';
 import 'package:flutter/material.dart';
 class ApplyLeaveScreen extends StatelessWidget {
