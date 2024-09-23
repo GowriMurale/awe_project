@@ -12,6 +12,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 //main file
+//setup for deploy
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
