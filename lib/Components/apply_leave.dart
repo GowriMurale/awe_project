@@ -393,10 +393,12 @@ class _TabletLeaveState extends State<TabletLeave> {
   DateTime? _toDate;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
+    final DateTime now = DateTime.now();
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      initialDate: now,
+      // Set firstDate to today's date if it's for the "fromDate"
+      firstDate: isFromDate ? now : DateTime(2000),
       lastDate: DateTime(2101),
     );
 
@@ -419,6 +421,7 @@ class _TabletLeaveState extends State<TabletLeave> {
       });
     }
   }
+
 
   // Method to calculate the difference in days between two dates
   void _calculateDays() {
