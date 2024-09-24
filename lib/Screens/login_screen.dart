@@ -79,11 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: size.width * 0.265,
                   height: size.height * 0.120,
-                  child: Image.asset('assets/images/logo (2).png'),
+                  child: Image.asset('assets/images/awe logo.png'),
                 ),
                 SizedBox(height: size.height * 0.038,),
                 Container(
-                  height: size.height * 0.395,
+                  height: size.height * 0.400,
                   width: size.width * 0.220,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -224,7 +224,66 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
-        mobile: Column(),
+        mobile: Column(
+          children: [
+         SizedBox(
+           width: 150,
+           height: 70,
+           child: Image.asset('assets/images/logo (2).png'),
+         ),
+            Container(
+              width: 200,
+              height: 230,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/login.png',)
+                )
+              ),
+            ),
+            Card(
+              elevation: 3,
+              shadowColor: Colors.white,
+              child: Container(
+                width: size.width * 0.55,
+                height: size.height * 0.45,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 35),
+                      child: Text("Login",style: TextStyle(fontSize: 16,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 130,top: 8,bottom: 2),
+                      child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
+                    ),
+                    MobileTextField(controller3: userIdController, text3: 'User ID', icon3: Icons.person_outline),
+                    SizedBox(height: size.height * 0.02,),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 130,top: 8,bottom: 2),
+                      child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
+                    ),
+                    MobileTextField(controller3: passwordController, text3: 'Password', icon3: Icons.lock_outline),
+                    SizedBox(height: size.height * 0.04,),
+                    MaterialButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
+                      },
+                      minWidth: size.width * 0.37,
+                      height: size.height * 0.05,
+                      color: yellow,
+                      splashColor: yellow,
+                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
         paddingWidth: size.width * 0.1,
         bgColor: bgColor);
   }
@@ -306,6 +365,52 @@ class TabTextField extends StatelessWidget {
               hintStyle: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,
+                color: Colors.grey,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MobileTextField extends StatelessWidget {
+  final TextEditingController controller3;
+  final String text3;
+  final IconData icon3;
+  const MobileTextField({super.key, required this.controller3, required this.text3, required this.icon3});
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.white,
+      child: Container(
+        width: size.width * 0.40,
+        height: size.height * 0.045,
+        child: Material(
+          color: Colors.white,
+          child: TextField(
+            controller: controller3,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
+              prefixIcon: Icon(
+                icon3,
+                color: Colors.grey,
+                size: 16,  // Adjust icon size if needed
+              ),
+              hintText: text3,
+              hintStyle: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 12,
                 color: Colors.grey,
               ),
               enabledBorder: OutlineInputBorder(

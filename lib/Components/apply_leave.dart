@@ -43,10 +43,12 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   DateTime? _toDate;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
+    DateTime firstDate = DateTime.now(); // Disable all previous dates
+
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
+      initialDate: isFromDate ? DateTime.now() : (_toDate ?? DateTime.now()),
+      firstDate: firstDate, // No previous dates allowed
       lastDate: DateTime(2101),
     );
 
@@ -55,7 +57,6 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
         controller.text = formattedDate;
 
-        // Set the appropriate date variable
         if (isFromDate) {
           _fromDate = pickedDate;
         } else {
@@ -69,6 +70,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
       });
     }
   }
+
 
   // Method to calculate the difference in days between two dates
   void _calculateDays() {
@@ -695,7 +697,7 @@ class _TabletLeaveState extends State<TabletLeave> {
               color: Colors.transparent,
               child: MaterialButton(
                 onPressed: (){},
-                minWidth: size.width * 0.10,
+                minWidth: size.width * 0.11,
                 height: size.height * 0.06,
                 color: yellow,
                 child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),

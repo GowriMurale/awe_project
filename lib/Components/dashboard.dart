@@ -49,7 +49,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
           child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -83,8 +83,8 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     ),
               SizedBox(width: size.width * 0.390),
             Container(
-              width: 145,
-              height: 30,
+              width:size.width * 0.095,
+              height:size.height * 0.035,
                 decoration: BoxDecoration(
                 color: Colors.white,
                   border: Border.all(color: grey,width: 1)
@@ -141,8 +141,8 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                   onPressed: (){
                     Get.to(()=>ApplyLeaveScreen());
                   },
-                  minWidth: size.width * 0.025,
-                  height: size.height * 0.05,
+                  minWidth: size.width * 0.035,
+                  height: size.height * 0.060,
                   color: yellow,
                   child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
               )

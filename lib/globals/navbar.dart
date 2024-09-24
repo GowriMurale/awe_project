@@ -81,7 +81,7 @@ class DesktopNavbar extends StatelessWidget {
     return Card(
       elevation: 1,
       child: Container(
-        height:size.height * 0.11,
+        height:size.height * 0.12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
@@ -89,19 +89,19 @@ class DesktopNavbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 5,top: 5),
+              padding: const EdgeInsets.only(left: 5,top: 3),
               child: Container(
                 width: 170,
-                  height: 85,
+                  height: 80,
                   decoration: BoxDecoration(
                   ),
-                  child: Image.asset('assets/images/logo (2).png',)),
+                  child: Image.asset('assets/images/awe logo.png',)),
             ),
             Row(
               children: <Widget>[
                Padding(
                  padding: const EdgeInsets.only(
-                    right: 10,top: 10),
+                    right: 14,top: 10),
                  child: Column(
                    children: [
                      CircleAvatar(

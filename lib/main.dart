@@ -1,3 +1,4 @@
+import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home:
-      LoginScreen(),
+      DashBoardScreeen(),
     );
   }
 }
