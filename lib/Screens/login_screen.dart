@@ -3,6 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class LoginScreen extends StatefulWidget {
@@ -77,14 +78,14 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(height: size.height * 0.19,),
                 SizedBox(
-                  width: size.width * 0.265,
-                  height: size.height * 0.120,
+                  width: size.width * 0.245,
+                  height: size.height * 0.100,
                   child: Image.asset('assets/images/awe logo.png'),
                 ),
                 SizedBox(height: size.height * 0.038,),
                 Container(
-                  height: size.height * 0.400,
-                  width: size.width * 0.220,
+                  height: size.height * 0.490,
+                  width: size.width * 0.270,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/login.png'),
@@ -107,17 +108,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 80),
+                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.10,),
                       child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 290,top: 10,bottom: 2),
+                      padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.190,top: MediaQuery.of(context).size.height * 0.01,bottom: 2),
                       child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
                     MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
                     SizedBox(height: size.height * 0.01,),
                     Padding(
-                      padding: const EdgeInsets.only(right: 280,top: 10,bottom: 2),
+                      padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.180,top: 10,bottom: 2),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
                     MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
