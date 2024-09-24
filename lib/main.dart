@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 
-//new changes
+//tab view
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
