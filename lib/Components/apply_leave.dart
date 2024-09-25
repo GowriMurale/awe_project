@@ -1,7 +1,9 @@
 
+import 'package:awe_project/Screens/termscreen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class ApplyLeave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,8 +34,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   TextEditingController to=TextEditingController();
   TextEditingController reason=TextEditingController();
   TextEditingController  days=TextEditingController();
+  TextEditingController  badge=TextEditingController();
+  TextEditingController name=TextEditingController();
 
-  final List<String> _leaveTypes = ['Casual', 'Sick', 'Lop'];
+  final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
+    'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
   final List<String> _roles = ['Manager'];
   String? _selectedRole;
   String? _selectedLeaveType;
@@ -41,6 +46,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   bool isSelected=false;
   DateTime? _fromDate;
   DateTime? _toDate;
+  bool _isChecked = false;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
     DateTime firstDate = DateTime.now(); // Disable all previous dates
@@ -86,10 +92,36 @@ class _DesktopLeaveState extends State<DesktopLeave> {
     final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        SizedBox(height: size.height * 0.05,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.25,),
+            Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.038,),
+            myContainer(context, badge),
+            SizedBox(width: size.width * 0.088,),
+            Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.030,),
+            myContainer(context, name),
+          ],
+        ),
+        SizedBox(height: size.height * 0.015,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.25,),
+            Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.033,),
+            myContainer(context, badge),
+            SizedBox(width: size.width * 0.085,),
+            Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.018,),
+            myContainer(context, name),
+          ],
+        ),
+        SizedBox(height: size.height * 0.03,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.25,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.025,),
                Container(
@@ -115,7 +147,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   return DropdownMenuItem<String>(
                  value: leaveType,
                   child: Padding(
-                     padding: const EdgeInsets.only(left: 10),
+                     padding:  EdgeInsets.only(left: size.width * 0.01),
                     child: Text(
                     leaveType,
                     style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
@@ -131,15 +163,15 @@ class _DesktopLeaveState extends State<DesktopLeave> {
              ),
           ],
         ),
-        SizedBox(height: size.height * 0.04,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.25,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
             Container(
-              width: 30,
-                height: 28,
+              width: size.width * 0.020,
+                height: size.height * 0.038,
               child: Material(
               color: Colors.transparent,
                   child: GestureDetector(
@@ -165,10 +197,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           ),
           ],
            ),
-        SizedBox(height: size.height * 0.05,),
+        SizedBox(height: size.height * 0.02,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.26,),
+            SizedBox(width: size.width * 0.34,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.145,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -179,12 +211,12 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.25,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.022,),
             Container(
               width: size.width * 0.14,
-              height: size.width * 0.024,
+              height: size.height * 0.054,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -195,7 +227,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                         onPressed: ()=> _selectDate(context, from, true),
                         icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
                       ),
-                      hintText: '00/00/0000',
+                      hintText: 'dd/mm/yyyy',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: grey,width: 1),
                       borderRadius: BorderRadius.circular(0),
@@ -207,14 +239,14 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.03,),
             Container(
               width: size.width * 0.14,
-              height: size.width * 0.024,
+              height: size.height * 0.054,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
                   controller: to,
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(5),
-                      hintText: '00/00/0000',
+                      hintText: 'dd/mm/yyyy',
                       suffixIcon: IconButton(
                         onPressed: () => _selectDate(context,to,false),
                         icon: Icon(Icons.calendar_today_outlined,size: 25,color: black,),
@@ -230,7 +262,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.025,),
             Container(
               width: size.width * 0.14,
-              height: size.width * 0.024,
+              height: size.height * 0.052,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -247,15 +279,15 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.05,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.17,),
+            SizedBox(width: size.width * 0.25,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.035,),
             Container(
               width: size.width * 0.22,
-              height: size.width * 0.024,
+              height: size.height * 0.052,
               decoration: BoxDecoration(
                 border: Border.all(color: grey,width: 1),
                 borderRadius: BorderRadius.circular(2),
@@ -267,7 +299,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   child: DropdownButton<String>(
                     value: _selectedRole,
                     hint: Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding:  EdgeInsets.only(left: size.width * 0.01),
                       child: Text('Manager', style: TextStyle(fontFamily: 'Inter', fontSize: 15, color:grey)),
                     ),
                     onChanged: (String? newValue) {
@@ -279,7 +311,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                       return DropdownMenuItem<String>(
                         value: role,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding:  EdgeInsets.only(left: size.width * 0.01),
                           child: Text(
                             role,
                             style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
@@ -295,13 +327,13 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.06,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center, // Ensures vertical alignment
           children: <Widget>[
        // Adjust space before the label as needed
             Padding(
-              padding: const EdgeInsets.only(left: 255,bottom: 90),
+              padding:  EdgeInsets.only(left: 380,bottom: 90),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -315,7 +347,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.042), // Adjust space between label and textfield as needed
             Container(
             width: size.width * 0.3, // Specify the width of the TextField
-            height: size.height * 0.18,  // Specify the height of the TextField
+            height: size.height * 0.15,  // Specify the height of the TextField
             child: TextField(
             controller: reason,
             style: TextStyle(fontSize: 16), // Adjust text size within the TextField
@@ -335,18 +367,41 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             )
           ],
         ),
-        SizedBox(height: size.width * 0.02,),
+        SizedBox(height: size.height * 0.015,),
         Row(
           children: [
             SizedBox(width: size.width * 0.34,),
+            Checkbox(
+                value: _isChecked,
+                onChanged: (bool? value){
+                  setState(() {
+                    _isChecked=value ?? false;
+                  });
+                }),
+            SizedBox(width: size.width * 0.014,),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Termscreen()));
+                  },
+                    child: Text('I agree to terms of conditions and policies',style: TextStyle(color: Colors.blue,
+                        decoration: TextDecoration.underline,fontSize: 16,fontFamily: 'Inter'),))
+          ],
+        ),
+        SizedBox(height: size.height * 0.018,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.36,),
             Material(
               borderRadius: BorderRadius.circular(45),
-              color: Colors.transparent,
               child: MaterialButton(
-                  onPressed: (){},
+                onPressed: _isChecked
+                    ? () {
+                  // Define what happens when "Apply" is pressed
+                }
+                    : null,
                 minWidth: size.width * 0.08,
                 height: size.height * 0.06,
-                color: yellow,
+                color: _isChecked ? yellow : grey,
                 child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
               ),
             ),
@@ -732,3 +787,23 @@ class MobileLeave extends StatelessWidget {
   }
 }
 
+Widget myContainer(BuildContext context, TextEditingController controller){
+  final Size size = MediaQuery.of(context).size;
+  return Container(
+    width: size.width * 0.12,
+    height: size.height * 0.042,
+    child: Material(
+      color: Colors.transparent,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: grey,width: 1),
+              borderRadius: BorderRadius.circular(0),
+            )
+        ),
+
+      ),
+    ),
+  );
+}

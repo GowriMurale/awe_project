@@ -89,10 +89,10 @@ class DesktopNavbar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 5,top: 3),
+              padding:  EdgeInsets.only(left: size.width * 0.005,top: size.height * 0.003),
               child: Container(
-                width: 170,
-                  height: 80,
+                width: size.width * 0.130,
+                  height: size.height * 0.50,
                   decoration: BoxDecoration(
                   ),
                   child: Image.asset('assets/images/awe logo.png',)),
@@ -100,19 +100,19 @@ class DesktopNavbar extends StatelessWidget {
             Row(
               children: <Widget>[
                Padding(
-                 padding: const EdgeInsets.only(
-                    right: 14,top: 10),
+                 padding:  EdgeInsets.only(
+                    right: size.width * 0.012,top: size.height * 0.012),
                  child: Column(
                    children: [
                      CircleAvatar(
-                       radius: 17,
+                       radius: 18,
                        child: GestureDetector(
                          onTap: (){
                            _confirmSignOut(context);
                          },
                            child: Image.asset('assets/images/user image.png')),
                      ),
-                     SizedBox(height: 5,),
+                     SizedBox(height: size.height * 0.015,),
                      Text('Log Out',style: TextStyle(color: black,fontFamily: 'Inter', fontSize: 14),),
                    ],
                  ),

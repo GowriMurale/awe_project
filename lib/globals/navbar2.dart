@@ -24,7 +24,7 @@ class DesktopNavbar2 extends StatelessWidget {
     return Card(
       elevation: 1,
       child: Container(
-        height: size.height * 0.10,
+        height: size.height * 0.08,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),

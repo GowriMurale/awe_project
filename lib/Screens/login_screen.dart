@@ -76,13 +76,13 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(width: size.width * 0.01,),
             Column(
               children: [
-                SizedBox(height: size.height * 0.19,),
+                SizedBox(height: size.height * 0.20,),
                 SizedBox(
-                  width: size.width * 0.245,
-                  height: size.height * 0.100,
+                  width: size.width * 0.240,
+                  height: size.height * 0.090,
                   child: Image.asset('assets/images/awe logo.png'),
                 ),
-                SizedBox(height: size.height * 0.038,),
+                SizedBox(height: size.height * 0.040,),
                 Container(
                   height: size.height * 0.490,
                   width: size.width * 0.270,
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
               shadowColor: Colors.white,
               child: Container(
                 width: size.width * 0.280,
-                height:size.height *  0.610,
+                height:size.height *  0.670,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -108,21 +108,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.10,),
+                      padding:  EdgeInsets.only(top: size.height * 0.12,),
                       child: Text("Login",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
                     ),
                     Padding(
-                      padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.190,top: MediaQuery.of(context).size.height * 0.01,bottom: 2),
+                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
                       child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
                     MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
-                    SizedBox(height: size.height * 0.01,),
+                    SizedBox(height: size.height * 0.02,),
                     Padding(
-                      padding:  EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.180,top: 10,bottom: 2),
+                      padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
                     MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
-                    SizedBox(height: size.height * 0.06,),
+                    SizedBox(height: size.height * 0.08,),
                     MaterialButton(
                       onPressed: (){
                        Get.off(DashBoardScreeen());
@@ -230,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
          SizedBox(
            width: 150,
            height: 70,
-           child: Image.asset('assets/images/logo (2).png'),
+           child: Image.asset('assets/images/awe logo.png'),
          ),
             Container(
               width: 200,

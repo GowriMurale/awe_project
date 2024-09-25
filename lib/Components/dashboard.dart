@@ -49,7 +49,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+          padding:  EdgeInsets.only(top: size.height * 0.030,),
           child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -84,7 +84,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
               SizedBox(width: size.width * 0.390),
             Container(
               width:size.width * 0.095,
-              height:size.height * 0.035,
+              height:size.height * 0.037,
                 decoration: BoxDecoration(
                 color: Colors.white,
                   border: Border.all(color: grey,width: 1)
@@ -101,7 +101,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             return DropdownMenuItem<String>(
               value: value,
               child: Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding:  EdgeInsets.only(left: size.width * 0.008),
                child: Text(
               value,
               style: TextStyle(
@@ -128,7 +128,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 265,top: 10),
+              padding:  EdgeInsets.only(left: size.width * 0.170,top: size.height * 0.02),
               child: EmployeeTable(),
             ),
           ],
@@ -382,63 +382,70 @@ class EmployeeTable extends StatelessWidget {
     );
 
     // Create a list of data rows for demonstration
-    List<DataRow> rows = List<DataRow>.generate(
-      4, // Example number of rows, dynamically adjust based on your data
-          (index) => DataRow(
-        cells: [
-          DataCell(Text('Casual', style: rowTextStyle)),
-          DataCell(Text('10/06/2024', style: rowTextStyle)),
-          DataCell(Text('12/06/2024', style: rowTextStyle)),
-          DataCell(Text('2', style: rowTextStyle)),
-          DataCell(Text('Traveling to Village', style: rowTextStyle)),
-          DataCell(Text('Hassan Ali', style: rowTextStyle)),
-          DataCell(Text(index % 2 == 0 ? 'Pending' : 'Approved', style: rowTextStyle)),
-        ],
-      ),
-    );
+
 
     return Container(
       color: Colors.white, // Set the background color to white
       child: Column(
         children: [
-          // Static header (remains in view while scrolling)
-          // DataTable(
-          //   headingRowHeight: 42,
-          //   columnSpacing: 45,
-          //   decoration: BoxDecoration(
-          //     color: Colors.white,
-          //     border: Border.all(color: Colors.grey, width: 1), // Outline border for the table
-          //     borderRadius: BorderRadius.circular(10), // Rounded corners for the table
-          //   ),
-          //
-          //   rows: [], // Empty rows for the fixed header
-          // ),
-          // Fixed height for 4 rows + scrollable area
-          SizedBox(
-            height: 4 * 47.0, // 4 rows * row height (47.0)
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              scrollDirection: Axis.vertical,
-              child: DataTable(
-                headingRowHeight: 40, // Remove header inside the scrollable table
-                dataRowHeight: 47,
-                columnSpacing: 60,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey, width: 1), // Outline border for the table
-                  borderRadius: BorderRadius.circular(10), // Rounded corners for the table
-                ),
-                columns: [
-                  DataColumn(label: Text('Leave Type', style: headerTextStyle)),
-                  DataColumn(label: Text('From', style: headerTextStyle)),
-                  DataColumn(label: Text('To', style: headerTextStyle)),
-                  DataColumn(label: Text('Days', style: headerTextStyle)),
-                  DataColumn(label: Text('Reason', style: headerTextStyle)),
-                  DataColumn(label: Text('Approved', style: headerTextStyle)),
-                  DataColumn(label: Text('Status', style: headerTextStyle)),
-                ],
-                rows: rows, // Scrollable data rows
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: DataTable(
+              headingRowHeight: 40, // Remove header inside the scrollable table
+              dataRowHeight: 42,
+              columnSpacing: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 1), // Outline border for the table
+                borderRadius: BorderRadius.circular(10), // Rounded corners for the table
               ),
+              columns: [
+                DataColumn(label: Text('Leave Type', style: headerTextStyle)),
+                DataColumn(label: Text('From', style: headerTextStyle)),
+                DataColumn(label: Text('To', style: headerTextStyle)),
+                DataColumn(label: Text('Days', style: headerTextStyle)),
+                DataColumn(label: Text('Reason', style: headerTextStyle)),
+                DataColumn(label: Text('Approved', style: headerTextStyle)),
+                DataColumn(label: Text('Status', style: headerTextStyle)),
+              ],
+              rows: [
+                DataRow(cells: [
+                  DataCell(Text('Casual', style: rowTextStyle)),
+                  DataCell(Text('10/06/2024', style: rowTextStyle)),
+                  DataCell(Text('12/06/2024', style: rowTextStyle)),
+                  DataCell(Text('2', style: rowTextStyle)),
+                  DataCell(Text('Traveling to Village', style: rowTextStyle)),
+                  DataCell(Text('Hassan Ali', style: rowTextStyle)),
+                  DataCell(Text('Pending', style: rowTextStyle)),
+                ]),
+                DataRow(cells: [
+                  DataCell(Text('Sick', style: rowTextStyle)),
+                  DataCell(Text('09/06/2024', style: rowTextStyle)),
+                  DataCell(Text('11/06/2024', style: rowTextStyle)),
+                  DataCell(Text('3', style: rowTextStyle)),
+                  DataCell(Text('Fever', style: rowTextStyle)),
+                  DataCell(Text('Muneeb Khan', style: rowTextStyle)),
+                  DataCell(Text('Approved', style: rowTextStyle)),
+                ]),
+                DataRow(cells: [
+                  DataCell(Text('Casual', style: rowTextStyle)),
+                  DataCell(Text('08/06/2024', style: rowTextStyle)),
+                  DataCell(Text('10/06/2024', style: rowTextStyle)),
+                  DataCell(Text('2', style: rowTextStyle)),
+                  DataCell(Text('Wedding', style: rowTextStyle)),
+                  DataCell(Text('Ahmed Raza', style: rowTextStyle)),
+                  DataCell(Text('Approved', style: rowTextStyle)),
+                ]),
+                DataRow(cells: [
+                  DataCell(Text('Sick', style: rowTextStyle)),
+                  DataCell(Text('09/06/2024', style: rowTextStyle)),
+                  DataCell(Text('11/06/2024', style: rowTextStyle)),
+                  DataCell(Text('3', style: rowTextStyle)),
+                  DataCell(Text('Fever', style: rowTextStyle)),
+                  DataCell(Text('Muneeb Khan', style: rowTextStyle)),
+                  DataCell(Text('Approved', style: rowTextStyle)),
+                ]),
+              ], // Scrollable data rows
             ),
           ),
         ],
