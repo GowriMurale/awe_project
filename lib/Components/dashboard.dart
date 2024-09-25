@@ -46,108 +46,170 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Column(
+    return  Row(
       children: [
-        SizedBox(height: size.height * 0.04,),
-        Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
-            SizedBox(width: size.width * 0.01,),
-            Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
-          ],
-        ),
-        SizedBox(height: size.height * 0.030,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.205,),
-           container2('Present', '20.5', purple),
-            SizedBox(width: size.width * 0.04,),
-            container2('Absent Days', '2.5', green),
-            SizedBox(width: size.width * 0.04,),
-            container2('Available Leave', '6.5', brown),
-            SizedBox(width: size.width * 0.04,),
-            container2('Leave Request', '00', black),
-
-          ],
-        ),
-        SizedBox(height: size.height * 0.065,),
+    // Sidebar container
+    Container(
+      width: size.width * 0.135, // Adjust width as necessary
+      height:size.height* 0.915, // Sidebar takes full height
+      color: grey, // Background color for sidebar
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.20),
+          GestureDetector(
+            onTap: (){
+              Get.to(ApplyLeaveScreen());
+            },
+            child: Container(
+              width: size.width * 0.125,
+              height:size.height* 0.050,
+              decoration: BoxDecoration(
+                color: Colors.yellowAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  SizedBox(width: size.width * 0.02,),
+                  Icon(Icons.person_outline,size: 18,color: Colors.black,),
+                  SizedBox(width: size.width * 0.01,),
+                  Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.05),
+          Container(
+            width: size.width * 0.125,
+            height:size.height* 0.050,
+            decoration: BoxDecoration(
+              color: grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: size.width * 0.02,),
+                Icon(Icons.dashboard_outlined,size: 18,color: Colors.white,),
+                SizedBox(width: size.width * 0.01,),
+                Text('Training',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.white),),
+              ],
+            ),
+          ),
+          // Add more widgets here as per your sidebar content
+        ],
+      ),
+    ),
+      Expanded(
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.02,),
+          Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: size.width* 0.28,),
+              // IconButton(onPressed: (){
+              //   Get.back();
+              // }, icon: Icon(Icons.arrow_back,size: 18,color: Colors.black,)),
+              // SizedBox(width: size.width* 0.16,),
+              Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+              SizedBox(width: size.width * 0.01,),
+              Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+            ],
+          ),
+          SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-            SizedBox(width: size.width * 0.205),
-              Text(
-                  'My Recent Leave',
-                    style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-              SizedBox(width: size.width * 0.390),
-            Container(
-              width:size.width * 0.095,
-              height:size.height * 0.037,
-                decoration: BoxDecoration(
-                color: Colors.white,
-                  border: Border.all(color: grey,width: 1)
+              SizedBox(width: size.width * 0.100,),
+             container2('Present', '20.5', purple),
+              SizedBox(width: size.width * 0.04,),
+              container2('Absent Days', '2.5', green),
+              SizedBox(width: size.width * 0.04,),
+              container2('Available Leave', '6.5', brown),
+              SizedBox(width: size.width * 0.04,),
+              container2('Leave Request', '00', black),
+      
+            ],
+          ),
+          SizedBox(height: size.height * 0.065,),
+            Row(
+              children: [
+              SizedBox(width: size.width * 0.100),
+                Text(
+                    'My Recent Leave',
+                      style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                SizedBox(width: size.width * 0.390),
+              Container(
+                width:size.width * 0.095,
+                height:size.height * 0.037,
+                  decoration: BoxDecoration(
+                  color: Colors.white,
+                    border: Border.all(color: grey,width: 1)
+                  ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                value: selectedValue,
+                onChanged: (String? newValue) {
+                setState(() {
+                selectedValue = newValue!;
+                });
+              },
+              items: _dropdownItems.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Padding(
+                  padding:  EdgeInsets.only(left: size.width * 0.008),
+                 child: Text(
+                value,
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                fontSize: 15,
+                color: Colors.black,
                 ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-              value: selectedValue,
-              onChanged: (String? newValue) {
-              setState(() {
-              selectedValue = newValue!;
-              });
-            },
-            items: _dropdownItems.map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Padding(
-                padding:  EdgeInsets.only(left: size.width * 0.008),
-               child: Text(
-              value,
-              style: TextStyle(
-                fontFamily: 'Inter',
-              fontSize: 15,
-              color: Colors.black,
+              ),),
+              );
+           }).toList(),
+        // Show the dropdown icon and no custom container needed
+              icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: Colors.black,
+            size: 20,
+            ),
+        // Adjusting dropdown's appearance
+            dropdownColor: Colors.white, // Background color of dropdown
               ),
-            ),),
-            );
-         }).toList(),
-      // Show the dropdown icon and no custom container needed
-            icon: Icon(
-          Icons.keyboard_arrow_down_rounded,
-          color: Colors.black,
-          size: 20,
-          ),
-      // Adjusting dropdown's appearance
-          dropdownColor: Colors.white, // Background color of dropdown
             ),
-          ),
-          ),
-          ],
-        ),
-    Row(
-          children: [
-            Padding(
-              padding:  EdgeInsets.only(left: size.width * 0.205,top: size.height * 0.02),
-              child: EmployeeTable(),
             ),
-          ],
-        ),
-        SizedBox(height: size.height * 0.030,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.48,),
-              MaterialButton(
-                  onPressed: (){
-                    Get.to(()=>ApplyLeaveScreen());
-                  },
-                  minWidth: size.width * 0.035,
-                  height: size.height * 0.060,
-                  color: yellow,
-                  child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
-              )
-          ],
-        )
-      ],
+            ],
+          ),
+      Row(
+            children: [
+              Padding(
+                padding:  EdgeInsets.only(left: size.width * 0.100,top: size.height * 0.02),
+                child: EmployeeTable(),
+              ),
+            ],
+          ),
+          SizedBox(height: size.height * 0.030,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.38,),
+                MaterialButton(
+                    onPressed: (){
+                      Get.to(()=>ApplyLeaveScreen());
+                    },
+                    minWidth: size.width * 0.035,
+                    height: size.height * 0.060,
+                    color: yellow,
+                    child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
+                )
+            ],
+          )
+        ],
+      ),
+      )
+    ]
     );
+
   }
 }
 
@@ -265,7 +327,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
               onPressed: (){
                 Get.to(()=>ApplyLeaveScreen());
               },
-              minWidth: size.width * 0.025,
+              minWidth: size.width * 0.028,
               height: size.height * 0.05,
               color: yellow,
               child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
@@ -572,6 +634,26 @@ Container container3(Color color, String text, String name){
             )
           ],
         )
+      ],
+    ),
+  );
+}
+
+Widget dashContainer(BuildContext context,Color color,String text,IconData icon){
+  final Size size = MediaQuery.of(context).size;
+  return   Container(
+    width: size.width * 0.125,
+    height:size.height* 0.050,
+    decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Row(
+      children: [
+        SizedBox(width: size.width * 0.02,),
+        Icon(Icons.person_outline,size: 18,color: Colors.white,),
+        SizedBox(width: size.width * 0.01,),
+        Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color: Colors.white),),
       ],
     ),
   );
