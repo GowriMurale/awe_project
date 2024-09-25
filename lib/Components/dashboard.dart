@@ -48,21 +48,19 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Padding(
-          padding:  EdgeInsets.only(top: size.height * 0.030,),
-          child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
-              SizedBox(width: size.width * 0.01,),
-              Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
-            ],
-          ),
+        SizedBox(height: size.height * 0.04,),
+        Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+            SizedBox(width: size.width * 0.01,),
+            Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+          ],
         ),
         SizedBox(height: size.height * 0.030,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.165,),
+            SizedBox(width: size.width * 0.205,),
            container2('Present', '20.5', purple),
             SizedBox(width: size.width * 0.04,),
             container2('Absent Days', '2.5', green),
@@ -76,7 +74,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
         SizedBox(height: size.height * 0.065,),
           Row(
             children: [
-            SizedBox(width: size.width * 0.185),
+            SizedBox(width: size.width * 0.205),
               Text(
                   'My Recent Leave',
                     style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
@@ -128,7 +126,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     Row(
           children: [
             Padding(
-              padding:  EdgeInsets.only(left: size.width * 0.170,top: size.height * 0.02),
+              padding:  EdgeInsets.only(left: size.width * 0.205,top: size.height * 0.02),
               child: EmployeeTable(),
             ),
           ],
@@ -136,7 +134,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
         SizedBox(height: size.height * 0.030,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.43,),
+            SizedBox(width: size.width * 0.48,),
               MaterialButton(
                   onPressed: (){
                     Get.to(()=>ApplyLeaveScreen());

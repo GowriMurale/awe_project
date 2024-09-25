@@ -32,7 +32,7 @@ class DesktopNavbar2 extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: size.width * 0.3,),
+            SizedBox(width: size.width * 0.40,),
             Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold,color: black),),
 
           ],

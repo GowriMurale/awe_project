@@ -1,9 +1,13 @@
 
+import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/termscreen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:url_launcher/url_launcher.dart';
 class ApplyLeave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   TextEditingController  days=TextEditingController();
   TextEditingController  badge=TextEditingController();
   TextEditingController name=TextEditingController();
+  TextEditingController dept=TextEditingController();
+  TextEditingController title=TextEditingController();
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
@@ -85,6 +91,20 @@ class _DesktopLeaveState extends State<DesktopLeave> {
       days.text = dayDifference.toString();
     }
   }
+  bool _validateFields() {
+    // Replace 'controller.text' with the actual controllers for each field
+    if (badge.text.isEmpty) return false;
+    if (name.text.isEmpty) return false;
+    if (dept.text.isEmpty) return false;
+    if (title.text.isEmpty) return false;
+    if (_selectedLeaveType == null || _selectedLeaveType!.isEmpty) return false;
+    if (from.text.isEmpty) return false;
+    if (to.text.isEmpty) return false;
+    if (days.text.isEmpty) return false;
+    if (_selectedRole == null || _selectedRole!.isEmpty) return false;
+
+    return true; // All fields are valid
+  }
 
 
   @override
@@ -105,17 +125,17 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             myContainer(context, name),
           ],
         ),
-        SizedBox(height: size.height * 0.015,),
+        SizedBox(height: size.height * 0.025,),
         Row(
           children: [
             SizedBox(width: size.width * 0.25,),
             Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.033,),
-            myContainer(context, badge),
+            myContainer(context, dept),
             SizedBox(width: size.width * 0.085,),
             Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.018,),
-            myContainer(context, name),
+            myContainer(context, title),
           ],
         ),
         SizedBox(height: size.height * 0.03,),
@@ -126,7 +146,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.025,),
                Container(
                 width: size.width * 0.2,
-                height: size.height * 0.05,
+                height: size.height * 0.045,
                  decoration: BoxDecoration(
                      border: Border.all(color: grey,width: 1),
                        borderRadius: BorderRadius.circular(2),
@@ -216,7 +236,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.022,),
             Container(
               width: size.width * 0.14,
-              height: size.height * 0.054,
+              height: size.height * 0.052,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -239,7 +259,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.03,),
             Container(
               width: size.width * 0.14,
-              height: size.height * 0.054,
+              height: size.height * 0.052,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -287,7 +307,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.035,),
             Container(
               width: size.width * 0.22,
-              height: size.height * 0.052,
+              height: size.height * 0.045,
               decoration: BoxDecoration(
                 border: Border.all(color: grey,width: 1),
                 borderRadius: BorderRadius.circular(2),
@@ -380,10 +400,21 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 }),
             SizedBox(width: size.width * 0.014,),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Termscreen()));
+                  onTap: () async {
+                   const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
+                   if (await canLaunch(url)) {
+                     // Open the URL in the browser
+                     await launch(url, forceSafariVC: false); // For Android, using the system browser
+                   } else {
+                     // Can't launch the URL, show an error to the user
+                     ScaffoldMessenger.of(context).showSnackBar(
+                       SnackBar(
+                         content: Text('Could not launch the URL'),
+                       ),
+                    );
+                    }
                   },
-                    child: Text('I agree to terms of conditions and policies',style: TextStyle(color: Colors.blue,
+                    child: Text('I have read and accept the leave policies',style: TextStyle(color: Colors.blue,
                         decoration: TextDecoration.underline,fontSize: 16,fontFamily: 'Inter'),))
           ],
         ),
@@ -391,32 +422,75 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         Row(
           children: [
             SizedBox(width: size.width * 0.36,),
+            OutlinedButton(
+              onPressed: _isChecked ? () {
+                // Validate all fields before applying
+                if (_validateFields()) {
+                  // All fields are filled, show confirmation popup with Yes and No buttons
+                  Get.defaultDialog(
+                    title: 'Confirm',
+                    content: Text('Are you sure you want to apply?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          // Action on No (cancel)
+                          Get.back(); // Close the dialog
+                        },
+                        child: Text('No', style: TextStyle(color: Colors.red)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Action on Yes (confirmation)
+                         Get.off(DashBoardScreeen()); // Close the dialog
+                          // Proceed with applying leave
+                        },
+                        child: Text('Yes', style: TextStyle(color: Colors.green)),
+                      ),
+                    ],
+                  );
+                } else {
+                  // Show error alert dialog if fields are missing
+                  Get.defaultDialog(
+                    title: 'Error',
+                    content: Text('Please fill all required fields.'),
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+                      Get.back(); // Close the dialog
+                    },
+                  );
+                }
+              } : null, // Disable the button if the checkbox isn't checked
+              style: OutlinedButton.styleFrom(
+                fixedSize: Size(size.width * 0.07, size.height * 0.05),
+                side: BorderSide(color: _isChecked ? Colors.yellow : Colors.grey, width: 2.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                backgroundColor: _isChecked ? Colors.yellow : Colors.transparent,
+              ),
+              child: Text(
+                'Apply',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _isChecked ? Colors.black : Colors.black,
+                ),
+              ),
+            ),
+
+
+            SizedBox(width: size.width * 0.03,),
             Material(
               borderRadius: BorderRadius.circular(45),
               child: MaterialButton(
-                onPressed: _isChecked
-                    ? () {
-                  // Define what happens when "Apply" is pressed
-                }
-                    : null,
-                minWidth: size.width * 0.08,
+                onPressed: (){},
+                minWidth: size.width * 0.075,
                 height: size.height * 0.06,
-                color: _isChecked ? yellow : grey,
-                child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                color: Colors.redAccent.shade200,
+                child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
               ),
             ),
-            SizedBox(width: size.width * 0.03,),
-            OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                fixedSize: Size(size.width * 0.07, size.height * 0.05),
-                side: BorderSide(color: grey, width: 2.0), // Outline border
-                shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0), // Rounded corners (optional)
-              ),
-              ),
-              child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
-            )
           ],
         )
 
@@ -790,7 +864,7 @@ class MobileLeave extends StatelessWidget {
 Widget myContainer(BuildContext context, TextEditingController controller){
   final Size size = MediaQuery.of(context).size;
   return Container(
-    width: size.width * 0.12,
+    width: size.width * 0.14,
     height: size.height * 0.042,
     child: Material(
       color: Colors.transparent,
