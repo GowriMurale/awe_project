@@ -46,70 +46,54 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return  Row(
-      children: [
-    // Sidebar container
-    Container(
-      width: size.width * 0.135, // Adjust width as necessary
-      height:size.height* 0.915, // Sidebar takes full height
-      color: grey, // Background color for sidebar
-      child: Column(
-        children: [
-          SizedBox(height: size.height * 0.20),
-          GestureDetector(
-            onTap: (){
-              Get.to(ApplyLeaveScreen());
-            },
-            child: Container(
-              width: size.width * 0.125,
-              height:size.height* 0.050,
-              decoration: BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: size.width * 0.02,),
-                  Icon(Icons.person_outline,size: 18,color: Colors.black,),
-                  SizedBox(width: size.width * 0.01,),
-                  Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.05),
-          Container(
-            width: size.width * 0.125,
-            height:size.height* 0.050,
-            decoration: BoxDecoration(
-              color: grey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                SizedBox(width: size.width * 0.02,),
-                Icon(Icons.dashboard_outlined,size: 18,color: Colors.white,),
-                SizedBox(width: size.width * 0.01,),
-                Text('Training',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.white),),
-              ],
-            ),
-          ),
-          // Add more widgets here as per your sidebar content
-        ],
-      ),
-    ),
-      Expanded(
-      child: Column(
+    // return  Row(
+    //   children: [
+    // // Sidebar container
+    // Container(
+    //   width: size.width * 0.150, // Adjust width as necessary
+    //   height:size.height* 0.900, // Sidebar takes full height
+    //   color: grey, // Background color for sidebar
+    //   child: Column(
+    //     children: [
+    //       SizedBox(height: size.height * 0.20),
+    //       GestureDetector(
+    //         onTap: (){
+    //           Get.to(ApplyLeaveScreen());
+    //         },
+    //         child: Container(
+    //           width: size.width * 0.125,
+    //           height:size.height* 0.048,
+    //           decoration: BoxDecoration(
+    //             color: Colors.yellowAccent,
+    //             borderRadius: BorderRadius.circular(10),
+    //           ),
+    //           child: Row(
+    //             children: [
+    //               SizedBox(width: size.width * 0.02,),
+    //               Icon(Icons.person_outline,size: 18,color: Colors.black,),
+    //               SizedBox(width: size.width * 0.01,),
+    //               Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       SizedBox(height: size.height * 0.05),
+    //       // Add more widgets here as per your sidebar content
+    //     ],
+    //   ),
+    // ),
+    return
+      Column(
         children: [
           SizedBox(height: size.height * 0.02,),
           Row(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: size.width* 0.28,),
+              SizedBox(width: size.width* 0.37,),
               // IconButton(onPressed: (){
               //   Get.back();
-              // }, icon: Icon(Icons.arrow_back,size: 18,color: Colors.black,)),
-              // SizedBox(width: size.width* 0.16,),
+              // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
+              // SizedBox(width: size.width* 0.14,),
               Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
               SizedBox(width: size.width * 0.01,),
               Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
@@ -118,29 +102,29 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.100,),
-             container2('Present', '20.5', purple),
+              SizedBox(width: size.width * 0.195,),
+             container2('Present', '20.5', purple,context),
               SizedBox(width: size.width * 0.04,),
-              container2('Absent Days', '2.5', green),
+              container2('Absent Days', '2.5', green,context),
               SizedBox(width: size.width * 0.04,),
-              container2('Available Leave', '6.5', brown),
+              container2('Available Leave', '6.5', brown,context),
               SizedBox(width: size.width * 0.04,),
-              container2('Leave Request', '00', black),
-      
+              container2('Leave Request', '00', black,context),
+
             ],
           ),
           SizedBox(height: size.height * 0.065,),
             Row(
               children: [
-              SizedBox(width: size.width * 0.100),
+              SizedBox(width: size.width * 0.195),
                 Text(
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                 SizedBox(width: size.width * 0.390),
               Container(
-                width:size.width * 0.095,
-                height:size.height * 0.037,
+                width:size.width * 0.098,
+                height:size.height * 0.042,
                   decoration: BoxDecoration(
                   color: Colors.white,
                     border: Border.all(color: grey,width: 1)
@@ -184,7 +168,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
       Row(
             children: [
               Padding(
-                padding:  EdgeInsets.only(left: size.width * 0.100,top: size.height * 0.02),
+                padding:  EdgeInsets.only(left: size.width * 0.195,top: size.height * 0.02),
                 child: EmployeeTable(),
               ),
             ],
@@ -192,12 +176,12 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.38,),
+              SizedBox(width: size.width * 0.45,),
                 MaterialButton(
                     onPressed: (){
                       Get.to(()=>ApplyLeaveScreen());
                     },
-                    minWidth: size.width * 0.035,
+                    minWidth: size.width * 0.085,
                     height: size.height * 0.060,
                     color: yellow,
                     child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
@@ -205,11 +189,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ],
           )
         ],
-      ),
-      )
-    ]
-    );
-
+      );
   }
 }
 
@@ -235,43 +215,46 @@ class _TabletDashboardState extends State<TabletDashboard> {
     final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18,horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
-              SizedBox(width: size.width * 0.01,),
-              Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
-            ],
-          ),
+        SizedBox(height: size.height * 0.02,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: size.width* 0.12,),
+            IconButton(onPressed: (){
+              Get.back();
+            }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
+            SizedBox(width: size.width* 0.18,),
+            Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+            SizedBox(width: size.width * 0.01,),
+            Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+          ],
         ),
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.105,),
-            tabcontainer2('Present', '20.5', purple),
+            SizedBox(width: size.width * 0.110,),
+            tabcontainer2('Present', '20.5', purple,context),
             SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Absent Days', '2.5', green),
+            tabcontainer2('Absent Days', '2.5', green,context),
             SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Available Leave', '6.5', brown),
+            tabcontainer2('Available Leave', '6.5', brown,context),
             SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Leave Request', '00', black),
+            tabcontainer2('Leave Request', '00', black,context),
 
           ],
         ),
         SizedBox(height: size.height * 0.06,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.180),
+            SizedBox(width: size.width * 0.145),
             Text(
               'My Recent Leave',
               style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: size.width * 0.390),
+            SizedBox(width: size.width * 0.420),
             Container(
-              width: size.width * 0.140,
-              height: size.height * 0.038,
+              width: size.width * 0.137,
+              height: size.height * 0.040,
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: grey,width: 1)
@@ -315,7 +298,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
         SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.1,),
+            SizedBox(width: size.width * 0.12,),
             TabEmployeeTable(),
           ],
         ),
@@ -327,8 +310,8 @@ class _TabletDashboardState extends State<TabletDashboard> {
               onPressed: (){
                 Get.to(()=>ApplyLeaveScreen());
               },
-              minWidth: size.width * 0.028,
-              height: size.height * 0.05,
+              minWidth: size.width * 0.065,
+              height: size.height * 0.055,
               color: yellow,
               child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
             )
@@ -370,12 +353,13 @@ Widget container1(Color color,String text,IconData icon,double width){
   );
 }
 
-Widget container2(String text,String no, Color color ){
+Widget container2(String text,String no, Color color,BuildContext context ){
+  final Size size = MediaQuery.of(context).size;
   return Card(
     elevation: 2,
     child: Container(
-      width: 180,
-      height: 90,
+      width: size.width * 0.115,
+      height:size.height *  0.112,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -396,12 +380,13 @@ Widget container2(String text,String no, Color color ){
   );
 }
 
-Widget tabcontainer2(String text,String no, Color color ){
+Widget tabcontainer2(String text,String no, Color color,BuildContext context ){
+  final Size size = MediaQuery.of(context).size;
   return Card(
     elevation: 2,
     child: Container(
-      width: 160,
-      height: 80,
+      width: size.width * 0.155,
+      height: size.height * 0.120,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -465,7 +450,7 @@ class EmployeeTable extends StatelessWidget {
                 DataColumn(label: Text('To', style: headerTextStyle)),
                 DataColumn(label: Text('Days', style: headerTextStyle)),
                 DataColumn(label: Text('Reason', style: headerTextStyle)),
-                DataColumn(label: Text('Approved', style: headerTextStyle)),
+                DataColumn(label: Text('Approver', style: headerTextStyle)),
                 DataColumn(label: Text('Status', style: headerTextStyle)),
               ],
               rows: [
@@ -578,7 +563,7 @@ class TabEmployeeTable extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 child: DataTable(
                   headingRowHeight: 40, // Remove header inside the scrollable table
-                  dataRowHeight: 47,
+                  dataRowHeight: 44,
                   columnSpacing: 45,
                   decoration: BoxDecoration(
                     color: Colors.white,

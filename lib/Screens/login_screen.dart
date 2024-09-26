@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         password: passwordController.text.trim(),
       );
       if (res.isSignedIn) {
-        Get.to(() => DashBoardScreeen());
+        Get.off(() => DashBoardScreeen());
       } else {
         _showErrorDialog(context, 'Sign-in failed.');
       }
@@ -115,23 +115,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
                       child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline),
+                    MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline, obscureText: false,),
                     SizedBox(height: size.height * 0.02,),
                     Padding(
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline),
-                    SizedBox(height: size.height * 0.08,),
+                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
+                    SizedBox(height: size.height * 0.075,),
                     MaterialButton(
                       onPressed: (){
-                       Get.off(DashBoardScreeen());
+                      _signIn(context);
                       },
-                      minWidth: size.width * 0.225,
-                      height:size.height * 0.055,
+                      minWidth: size.width * 0.228,
+                      height:size.height * 0.060,
                       color: yellow,
                       splashColor: yellow,
-                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 18),),
                     ),
                   ],
                 ),
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     width: size.width * 0.2,
                     height: size.height * 0.14,
-                    child: Image.asset('assets/images/logo (2).png'),
+                    child: Image.asset('assets/images/awe logo.png'),
                   ),
                   SizedBox(height: size.height * 0.03,),
                   Container(
@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(width: size.width * 0.08,),
               Card(
-                elevation: 3,
+                elevation: 2,
                 shadowColor: Colors.white,
                 child: Container(
                   width: size.width * 0.34,
@@ -193,17 +193,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 85),
+                        padding:  EdgeInsets.only(top: size.height * 0.080),
                         child: Text("Login",style: TextStyle(fontSize: 22,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 190,top: 12,bottom: 2),
+                        padding:  EdgeInsets.only(right: size.width * 0.190,top: size.height * 0.020,bottom: size.height * 0.004),
                         child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
                       ),
                       TabTextField(controller2: userIdController, text2: 'User ID', icon2: Icons.person_outline),
                       SizedBox(height: size.height * 0.02,),
                       Padding(
-                        padding: const EdgeInsets.only(right: 170,top: 10,bottom: 2),
+                        padding:  EdgeInsets.only(right: size.width * 0.170,top: size.height * 0.017,bottom: size.height * 0.002),
                         child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
                       ),
                       TabTextField(controller2: passwordController, text2: 'Password', icon2: Icons.lock_outline),
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
                         },
                         minWidth: size.width * 0.26,
-                        height: size.height * 0.05,
+                        height: size.height * 0.055,
                         color: yellow,
                         splashColor: yellow,
                         child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
@@ -294,7 +294,8 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String text;
   final IconData icon;
-  const MyTextField({super.key, required this.controller, required this.text, required this.icon});
+  final bool obscureText;
+  const MyTextField({super.key, required this.controller, required this.text, required this.icon, required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
@@ -309,6 +310,7 @@ class MyTextField extends StatelessWidget {
           color: Colors.white,
           child: TextField(
             controller: controller,
+            obscureText: obscureText,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
               prefixIcon: Icon(
@@ -317,6 +319,7 @@ class MyTextField extends StatelessWidget {
                 size: 21,  // Adjust icon size if needed
               ),
               hintText: text,
+
               hintStyle: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 15,

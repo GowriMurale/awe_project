@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'my_colors.dart';
 class Navbar2 extends StatelessWidget {
   @override
@@ -32,8 +34,12 @@ class DesktopNavbar2 extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: size.width * 0.40,),
-            Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold,color: black),),
+            SizedBox(width: size.width * 0.20,),
+            IconButton(onPressed: (){
+              Get.back();
+            }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
+            SizedBox(width: size.width * 0.25,),
+            Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 22,fontWeight: FontWeight.bold,color: black),),
 
           ],
         ),

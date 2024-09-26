@@ -45,7 +45,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
-  final List<String> _roles = ['Manager'];
+  final List<String> _roles = ['Manager','Supervisor'];
   String? _selectedRole;
   String? _selectedLeaveType;
   DateTime? selectedDate;
@@ -53,6 +53,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   DateTime? _fromDate;
   DateTime? _toDate;
   bool _isChecked = false;
+  bool isHalfDay=false;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
     DateTime firstDate = DateTime.now(); // Disable all previous dates
@@ -87,10 +88,27 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   // Method to calculate the difference in days between two dates
   void _calculateDays() {
     if (_fromDate != null && _toDate != null) {
-      int dayDifference = _toDate!.difference(_fromDate!).inDays + 1; // +1 to include both start and end dates
+      // Calculate the difference in days between _fromDate and _toDate
+      double dayDifference = _toDate!.difference(_fromDate!).inDays + 1;
+
+      // If half-day is selected
+      if (isHalfDay) {
+        // Case 1: If the from and to dates are the same, the leave is half a day
+        if (_fromDate == _toDate) {
+          dayDifference = 0.5;
+        }
+        // Case 2: If the from and to dates are different, add 0.5 to the total days
+        else {
+          dayDifference -= 0.5; // Subtract 0.5 from the dayDifference to represent half of a day
+        }
+      }
+
+      // Update the text field with the calculated days
       days.text = dayDifference.toString();
     }
   }
+
+
   bool _validateFields() {
     // Replace 'controller.text' with the actual controllers for each field
     if (badge.text.isEmpty) return false;
@@ -121,7 +139,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             myContainer(context, badge),
             SizedBox(width: size.width * 0.088,),
             Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.030,),
+            SizedBox(width: size.width * 0.051,),
             myContainer(context, name),
           ],
         ),
@@ -134,7 +152,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             myContainer(context, dept),
             SizedBox(width: size.width * 0.085,),
             Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.018,),
+            SizedBox(width: size.width * 0.040,),
             myContainer(context, title),
           ],
         ),
@@ -143,9 +161,9 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           children: [
             SizedBox(width: size.width * 0.25,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
+            SizedBox(width: size.width * 0.023,),
                Container(
-                width: size.width * 0.2,
+                width: size.width * 0.16,
                 height: size.height * 0.045,
                  decoration: BoxDecoration(
                      border: Border.all(color: grey,width: 1),
@@ -181,11 +199,16 @@ class _DesktopLeaveState extends State<DesktopLeave> {
              ),
                ),
              ),
+            SizedBox(width: size.width * 0.065,),
+            Text('Leave balance:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.010,),
+            myContainer(context, title),
           ],
         ),
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
+            //Half day
             SizedBox(width: size.width * 0.25,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
@@ -197,17 +220,20 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        isSelected = !isSelected; // Toggle selection state
-                 });
+                        isHalfDay = !isHalfDay; // Toggle half-day state
+                        if (_fromDate != null && _toDate != null) {
+                          _calculateDays(); // Recalculate days whenever half-day is toggled
+                        }
+                      });
                    },
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(0),
                 border: Border.all(color: Colors.grey, width: 1),
-                  color: isSelected ? Colors.blue : Colors.transparent, // Optional: change color when selected
+                  color: isHalfDay ? Colors.blue : Colors.transparent, // Optional: change color when selected
                   ),
               child: Center(
-              child: isSelected
+              child: isHalfDay
              ? Icon(Icons.check, color: Colors.white, size: 20) // Show tick icon when selected
         : null,
           ),
@@ -513,23 +539,30 @@ class _TabletLeaveState extends State<TabletLeave> {
   TextEditingController to=TextEditingController();
   TextEditingController reason=TextEditingController();
   TextEditingController  days=TextEditingController();
+  TextEditingController  badge=TextEditingController();
+  TextEditingController name=TextEditingController();
+  TextEditingController dept=TextEditingController();
+  TextEditingController title=TextEditingController();
 
-  final List<String> _leaveTypes = ['Casual', 'Sick', 'Lop'];
-  final List<String> _roles = ['Manager'];
+  final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
+    'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
+  final List<String> _roles = ['Manager','Supervisor'];
   String? _selectedRole;
   String? _selectedLeaveType;
   DateTime? selectedDate;
   bool isSelected=false;
   DateTime? _fromDate;
   DateTime? _toDate;
+  bool _isChecked = false;
+  bool isHalfDay=false;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
-    final DateTime now = DateTime.now();
+    DateTime firstDate = DateTime.now(); // Disable all previous dates
+
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: now,
-      // Set firstDate to today's date if it's for the "fromDate"
-      firstDate: isFromDate ? now : DateTime(2000),
+      initialDate: isFromDate ? DateTime.now() : (_toDate ?? DateTime.now()),
+      firstDate: firstDate, // No previous dates allowed
       lastDate: DateTime(2101),
     );
 
@@ -538,7 +571,6 @@ class _TabletLeaveState extends State<TabletLeave> {
         String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
         controller.text = formattedDate;
 
-        // Set the appropriate date variable
         if (isFromDate) {
           _fromDate = pickedDate;
         } else {
@@ -557,9 +589,40 @@ class _TabletLeaveState extends State<TabletLeave> {
   // Method to calculate the difference in days between two dates
   void _calculateDays() {
     if (_fromDate != null && _toDate != null) {
-      int dayDifference = _toDate!.difference(_fromDate!).inDays + 1; // +1 to include both start and end dates
+      // Calculate the difference in days between _fromDate and _toDate
+      double dayDifference = _toDate!.difference(_fromDate!).inDays + 1;
+
+      // If half-day is selected
+      if (isHalfDay) {
+        // Case 1: If the from and to dates are the same, the leave is half a day
+        if (_fromDate == _toDate) {
+          dayDifference = 0.5;
+        }
+        // Case 2: If the from and to dates are different, add 0.5 to the total days
+        else {
+          dayDifference -= 0.5; // Subtract 0.5 from the dayDifference to represent half of a day
+        }
+      }
+
+      // Update the text field with the calculated days
       days.text = dayDifference.toString();
     }
+  }
+
+
+  bool _validateFields() {
+    // Replace 'controller.text' with the actual controllers for each field
+    if (badge.text.isEmpty) return false;
+    if (name.text.isEmpty) return false;
+    if (dept.text.isEmpty) return false;
+    if (title.text.isEmpty) return false;
+    if (_selectedLeaveType == null || _selectedLeaveType!.isEmpty) return false;
+    if (from.text.isEmpty) return false;
+    if (to.text.isEmpty) return false;
+    if (days.text.isEmpty) return false;
+    if (_selectedRole == null || _selectedRole!.isEmpty) return false;
+
+    return true; // All fields are valid
   }
 
 
@@ -571,12 +634,38 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.13,),
+            SizedBox(width: size.width * 0.25,),
+            Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.038,),
+            myContainer(context, badge),
+            SizedBox(width: size.width * 0.088,),
+            Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.051,),
+            myContainer(context, name),
+          ],
+        ),
+        SizedBox(height: size.height * 0.025,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.25,),
+            Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.033,),
+            myContainer(context, dept),
+            SizedBox(width: size.width * 0.085,),
+            Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.040,),
+            myContainer(context, title),
+          ],
+        ),
+        SizedBox(height: size.height * 0.03,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.25,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
+            SizedBox(width: size.width * 0.023,),
             Container(
-              width: size.width * 0.2,
-              height: size.height * 0.05,
+              width: size.width * 0.16,
+              height: size.height * 0.045,
               decoration: BoxDecoration(
                 border: Border.all(color: grey,width: 1),
                 borderRadius: BorderRadius.circular(2),
@@ -597,7 +686,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                       return DropdownMenuItem<String>(
                         value: leaveType,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding:  EdgeInsets.only(left: size.width * 0.01),
                           child: Text(
                             leaveType,
                             style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
@@ -611,33 +700,41 @@ class _TabletLeaveState extends State<TabletLeave> {
                 ),
               ),
             ),
+            SizedBox(width: size.width * 0.065,),
+            Text('Leave balance:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.010,),
+            myContainer(context, title),
           ],
         ),
         SizedBox(height: size.height * 0.04,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.13,),
+            //Half day
+            SizedBox(width: size.width * 0.25,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.052,),
+            SizedBox(width: size.width * 0.042,),
             Container(
-              width: 30,
-              height: 28,
+              width: size.width * 0.028,
+              height: size.height * 0.038,
               child: Material(
                 color: Colors.transparent,
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
-                      isSelected = !isSelected; // Toggle selection state
+                      isHalfDay = !isHalfDay; // Toggle half-day state
+                      if (_fromDate != null && _toDate != null) {
+                        _calculateDays(); // Recalculate days whenever half-day is toggled
+                      }
                     });
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(0),
                       border: Border.all(color: Colors.grey, width: 1),
-                      color: isSelected ? Colors.blue : Colors.transparent, // Optional: change color when selected
+                      color: isHalfDay ? Colors.blue : Colors.transparent, // Optional: change color when selected
                     ),
                     child: Center(
-                      child: isSelected
+                      child: isHalfDay
                           ? Icon(Icons.check, color: Colors.white, size: 20) // Show tick icon when selected
                           : null,
                     ),
@@ -650,7 +747,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.26,),
+            SizedBox(width: size.width * 0.37,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.165,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -661,7 +758,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.13,),
+            SizedBox(width: size.width * 0.25,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.020,),
             Container(
@@ -732,7 +829,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.13,),
+            SizedBox(width: size.width * 0.25,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
             Container(
@@ -783,7 +880,7 @@ class _TabletLeaveState extends State<TabletLeave> {
           children: <Widget>[
             // Adjust space before the label as needed
             Padding(
-              padding: const EdgeInsets.only(left: 125,bottom: 90),
+              padding: const EdgeInsets.only(left: 255,bottom: 90),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -874,7 +971,8 @@ Widget myContainer(BuildContext context, TextEditingController controller){
             border: OutlineInputBorder(
               borderSide: BorderSide(color: grey,width: 1),
               borderRadius: BorderRadius.circular(0),
-            )
+            ),
+             contentPadding: EdgeInsets.all(7),
         ),
 
       ),
