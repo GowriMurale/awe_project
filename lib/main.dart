@@ -1,5 +1,6 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:awe_project/amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +16,12 @@ void main() async {
 }
 //auth
 Future<void> _configureAmplify() async {
-  // Add Amplify plugins
+
   AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
   await Amplify.addPlugin(authPlugin);
 
-  // Configure Amplify
   try {
-    await Amplify.configure(amplifyconfig);
+     await Amplify.configure(amplifyconfig);
   } catch (e) {
     print('Amplify configure failed: $e');
   }
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: DashBoardScreeen(),
     );
   }
 }
