@@ -42,6 +42,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   TextEditingController name=TextEditingController();
   TextEditingController dept=TextEditingController();
   TextEditingController title=TextEditingController();
+  TextEditingController balance=TextEditingController();
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
@@ -202,7 +203,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.065,),
             Text('Leave balance:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.010,),
-            myContainer(context, title),
+            myContainer(context, balance),
           ],
         ),
         SizedBox(height: size.height * 0.03,),
@@ -413,18 +414,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             )
           ],
         ),
-        SizedBox(height: size.height * 0.015,),
+        SizedBox(height: size.height * 0.022,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.34,),
-            Checkbox(
-                value: _isChecked,
-                onChanged: (bool? value){
-                  setState(() {
-                    _isChecked=value ?? false;
-                  });
-                }),
-            SizedBox(width: size.width * 0.014,),
+            SizedBox(width: size.width * 0.37,),
                 GestureDetector(
                   onTap: () async {
                    const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
@@ -444,12 +437,12 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                         decoration: TextDecoration.underline,fontSize: 16,fontFamily: 'Inter'),))
           ],
         ),
-        SizedBox(height: size.height * 0.018,),
+        SizedBox(height: size.height * 0.034,),
         Row(
           children: [
             SizedBox(width: size.width * 0.36,),
             OutlinedButton(
-              onPressed: _isChecked ? () {
+              onPressed: () {
                 // Validate all fields before applying
                 if (_validateFields()) {
                   // All fields are filled, show confirmation popup with Yes and No buttons
@@ -485,14 +478,14 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                     },
                   );
                 }
-              } : null, // Disable the button if the checkbox isn't checked
+              },  // Disable the button if the checkbox isn't checked
               style: OutlinedButton.styleFrom(
                 fixedSize: Size(size.width * 0.07, size.height * 0.05),
-                side: BorderSide(color: _isChecked ? Colors.yellow : Colors.grey, width: 2.0),
+                // side: BorderSide(color: _isChecked ? Colors.yellow : Colors.grey, width: 2.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                backgroundColor: _isChecked ? Colors.yellow : Colors.transparent,
+                backgroundColor:  Colors.yellow ,
               ),
               child: Text(
                 'Apply',

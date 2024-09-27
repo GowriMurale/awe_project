@@ -23,7 +23,12 @@ class Navbar extends StatelessWidget {
   }
 }
 
-class DesktopNavbar extends StatelessWidget {
+class DesktopNavbar extends StatefulWidget {
+  @override
+  State<DesktopNavbar> createState() => _DesktopNavbarState();
+}
+
+class _DesktopNavbarState extends State<DesktopNavbar> {
   Future<void> _confirmSignOut(BuildContext context) async {
     showDialog(
       context: context,
@@ -57,6 +62,7 @@ class DesktopNavbar extends StatelessWidget {
       _showErrorDialog(context, e.message);
     }
   }
+
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
@@ -75,6 +81,46 @@ class DesktopNavbar extends StatelessWidget {
     );
   }
 
+  bool _isEditing = false;
+
+  void _toggleEdit() {
+    setState(() {
+      _isEditing = !_isEditing;
+    });
+  }
+  // Function to open dialog
+  void _showEditDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Container(
+            width: MediaQuery.of(ctx).size.width * 0.5,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("Edit Personal Information"),
+                // Other widgets and buttons
+                SizedBox(height: 20),
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.pop(ctx); // Close the dialog
+                  },
+                  child: Text('Save'),
+                  color: Colors.yellow,
+                  textColor: Colors.white,
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -92,32 +138,133 @@ class DesktopNavbar extends StatelessWidget {
               padding:  EdgeInsets.only(left: size.width * 0.005,top: size.height * 0.003),
               child: Container(
                 width: size.width * 0.130,
-                  height: size.height * 0.50,
+                  // height: size.height * 0.50,
                   decoration: BoxDecoration(
                   ),
                   child: Image.asset('assets/images/awe logo.png',)),
             ),
-            Row(
-              children: <Widget>[
-               Padding(
-                 padding:  EdgeInsets.only(
-                    right: size.width * 0.012,top: size.height * 0.012),
-                 child: Column(
-                   children: [
-                     CircleAvatar(
-                       radius: 18,
-                       child: GestureDetector(
-                         onTap: (){
-                           _confirmSignOut(context);
-                         },
-                           child: Image.asset('assets/images/user image.png')),
-                     ),
-                     SizedBox(height: size.height * 0.015,),
-                     Text('Log Out',style: TextStyle(color: black,fontFamily: 'Inter', fontSize: 14),),
-                   ],
-                 ),
-               )
-              ],
+            Padding(
+              padding:  EdgeInsets.only(
+                 right: size.width * 0.038,top: size.height * 0.032),
+              child: Column(
+                children: [
+                  GestureDetector(
+                     onTap: _toggleEdit,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        CircleAvatar(
+                          radius: 18,
+                          child: Image.asset('assets/images/user_image.png'),
+                        ),
+                        // Positioned(
+                        //   right: 0,
+                        //   bottom: 0,
+                        //   child: Icon(Icons.edit, size: 12, color: Colors.blue),
+                        // ),
+                      ],
+                    ),
+                  ),
+                  if (_isEditing)
+                    SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Container(
+                       width: 195,
+                        height: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: bgColor
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                         CircleAvatar(
+                           radius: 15,
+                           child: Image.asset('assets/images/user_image.png'),
+                         ),
+                            GestureDetector(
+                                  onTap: (){
+                                    print('button is pressed');
+                                    _showEditDialog(context);
+                                  },
+                                child: Text('Personal Edit Info',style: TextStyle(fontSize: 12),)),
+                            Divider(),
+                            Row(
+                              children: [
+                                SizedBox(width: 30,),
+                             Container(
+                               width: 65,
+                               height: 22,
+                               decoration: BoxDecoration(
+                                 color: Colors.grey.shade50,
+                                 borderRadius: BorderRadius.circular(5),
+                               ),
+                               child: Text('mdm',style: TextStyle(fontSize: 13),),
+                             ),
+                                SizedBox(width: 20,),
+                                Container(
+                                  width: 65,
+                                  height: 22,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade50,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Text('wong',style: TextStyle(fontSize: 13),),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8,),
+                            Container(
+                              width: 115,
+                              height: 22,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade50,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text('2345684',style: TextStyle(fontSize: 13),),
+                            ),
+                            SizedBox(height: 6,),
+                            Container(
+                              width: 115,
+                              height: 22,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade50,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text('adinin @gmail.com',style: TextStyle(fontSize: 13),),
+                            ),
+                           SizedBox(height: 12,),
+                            Row(
+                              children: [ SizedBox(width: 10,),
+                               MaterialButton(
+                                 onPressed: (){},
+                                 minWidth: 20,
+                                 height: 25,
+                                 color: Colors.white,
+                                 child: Text('Change Password',style: TextStyle(color: Colors.black,fontSize: 12),),
+                               ),
+                                SizedBox(width: 10,),
+                                MaterialButton(
+                                  onPressed: (){},
+                                  minWidth: 20,
+                                  height: 25,
+                                  color:yellow,
+                                  child: Text('Log out',style: TextStyle(color:Colors.black,fontSize: 12),),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: size.height * 0.015,),
+                  // GestureDetector(
+                  //   onTap: (){
+                  //     _confirmSignOut(context);
+                  //   },
+                  //     child: Text('Log Out',style: TextStyle(color: black,fontFamily: 'Inter', fontSize: 14),)),
+                ],
+              ),
             )
           ],
         ),
