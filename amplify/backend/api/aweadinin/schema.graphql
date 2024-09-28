@@ -1,0 +1,75 @@
+type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  profilePhoto: String!
+  agent: String
+  position: String!
+  contractType: String!
+  employeeType: String!
+  name: String!
+  chinese: String
+  gender: String!
+  age: Int!
+  email: String!
+  countryOfBirth: String!
+  nationality: String!
+  otherNationality: String
+  marital: String!
+  race: String!
+  otherRace: String
+  religion: String!
+  otherReligion: String
+  icNo: String!
+  icExpiry: String!
+  icColour: String!
+  passportNo: String!
+  alternateNo: String
+  passportIssued: String!
+  passportExpiry: String!
+  passportDestination: String!
+  contactNo: String!
+  presentAddress: String!
+  permanentAddress: String!
+  drivingLicense: String
+  language: String!
+  familyDetails: [String]
+  educationDetails: [String]
+  workExperience: [String]
+  referees: [String]
+  relatives: [String]
+  description: String
+  emergencyContact: [String]
+  disease: String
+  liquor: String
+  crime: String
+  diseaseDescription: String
+  liquorDescription: String
+  crimeDescription: String
+  salaryException: String
+  noticePeriod: String!
+  employeStatement: String!
+  perInterviewStatus: String!
+  perInterviewDescription: String
+  supportInfo: String
+  uploadResume: String!
+  uploadCertificate: String!
+  uploadPassport: String!
+  dateOfBirth: String!
+  tempID: String!
+}
+
+type SampleTest1 @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  email: String
+  gender: String
+  empID: String
+  password: String
+  tempID: String
+}
+
+type Todo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  description: String
+}
+ 

@@ -39,9 +39,11 @@ dependencies:
   get: ^4.6.6
   intl: ^0.19.0
   percent_indicator: ^4.2.3
+  syncfusion_flutter_pdfviewer: ^27.1.50
   amplify_flutter: ^2.4.1
   amplify_auth_cognito: ^2.4.1
-  syncfusion_flutter_pdfviewer: ^27.1.50
+  amplify_storage_s3: ^2.4.1
+  amplify_datastore: ^2.4.1
 
 
 
@@ -72,7 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/images/
-     - assets/pdf/Leave Form.pdf
+#     - assets/pdf/Leave Form.pdf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

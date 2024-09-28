@@ -1,46 +1,45 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
+
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class changePasswordScreen extends StatefulWidget {
+  final String username;
+  const changePasswordScreen({super.key, required this.username});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<changePasswordScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends State<changePasswordScreen> {
   TextEditingController userIdController=TextEditingController();
-  TextEditingController  emailController=TextEditingController();
-  TextEditingController  passwordController=TextEditingController();
-  Future<void> _signUp() async {
-    try {
-      Map<AuthUserAttributeKey, String> userAttributes = {
-        AuthUserAttributeKey.email: emailController.text,
-        AuthUserAttributeKey.preferredUsername: userIdController.text,
-      };
+  TextEditingController  pasword=TextEditingController();
+  TextEditingController  newPassword=TextEditingController();
+  TextEditingController  confirmPassword=TextEditingController();
 
-      SignUpResult result = await Amplify.Auth.signUp(
-        username: userIdController.text,
-        password: passwordController.text,
-        options: SignUpOptions(userAttributes: userAttributes),
-      );
+  //
+  // Future<void> _changePassword(BuildContext context) async {
+  //   if (newPassword.text.trim() == confirmPassword.text.trim()) {
+  //     try {
+  //       // Confirm the sign-in with the new password
+  //       SignInResult result = await Amplify.Auth.confirmSignIn(
+  //         confirmationValue: newPassword.text.trim(),
+  //       );
+  //
+  //       if (result.isSignedIn) {
+  //         Get.off(() => LoginScreen());
+  //       } else {
+  //         _showErrorDialog('Password change failed.');
+  //       }
+  //     } on AuthException catch (e) {
+  //       _showErrorDialog(e.message);
+  //     }
+  //   } else {
+  //     _showErrorDialog('Passwords do not match.');
+  //   }
+  // }
 
-      if (result.isSignUpComplete) {
-        // Navigate to verification screen or login
-        Get.to(LoginScreen());
-      } else {
-        // Continue with further verification
-        print("Sign up needs verification");
-      }
-    } on AuthException catch (e) {
-      print("Error signing up: ${e.message}");
-      _showErrorDialog(e.message); // Display the error
-    }
-  }
 
   // Function to show error dialog
   void _showErrorDialog(String message) {
@@ -79,30 +78,31 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding:  EdgeInsets.only(top: size.height * 0.12,),
-                      child: Text("Sign up",style: TextStyle(fontSize: 32,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
-                    ),
-                    Padding(
-                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
-                      child: Text('Email Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                    ),
-                    MyTextField(controller: emailController, text: 'Email ID', icon: Icons.email_outlined, obscureText: false,),
-                    SizedBox(height: size.height * 0.02,),
-                    Padding(
                       padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
                       child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: userIdController, text: 'User ID', icon: Icons.person_outline, obscureText: false,),
+                    MyTextField(controller: userIdController, text: 'Email ID', icon: Icons.email_outlined, obscureText: false,),
+                    Padding(
+                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
+                      child: Text('password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                    ),
+                    MyTextField(controller: pasword, text: 'Email ID', icon: Icons.email_outlined, obscureText: false,),
+                    SizedBox(height: size.height * 0.02,),
+                    Padding(
+                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
+                      child: Text('New password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                    ),
+                    MyTextField(controller: newPassword, text: 'User ID', icon: Icons.person_outline, obscureText: false,),
                     SizedBox(height: size.height * 0.02,),
                     Padding(
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
-                      child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                      child: Text(' confirm Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
+                    MyTextField(controller: confirmPassword, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
                     SizedBox(height: size.height * 0.075,),
                     MaterialButton(
                       onPressed: (){
-                          _signUp();
+                          // _changePassword(context);
                       },
                       minWidth: size.width * 0.228,
                       height:size.height * 0.060,

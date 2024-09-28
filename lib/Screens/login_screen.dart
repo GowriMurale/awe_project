@@ -1,4 +1,6 @@
 
+
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
@@ -25,16 +27,32 @@ class _LoginScreenState extends State<LoginScreen> {
         username: userIdController.text.trim(),
         password: passwordController.text.trim(),
       );
+
+      print("Sign-in response: ${res.toString()}");
+
       if (res.isSignedIn) {
+        // User is signed in, navigate to the dashboard
         Get.off(() => DashBoardScreeen());
+      } else if (res.nextStep.signInStep == 'confirmSignInWithNewPassword') {
+        // The user needs to set a new password
+        print("Next step: Confirm sign in with new password required.");
+        // Navigate to the change password screen
+        Future.delayed(Duration.zero, () {
+          Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
+        });
       } else {
-        print(res);
-        Get.to(SignupScreen());
+        // Handle other failure reasons (e.g., incorrect password)
+        print("Sign-in failed. Next step: ${res.nextStep.signInStep}");
+        _showErrorDialog(context, 'Sign-in failed. Please try again.');
       }
     } on AuthException catch (e) {
+      print("AuthException: ${e.message}");
       _showErrorDialog(context, e.message);
     }
   }
+
+
+
 
   void _showErrorDialog(BuildContext context, String message) {
     showDialog(
@@ -123,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: true,),
+                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
                     SizedBox(height: size.height * 0.075,),
                     MaterialButton(
                       onPressed: (){

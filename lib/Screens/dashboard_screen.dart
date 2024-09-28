@@ -12,10 +12,14 @@ class DashBoardScreeen extends StatelessWidget {
         desktop: Scaffold(
           body: Container(
             child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Navbar(),
-                  Dashboard(),
+              child: Stack(
+                children: [
+                 Column(
+                   children: [
+                     Navbar(),
+                     Dashboard(),
+                   ],
+                 )
                 ],
               ),
             ),

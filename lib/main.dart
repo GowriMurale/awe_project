@@ -1,10 +1,12 @@
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
-import 'package:awe_project/amplifyconfiguration.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'amplifyconfiguration.dart';
 
 
 void main() async {
@@ -14,16 +16,18 @@ void main() async {
 
   runApp(MyApp());
 }
-//auth
 Future<void> _configureAmplify() async {
-
-  AmplifyAuthCognito authPlugin = AmplifyAuthCognito();
-  await Amplify.addPlugin(authPlugin);
-
   try {
-     await Amplify.configure(amplifyconfig);
+    // Add Amplify plugins
+    await Amplify.addPlugins([
+      AmplifyAuthCognito(),
+
+    ]);
+
+    // Configure Amplify with the backend
+    await Amplify.configure(amplifyconfig);
   } catch (e) {
-    print('Amplify configure failed: $e');
+    print('An error occurred configuring Amplify: $e');
   }
 }
 

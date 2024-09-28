@@ -46,7 +46,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
-  final List<String> _roles = ['Manager','Supervisor'];
+  final List<String> _roles = ['Superior'];
   String? _selectedRole;
   String? _selectedLeaveType;
   DateTime? selectedDate;
@@ -55,7 +55,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   DateTime? _toDate;
   bool _isChecked = false;
   bool isHalfDay=false;
-
+  String? selectedTicket;
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
     DateTime firstDate = DateTime.now(); // Disable all previous dates
 
@@ -374,7 +374,38 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.03,),
+        SizedBox(height: size.height * 0.025,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.25,),
+            Text('Own Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.025,),
+            Radio<String>(
+              value: 'own_ticket',
+              groupValue: selectedTicket,
+              onChanged: (String? value) {
+                setState(() {
+                  selectedTicket = value; // Update the selected value
+                });
+              },
+              activeColor: Colors.grey, // Customize the active color
+            ),
+            SizedBox(width: size.width * 0.035,),
+            Text('company Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.025,),
+            Radio<String>(
+              value: 'company_ticket',
+              groupValue: selectedTicket,
+              onChanged: (String? value) {
+                setState(() {
+                  selectedTicket = value; // Update the selected value
+                });
+              },
+              activeColor: Colors.grey, // Customize the active color
+            ),
+          ],
+        ),
+        SizedBox(height: size.height * 0.020,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center, // Ensures vertical alignment
           children: <Widget>[
@@ -394,7 +425,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.042), // Adjust space between label and textfield as needed
             Container(
             width: size.width * 0.3, // Specify the width of the TextField
-            height: size.height * 0.15,  // Specify the height of the TextField
+            height: size.height * 0.13,  // Specify the height of the TextField
             child: TextField(
             controller: reason,
             style: TextStyle(fontSize: 16), // Adjust text size within the TextField

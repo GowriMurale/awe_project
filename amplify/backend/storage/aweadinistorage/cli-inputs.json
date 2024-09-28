@@ -1,0 +1,14 @@
+{
+  "resourceName": "aweadinistorage",
+  "policyUUID": "edd729eb",
+  "bucketName": "aweadininstorage2024",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
