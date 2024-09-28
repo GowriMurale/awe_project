@@ -29,12 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       print("Sign-in response: ${res.toString()}");
-
+        print(res.nextStep.signInStep);
       if (res.isSignedIn) {
         // User is signed in, navigate to the dashboard
         Get.off(() => DashBoardScreeen());
-      } else if (res.nextStep.signInStep == 'confirmSignInWithNewPassword') {
+      } else if (res.nextStep.signInStep == AuthSignInStep.confirmSignInWithNewPassword) {
         // The user needs to set a new password
+
         print("Next step: Confirm sign in with new password required.");
           Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
       } else {

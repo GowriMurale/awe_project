@@ -100,126 +100,126 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
     });
   }
   // Function to open dialog
-  void _showEditDialog(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    Get.dialog(
-      Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        child: Container(
-          padding: EdgeInsets.all(8),
-          width:  size.width * 0.400,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius:BorderRadius.circular(5),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width * 0.025,),
-                  Text(
-                    "Personal Information",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(width: size.width * 0.230,),
-                  IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-                ],
-              ),
-              Divider(),
-              SizedBox(height: size.height * 0.012,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width *  0.08,),
-                  Text('First Name', style: TextStyle(fontSize: 14)),
-                  SizedBox(width: size.width * 0.093,),
-                  Text('Last Name', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height: size.height * 0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width* 0.080,),
-                    myContainer(context, firstName),
-                  SizedBox(width: size.width * 0.040,),
-                  myContainer(context, lastName),
-                ],
-              ),
-              SizedBox(height:size.height * 0.020,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  Text('Email address', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height: size.height *0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  newContainer(context, email)
-                ],
-              ),
-              SizedBox(height:size.height * 0.020,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  Text('Position', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height: size.height *0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  newContainer(context, position)
-                ],
-              ),
-              SizedBox(height:size.height * 0.020,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  Text('Mobile Number', style: TextStyle(fontSize: 14)),
-                  SizedBox(width: size.width * 0.077,),
-                  Text('Date of birth', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height:size.height * 0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  myContainer(context, mobile),
-                  SizedBox(width: size.width * 0.040,),
-                  myContainer(context, dob),
-                ],
-              ),
-              SizedBox(height:size.height * 0.040,),
-              MaterialButton(
-                minWidth: size.width * .06,
-                height: size.height * 0.03,
-                onPressed: () {
-                  Get.back(); // Close the dialog
-                },
-                child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
-                color: Colors.yellow,
-                textColor: Colors.black,
-              )
-            ],
-          ),
-        ),
-      ),
-      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
-    );
-  }
+  // void _showEditDialog(BuildContext context) {
+  //   final Size size = MediaQuery.of(context).size;
+  //   Get.dialog(
+  //     Dialog(
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+  //       child: Container(
+  //         padding: EdgeInsets.all(8),
+  //         width:  size.width * 0.400,
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius:BorderRadius.circular(5),
+  //         ),
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: <Widget>[
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width:size.width * 0.025,),
+  //                 Text(
+  //                   "Personal Information",
+  //                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //                 ),
+  //                 SizedBox(width: size.width * 0.230,),
+  //                 IconButton(onPressed: (){
+  //                   Navigator.pop(context);
+  //                 }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+  //               ],
+  //             ),
+  //             Divider(),
+  //             SizedBox(height: size.height * 0.012,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width:size.width *  0.08,),
+  //                 Text('First Name', style: TextStyle(fontSize: 14)),
+  //                 SizedBox(width: size.width * 0.093,),
+  //                 Text('Last Name', style: TextStyle(fontSize: 14)),
+  //               ],
+  //             ),
+  //             SizedBox(height: size.height * 0.007,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width* 0.080,),
+  //                   myContainer(context, firstName),
+  //                 SizedBox(width: size.width * 0.040,),
+  //                 myContainer(context, lastName),
+  //               ],
+  //             ),
+  //             SizedBox(height:size.height * 0.020,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 Text('Email address', style: TextStyle(fontSize: 14)),
+  //               ],
+  //             ),
+  //             SizedBox(height: size.height *0.007,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 newContainer(context, email)
+  //               ],
+  //             ),
+  //             SizedBox(height:size.height * 0.020,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 Text('Position', style: TextStyle(fontSize: 14)),
+  //               ],
+  //             ),
+  //             SizedBox(height: size.height *0.007,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 newContainer(context, position)
+  //               ],
+  //             ),
+  //             SizedBox(height:size.height * 0.020,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 Text('Mobile Number', style: TextStyle(fontSize: 14)),
+  //                 SizedBox(width: size.width * 0.077,),
+  //                 Text('Date of birth', style: TextStyle(fontSize: 14)),
+  //               ],
+  //             ),
+  //             SizedBox(height:size.height * 0.007,),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               children: [
+  //                 SizedBox(width: size.width * 0.080,),
+  //                 myContainer(context, mobile),
+  //                 SizedBox(width: size.width * 0.040,),
+  //                 myContainer(context, dob),
+  //               ],
+  //             ),
+  //             SizedBox(height:size.height * 0.040,),
+  //             MaterialButton(
+  //               minWidth: size.width * .06,
+  //               height: size.height * 0.03,
+  //               onPressed: () {
+  //                 Get.back(); // Close the dialog
+  //               },
+  //               child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
+  //               color: Colors.yellow,
+  //               textColor: Colors.black,
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //     barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+  //   );
+  // }
 
 
 
@@ -273,144 +273,144 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                           ],
                         ),
                       ),
-                      if (_isEditing)
-                        SingleChildScrollView(
-                          child: Container(
-                            width: size.width * 0.135,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.grey.shade100,
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(height: size.height * 0.004),
-                                GestureDetector(
-                                  onTap: (){
-                                    _showEditDialog(context);
-                                    },
-                                  child: CircleAvatar(
-                                    radius: 15,
-                                    child: Image.asset('assets/images/user image.png'),
-                                  ),
-                                ),
-                                SizedBox(height: size.height * 0.003),
-                                Text(
-                                  'Personal Edit Info',
-                                  style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
-                                ),
-                                Divider(),
-                                SizedBox(height: size.height * 0.010),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(width: size.width * 0.020),
-                                    Container(
-                                      width: size.width * 0.038,
-                                      height:  size.height * 0.028,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: Colors.grey.shade400),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                      child: Text(
-                                        'mdm',
-                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
-                                      ),
-                                    ),
-                                    SizedBox(width: size.width * 0.020),
-                                    Container(
-                                      width: size.width * 0.038,
-                                      height:  size.height * 0.028,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: Colors.grey.shade400),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                      child: Text(
-                                        'wong',
-                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: size.height * 0.015),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(width: size.width * 0.020),
-                                      Container(
-                                        width:size.width * 0.095,
-                                        height: size.height *  0.028,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(color: Colors.grey.shade400),
-                                          borderRadius: BorderRadius.circular(2),
-                                        ),
-                                        child: Text(
-                                          '234568456',
-                                          style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                SizedBox(height: size.height * 0.010),
-                                Row(
-                                  children: [
-                                    SizedBox(width: size.width * 0.020),
-                                    Container(
-                                      width:size.width * 0.095,
-                                      height: size.height *  0.028,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: Colors.grey.shade400),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                      child: Text(
-                                        'adinin@gmail.com',
-                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: size.height * 0.015),
-                                Row(
-                                  children: [
-                                    SizedBox(width: size.width * 0.010),
-                                    MaterialButton(
-                                      onPressed: () {},
-                                      minWidth: size.width * 0.020,
-                                      height:size.height * 0.032,
-                                      color: Colors.white,
-                                      child: Text(
-                                        'Change Password',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,fontFamily: 'Inter'
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: size.width * 0.010),
-                                    MaterialButton(
-                                      onPressed: () {
-                                        _confirmSignOut(context);
-                                      },
-                                      minWidth: size.width * 0.020,
-                                      height:size.height * 0.032,
-                                      color: yellow,
-                                      child: Text(
-                                        'Log out',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,fontFamily: 'Inter'
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      // if (_isEditing)
+                        // SingleChildScrollView(
+                        //   child: Container(
+                        //     width: size.width * 0.135,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(5),
+                        //       color: Colors.grey.shade100,
+                        //     ),
+                        //     child: Column(
+                        //       children: [
+                        //         SizedBox(height: size.height * 0.004),
+                        //         GestureDetector(
+                        //           onTap: (){
+                        //             // _showEditDialog(context);
+                        //             },
+                        //           child: CircleAvatar(
+                        //             radius: 15,
+                        //             child: Image.asset('assets/images/user image.png'),
+                        //           ),
+                        //         ),
+                        //         SizedBox(height: size.height * 0.003),
+                        //         Text(
+                        //           'Personal Edit Info',
+                        //           style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                        //         ),
+                        //         Divider(),
+                        //         SizedBox(height: size.height * 0.010),
+                        //         Row(
+                        //             mainAxisAlignment: MainAxisAlignment.start,
+                        //           children: [
+                        //             SizedBox(width: size.width * 0.020),
+                        //             Container(
+                        //               width: size.width * 0.038,
+                        //               height:  size.height * 0.028,
+                        //               decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 border: Border.all(color: Colors.grey.shade400),
+                        //                 borderRadius: BorderRadius.circular(2),
+                        //               ),
+                        //               child: Text(
+                        //                 'mdm',
+                        //                 style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                        //               ),
+                        //             ),
+                        //             SizedBox(width: size.width * 0.020),
+                        //             Container(
+                        //               width: size.width * 0.038,
+                        //               height:  size.height * 0.028,
+                        //               decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 border: Border.all(color: Colors.grey.shade400),
+                        //                 borderRadius: BorderRadius.circular(2),
+                        //               ),
+                        //               child: Text(
+                        //                 'wong',
+                        //                 style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         SizedBox(height: size.height * 0.015),
+                        //           Row(
+                        //             mainAxisAlignment: MainAxisAlignment.start,
+                        //             children: [
+                        //               SizedBox(width: size.width * 0.020),
+                        //               Container(
+                        //                 width:size.width * 0.095,
+                        //                 height: size.height *  0.028,
+                        //                 decoration: BoxDecoration(
+                        //                   color: Colors.white,
+                        //                   border: Border.all(color: Colors.grey.shade400),
+                        //                   borderRadius: BorderRadius.circular(2),
+                        //                 ),
+                        //                 child: Text(
+                        //                   '234568456',
+                        //                   style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         SizedBox(height: size.height * 0.010),
+                        //         Row(
+                        //           children: [
+                        //             SizedBox(width: size.width * 0.020),
+                        //             Container(
+                        //               width:size.width * 0.095,
+                        //               height: size.height *  0.028,
+                        //               decoration: BoxDecoration(
+                        //                 color: Colors.white,
+                        //                 border: Border.all(color: Colors.grey.shade400),
+                        //                 borderRadius: BorderRadius.circular(2),
+                        //               ),
+                        //               child: Text(
+                        //                 'adinin@gmail.com',
+                        //                 style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         SizedBox(height: size.height * 0.015),
+                        //         Row(
+                        //           children: [
+                        //             SizedBox(width: size.width * 0.010),
+                        //             MaterialButton(
+                        //               onPressed: () {},
+                        //               minWidth: size.width * 0.020,
+                        //               height:size.height * 0.032,
+                        //               color: Colors.white,
+                        //               child: Text(
+                        //                 'Change Password',
+                        //                 style: TextStyle(
+                        //                   color: Colors.black,
+                        //                   fontSize: 12,fontFamily: 'Inter'
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             SizedBox(width: size.width * 0.010),
+                        //             MaterialButton(
+                        //               onPressed: () {
+                        //                 _confirmSignOut(context);
+                        //               },
+                        //               minWidth: size.width * 0.020,
+                        //               height:size.height * 0.032,
+                        //               color: yellow,
+                        //               child: Text(
+                        //                 'Log out',
+                        //                 style: TextStyle(
+                        //                   color: Colors.black,
+                        //                   fontSize: 12,fontFamily: 'Inter'
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                     ],
                   ),
                 ),
