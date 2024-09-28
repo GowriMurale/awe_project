@@ -1,5 +1,7 @@
 
 
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,13 @@ class DesktopNavbar extends StatefulWidget {
 }
 
 class _DesktopNavbarState extends State<DesktopNavbar> {
+  TextEditingController firstName=TextEditingController();
+  TextEditingController lastName=TextEditingController();
+  TextEditingController email=TextEditingController();
+  TextEditingController position=TextEditingController();
+  TextEditingController mobile=TextEditingController();
+  TextEditingController dob=TextEditingController();
+
   Future<void> _confirmSignOut(BuildContext context) async {
     showDialog(
       context: context,
@@ -46,12 +55,21 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
             child: Text('Yes'),
             onPressed: () async {
               Navigator.of(ctx).pop(); // Close the dialog before signing out
-              // await _signOut(context); // Call the sign out method
+              await _signOut(context); // Call the sign out method
             },
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await Amplify.Auth.signOut();
+      Get.offAll(() => LoginScreen()); // Redirect to login screen
+    } on AuthException catch (e) {
+      _showErrorDialog(context, e.message);
+    }
   }
 
 
@@ -83,55 +101,115 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
   }
   // Function to open dialog
   void _showEditDialog(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Container(
-          padding: EdgeInsets.all(16),
-          width: 500,
+          padding: EdgeInsets.all(8),
+          width:  size.width * 0.400,
           decoration: BoxDecoration(
             color: Colors.white,
+            borderRadius:BorderRadius.circular(5),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(width:size.width * 0.025,),
                   Text(
                     "Personal Information",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 40,),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.cancel_outlined,size: 20,color: black,))
+                  SizedBox(width: size.width * 0.230,),
+                  IconButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
                 ],
               ),
               Divider(),
-              SizedBox(height: 10,),
+              SizedBox(height: size.height * 0.012,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 10,),
+                  SizedBox(width:size.width *  0.08,),
                   Text('First Name', style: TextStyle(fontSize: 14)),
-                  SizedBox(width: 20,),
+                  SizedBox(width: size.width * 0.093,),
                   Text('Last Name', style: TextStyle(fontSize: 14)),
                 ],
               ),
-              SizedBox(height: 3,),
+              SizedBox(height: size.height * 0.007,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: 10,),
-                  Text('First Name', style: TextStyle(fontSize: 14)),
-                  SizedBox(width: 20,),
-                  Text('Last Name', style: TextStyle(fontSize: 14)),
+                  SizedBox(width: size.width* 0.080,),
+                    myContainer(context, firstName),
+                  SizedBox(width: size.width * 0.040,),
+                  myContainer(context, lastName),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Email address', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height *0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  newContainer(context, email)
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Position', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height *0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  newContainer(context, position)
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Mobile Number', style: TextStyle(fontSize: 14)),
+                  SizedBox(width: size.width * 0.077,),
+                  Text('Date of birth', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height:size.height * 0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  myContainer(context, mobile),
+                  SizedBox(width: size.width * 0.040,),
+                  myContainer(context, dob),
+                ],
+              ),
+              SizedBox(height:size.height * 0.040,),
               MaterialButton(
+                minWidth: size.width * .06,
+                height: size.height * 0.03,
                 onPressed: () {
                   Get.back(); // Close the dialog
                 },
-                child: Text('Save'),
+                child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
                 color: Colors.yellow,
                 textColor: Colors.black,
               )
@@ -178,8 +256,8 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    right: size.width * 0.038,
-                    top: size.height * 0.032,
+                    right: size.width * 0.030,
+                    top: size.height * 0.030,
                   ),
                   child: Column(
                     children: [
@@ -189,124 +267,141 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                           alignment: Alignment.bottomRight,
                           children: [
                             CircleAvatar(
-                              radius: 18,
-                              child: Image.asset('assets/images/user_image.png'),
+                              radius: 20,
+                              child: Image.asset('assets/images/user image.png'),
                             ),
                           ],
                         ),
                       ),
                       if (_isEditing)
                         SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
                           child: Container(
-                            width: 195,
-                            height: 190,
+                            width: size.width * 0.135,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: bgColor,
+                              color: Colors.grey.shade100,
                             ),
                             child: Column(
-                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                CircleAvatar(
-                                  radius: 15,
-                                  child: Image.asset('assets/images/user_image.png'),
-                                ),
+                                SizedBox(height: size.height * 0.004),
                                 GestureDetector(
-                                  onTap: () {
-                                    print('button is pressed');
+                                  onTap: (){
                                     _showEditDialog(context);
-                                  },
-                                  child: Text(
-                                    'Personal Edit Info',
-                                    style: TextStyle(fontSize: 12),
+                                    },
+                                  child: CircleAvatar(
+                                    radius: 15,
+                                    child: Image.asset('assets/images/user image.png'),
                                   ),
                                 ),
+                                SizedBox(height: size.height * 0.003),
+                                Text(
+                                  'Personal Edit Info',
+                                  style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                                ),
                                 Divider(),
+                                SizedBox(height: size.height * 0.010),
                                 Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(width: 30),
+                                    SizedBox(width: size.width * 0.020),
                                     Container(
-                                      width: 65,
-                                      height: 22,
+                                      width: size.width * 0.038,
+                                      height:  size.height * 0.028,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade50,
-                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade400),
+                                        borderRadius: BorderRadius.circular(2),
                                       ),
                                       child: Text(
                                         'mdm',
-                                        style: TextStyle(fontSize: 13),
+                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
                                       ),
                                     ),
-                                    SizedBox(width: 20),
+                                    SizedBox(width: size.width * 0.020),
                                     Container(
-                                      width: 65,
-                                      height: 22,
+                                      width: size.width * 0.038,
+                                      height:  size.height * 0.028,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade50,
-                                        borderRadius: BorderRadius.circular(5),
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade400),
+                                        borderRadius: BorderRadius.circular(2),
                                       ),
                                       child: Text(
                                         'wong',
-                                        style: TextStyle(fontSize: 13),
+                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8),
-                                Container(
-                                  width: 115,
-                                  height: 22,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade50,
-                                    borderRadius: BorderRadius.circular(5),
+                                SizedBox(height: size.height * 0.015),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(width: size.width * 0.020),
+                                      Container(
+                                        width:size.width * 0.095,
+                                        height: size.height *  0.028,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(color: Colors.grey.shade400),
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
+                                        child: Text(
+                                          '234568456',
+                                          style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  child: Text(
-                                    '2345684',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                                SizedBox(height: 6),
-                                Container(
-                                  width: 115,
-                                  height: 22,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade50,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(
-                                    'adinin @gmail.com',
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                                SizedBox(height: 12),
+                                SizedBox(height: size.height * 0.010),
                                 Row(
                                   children: [
-                                    SizedBox(width: 10),
+                                    SizedBox(width: size.width * 0.020),
+                                    Container(
+                                      width:size.width * 0.095,
+                                      height: size.height *  0.028,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade400),
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
+                                      child: Text(
+                                        'adinin@gmail.com',
+                                        style: TextStyle(fontSize: 14,fontFamily: 'Inter',color: Colors.black),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: size.height * 0.015),
+                                Row(
+                                  children: [
+                                    SizedBox(width: size.width * 0.010),
                                     MaterialButton(
                                       onPressed: () {},
-                                      minWidth: 20,
-                                      height: 25,
+                                      minWidth: size.width * 0.020,
+                                      height:size.height * 0.032,
                                       color: Colors.white,
                                       child: Text(
                                         'Change Password',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12,fontFamily: 'Inter'
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    SizedBox(width: size.width * 0.010),
                                     MaterialButton(
-                                      onPressed: () {},
-                                      minWidth: 20,
-                                      height: 25,
+                                      onPressed: () {
+                                        _confirmSignOut(context);
+                                      },
+                                      minWidth: size.width * 0.020,
+                                      height:size.height * 0.032,
                                       color: yellow,
                                       child: Text(
                                         'Log out',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12,fontFamily: 'Inter'
                                         ),
                                       ),
                                     ),
@@ -316,20 +411,6 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                             ),
                           ),
                         ),
-                      SizedBox(height: size.height * 0.015),
-                      GestureDetector(
-                        onTap: () {
-                          _confirmSignOut(context);
-                        },
-                        child: Text(
-                          'Log Out',
-                          style: TextStyle(
-                            color: black,
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -354,4 +435,48 @@ class MobileNavbar extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget myContainer(BuildContext context, TextEditingController controller){
+  final Size size = MediaQuery.of(context).size;
+  return Container(
+    width: size.width * 0.10,
+    height: size.height * 0.032,
+    child: Material(
+      color: Colors.transparent,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: grey,width: 1),
+            borderRadius: BorderRadius.circular(0),
+          ),
+          contentPadding: EdgeInsets.all(7),
+        ),
+
+      ),
+    ),
+  );
+}
+
+Widget newContainer(BuildContext context, TextEditingController controller){
+  final Size size = MediaQuery.of(context).size;
+  return Container(
+    width: size.width * 0.24,
+    height: size.height * 0.032,
+    child: Material(
+      color: Colors.transparent,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: grey,width: 1),
+            borderRadius: BorderRadius.circular(0),
+          ),
+          contentPadding: EdgeInsets.all(7),
+        ),
+
+      ),
+    ),
+  );
 }

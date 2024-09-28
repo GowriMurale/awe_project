@@ -36,10 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       } else if (res.nextStep.signInStep == 'confirmSignInWithNewPassword') {
         // The user needs to set a new password
         print("Next step: Confirm sign in with new password required.");
-        // Navigate to the change password screen
-        Future.delayed(Duration.zero, () {
           Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
-        });
       } else {
         // Handle other failure reasons (e.g., incorrect password)
         print("Sign-in failed. Next step: ${res.nextStep.signInStep}");
@@ -66,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('yes'),
             ),
           ],
         );
