@@ -21,6 +21,9 @@ jobs:
       - name: 🌍 Enable Web
         run: flutter config --enable-web
 
+      - name: clean packages
+        run: flutter clean
+
       - name: 📦 Get packages
         run: flutter pub get
 
