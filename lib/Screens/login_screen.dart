@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
+                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: true,),
                     SizedBox(height: size.height * 0.075,),
                     MaterialButton(
                       onPressed: (){

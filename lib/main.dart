@@ -8,6 +8,7 @@ import 'package:awe_project/Screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'amplifyconfiguration.dart';
+import 'globals/navigation_bar.dart';
 
 
 

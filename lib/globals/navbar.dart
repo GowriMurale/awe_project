@@ -99,127 +99,168 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
       _isEditing = !_isEditing;
     });
   }
-  // Function to open dialog
-  // void _showEditDialog(BuildContext context) {
-  //   final Size size = MediaQuery.of(context).size;
-  //   Get.dialog(
-  //     Dialog(
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-  //       child: Container(
-  //         padding: EdgeInsets.all(8),
-  //         width:  size.width * 0.400,
-  //         decoration: BoxDecoration(
-  //           color: Colors.white,
-  //           borderRadius:BorderRadius.circular(5),
-  //         ),
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: <Widget>[
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width:size.width * 0.025,),
-  //                 Text(
-  //                   "Personal Information",
-  //                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-  //                 ),
-  //                 SizedBox(width: size.width * 0.230,),
-  //                 IconButton(onPressed: (){
-  //                   Navigator.pop(context);
-  //                 }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-  //               ],
-  //             ),
-  //             Divider(),
-  //             SizedBox(height: size.height * 0.012,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width:size.width *  0.08,),
-  //                 Text('First Name', style: TextStyle(fontSize: 14)),
-  //                 SizedBox(width: size.width * 0.093,),
-  //                 Text('Last Name', style: TextStyle(fontSize: 14)),
-  //               ],
-  //             ),
-  //             SizedBox(height: size.height * 0.007,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width* 0.080,),
-  //                   myContainer(context, firstName),
-  //                 SizedBox(width: size.width * 0.040,),
-  //                 myContainer(context, lastName),
-  //               ],
-  //             ),
-  //             SizedBox(height:size.height * 0.020,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 Text('Email address', style: TextStyle(fontSize: 14)),
-  //               ],
-  //             ),
-  //             SizedBox(height: size.height *0.007,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 newContainer(context, email)
-  //               ],
-  //             ),
-  //             SizedBox(height:size.height * 0.020,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 Text('Position', style: TextStyle(fontSize: 14)),
-  //               ],
-  //             ),
-  //             SizedBox(height: size.height *0.007,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 newContainer(context, position)
-  //               ],
-  //             ),
-  //             SizedBox(height:size.height * 0.020,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 Text('Mobile Number', style: TextStyle(fontSize: 14)),
-  //                 SizedBox(width: size.width * 0.077,),
-  //                 Text('Date of birth', style: TextStyle(fontSize: 14)),
-  //               ],
-  //             ),
-  //             SizedBox(height:size.height * 0.007,),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               children: [
-  //                 SizedBox(width: size.width * 0.080,),
-  //                 myContainer(context, mobile),
-  //                 SizedBox(width: size.width * 0.040,),
-  //                 myContainer(context, dob),
-  //               ],
-  //             ),
-  //             SizedBox(height:size.height * 0.040,),
-  //             MaterialButton(
-  //               minWidth: size.width * .06,
-  //               height: size.height * 0.03,
-  //               onPressed: () {
-  //                 Get.back(); // Close the dialog
-  //               },
-  //               child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
-  //               color: Colors.yellow,
-  //               textColor: Colors.black,
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //     barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
-  //   );
-  // }
+  //Function to open dialog
+  void _showEditDialog(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width:  size.width * 0.410,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width * 0.025,),
+                  Text(
+                    "Personal Information",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: size.width * 0.230,),
+                  IconButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                ],
+              ),
+              Divider(),
+              SizedBox(height: size.height * 0.012,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.08,),
+                  Text('First Name', style: TextStyle(fontSize: 14)),
+                  SizedBox(width: size.width * 0.093,),
+                  Text('Last Name', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height * 0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width* 0.080,),
+                    myContainer(context, firstName),
+                  SizedBox(width: size.width * 0.040,),
+                  myContainer(context, lastName),
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Email address', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height *0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  newContainer(context, email)
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Position', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height *0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  newContainer(context, position)
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Mobile Number', style: TextStyle(fontSize: 14)),
+                  SizedBox(width: size.width * 0.077,),
+                  Text('Date of birth', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height:size.height * 0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  myContainer(context, mobile),
+                  SizedBox(width: size.width * 0.040,),
+                  Container(
+                    width: size.width * 0.10,
+                    height: size.height * 0.032,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: TextField(
+                        controller: dob,
+                        readOnly: true, // Makes the TextField read-only to prevent keyboard from appearing
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              size: 13,
+                              color: Colors.black,
+                            ),
+                            onPressed: () async {
+                              // Show date picker when the calendar icon is pressed
+                              DateTime? selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(), // Default to today's date
+                                firstDate: DateTime(1900), // Start date for the date picker
+                                lastDate: DateTime.now(), // End date for the date picker
+                              );
+
+                              if (selectedDate != null) {
+                                // Format the selected date and update the TextField
+                                String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                                dob.text = formattedDate; // Set the formatted date in the TextField
+                              }
+                            },
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: grey, width: 1),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          contentPadding: EdgeInsets.all(7),
+                        ),
+                      ),
+                    ),
+                  )
+
+
+                ],
+              ),
+              SizedBox(height:size.height * 0.040,),
+              MaterialButton(
+                minWidth: size.width * .06,
+                height: size.height * 0.03,
+                onPressed: () {
+                  Get.back(); // Close the dialog
+                },
+                child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
+                color: Colors.yellow,
+                textColor: Colors.black,
+              )
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+    );
+  }
 
 
 
@@ -263,7 +304,7 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          _confirmSignOut(context);
+                          _showEditDialog(context);
                           },
                         child: Stack(
                           alignment: Alignment.bottomRight,
@@ -443,7 +484,7 @@ Widget myContainer(BuildContext context, TextEditingController controller){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.10,
-    height: size.height * 0.032,
+    height: size.height * 0.036,
     child: Material(
       color: Colors.transparent,
       child: TextField(
@@ -453,7 +494,7 @@ Widget myContainer(BuildContext context, TextEditingController controller){
             borderSide: BorderSide(color: grey,width: 1),
             borderRadius: BorderRadius.circular(0),
           ),
-          contentPadding: EdgeInsets.all(7),
+          contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
         ),
 
       ),
@@ -465,20 +506,21 @@ Widget newContainer(BuildContext context, TextEditingController controller){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.24,
-    height: size.height * 0.032,
+    height: size.height * 0.05, // Increase the height for better alignment
     child: Material(
       color: Colors.transparent,
       child: TextField(
         controller: controller,
+        style: TextStyle(fontSize: 16), // Adjust font size if necessary
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: grey,width: 1),
+            borderSide: BorderSide(color: grey, width: 1),
             borderRadius: BorderRadius.circular(0),
           ),
-          contentPadding: EdgeInsets.all(7),
+          contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007), // Adjust vertical padding
         ),
-
       ),
     ),
   );
+
 }

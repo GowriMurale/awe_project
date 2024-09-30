@@ -46,50 +46,54 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // return  Row(
-    //   children: [
-    // // Sidebar container
-    // Container(
-    //   width: size.width * 0.150, // Adjust width as necessary
-    //   height:size.height* 0.900, // Sidebar takes full height
-    //   color: grey, // Background color for sidebar
-    //   child: Column(
-    //     children: [
-    //       SizedBox(height: size.height * 0.20),
-    //       GestureDetector(
-    //         onTap: (){
-    //           Get.to(ApplyLeaveScreen());
-    //         },
-    //         child: Container(
-    //           width: size.width * 0.125,
-    //           height:size.height* 0.048,
-    //           decoration: BoxDecoration(
-    //             color: Colors.yellowAccent,
-    //             borderRadius: BorderRadius.circular(10),
-    //           ),
-    //           child: Row(
-    //             children: [
-    //               SizedBox(width: size.width * 0.02,),
-    //               Icon(Icons.person_outline,size: 18,color: Colors.black,),
-    //               SizedBox(width: size.width * 0.01,),
-    //               Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
-    //             ],
-    //           ),
-    //         ),
-    //       ),
-    //       SizedBox(height: size.height * 0.05),
-    //       // Add more widgets here as per your sidebar content
-    //     ],
-    //   ),
-    // ),
-    return
+    return  Row(
+      children: [
+    // Sidebar container
+    Container(
+      width: size.width * 0.150, // Adjust width as necessary
+      height:size.height* 0.900, // Sidebar takes full height
+      color: grey, // Background color for sidebar
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.20),
+          GestureDetector(
+            onTap: (){
+              Get.to(ApplyLeaveScreen());
+            },
+            child: Container(
+              width: size.width * 0.125,
+              height:size.height* 0.048,
+              decoration: BoxDecoration(
+                color: Colors.yellowAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  SizedBox(width: size.width * 0.02,),
+                SizedBox(
+                  height: 18,
+                  width: 22,
+                  child: Image.asset('assets/images/leave.png',color: Colors.black,),
+                ),
+                  SizedBox(width: size.width * 0.01,),
+                  Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.05),
+          // Add more widgets here as per your sidebar content
+        ],
+      ),
+    ),
+    // return
       Column(
         children: [
           SizedBox(height: size.height * 0.02,),
           Row(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: size.width* 0.37,),
+              SizedBox(width: size.width* 0.13,),
               // IconButton(onPressed: (){
               //   Get.back();
               // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
@@ -102,7 +106,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.195,),
+              SizedBox(width: size.width * 0.100,),
              container2('Present', '20.5', purple,context),
               SizedBox(width: size.width * 0.04,),
               container2('Absent Days', '2.5', green,context),
@@ -116,7 +120,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.065,),
             Row(
               children: [
-              SizedBox(width: size.width * 0.205),
+              SizedBox(width: size.width * 0.105),
                 Text(
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
@@ -168,7 +172,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
       Row(
             children: [
               Padding(
-                padding:  EdgeInsets.only(left: size.width * 0.195,top: size.height * 0.02),
+                padding:  EdgeInsets.only(left: size.width * 0.120,top: size.height * 0.02),
                 child: EmployeeTable(),
               ),
             ],
@@ -176,7 +180,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.45,),
+              SizedBox(width: size.width * 0.10,),
                 MaterialButton(
                     onPressed: (){
                       Get.to(()=>ApplyLeaveScreen());
@@ -189,6 +193,8 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ],
           )
         ],
+    )
+    ]
       );
   }
 }
