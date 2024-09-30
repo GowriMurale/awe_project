@@ -116,7 +116,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.065,),
             Row(
               children: [
-              SizedBox(width: size.width * 0.195),
+              SizedBox(width: size.width * 0.205),
                 Text(
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
@@ -219,11 +219,11 @@ class _TabletDashboardState extends State<TabletDashboard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: size.width* 0.12,),
-            IconButton(onPressed: (){
-              Get.back();
-            }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
-            SizedBox(width: size.width* 0.18,),
+            // SizedBox(width: size.width* 0.12,),
+            // IconButton(onPressed: (){
+            //   Get.back();
+            // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
+            SizedBox(width: size.width* 0.35,),
             Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
             SizedBox(width: size.width * 0.01,),
             Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
@@ -232,7 +232,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.110,),
+            SizedBox(width: size.width * 0.120,),
             tabcontainer2('Present', '20.5', purple,context),
             SizedBox(width: size.width * 0.04,),
             tabcontainer2('Absent Days', '2.5', green,context),
@@ -251,7 +251,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
               'My Recent Leave',
               style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: size.width * 0.420),
+            SizedBox(width: size.width * 0.435),
             Container(
               width: size.width * 0.137,
               height: size.height * 0.040,
@@ -310,7 +310,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
               onPressed: (){
                 Get.to(()=>ApplyLeaveScreen());
               },
-              minWidth: size.width * 0.065,
+              minWidth: size.width * 0.075,
               height: size.height * 0.055,
               color: yellow,
               child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
@@ -370,9 +370,9 @@ Widget container2(String text,String no, Color color,BuildContext context ){
       ),
       child: Column(
         children: [
-          SizedBox(height: 7,),
+          SizedBox(height: size.height * 0.007,),
           Text(text,style: TextStyle(color: color,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),),
-          SizedBox(height: 3),
+          SizedBox(height: size.height * 0.003),
           Text(no,style: TextStyle(color: black,fontFamily: 'Inter',fontSize: 23,fontWeight: FontWeight.bold),)
         ],
       ),
@@ -385,8 +385,8 @@ Widget tabcontainer2(String text,String no, Color color,BuildContext context ){
   return Card(
     elevation: 2,
     child: Container(
-      width: size.width * 0.155,
-      height: size.height * 0.120,
+      width: size.width * 0.143,
+      height: size.height * 0.115,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -397,9 +397,9 @@ Widget tabcontainer2(String text,String no, Color color,BuildContext context ){
       ),
       child: Column(
         children: [
-          SizedBox(height: 7,),
+          SizedBox(height: size.height * 0.015,),
           Text(text,style: TextStyle(color: color,fontFamily: 'Inter',fontSize: 18,fontWeight: FontWeight.bold),),
-          SizedBox(height: 3),
+          SizedBox(height: size.height * 0.005),
           Text(no,style: TextStyle(color: black,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),)
         ],
       ),

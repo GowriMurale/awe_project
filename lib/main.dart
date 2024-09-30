@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/login_screen.dart';
+import 'package:awe_project/Screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'amplifyconfiguration.dart';

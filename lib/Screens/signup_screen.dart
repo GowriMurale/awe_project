@@ -1,4 +1,5 @@
 
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/login_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
@@ -19,26 +20,26 @@ class _SignupScreenState extends State<changePasswordScreen> {
   TextEditingController  confirmPassword=TextEditingController();
 
   //
-  // Future<void> _changePassword(BuildContext context) async {
-  //   if (newPassword.text.trim() == confirmPassword.text.trim()) {
-  //     try {
-  //       // Confirm the sign-in with the new password
-  //       SignInResult result = await Amplify.Auth.confirmSignIn(
-  //         confirmationValue: newPassword.text.trim(),
-  //       );
-  //
-  //       if (result.isSignedIn) {
-  //         Get.off(() => LoginScreen());
-  //       } else {
-  //         _showErrorDialog('Password change failed.');
-  //       }
-  //     } on AuthException catch (e) {
-  //       _showErrorDialog(e.message);
-  //     }
-  //   } else {
-  //     _showErrorDialog('Passwords do not match.');
-  //   }
-  // }
+  Future<void> _changePassword(BuildContext context) async {
+    if (newPassword.text.trim() == confirmPassword.text.trim()) {
+      try {
+        // Confirm the sign-in with the new password
+        SignInResult result = await Amplify.Auth.confirmSignIn(
+          confirmationValue: newPassword.text.trim(),
+        );
+
+        if (result.isSignedIn) {
+          Get.off(() => LoginScreen());
+        } else {
+          _showErrorDialog('Password change failed.');
+        }
+      } on AuthException catch (e) {
+        _showErrorDialog(e.message);
+      }
+    } else {
+      _showErrorDialog('Passwords do not match.');
+    }
+  }
 
 
   // Function to show error dialog
@@ -64,55 +65,253 @@ class _SignupScreenState extends State<changePasswordScreen> {
     final Size size = MediaQuery.of(context).size;
     return HelperClass(
         desktop: Scaffold(
-          body:   Center(
-            child: Card(
-              elevation: 2,
-              shadowColor: Colors.white,
-              child: Container(
-                width: size.width * 0.280,
-                height:size.height *  0.730,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child:Container(
+                    padding:  const EdgeInsets.all(10),
+                    height: 350,
+                    width: 10,
+                    child: Image(image: AssetImage(
+                        'assets/images/lock.png'),
+                      fit: BoxFit.contain,
+                      width: size.width  * 0.10, // 50% of screen width
+                      height: size.height * 0.5,
+                    ),
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
-                      child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding:  const EdgeInsets.all(30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          //padding:  const EdgeInsets.all(1),
+                          height: 90,
+                          width: 300,
+                          child: Image(image: AssetImage(
+                              'assets/images/awe logo.png'),
+                            fit: BoxFit.contain,
+                          ),),
+                        Center(
+                          child:Container(
+                            height: 50,
+                            child: const Text(
+                              'Change Password',
+                              style: TextStyle(fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontStyle: FontStyle.normal,
+                              ),
+                              textAlign: TextAlign.right,
+                            ),),),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: 360,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('User ID',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,
+                                  color: Colors.black,fontStyle: FontStyle.normal),),
+                              Container(
+                                height: 35,
+                                width: 330,
+                                child: TextField(
+                                  controller: userIdController,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(color: Colors.grey.shade500),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),)
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: 360,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Current Password',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,
+                                  color: Colors.black,fontStyle: FontStyle.normal),
+                              ),
+                              Container(
+                                height: 35,
+                                width: 330,
+                                child: TextField(
+                                  controller: pasword,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),)
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: 360,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('New Password',style:TextStyle(fontSize: 15,fontWeight: FontWeight.w600,
+                                  color: Colors.black,fontStyle: FontStyle.normal)),
+                              Container(
+                                height: 35,
+                                width: 330,
+                                child: TextField(
+                                  controller: newPassword,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.visibility_off_outlined),
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                ),)
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+
+                        SizedBox(
+                          width: 360,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Confirm Password',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600,
+                                  color: Colors.black,fontStyle: FontStyle.normal),),
+                              Container(
+                                height: 35,
+                                width: 330,
+                                padding: const EdgeInsets.only( ),
+                                child: TextField(
+                                  controller: confirmPassword,
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(color: Colors.black12, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.visibility_off_outlined),
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                ),)
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        Container(
+                          child: Center(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                  _changePassword(context);
+                              },
+                              child: const Text('Update',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.black),),
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 13),
+                                backgroundColor: Colors.yellow,
+                                shape:  RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                ),
+                              ),
+                            ),
+                          ),
+                          //SizedBox(height: 30)
+                        ),
+                        SizedBox(height: 80,width: 300,
+                          child:  Divider(
+
+                            color: Colors.grey,
+                            thickness: 1.0,
+                          ),)
+                      ],
                     ),
-                    MyTextField(controller: userIdController, text: 'Email ID', icon: Icons.email_outlined, obscureText: false,),
-                    Padding(
-                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
-                      child: Text('password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                    ),
-                    MyTextField(controller: pasword, text: 'Email ID', icon: Icons.email_outlined, obscureText: false,),
-                    SizedBox(height: size.height * 0.02,),
-                    Padding(
-                      padding:  EdgeInsets.only(right:size.width * 0.190,top: size.height * 0.02,bottom: size.height * 0.002),
-                      child: Text('New password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                    ),
-                    MyTextField(controller: newPassword, text: 'User ID', icon: Icons.person_outline, obscureText: false,),
-                    SizedBox(height: size.height * 0.02,),
-                    Padding(
-                      padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
-                      child: Text(' confirm Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                    ),
-                    MyTextField(controller: confirmPassword, text: 'Password', icon: Icons.lock_outline, obscureText: false,),
-                    SizedBox(height: size.height * 0.075,),
-                    MaterialButton(
-                      onPressed: (){
-                          // _changePassword(context);
-                      },
-                      minWidth: size.width * 0.228,
-                      height:size.height * 0.060,
-                      color: yellow,
-                      splashColor: yellow,
-                      child: Text("Sign Up",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 18),),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

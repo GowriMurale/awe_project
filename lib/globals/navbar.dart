@@ -262,7 +262,9 @@ class _DesktopNavbarState extends State<DesktopNavbar> {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: _toggleEdit,
+                        onTap: (){
+                          _confirmSignOut(context);
+                          },
                         child: Stack(
                           alignment: Alignment.bottomRight,
                           children: [

@@ -165,7 +165,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.023,),
                Container(
                 width: size.width * 0.16,
-                height: size.height * 0.045,
+                height: size.height * 0.042,
                  decoration: BoxDecoration(
                      border: Border.all(color: grey,width: 1),
                        borderRadius: BorderRadius.circular(2),
@@ -263,7 +263,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.022,),
             Container(
               width: size.width * 0.14,
-              height: size.height * 0.052,
+              height: size.height * 0.050,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -286,7 +286,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.03,),
             Container(
               width: size.width * 0.14,
-              height: size.height * 0.052,
+              height: size.height * 0.050,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -309,7 +309,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             SizedBox(width: size.width * 0.025,),
             Container(
               width: size.width * 0.14,
-              height: size.height * 0.052,
+              height: size.height * 0.050,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -374,7 +374,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.025,),
+        SizedBox(height: size.height * 0.027,),
         Row(
           children: [
             SizedBox(width: size.width * 0.25,),
@@ -405,13 +405,13 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.020,),
+        SizedBox(height: size.height * 0.022,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center, // Ensures vertical alignment
           children: <Widget>[
        // Adjust space before the label as needed
             Padding(
-              padding:  EdgeInsets.only(left: 380,bottom: 90),
+              padding:  EdgeInsets.only(left: size.width * 0.250,bottom: size.height * 0.090),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -435,7 +435,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             decoration: InputDecoration(
             hintText: 'Text Here',
             hintStyle: TextStyle(color: Colors.grey),
-            contentPadding: EdgeInsets.only(top: 15,left: 10), // Padding inside the TextField
+            contentPadding: EdgeInsets.only(top:size.height * 0.015,left: size.width * 0.010), // Padding inside the TextField
             border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -472,60 +472,50 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         Row(
           children: [
             SizedBox(width: size.width * 0.36,),
-            OutlinedButton(
-              onPressed: () {
-                // Validate all fields before applying
-                if (_validateFields()) {
-                  // All fields are filled, show confirmation popup with Yes and No buttons
-                  Get.defaultDialog(
-                    title: 'Confirm',
-                    content: Text('Are you sure you want to apply?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          // Action on No (cancel)
-                          Get.back(); // Close the dialog
-                        },
-                        child: Text('No', style: TextStyle(color: Colors.red)),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Action on Yes (confirmation)
-                         Get.off(DashBoardScreeen()); // Close the dialog
-                          // Proceed with applying leave
-                        },
-                        child: Text('Yes', style: TextStyle(color: Colors.green)),
-                      ),
-                    ],
-                  );
-                } else {
-                  // Show error alert dialog if fields are missing
-                  Get.defaultDialog(
-                    title: 'Error',
-                    content: Text('Please fill all required fields.'),
-                    confirmTextColor: Colors.white,
-                    onConfirm: () {
-                      Get.back(); // Close the dialog
+            Material(
+              borderRadius: BorderRadius.circular(45),
+              child: MaterialButton(
+                onPressed: () {
+                    // Validate all fields before applying
+                  if (_validateFields()) {
+                // All fields are filled, show confirmation popup with Yes and No buttons
+                Get.defaultDialog(
+                title: 'Confirm',
+                  content: Text('Are you sure you want to apply?'),
+                  actions: [
+                  TextButton(
+                  onPressed: () {
+                  // Action on No (cancel)
+                  Get.back(); // Clo  se the dialog
+                  } ,
+                child: Text('No', style: TextStyle(color: Colors.red)),
+                  ),
+                    TextButton(
+                    onPressed: () {
+                      // Action on Yes (confirmation)
+                  Get.off(DashBoardScreeen()); // Close the dialog
+                    // Proceed with applying leave
                     },
-                  );
-                }
-              },  // Disable the button if the checkbox isn't checked
-              style: OutlinedButton.styleFrom(
-                fixedSize: Size(size.width * 0.07, size.height * 0.05),
-                // side: BorderSide(color: _isChecked ? Colors.yellow : Colors.grey, width: 2.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                backgroundColor:  Colors.yellow ,
-              ),
-              child: Text(
-                'Apply',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: _isChecked ? Colors.black : Colors.black,
-                ),
+                  child: Text('Yes', style: TextStyle(color: Colors.green)),
+                  ),
+                ],
+                );
+            } else {
+                  // Show error alert dialog if fields are missing
+              Get.defaultDialog(
+                title: 'Error',
+              content: Text('Please fill all required fields.'),
+                  confirmTextColor: Colors.white,
+                  onConfirm: () {
+          Get.back(); // Close the dialog
+                  },
+                );
+              }
+            },
+                minWidth: size.width * 0.075,
+                height: size.height * 0.06,
+                color: yellow,
+                child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
               ),
             ),
 
@@ -579,6 +569,7 @@ class _TabletLeaveState extends State<TabletLeave> {
   DateTime? _toDate;
   bool _isChecked = false;
   bool isHalfDay=false;
+  String? selectedTicket;
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
     DateTime firstDate = DateTime.now(); // Disable all previous dates
@@ -658,35 +649,35 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.05,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.038,),
             myContainer(context, badge),
             SizedBox(width: size.width * 0.088,),
             Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.051,),
+            SizedBox(width: size.width * 0.072,),
             myContainer(context, name),
           ],
         ),
         SizedBox(height: size.height * 0.025,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.033,),
             myContainer(context, dept),
             SizedBox(width: size.width * 0.085,),
             Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.040,),
+            SizedBox(width: size.width * 0.053,),
             myContainer(context, title),
           ],
         ),
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Leave Type:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.023,),
+            SizedBox(width: size.width * 0.020,),
             Container(
               width: size.width * 0.16,
               height: size.height * 0.045,
@@ -734,7 +725,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         Row(
           children: [
             //Half day
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
             Container(
@@ -768,10 +759,10 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.05,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.37,),
+            SizedBox(width: size.width * 0.32,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.165,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -782,7 +773,7 @@ class _TabletLeaveState extends State<TabletLeave> {
         SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Select Date:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.020,),
             Container(
@@ -850,10 +841,10 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.05,),
+        SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.20,),
             Text('Apply To:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
             Container(
@@ -898,13 +889,44 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-        SizedBox(height: size.height * 0.06,),
+        SizedBox(height: size.height * 0.02,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.20,),
+            Text('Own Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.025,),
+            Radio<String>(
+              value: 'own_ticket',
+              groupValue: selectedTicket,
+              onChanged: (String? value) {
+                setState(() {
+                  selectedTicket = value; // Update the selected value
+                });
+              },
+              activeColor: Colors.grey, // Customize the active color
+            ),
+            SizedBox(width: size.width * 0.035,),
+            Text('company Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+            SizedBox(width: size.width * 0.025,),
+            Radio<String>(
+              value: 'company_ticket',
+              groupValue: selectedTicket,
+              onChanged: (String? value) {
+                setState(() {
+                  selectedTicket = value; // Update the selected value
+                });
+              },
+              activeColor: Colors.grey, // Customize the active color
+            ),
+          ],
+        ),
+        SizedBox(height: size.height * 0.025,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center, // Ensures vertical alignment
           children: <Widget>[
             // Adjust space before the label as needed
             Padding(
-              padding: const EdgeInsets.only(left: 255,bottom: 90),
+              padding:  EdgeInsets.only(left: size.width * 0.205,bottom: size.height * 0.090),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -918,7 +940,7 @@ class _TabletLeaveState extends State<TabletLeave> {
             SizedBox(width: size.width * 0.048), // Adjust space between label and textfield as needed
             Container(
               width: size.width * 0.3, // Specify the width of the TextField
-              height: size.height * 0.18,  // Specify the height of the TextField
+              height: size.height * 0.13,  // Specify the height of the TextField
               child: TextField(
                 controller: reason,
                 style: TextStyle(fontSize: 16), // Adjust text size within the TextField
@@ -938,10 +960,33 @@ class _TabletLeaveState extends State<TabletLeave> {
             )
           ],
         ),
+        SizedBox(height: size.width * 0.01,),
+        Row(
+          children: [
+            SizedBox(width: size.width * 0.33,),
+            GestureDetector(
+                onTap: () async {
+                  const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
+                  if (await canLaunch(url)) {
+                    // Open the URL in the browser
+                    await launch(url, forceSafariVC: false); // For Android, using the system browser
+                  } else {
+                    // Can't launch the URL, show an error to the user
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Could not launch the URL'),
+                      ),
+                    );
+                  }
+                },
+                child: Text('I have read and accept the leave policies',style: TextStyle(color: Colors.blue,
+                    decoration: TextDecoration.underline,fontSize: 16,fontFamily: 'Inter'),))
+          ],
+        ),
         SizedBox(height: size.width * 0.02,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.30,),
+            SizedBox(width: size.width * 0.35,),
             Material(
               borderRadius: BorderRadius.circular(45),
               color: Colors.transparent,
@@ -954,17 +999,17 @@ class _TabletLeaveState extends State<TabletLeave> {
               ),
             ),
             SizedBox(width: size.width * 0.02,),
-            OutlinedButton(
-              onPressed: () {},
-              style: OutlinedButton.styleFrom(
-                fixedSize: Size(size.width * 0.10, size.height * 0.05),
-                side: BorderSide(color: grey, width: 2.0), // Outline border
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0), // Rounded corners (optional)
-                ),
+            Material(
+              borderRadius: BorderRadius.circular(45),
+              color: Colors.transparent,
+              child: MaterialButton(
+                onPressed: (){},
+                minWidth: size.width * 0.11,
+                height: size.height * 0.06,
+                color: Colors.redAccent.shade100,
+                child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
               ),
-              child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
-            )
+            ),
           ],
         )
 
@@ -1003,3 +1048,41 @@ Widget myContainer(BuildContext context, TextEditingController controller){
     ),
   );
 }
+
+// onPressed: () {
+// // Validate all fields before applying
+// if (_validateFields()) {
+// // All fields are filled, show confirmation popup with Yes and No buttons
+// Get.defaultDialog(
+// title: 'Confirm',
+// content: Text('Are you sure you want to apply?'),
+// actions: [
+// TextButton(
+// onPressed: () {
+// // Action on No (cancel)
+// Get.back(); // Close the dialog
+// },
+// child: Text('No', style: TextStyle(color: Colors.red)),
+// ),
+// TextButton(
+// onPressed: () {
+// // Action on Yes (confirmation)
+// Get.off(DashBoardScreeen()); // Close the dialog
+// // Proceed with applying leave
+// },
+// child: Text('Yes', style: TextStyle(color: Colors.green)),
+// ),
+// ],
+// );
+// } else {
+// // Show error alert dialog if fields are missing
+// Get.defaultDialog(
+// title: 'Error',
+// content: Text('Please fill all required fields.'),
+// confirmTextColor: Colors.white,
+// onConfirm: () {
+// Get.back(); // Close the dialog
+// },
+// );
+// }
+// },
