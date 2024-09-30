@@ -88,7 +88,7 @@ class _DesktopNavbar2State extends State<DesktopNavbar2> {
       child: Container(
         height: size.height * 0.09,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: bgColor,
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
         ),
         child: Row(

@@ -3,6 +3,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/dashboard.dart';
 import 'package:awe_project/Components/helper_class.dart';
+import 'package:awe_project/Screens/signup_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +178,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       height: 30,
                       width: 135,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          changePasswordScreen(username: '',);
+                        },
                         style: ButtonStyle(
                           side: MaterialStateProperty.all(
                             BorderSide(color: Colors.yellow, width: 3), // Change border color and width
@@ -387,7 +390,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     return HelperClass(
         desktop: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor:bgColor,
             actions: [
               Row(
                   children: [
@@ -445,6 +448,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             ],
             toolbarHeight: 75.0,
           ),
+          backgroundColor: bgColor,
           body: Container(
             child: SingleChildScrollView(
               child: Column(

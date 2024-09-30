@@ -192,12 +192,54 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Column(
+    return  Row(
+      children: [
+    // Sidebar container
+    Container(
+    width: size.width * 0.150, // Adjust width as necessary
+      height:size.height* 0.900, // Sidebar takes full height
+      color: grey, // Background color for sidebar
+      child: Column(
+        children: [
+          SizedBox(height: size.height * 0.20),
+          GestureDetector(
+            onTap: (){
+              Get.to(DashBoardScreeen());
+            },
+            child: Container(
+              width: size.width * 0.125,
+              height:size.height* 0.048,
+              decoration: BoxDecoration(
+                color: Colors.yellowAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  SizedBox(width: size.width * 0.02,),
+                  SizedBox(
+                    height: 18,
+                    width: 22,
+                    child: Image.asset('assets/images/dash.png',color: Colors.black,),
+                  ),
+                  SizedBox(width: size.width * 0.01,),
+                  Text('Dashboard',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.05),
+          // Add more widgets here as per your sidebar content
+        ],
+      ),
+    ),
+
+
+      Column(
       children: [
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.095,),
             Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.038,),
             myContainer(context, '0001'),
@@ -210,7 +252,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.025,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.095,),
             Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.033,),
             myContainer(context, 'Xyz'),
@@ -222,9 +264,9 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         ),
         SizedBox(height: size.height * 0.03,),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
+          // Align error message properly
           children: [
-            SizedBox(width: size.width * 0.25),
+            SizedBox(width: size.width * 0.095,),
             Text(
               'Leave Type:',
               style: TextStyle(
@@ -321,13 +363,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             myContainer(context, '04'),
           ],
         ),
-
-
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
             //Half day
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.000010,),
             Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.042,),
             Container(
@@ -364,7 +404,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.02,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.34,),
+            SizedBox(width: size.width * 0.118,),
             Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.145,),
             Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -372,11 +412,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
           ],
         ),
-        SizedBox(height: size.height * 0.015,),
+        SizedBox(height: size.height * 0.02,),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align error messages properly
+          mainAxisAlignment: MainAxisAlignment.start, // Align error messages properly
           children: [
-            SizedBox(width: size.width * 0.25),
+            SizedBox(width: size.width * 0.115,),
             Text(
               'Select Date:',
               style: TextStyle(
@@ -502,9 +542,9 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
         SizedBox(height: size.height * 0.03,),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
+          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: size.width * 0.25),
+            SizedBox(width: size.width * 0.0100,),
             Text(
               'Apply To:',
               style: TextStyle(
@@ -582,7 +622,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.027,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.25,),
+            SizedBox(width: size.width * 0.0003,),
             Text('Own Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
             SizedBox(width: size.width * 0.025,),
             Radio<String>(
@@ -615,7 +655,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left: size.width * 0.250, bottom: size.height * 0.090),
+              padding: EdgeInsets.only(left: size.width * 0.115, bottom: size.height * 0.090),
               child: Text(
                 'Reason:',
                 style: TextStyle(
@@ -671,7 +711,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.022,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.37,),
+            SizedBox(width: size.width * 0.080,),
             RichText(
               text: TextSpan(
                 text: 'I have read and accept ', // First part of the text
@@ -709,7 +749,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         SizedBox(height: size.height * 0.034,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.36,),
+            SizedBox(width: size.width * 0.12,),
             Material(
               borderRadius: BorderRadius.circular(45),
               child: MaterialButton(
@@ -773,6 +813,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         )
 
       ],
+              )
+    ]
     );
   }
 }
