@@ -295,17 +295,86 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding:  EdgeInsets.only(right: size.width * 0.170,top: size.height * 0.017,bottom: size.height * 0.002),
                         child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
                       ),
-                      TabTextField(controller2: passwordController, text2: 'Password', icon2: Icons.lock_outline),
+                Card(
+                  elevation: 2,
+                  shadowColor: Colors.white,
+                  child: Container(
+                    width: size.width * 0.26,
+                    height: size.height * 0.04,
+                    child: Material(
+                      color: Colors.white,
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(right:size.width * 0.005),  // Align the text vertically with the icon
+                          prefixIcon: Icon(
+                            Icons.lock_outline,
+                            color: Colors.grey.shade500,
+                            size: 18,  // Adjust icon size if needed
+                          ),
+                          hintText: 'Password',
+                          hintStyle: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_outlined // Show this icon when password is visible
+                                  : Icons.visibility_off_outlined, // Show this icon when password is hidden
+                              size: 19,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                       SizedBox(height: size.height * 0.05,),
                       MaterialButton(
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
+                        onPressed: _isLoading
+                            ? null // Disable the button while loading
+                            : () async {
+                          setState(() {
+                            _isLoading = true; // Start loading
+                          });
+
+                          await _signIn(context);
+
+                          setState(() {
+                            _isLoading = false; // Stop loading
+                          });
                         },
                         minWidth: size.width * 0.26,
                         height: size.height * 0.055,
                         color: yellow,
                         splashColor: yellow,
-                        child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                        child: _isLoading
+                            ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                        )
+                            : Text(
+                          "Login",
+                          style: TextStyle(
+                            color: black,
+                            fontFamily: 'Open Sans',
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -317,13 +386,13 @@ class _LoginScreenState extends State<LoginScreen> {
         mobile: Column(
           children: [
          SizedBox(
-           width: 150,
-           height: 70,
+           width:size.width * 0.270,
+           height:size.height * 0.080,
            child: Image.asset('assets/images/awe logo.png'),
          ),
             Container(
-              width: 200,
-              height: 230,
+              width:size.width * 0.330,
+              height: size.height * 0.340,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/login.png',)
@@ -343,30 +412,99 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 35),
+                      padding:  EdgeInsets.only(top: size.height * 0.040),
                       child: Text("Login",style: TextStyle(fontSize: 16,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 130,top: 8,bottom: 2),
+                      padding:  EdgeInsets.only(right: size.width * 0.250,top: 8,bottom:size.height * 0.002),
                       child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
                     ),
                     MobileTextField(controller3: userIdController, text3: 'User ID', icon3: Icons.person_outline),
                     SizedBox(height: size.height * 0.02,),
                     Padding(
-                      padding: const EdgeInsets.only(right: 130,top: 8,bottom: 2),
+                      padding:  EdgeInsets.only(right:size.width * 0.250,top:size.height * 0.008,bottom: size.height * 0.002),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
                     ),
-                    MobileTextField(controller3: passwordController, text3: 'Password', icon3: Icons.lock_outline),
+              Card(
+                elevation: 2,
+                shadowColor: Colors.white,
+                child: Container(
+                  width: size.width * 0.40,
+                  height: size.height * 0.045,
+                  child: Material(
+                    color: Colors.white,
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: !_isPasswordVisible,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
+                        prefixIcon: Icon(
+                          Icons.lock_outline,
+                          color: Colors.grey,
+                          size: 16,  // Adjust icon size if needed
+                        ),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility_outlined // Show this icon when password is visible
+                                : Icons.visibility_off_outlined, // Show this icon when password is hidden
+                            size: 16,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
                     SizedBox(height: size.height * 0.04,),
                     MaterialButton(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoardScreeen()));
+                      onPressed: _isLoading
+                          ? null // Disable the button while loading
+                          : () async {
+                        setState(() {
+                          _isLoading = true; // Start loading
+                        });
+
+                        await _signIn(context);
+
+                        setState(() {
+                          _isLoading = false; // Stop loading
+                        });
                       },
-                      minWidth: size.width * 0.37,
-                      height: size.height * 0.05,
+                      minWidth: size.width * 0.38,
+                      height: size.height * 0.045,
                       color: yellow,
                       splashColor: yellow,
-                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 16),),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                      )
+                          : Text(
+                        "Login",
+                        style: TextStyle(
+                          color: black,
+                          fontFamily: 'Open Sans',
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ],
                 ),

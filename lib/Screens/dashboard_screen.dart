@@ -12,6 +12,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../globals/navigation_bar.dart';
+import 'apply_leave_screen.dart';
 import 'login_screen.dart';
 class DashBoardScreeen extends StatefulWidget {
   @override
@@ -460,6 +461,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           ),
         ),
         tablet: Scaffold(
+          backgroundColor: bgColor,
           body: Container(
             child: SingleChildScrollView(
               child: Column(
@@ -472,10 +474,29 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             ),
           ),
         ),
-        mobile: Column(
-          children: [
-
-          ],
+        mobile:Scaffold(
+          appBar: AppBar(),
+          backgroundColor: bgColor,
+          body: Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: size.height * 0.75,),
+              Row(
+                children: [
+                  SizedBox(width: size.width * 0.4,),
+                  MaterialButton(
+                    onPressed: (){
+                      Get.to(()=>ApplyLeaveScreen());
+                    },
+                    minWidth: size.width * 0.075,
+                    height: size.height * 0.055,
+                    color: yellow,
+                    child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
         paddingWidth: size.width * 0.1,
         bgColor: bgColor);

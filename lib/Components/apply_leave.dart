@@ -167,17 +167,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         isValid = false;
       }
 
-      // Validate Apply To
-      if (_selectedRole == null || _selectedRole!.isEmpty) {
-        applyToError = '* This field is required';
+      // Validate Apply To (Manager or Superior checkbox)
+      if (!isManager && !isSuperior) {
+        applyToError = '* Please select either Manager or Superior.';
         isValid = false;
       }
-
-      // Validate Ticket Selection
-      // if (selectedTicket == null || selectedTicket!.isEmpty) {
-      //   ticketError = '* Please select a ticket option';
-      //   isValid = false;
-      // }
 
       // Validate Reason
       if (reason.text.isEmpty) {
@@ -188,17 +182,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
     return isValid;
   }
-  void validateApplyTo() {
-    if (!isManager && !isSuperior) {
-      setState(() {
-        applyToError = "Please select Manager or Superior"; // Show error if none is selected
-      });
-    } else {
-      setState(() {
-        applyToError = null; // No error if at least one is selected
-      });
-    }
-  }
+
+
 
 
 
@@ -564,94 +549,92 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             ],
           ),
           SizedBox(height: size.height * 0.03,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Aligns error to the left
-          children: [
-            // Conditionally show the error message above the checkboxes
-            if (applyToError != null)
-              Padding(
-                padding: EdgeInsets.only(left: size.width * 0.22, bottom: 4), // Align error message
-                child: Text(
-                  applyToError!,
-                  style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start, // Aligns error to the left
+            children: [
+              // Conditionally show the error message above the checkboxes
+              if (applyToError != null)
+                Padding(
+                  padding: EdgeInsets.only(left: size.width * 0.22, bottom: 4), // Align error message
+                  child: Text(
+                    applyToError!,
+                    style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
+                  ),
                 ),
+
+              Row(
+                children: [
+                  SizedBox(width: size.width * 0.22),
+                  Text(
+                    'Apply To:',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.035),
+                  Text(
+                    'Manager:',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.015),
+                  Transform.scale(
+                    scale: 1.5, // Adjust this value to change the checkbox size
+                    child: Checkbox(
+                      value: isManager,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          isManager = newValue ?? false;
+                        });// Validate all fields when user selects/deselects
+                      },
+                      side: BorderSide(
+                        color: Colors.grey.shade500, // Light grey border color
+                        width: 1,
+                      ),
+                      activeColor: Colors.blue, // Optional: change checkbox color when selected
+                      checkColor: Colors.white, // Optional: checkmark color
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.085),
+                  Text(
+                    'Superior:',
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.015),
+                  Transform.scale(
+                    scale: 1.5, // Adjust this value to change the checkbox size
+                    child: Checkbox(
+                      value: isSuperior,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          isSuperior = newValue ?? false;
+                        });
+                      // Validate all fields when user selects/deselects
+                      },
+                      side: BorderSide(
+                        color: Colors.grey.shade500,
+                        width: 1,
+                      ),
+                      activeColor: Colors.blue,
+                      checkColor: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-
-            Row(
-              children: [
-                SizedBox(width: size.width * 0.22),
-                Text(
-                  'Apply To:',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(width: size.width * 0.035),
-                Text(
-                  'Manager:',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(width: size.width * 0.015),
-                Transform.scale(
-                  scale: 1.5, // Adjust this value to change the checkbox size
-                  child: Checkbox(
-                    value: isManager,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        isManager = newValue ?? false;
-                      });
-                      validateApplyTo(); // Validate when user selects/deselects
-                    },
-                    side: BorderSide(
-                      color: Colors.grey.shade500, // Light grey border color
-                      width: 1,
-                    ),
-                    activeColor: Colors.blue, // Optional: change checkbox color when selected
-                    checkColor: Colors.white, // Optional: checkmark color
-                  ),
-                ),
-                SizedBox(width: size.width * 0.085),
-                Text(
-                  'Superior:',
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(width: size.width * 0.015),
-                Transform.scale(
-                  scale: 1.5, // Adjust this value to change the checkbox size
-                  child: Checkbox(
-                    value: isSuperior,
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        isSuperior = newValue ?? false;
-                      });
-                      validateApplyTo(); // Validate when user selects/deselects
-                    },
-                    side: BorderSide(
-                      color: Colors.grey.shade500,
-                      width: 1,
-                    ),
-                    activeColor: Colors.blue,
-                    checkColor: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-
+            ],
+          ),
           SizedBox(height: size.height * 0.027,),
 
           SizedBox(height: size.height * 0.022,),
@@ -866,6 +849,8 @@ class _TabletLeaveState extends State<TabletLeave> {
   bool _isChecked = false;
   bool isHalfDay=false;
   String? selectedTicket;
+  bool isManager=false;
+  bool isSuperior=false;
 
   String? leaveTypeError;
   String? fromDateError;
@@ -957,17 +942,11 @@ class _TabletLeaveState extends State<TabletLeave> {
         isValid = false;
       }
 
-      // Validate Apply To
-      if (_selectedRole == null || _selectedRole!.isEmpty) {
-        applyToError = '* This field is required';
+      // Validate Apply To (Manager or Superior checkbox)
+      if (!isManager && !isSuperior) {
+        applyToError = '* Please select either Manager or Superior.';
         isValid = false;
       }
-
-      // Validate Ticket Selection
-      // if (selectedTicket == null || selectedTicket!.isEmpty) {
-      //   ticketError = '* Please select a ticket option';
-      //   isValid = false;
-      // }
 
       // Validate Reason
       if (reason.text.isEmpty) {
@@ -991,7 +970,7 @@ class _TabletLeaveState extends State<TabletLeave> {
           children: [
             SizedBox(width: size.width * 0.20,),
             Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.038,),
+            SizedBox(width: size.width * 0.042,),
             myContainer(context, '0001'),
             SizedBox(width: size.width * 0.088,),
             Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -1004,7 +983,7 @@ class _TabletLeaveState extends State<TabletLeave> {
           children: [
             SizedBox(width: size.width * 0.20,),
             Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.033,),
+            SizedBox(width: size.width * 0.035,),
             myContainer(context, 'Xyz'),
             SizedBox(width: size.width * 0.085,),
             Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
@@ -1013,10 +992,9 @@ class _TabletLeaveState extends State<TabletLeave> {
           ],
         ),
         SizedBox(height: size.height * 0.03,),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
+        Row(// Align error message properly
           children: [
-            SizedBox(width: size.width * 0.25),
+            SizedBox(width: size.width * 0.20),
             Text(
               'Leave Type:',
               style: TextStyle(
@@ -1026,7 +1004,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(width: size.width * 0.023),
+            SizedBox(width: size.width * 0.020),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1051,7 +1029,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(2),
-                    color: Colors.white,
+                    color: bgColor,
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -1061,7 +1039,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                         hint: Padding(
                           padding: EdgeInsets.all(4.0),
                           child: Text(
-                            'Select Leave Type',
+                            'Select Type',
                             style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: grey),
                           ),
                         ),
@@ -1272,7 +1250,7 @@ class _TabletLeaveState extends State<TabletLeave> {
             // Days Field
             Container(
               width: size.width * 0.16,
-              height: size.width * 0.032,
+              height: size.width * 0.028,
               child: Material(
                 color: Colors.transparent,
                 child: TextField(
@@ -1299,105 +1277,72 @@ class _TabletLeaveState extends State<TabletLeave> {
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 18,
-                color: black,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(width: size.width * 0.042),
-
-            // Apply To Dropdown
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for Apply To
-                if (applyToError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below the error message
-                    child: Text(
-                      applyToError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                Container(
-                  width: size.width * 0.22,
-                  height: size.height * 0.044,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: grey, width: 1),
-                    borderRadius: BorderRadius.circular(2),
-                    color: Colors.white,
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedRole,
-                        hint: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            'Manager',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: grey),
-                          ),
-                        ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedRole = newValue;
-                          });
-                        },
-                        items: _roles.map((String role) {
-                          return DropdownMenuItem<String>(
-                            value: role,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                role,
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        icon: Icon(Icons.keyboard_arrow_down_outlined, size: 25, color: Colors.black),
-                        isExpanded: true, // Ensures the dropdown takes full width
-                      ),
-                    ),
-                  ),
+            SizedBox(width: size.width * 0.035),
+            Text(
+              'Manager:',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: size.width * 0.015),
+            Transform.scale(
+              scale: 1.5, // Adjust this value to change the checkbox size
+              child: Checkbox(
+                value: isManager,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    isManager = newValue ?? false;
+                  });// Validate all fields when user selects/deselects
+                },
+                side: BorderSide(
+                  color: Colors.grey.shade500, // Light grey border color
+                  width: 1,
                 ),
-              ],
+                activeColor: Colors.blue, // Optional: change checkbox color when selected
+                checkColor: Colors.white, // Optional: checkmark color
+              ),
+            ),
+            SizedBox(width: size.width * 0.085),
+            Text(
+              'Superior:',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: size.width * 0.015),
+            Transform.scale(
+              scale: 1.5, // Adjust this value to change the checkbox size
+              child: Checkbox(
+                value: isSuperior,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    isSuperior = newValue ?? false;
+                  });
+                  // Validate all fields when user selects/deselects
+                },
+                side: BorderSide(
+                  color: Colors.grey.shade500,
+                  width: 1,
+                ),
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+              ),
             ),
           ],
         ),
 
         SizedBox(height: size.height * 0.02,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.20,),
-            Text('Own Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
-            Radio<String>(
-              value: 'own_ticket',
-              groupValue: selectedTicket,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedTicket = value; // Update the selected value
-                });
-              },
-              activeColor: Colors.grey, // Customize the active color
-            ),
-            SizedBox(width: size.width * 0.035,),
-            Text('company Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
-            Radio<String>(
-              value: 'company_ticket',
-              groupValue: selectedTicket,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedTicket = value; // Update the selected value
-                });
-              },
-              activeColor: Colors.grey, // Customize the active color
-            ),
-          ],
-        ),
+
         SizedBox(height: size.height * 0.025,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start, // Ensures vertical alignment
@@ -1424,7 +1369,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                 // Error message for Reason
                 if (reasonError != null)
                   Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below the error message
+                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below the error message
                     child: Text(
                       reasonError!,
                       style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
@@ -1433,7 +1378,7 @@ class _TabletLeaveState extends State<TabletLeave> {
 
                 Container(
                   width: size.width * 0.3, // Specify the width of the TextField
-                  height: size.height * 0.13, // Specify the height of the TextField
+                  height: size.height * 0.10, // Specify the height of the TextField
                   child: TextField(
                     controller: reason,
                     style: TextStyle(fontSize: 16), // Adjust text size within the TextField
@@ -1546,17 +1491,27 @@ class _TabletLeaveState extends State<TabletLeave> {
               ),
             ),
             SizedBox(width: size.width * 0.02,),
-            Material(
-              borderRadius: BorderRadius.circular(45),
-              color: Colors.transparent,
-              child: MaterialButton(
-                onPressed: (){},
-                minWidth: size.width * 0.11,
-                height: size.height * 0.06,
-                color: Colors.redAccent.shade100,
-                child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
+            OutlinedButton(
+              onPressed: () {
+                Get.off(DashBoardScreeen());
+              },
+              style: OutlinedButton.styleFrom(
+                minimumSize: Size(size.width * 0.11, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                side: BorderSide(color: grey), // Define the border color for the outlined button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                ),
               ),
-            ),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: black,
+                ),
+              ),
+            )
           ],
         )
 

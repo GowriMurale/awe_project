@@ -309,7 +309,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
             TabEmployeeTable(),
           ],
         ),
-        SizedBox(height: size.height * 0.030,),
+        SizedBox(height: size.height * 0.035,),
         Row(
           children: [
             SizedBox(width: size.width * 0.43,),
@@ -510,6 +510,7 @@ class EmployeeTable extends StatelessWidget {
 class TabEmployeeTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     // Define the text style for the header row
     TextStyle headerTextStyle = TextStyle(
       fontFamily: 'Inter',
@@ -570,9 +571,9 @@ class TabEmployeeTable extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: DataTable(
-                  headingRowHeight: 40, // Remove header inside the scrollable table
-                  dataRowHeight: 44,
-                  columnSpacing: 45,
+                  headingRowHeight: size.height * 0.053, // Remove header inside the scrollable table
+                  dataRowHeight: size.height *  0.052,
+                  columnSpacing: size.width * 0.044,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.grey, width: 1), // Outline border for the table
