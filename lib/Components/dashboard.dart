@@ -46,46 +46,47 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return  Row(
-      children: [
-    // Sidebar container
-    Container(
-      width: size.width * 0.150, // Adjust width as necessary
-      height:size.height* 0.900, // Sidebar takes full height
-      color: grey, // Background color for sidebar
-      child: Column(
-        children: [
-          SizedBox(height: size.height * 0.20),
-          GestureDetector(
-            onTap: (){
-              Get.to(ApplyLeaveScreen());
-            },
-            child: Container(
-              width: size.width * 0.125,
-              height:size.height* 0.048,
-              decoration: BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: size.width * 0.02,),
-                SizedBox(
-                  height: 18,
-                  width: 22,
-                  child: Image.asset('assets/images/leave.png',color: Colors.black,),
-                ),
-                  SizedBox(width: size.width * 0.01,),
-                  Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.05),
-          // Add more widgets here as per your sidebar content
-        ],
-      ),
-    ),
+     return
+    // Row(
+    //   children: [
+    // // Sidebar container
+    // Container(
+    //   width: size.width * 0.150, // Adjust width as necessary
+    //   height:size.height* 0.900, // Sidebar takes full height
+    //   color: grey, // Background color for sidebar
+    //   child: Column(
+    //     children: [
+    //       SizedBox(height: size.height * 0.20),
+    //       GestureDetector(
+    //         onTap: (){
+    //           Get.to(ApplyLeaveScreen());
+    //         },
+    //         child: Container(
+    //           width: size.width * 0.125,
+    //           height:size.height* 0.048,
+    //           decoration: BoxDecoration(
+    //             color: Colors.yellowAccent,
+    //             borderRadius: BorderRadius.circular(10),
+    //           ),
+    //           child: Row(
+    //             children: [
+    //               SizedBox(width: size.width * 0.02,),
+    //             SizedBox(
+    //               height: 18,
+    //               width: 22,
+    //               child: Image.asset('assets/images/leave.png',color: Colors.black,),
+    //             ),
+    //               SizedBox(width: size.width * 0.01,),
+    //               Text('Leaves',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       SizedBox(height: size.height * 0.05),
+    //       // Add more widgets here as per your sidebar content
+    //     ],
+    //   ),
+    // ),
     // return
       Column(
         children: [
@@ -93,7 +94,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           Row(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: size.width* 0.13,),
+              SizedBox(width: size.width* 0.35,),
               // IconButton(onPressed: (){
               //   Get.back();
               // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
@@ -106,7 +107,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.030,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.100,),
+              SizedBox(width: size.width * 0.170,),
              container2('Present', '20.5', purple,context),
               SizedBox(width: size.width * 0.04,),
               container2('Absent Days', '2.5', green,context),
@@ -120,12 +121,12 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.065,),
             Row(
               children: [
-              SizedBox(width: size.width * 0.105),
+              SizedBox(width: size.width * 0.178),
                 Text(
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                SizedBox(width: size.width * 0.390),
+                SizedBox(width: size.width * 0.396),
               Container(
                 width:size.width * 0.098,
                 height:size.height * 0.042,
@@ -172,15 +173,15 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
       Row(
             children: [
               Padding(
-                padding:  EdgeInsets.only(left: size.width * 0.120,top: size.height * 0.02),
+                padding:  EdgeInsets.only(left: size.width * 0.170,top: size.height * 0.02),
                 child: EmployeeTable(),
               ),
             ],
           ),
-          SizedBox(height: size.height * 0.030,),
+          SizedBox(height: size.height * 0.032,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.10,),
+              SizedBox(width: size.width * 0.42,),
                 MaterialButton(
                     onPressed: (){
                       Get.to(()=>ApplyLeaveScreen());
@@ -193,9 +194,9 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
             ],
           )
         ],
-    )
-    ]
-      );
+    );
+
+
   }
 }
 
@@ -417,6 +418,7 @@ class EmployeeTable extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     // Define the text style for the header row
     TextStyle headerTextStyle = TextStyle(
       fontFamily: 'Inter',
@@ -442,9 +444,9 @@ class EmployeeTable extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: DataTable(
-              headingRowHeight: 40, // Remove header inside the scrollable table
-              dataRowHeight: 42,
-              columnSpacing: 60,
+              headingRowHeight: size.height * 0.050, // Remove header inside the scrollable table
+              dataRowHeight: size.height * 0.055,
+              columnSpacing: size.width * 0.040,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.grey, width: 1), // Outline border for the table

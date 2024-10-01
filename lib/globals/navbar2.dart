@@ -86,7 +86,7 @@ class _DesktopNavbar2State extends State<DesktopNavbar2> {
     return Card(
       elevation: 1,
       child: Container(
-        height: size.height * 0.09,
+        height: size.height * 0.08,
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.only(topRight: Radius.circular(5),topLeft: Radius.circular(5),bottomLeft: Radius.zero,bottomRight: Radius.zero),
@@ -105,13 +105,8 @@ class _DesktopNavbar2State extends State<DesktopNavbar2> {
             child: Image.asset('assets/images/awe logo.png'),
                     ),
           ),
-            SizedBox(width: size.width * 0.10,),
-            IconButton(onPressed: (){
-              Get.back();
-            }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
-            SizedBox(width: size.width * 0.15,),
-            Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 22,fontWeight: FontWeight.bold,color: black),),
-            SizedBox(width: size.width * 0.45,),
+
+            SizedBox(width: size.width * 0.75,),
             GestureDetector(
               onTap: (){
                 _confirmSignOut(context);

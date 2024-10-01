@@ -19,7 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
+  bool _isLoading = false;
+  bool _isPasswordVisible = false;
 
   Future<void> _signIn(BuildContext context) async {
     try {
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('yes'),
+              child: Text('ok'),
             ),
           ],
         );
@@ -139,18 +140,88 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-                    MyTextField(controller: passwordController, text: 'Password', icon: Icons.lock_outline, obscureText: true,),
+              Card(
+                elevation: 2,
+                shadowColor: Colors.white,
+                child: Container(
+                  width: size.width *  0.235,
+                  height: size.height * 0.050,
+                  child: Material(
+                    color: Colors.white,
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: !_isPasswordVisible, // Hide or show the password
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
+                        prefixIcon: Icon(
+                          Icons.lock_outline,
+                          color: Colors.grey,
+                          size: 21,  // Adjust icon size if needed
+                        ),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 15,
+                          color: Colors.grey,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility_outlined // Show this icon when password is visible
+                                : Icons.visibility_off_outlined, // Show this icon when password is hidden
+                            size: 20,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
                     SizedBox(height: size.height * 0.075,),
                     MaterialButton(
-                      onPressed: (){
-                      _signIn(context);
+                      onPressed: _isLoading
+                          ? null // Disable the button while loading
+                          : () async {
+                        setState(() {
+                          _isLoading = true; // Start loading
+                        });
+
+                        await _signIn(context);
+
+                        setState(() {
+                          _isLoading = false; // Stop loading
+                        });
                       },
                       minWidth: size.width * 0.228,
-                      height:size.height * 0.060,
+                      height: size.height * 0.060,
                       color: yellow,
                       splashColor: yellow,
-                      child: Text("Login",style: TextStyle(color: black,fontFamily: 'Open Sans',fontSize: 18),),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                      )
+                          : Text(
+                        "Login",
+                        style: TextStyle(
+                          color: black,
+                          fontFamily: 'Open Sans',
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
+
                   ],
                 ),
               ),

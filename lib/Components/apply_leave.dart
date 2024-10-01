@@ -56,6 +56,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   DateTime? _toDate;
   bool _isChecked = false;
   bool isHalfDay=false;
+  bool isManager=false;
+  bool isSuperior=false;
   String? selectedTicket;
 
   String? leaveTypeError;
@@ -186,478 +188,113 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
     return isValid;
   }
+  void validateApplyTo() {
+    if (!isManager && !isSuperior) {
+      setState(() {
+        applyToError = "Please select Manager or Superior"; // Show error if none is selected
+      });
+    } else {
+      setState(() {
+        applyToError = null; // No error if at least one is selected
+      });
+    }
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return  Row(
-      children: [
-    // Sidebar container
-    Container(
-    width: size.width * 0.150, // Adjust width as necessary
-      height:size.height* 0.900, // Sidebar takes full height
-      color: grey, // Background color for sidebar
-      child: Column(
+     return
+       // Row(
+    //   children: [
+    // // Sidebar container
+    // Container(
+    // width: size.width * 0.150, // Adjust width as necessary
+    //   height:size.height* 0.900, // Sidebar takes full height
+    //   color: grey, // Background color for sidebar
+    //   child: Column(
+    //     children: [
+    //       SizedBox(height: size.height * 0.20),
+    //       GestureDetector(
+    //         onTap: (){
+    //           Get.to(DashBoardScreeen());
+    //         },
+    //         child: Container(
+    //           width: size.width * 0.125,
+    //           height:size.height* 0.048,
+    //           decoration: BoxDecoration(
+    //             color: Colors.yellowAccent,
+    //             borderRadius: BorderRadius.circular(10),
+    //           ),
+    //           child: Row(
+    //             children: [
+    //               SizedBox(width: size.width * 0.02,),
+    //               SizedBox(
+    //                 height: 18,
+    //                 width: 22,
+    //                 child: Image.asset('assets/images/dash.png',color: Colors.black,),
+    //               ),
+    //               SizedBox(width: size.width * 0.01,),
+    //               Text('Dashboard',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       SizedBox(height: size.height * 0.05),
+    //       // Add more widgets here as per your sidebar content
+    //     ],
+    //   ),
+    // ),
+
+
+      SingleChildScrollView(
+        child: Column(
         children: [
-          SizedBox(height: size.height * 0.20),
-          GestureDetector(
-            onTap: (){
-              Get.to(DashBoardScreeen());
-            },
-            child: Container(
-              width: size.width * 0.125,
-              height:size.height* 0.048,
-              decoration: BoxDecoration(
-                color: Colors.yellowAccent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: size.width * 0.02,),
-                  SizedBox(
-                    height: 18,
-                    width: 22,
-                    child: Image.asset('assets/images/dash.png',color: Colors.black,),
-                  ),
-                  SizedBox(width: size.width * 0.01,),
-                  Text('Dashboard',style: TextStyle(fontSize: 18,fontFamily: 'Inter', color:Colors.black),),
-                ],
-              ),
-            ),
+          SizedBox(height: size.height * 0.015,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.15,),
+              IconButton(onPressed: (){
+                Get.back();
+              }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
+              SizedBox(width: size.width * 0.28,),
+              Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold,color: black),),
+            ],
           ),
-          SizedBox(height: size.height * 0.05),
-          // Add more widgets here as per your sidebar content
-        ],
-      ),
-    ),
-
-
-      Column(
-      children: [
-        SizedBox(height: size.height * 0.03,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.095,),
-            Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.038,),
-            myContainer(context, '0001'),
-            SizedBox(width: size.width * 0.088,),
-            Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.051,),
-            myContainer(context, 'Adinin'),
-          ],
-        ),
-        SizedBox(height: size.height * 0.025,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.095,),
-            Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.033,),
-            myContainer(context, 'Xyz'),
-            SizedBox(width: size.width * 0.085,),
-            Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.040,),
-            myContainer(context, 'Worker'),
-          ],
-        ),
-        SizedBox(height: size.height * 0.03,),
-        Row(
-          // Align error message properly
-          children: [
-            SizedBox(width: size.width * 0.095,),
-            Text(
-              'Leave Type:',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: size.width * 0.023),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for Leave Type
-                if (leaveTypeError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding above dropdown
-                    child: Text(
-                      leaveTypeError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                // Leave Type Dropdown
-                Container(
-                  width: size.width * 0.16,
-                  height: size.height * 0.042,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey, // Keep the border color gray always
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                    color: Colors.white,
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedLeaveType,
-                        hint: Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.005),
-                          child: Text(
-                            'Select Type',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: grey),
-                          ),
-                        ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedLeaveType = newValue;
-                          });
-                        },
-                        items: _leaveTypes.map((String leaveType) {
-                          return DropdownMenuItem<String>(
-                            value: leaveType,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: size.width * 0.01),
-                              child: Text(
-                                leaveType,
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_outlined,
-                          size: 25,
-                          color: Colors.black,
-                        ),
-                        isExpanded: true, // Ensures the dropdown takes full width
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(width: size.width * 0.065),
-            Text(
-              'Leave balance:',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: size.width * 0.010),
-            myContainer(context, '04'),
-          ],
-        ),
-        SizedBox(height: size.height * 0.03,),
-        Row(
-          children: [
-            //Half day
-            SizedBox(width: size.width * 0.000010,),
-            Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.042,),
-            Container(
-              width: size.width * 0.020,
-                height: size.height * 0.038,
-              child: Material(
-              color: Colors.transparent,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isHalfDay = !isHalfDay; // Toggle half-day state
-                        if (_fromDate != null && _toDate != null) {
-                          _calculateDays(); // Recalculate days whenever half-day is toggled
-                        }
-                      });
-                   },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(0),
-                border: Border.all(color: Colors.grey, width: 1),
-                  color: isHalfDay ? Colors.blue : Colors.transparent, // Optional: change color when selected
-                  ),
-              child: Center(
-              child: isHalfDay
-             ? Icon(Icons.check, color: Colors.white, size: 20) // Show tick icon when selected
-        : null,
+          SizedBox(height: size.height * 0.01,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.22,),
+              Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.038,),
+              myContainer(context, '0001'),
+              SizedBox(width: size.width * 0.088,),
+              Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.051,),
+              myContainer(context, 'Adinin'),
+            ],
           ),
-             ),
-            ),
-            ),
+          SizedBox(height: size.height * 0.025,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.22,),
+              Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.033,),
+              myContainer(context, 'Xyz'),
+              SizedBox(width: size.width * 0.085,),
+              Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.040,),
+              myContainer(context, 'Worker'),
+            ],
           ),
-          ],
-           ),
-        SizedBox(height: size.height * 0.02,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.118,),
-            Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.145,),
-            Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.15,),
-            Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-          ],
-        ),
-        SizedBox(height: size.height * 0.02,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start, // Align error messages properly
-          children: [
-            SizedBox(width: size.width * 0.115,),
-            Text(
-              'Select Date:',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: size.width * 0.022),
-
-            // From Date TextField
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for From Date
-                if (fromDateError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
-                    child: Text(
-                      fromDateError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                Container(
-                  width: size.width * 0.14,
-                  height: size.height * 0.050,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: TextField(
-                      controller: from,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(5),
-                        suffixIcon: IconButton(
-                          onPressed: () => _selectDate(context, from, true),
-                          icon: Icon(
-                            Icons.calendar_today_outlined,
-                            size: 25,
-                            color: Colors.black,
-                          ),
-                        ),
-                        hintText: 'dd/mm/yyyy',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(width: size.width * 0.03),
-
-            // To Date TextField
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for To Date
-                if (toDateError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
-                    child: Text(
-                      toDateError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                Container(
-                  width: size.width * 0.14,
-                  height: size.height * 0.050,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: TextField(
-                      controller: to,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(5),
-                        hintText: 'dd/mm/yyyy',
-                        suffixIcon: IconButton(
-                          onPressed: () => _selectDate(context, to, false),
-                          icon: Icon(
-                            Icons.calendar_today_outlined,
-                            size: 25,
-                            color: Colors.black,
-                          ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(width: size.width * 0.025),
-
-            // Days TextField
-            Container(
-              width: size.width * 0.14,
-              height: size.height * 0.050,
-              child: Material(
-                color: Colors.transparent,
-                child: TextField(
-                  controller: days,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                  ),
-                  readOnly: true,
-                ),
-              ),
-            ),
-          ],
-        ),
-
-
-        SizedBox(height: size.height * 0.03,),
-        Row(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(width: size.width * 0.0100,),
-            Text(
-              'Apply To:',
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: size.width * 0.035),
-
-            // Apply To Dropdown
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for Apply To
-                if (applyToError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
-                    child: Text(
-                      applyToError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                Container(
-                  width: size.width * 0.22,
-                  height: size.height * 0.045,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: grey, width: 1), // Keep border color grey
-                    borderRadius: BorderRadius.circular(2),
-                    color: Colors.white,
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedRole,
-                        hint: Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.005),
-                          child: Text(
-                            'Select Role',
-                            style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: grey),
-                          ),
-                        ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedRole = newValue;
-                          });
-                        },
-                        items: _roles.map((String role) {
-                          return DropdownMenuItem<String>(
-                            value: role,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: size.width * 0.01),
-                              child: Text(
-                                role,
-                                style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: Colors.black),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        icon: Icon(Icons.keyboard_arrow_down_outlined, size: 25, color: Colors.black),
-                        isExpanded: true, // Ensures the dropdown takes full width
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-
-
-        SizedBox(height: size.height * 0.027,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.0003,),
-            Text('Own Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
-            Radio<String>(
-              value: 'own_ticket',
-              groupValue: selectedTicket,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedTicket = value; // Update the selected value
-                });
-              },
-              activeColor: Colors.grey, // Customize the active color
-            ),
-            SizedBox(width: size.width * 0.035,),
-            Text('company Ticket:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
-            SizedBox(width: size.width * 0.025,),
-            Radio<String>(
-              value: 'company_ticket',
-              groupValue: selectedTicket,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedTicket = value; // Update the selected value
-                });
-              },
-              activeColor: Colors.grey, // Customize the active color
-            ),
-          ],
-        ),
-        SizedBox(height: size.height * 0.022,),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: size.width * 0.115, bottom: size.height * 0.090),
-              child: Text(
-                'Reason:',
+          SizedBox(height: size.height * 0.03,),
+          Row(
+            // Align error message properly
+            children: [
+              SizedBox(width: size.width * 0.22,),
+              Text(
+                'Leave Type:',
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 18,
@@ -665,41 +302,349 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            SizedBox(width: size.width * 0.042), // Adjust space between label and text field as needed
-
-            // Reason TextField
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Error message for Reason
-                if (reasonError != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
-                    child: Text(
-                      reasonError!,
-                      style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
-                    ),
-                  ),
-
-                Container(
-                  width: size.width * 0.3, // Specify the width of the TextField
-                  height: size.height * 0.13, // Specify the height of the TextField
-                  child: TextField(
-                    controller: reason,
-                    style: TextStyle(fontSize: 16), // Adjust text size within the TextField
-                    maxLines: null, // Allows the TextField to expand vertically
-                    expands: true, // Allows the TextField content to fill the available space
-                    textAlignVertical: TextAlignVertical.top, // Centers text vertically
-                    decoration: InputDecoration(
-                      hintText: 'Text Here',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      contentPadding: EdgeInsets.only(top: size.height * 0.015, left: size.width * 0.010), // Padding inside the TextField
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.grey, width: 1),
+              SizedBox(width: size.width * 0.023),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Error message for Leave Type
+                  if (leaveTypeError != null)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 4), // Adjust padding above dropdown
+                      child: Text(
+                        leaveTypeError!,
+                        style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
                       ),
                     ),
+
+                  // Leave Type Dropdown
+                  Container(
+                    width: size.width * 0.16,
+                    height: size.height * 0.042,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey, // Keep the border color gray always
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(2),
+                      color: bgColor,
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _selectedLeaveType,
+                          hint: Padding(
+                            padding: EdgeInsets.only(left: size.width * 0.005),
+                            child: Text(
+                              'Select Type',
+                              style: TextStyle(fontFamily: 'Inter', fontSize: 15, color: grey),
+                            ),
+                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              _selectedLeaveType = newValue;
+                            });
+                          },
+                          items: _leaveTypes.map((String leaveType) {
+                            return DropdownMenuItem<String>(
+                              value: leaveType,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: size.width * 0.01),
+                                child: Text(
+                                  leaveType,
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            size: 25,
+                            color: Colors.black,
+                          ),
+                          isExpanded: true, // Ensures the dropdown takes full width
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(width: size.width * 0.065),
+              Text(
+                'Leave balance:',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: size.width * 0.010),
+              myContainer(context, '04'),
+            ],
+          ),
+          SizedBox(height: size.height * 0.03,),
+          Row(
+            children: [
+              //Half day
+              SizedBox(width: size.width * 0.22,),
+              Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.042,),
+              Container(
+                width: size.width * 0.018,
+                height: size.height * 0.035,
+                child: Material(
+                color: Colors.transparent,
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isHalfDay = !isHalfDay; // Toggle half-day state
+                          if (_fromDate != null && _toDate != null) {
+                            _calculateDays(); // Recalculate days whenever half-day is toggled
+                          }
+                        });
+                     },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(0),
+                  border: Border.all(color: Colors.grey, width: 1),
+                    color: isHalfDay ? Colors.blue : Colors.transparent, // Optional: change color when selected
+                    ),
+                child: Center(
+                child: isHalfDay
+               ? Icon(Icons.check, color: Colors.white, size: 20) // Show tick icon when selected
+          : null,
+            ),
+               ),
+              ),
+              ),
+            ),
+            ],
+             ),
+          SizedBox(height: size.height * 0.02,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.31,),
+              Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.145,),
+              Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+              SizedBox(width: size.width * 0.15,),
+              Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+            ],
+          ),
+          SizedBox(height: size.height * 0.01,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start, // Align error messages properly
+            children: [
+              SizedBox(width: size.width * 0.22,),
+              Text(
+                'Select Date:',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: size.width * 0.022),
+        
+              // From Date TextField
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Error message for From Date
+                  if (fromDateError != null)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
+                      child: Text(
+                        fromDateError!,
+                        style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
+                      ),
+                    ),
+        
+                  Container(
+                    width: size.width * 0.14,
+                    height: size.height * 0.042,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: TextField(
+                        controller: from,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(5),
+                          suffixIcon: IconButton(
+                            onPressed: () => _selectDate(context, from, true),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                          hintText: 'dd/mm/yyyy',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+        
+              SizedBox(width: size.width * 0.03),
+        
+              // To Date TextField
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Error message for To Date
+                  if (toDateError != null)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
+                      child: Text(
+                        toDateError!,
+                        style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
+                      ),
+                    ),
+        
+                  Container(
+                    width: size.width * 0.14,
+                    height: size.height * 0.042,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: TextField(
+                        controller: to,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(5),
+                          hintText: 'dd/mm/yyyy',
+                          suffixIcon: IconButton(
+                            onPressed: () => _selectDate(context, to, false),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+        
+              SizedBox(width: size.width * 0.025),
+        
+              // Days TextField
+              Container(
+                width: size.width * 0.14,
+                height: size.height * 0.042,
+                child: Material(
+                  color: Colors.transparent,
+                  child: TextField(
+                    controller: days,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                    readOnly: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: size.height * 0.03,),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Aligns error to the left
+          children: [
+            // Conditionally show the error message above the checkboxes
+            if (applyToError != null)
+              Padding(
+                padding: EdgeInsets.only(left: size.width * 0.22, bottom: 4), // Align error message
+                child: Text(
+                  applyToError!,
+                  style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
+                ),
+              ),
+
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.22),
+                Text(
+                  'Apply To:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.035),
+                Text(
+                  'Manager:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.015),
+                Transform.scale(
+                  scale: 1.5, // Adjust this value to change the checkbox size
+                  child: Checkbox(
+                    value: isManager,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        isManager = newValue ?? false;
+                      });
+                      validateApplyTo(); // Validate when user selects/deselects
+                    },
+                    side: BorderSide(
+                      color: Colors.grey.shade500, // Light grey border color
+                      width: 1,
+                    ),
+                    activeColor: Colors.blue, // Optional: change checkbox color when selected
+                    checkColor: Colors.white, // Optional: checkmark color
+                  ),
+                ),
+                SizedBox(width: size.width * 0.085),
+                Text(
+                  'Superior:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.015),
+                Transform.scale(
+                  scale: 1.5, // Adjust this value to change the checkbox size
+                  child: Checkbox(
+                    value: isSuperior,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        isSuperior = newValue ?? false;
+                      });
+                      validateApplyTo(); // Validate when user selects/deselects
+                    },
+                    side: BorderSide(
+                      color: Colors.grey.shade500,
+                      width: 1,
+                    ),
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
                   ),
                 ),
               ],
@@ -707,115 +652,186 @@ class _DesktopLeaveState extends State<DesktopLeave> {
           ],
         ),
 
+          SizedBox(height: size.height * 0.027,),
 
-        SizedBox(height: size.height * 0.022,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.080,),
-            RichText(
-              text: TextSpan(
-                text: 'I have read and accept ', // First part of the text
-                style: TextStyle(
-                  color: Colors.black, // Default text color
-                  fontSize: 16,
-                  fontFamily: 'Inter',
+          SizedBox(height: size.height * 0.022,),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: size.width * 0.22, bottom: size.height * 0.090),
+                child: Text(
+                  'Reason:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+              ),
+              SizedBox(width: size.width * 0.042), // Adjust space between label and text field as needed
+        
+              // Reason TextField
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextSpan(
-                    text: 'the leave policies', // Clickable link
-                    style: TextStyle(
-                      color: Colors.blue, // Link color
-                      decoration: TextDecoration.underline, // Underline the link
+                  // Error message for Reason
+                  if (reasonError != null)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
+                      child: Text(
+                        reasonError!,
+                        style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
+                      ),
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () async {
-                        const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
-                        if (await canLaunch(url)) {
-                          await launch(url, forceSafariVC: false); // Open in browser
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Could not launch the URL'),
-                            ),
-                          );
-                        }
-                      },
+        
+                  Container(
+                    width: size.width * 0.3, // Specify the width of the TextField
+                    height: size.height * 0.12, // Specify the height of the TextField
+                    child: TextField(
+                      controller: reason,
+                      style: TextStyle(fontSize: 16), // Adjust text size within the TextField
+                      maxLines: null, // Allows the TextField to expand vertically
+                      expands: true, // Allows the TextField content to fill the available space
+                      textAlignVertical: TextAlignVertical.top, // Centers text vertically
+                      decoration: InputDecoration(
+                        hintText: 'Text Here',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        contentPadding: EdgeInsets.only(top: size.height * 0.015, left: size.width * 0.010), // Padding inside the TextField
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide(color: Colors.grey, width: 1),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: size.height * 0.034,),
-        Row(
-          children: [
-            SizedBox(width: size.width * 0.12,),
-            Material(
-              borderRadius: BorderRadius.circular(45),
-              child: MaterialButton(
-                onPressed: () {
-                    // Validate all fields before applying
-                  if (_validateFields()) {
-                // All fields are filled, show confirmation popup with Yes and No buttons
-                Get.defaultDialog(
-                title: 'Confirm',
-                  content: Text('Are you sure you want to apply?'),
-                  actions: [
-                  TextButton(
-                  onPressed: () {
-                  // Action on No (cancel)
-                  Get.back(); // Clo  se the dialog
-                  } ,
-                child: Text('No', style: TextStyle(color: Colors.red)),
+            ],
+          ),
+        
+        
+          SizedBox(height: size.height * 0.022,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.38,),
+              RichText(
+                text: TextSpan(
+                  text: 'I have read and accept the ', // First part of the text
+                  style: TextStyle(
+                    color: Colors.black, // Default text color
+                    fontSize: 16,
+                    fontFamily: 'Inter',
                   ),
+                  children: [
+                    TextSpan(
+                      text: 'leave policies', // Clickable link
+                      style: TextStyle(
+                        color: Colors.blue, // Link color
+                        decoration: TextDecoration.underline, // Underline the link
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () async {
+                          const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
+                          if (await canLaunch(url)) {
+                            await launch(url, forceSafariVC: false); // Open in browser
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Could not launch the URL'),
+                              ),
+                            );
+                          }
+                        },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: size.height * 0.034,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.38,),
+              Material(
+                borderRadius: BorderRadius.circular(45),
+                child: MaterialButton(
+                  onPressed: () {
+                      // Validate all fields before applying
+                    if (_validateFields()) {
+                  // All fields are filled, show confirmation popup with Yes and No buttons
+                  Get.defaultDialog(
+                  title: 'Confirm',
+                    content: Text('Are you sure you want to apply?'),
+                    actions: [
                     TextButton(
                     onPressed: () {
-                      // Action on Yes (confirmation)
-                  Get.off(DashBoardScreeen()); // Close the dialog
-                    // Proceed with applying leave
+                    // Action on No (cancel)
+                    Get.back(); // Clo  se the dialog
+                    } ,
+                  child: Text('No', style: TextStyle(color: Colors.red)),
+                    ),
+                      TextButton(
+                      onPressed: () {
+                        // Action on Yes (confirmation)
+                    Get.off(DashBoardScreeen()); // Close the dialog
+                      // Proceed with applying leave
+                      },
+                    child: Text('Yes', style: TextStyle(color: Colors.green)),
+                    ),
+                  ],
+                  );
+              } else {
+                    // Show error alert dialog if fields are missing
+                Get.defaultDialog(
+                  title: 'Error',
+                content: Text('Please fill all required fields.'),
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+            Get.back(); // Close the dialog
                     },
-                  child: Text('Yes', style: TextStyle(color: Colors.green)),
+                  );
+                }
+              },
+                  minWidth: size.width * 0.075,
+                  height: size.height * 0.06,
+                  color: yellow,
+                  child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                ),
+              ),
+        
+        
+              SizedBox(width: size.width * 0.03,),
+              OutlinedButton(
+                onPressed: () {
+                  Get.off(DashBoardScreeen());
+                },
+                style: OutlinedButton.styleFrom(
+                  minimumSize: Size(size.width * 0.075, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                  side: BorderSide(color: grey), // Define the border color for the outlined button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
                   ),
-                ],
-                );
-            } else {
-                  // Show error alert dialog if fields are missing
-              Get.defaultDialog(
-                title: 'Error',
-              content: Text('Please fill all required fields.'),
-                  confirmTextColor: Colors.white,
-                  onConfirm: () {
-          Get.back(); // Close the dialog
-                  },
-                );
-              }
-            },
-                minWidth: size.width * 0.075,
-                height: size.height * 0.06,
-                color: yellow,
-                child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
-              ),
-            ),
-
-
-            SizedBox(width: size.width * 0.03,),
-            Material(
-              borderRadius: BorderRadius.circular(45),
-              child: MaterialButton(
-                onPressed: (){},
-                minWidth: size.width * 0.075,
-                height: size.height * 0.06,
-                color: Colors.redAccent.shade200,
-                child: Text('Cancel',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
-              ),
-            ),
-          ],
-        )
-
-      ],
+                ),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: black,
+                  ),
+                ),
               )
-    ]
-    );
+        
+            ],
+          )
+        
+        ],
+                ),
+      );
+
   }
 }
 
@@ -1179,7 +1195,7 @@ class _TabletLeaveState extends State<TabletLeave> {
 
                 Container(
                   width: size.width * 0.18,
-                  height: size.width * 0.032,
+                  height: size.width * 0.028,
                   child: Material(
                     color: Colors.transparent,
                     child: TextField(
@@ -1190,7 +1206,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                           onPressed: () => _selectDate(context, from, true),
                           icon: Icon(
                             Icons.calendar_today_outlined,
-                            size: 18,
+                            size: 16,
                             color: black,
                           ),
                         ),
@@ -1224,7 +1240,7 @@ class _TabletLeaveState extends State<TabletLeave> {
 
                 Container(
                   width: size.width * 0.18,
-                  height: size.width * 0.032,
+                  height: size.width * 0.028,
                   child: Material(
                     color: Colors.transparent,
                     child: TextField(
@@ -1236,7 +1252,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                           onPressed: () => _selectDate(context, to, false),
                           icon: Icon(
                             Icons.calendar_today_outlined,
-                            size: 18,
+                            size: 16,
                             color: black,
                           ),
                         ),
@@ -1562,7 +1578,7 @@ Widget myContainer(BuildContext context,String text){
   final Size size = MediaQuery.of(context).size;
   return    Container(
     width: size.width * 0.14,
-    height: size.height * 0.044,
+    height: size.height * 0.040,
     decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade700,width: 1)
     ),
