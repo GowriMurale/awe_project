@@ -4,6 +4,7 @@ import 'package:awe_project/Screens/leave_view_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -39,8 +40,28 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     'Last 6 months',
     'Last 12 months',
   ];
-
+    TextEditingController from=TextEditingController();
+  TextEditingController to=TextEditingController();
   String selectedValue = 'Last 3 months';
+
+  String _selectedDate = "From"; // Default text
+
+  // Function to show the date picker and update the selected date
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null) {
+      setState(() {
+        controller.text = "${picked.day}/${picked.month}/${picked.year}"; // Update the controller with the selected date
+      });
+    }
+  }
+
 
 
   @override
@@ -90,7 +111,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
     // return
       Column(
         children: [
-          SizedBox(height: size.height * 0.02,),
+          SizedBox(height: size.height * 0.01,),
           Row(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -104,7 +125,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
               Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
             ],
           ),
-          SizedBox(height: size.height * 0.030,),
+          SizedBox(height: size.height * 0.015,),
           Row(
             children: [
               SizedBox(width: size.width * 0.170,),
@@ -118,7 +139,17 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
 
             ],
           ),
-          SizedBox(height: size.height * 0.065,),
+          Row(
+            children: [
+              SizedBox(width: size.width * 0.170,),
+              container2('Annual Leave', '9', purple, context),
+              SizedBox(width: size.width * 0.04,),
+              container2('Sick Leave', '8', purple, context),
+              SizedBox(width: size.width * 0.04,),
+              container2('unpaid Authorize', '0.5', purple, context),
+            ],
+          ),
+          SizedBox(height: size.height * 0.055,),
             Row(
               children: [
               SizedBox(width: size.width * 0.178),
@@ -126,48 +157,62 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                SizedBox(width: size.width * 0.396),
-              Container(
-                width:size.width * 0.098,
-                height:size.height * 0.042,
-                  decoration: BoxDecoration(
-                  color: Colors.white,
-                    border: Border.all(color: grey,width: 1)
+                SizedBox(width: size.width * 0.326),
+                Container(
+                  width: size.width * 0.082,
+                  height: size.height * 0.034,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: TextField(
+                      controller: from,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5,bottom: 6),
+                        hintText: 'From',
+                        hintStyle: TextStyle(fontSize: 12),
+                        suffixIcon: IconButton(
+                          onPressed: () => _selectDate(context,from),
+                          icon: Icon(
+                            Icons.calendar_month,
+                            size: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                      ),
+                    ),
                   ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                value: selectedValue,
-                onChanged: (String? newValue) {
-                setState(() {
-                selectedValue = newValue!;
-                });
-              },
-              items: _dropdownItems.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Padding(
-                  padding:  EdgeInsets.only(left: size.width * 0.008),
-                 child: Text(
-                value,
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                fontSize: 15,
-                color: Colors.black,
                 ),
-              ),),
-              );
-           }).toList(),
-        // Show the dropdown icon and no custom container needed
-              icon: Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: Colors.black,
-            size: 20,
-            ),
-        // Adjusting dropdown's appearance
-            dropdownColor: Colors.white, // Background color of dropdown
-              ),
-            ),
-            ),
+                SizedBox(width: size.width * 0.016),
+                Container(
+                  width: size.width * 0.082,
+                  height: size.height * 0.034,
+                  child: Material(
+                    color: Colors.transparent,
+                    child: TextField(
+                      controller: to,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 5,bottom: 6),
+                        hintText: 'To',
+                        hintStyle: TextStyle(fontSize: 12),
+                        suffixIcon: IconButton(
+                          onPressed: () => _selectDate(context,to),
+                          icon: Icon(
+                            Icons.calendar_month,
+                            size: 14,
+                            color: Colors.black,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
       Row(
@@ -190,7 +235,33 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     height: size.height * 0.060,
                     color: yellow,
                     child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
-                )
+                ),
+                SizedBox(width: size.width * 0.015,),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Request Ticket",
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 15,
+                        color: blue,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.none, // Remove default underline
+                      ),
+                    ),
+                  ),
+                  // Add space between text and line
+                  Container(
+                    height: 1,
+                    color: blue, // Custom underline color
+                    width: size.width * 0.065, // Set the underline width as needed
+                  ),
+                ],
+              )
+
             ],
           )
         ],
@@ -259,47 +330,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
               style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
             ),
             SizedBox(width: size.width * 0.435),
-            Container(
-              width: size.width * 0.137,
-              height: size.height * 0.040,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: grey,width: 1)
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: selectedValue,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedValue = newValue!;
-                    });
-                  },
-                  items: _dropdownItems.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: Colors.black,
-                          ),
-                        ),),
-                    );
-                  }).toList(),
-                  // Show the dropdown icon and no custom container needed
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: Colors.black,
-                    size: 20,
-                  ),
-                  // Adjusting dropdown's appearance
-                  dropdownColor: Colors.white, // Background color of dropdown
-                ),
-              ),
-            ),
+
           ],
         ),
         SizedBox(height: size.height * 0.015,),
@@ -365,8 +396,8 @@ Widget container2(String text,String no, Color color,BuildContext context ){
   return Card(
     elevation: 2,
     child: Container(
-      width: size.width * 0.115,
-      height:size.height *  0.112,
+      width: size.width * 0.105,
+      height:size.height *  0.102,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
