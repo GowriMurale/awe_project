@@ -167,6 +167,10 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     color: Colors.transparent,
                     child: TextField(
                       controller: from,
+                        style: TextStyle(
+                        fontSize: 12, // Set a smaller font size for the picked date
+                        color: Colors.black, // You can also control the color of the text
+                          ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 5,bottom: 6),
                         hintText: 'From',
@@ -196,6 +200,10 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     color: Colors.transparent,
                     child: TextField(
                       controller: to,
+                      style: TextStyle(
+                        fontSize: 12, // Set a smaller font size for the picked date
+                        color: Colors.black, // You can also control the color of the text
+                      ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 5,bottom: 6),
                         hintText: 'To',

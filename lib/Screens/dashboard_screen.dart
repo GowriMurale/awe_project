@@ -200,7 +200,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 child:Row(children: [
                   SizedBox(width: 20,),
                   Text(
-                    'Adinin@gmail.com',
+                    'adinin@gmail.com',
                     style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),
                   ),
                 ]),),
@@ -312,7 +312,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width* 0.080,),
-                  newContainer(context, fullName),
+                  newContainer(context, fullName,'mdm'),
                   // myContainer(context, lastName),
                 ],
               ),
@@ -321,94 +321,44 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width * 0.080,),
-                  Text('Email address', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height: size.height *0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  newContainer(context, email)
-                ],
-              ),
-              SizedBox(height:size.height * 0.020,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  Text('Position', style: TextStyle(fontSize: 14)),
-                ],
-              ),
-              SizedBox(height: size.height *0.007,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
-                  newContainer(context, position)
-                ],
-              ),
-              SizedBox(height:size.height * 0.020,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.080,),
                   Text('Mobile Number', style: TextStyle(fontSize: 14)),
-                  SizedBox(width: size.width * 0.077,),
-                  Text('Date of birth', style: TextStyle(fontSize: 14)),
                 ],
               ),
-              SizedBox(height:size.height * 0.007,),
+              SizedBox(height: size.height *0.007,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width * 0.080,),
-                  myContainer(context, mobile),
-                  SizedBox(width: size.width * 0.040,),
-                  Container(
-                    width: size.width * 0.10,
-                    height: size.height * 0.038,
-                    child: Material(
-                      color: Colors.transparent,
-                      child: TextField(
-                        controller: dob,
-                        readOnly: true, // Makes the TextField read-only to prevent keyboard from appearing
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              Icons.calendar_today_outlined,
-                              size: 14,
-                              color: Colors.black,
-                            ),
-                            onPressed: () async {
-                              // Show date picker when the calendar icon is pressed
-                              DateTime? selectedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(), // Default to today's date
-                                firstDate: DateTime(1900), // Start date for the date picker
-                                lastDate: DateTime.now(), // End date for the date picker
-                              );
-
-                              if (selectedDate != null) {
-                                // Format the selected date and update the TextField
-                                String formattedDate = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                                dob.text = formattedDate; // Set the formatted date in the TextField
-                              }
-                            },
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: grey, width: 1),
-                            borderRadius: BorderRadius.circular(0),
-                          ),
-                          contentPadding: EdgeInsets.only(bottom: 4),
-                        ),
-                      ),
-                    ),
-                  )
-
-
+                  newContainer(context, email,'8056863355')
                 ],
               ),
+              SizedBox(height:size.height * 0.020,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  Text('Email Address', style: TextStyle(fontSize: 14)),
+                ],
+              ),
+              SizedBox(height: size.height *0.007,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.080,),
+                  newContainer(context, email,'adinin@gmail.com')
+                ],
+              ),
+              SizedBox(height:size.height * 0.020,),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     SizedBox(width: size.width * 0.080,),
+              //     Text('Mobile Number', style: TextStyle(fontSize: 14)),
+              //     SizedBox(width: size.width * 0.077,),
+              //   ],
+              // ),
+
+
               SizedBox(height:size.height * 0.040,),
               MaterialButton(
                 minWidth: size.width * .06,
@@ -588,7 +538,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 }
 
-Widget newContainer(BuildContext context, TextEditingController controller){
+Widget newContainer(BuildContext context, TextEditingController controller,String text){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.24,
@@ -599,6 +549,7 @@ Widget newContainer(BuildContext context, TextEditingController controller){
         controller: controller,
         style: TextStyle(fontSize: 16), // Adjust font size if necessary
         decoration: InputDecoration(
+          hintText: text,
           border: OutlineInputBorder(
             borderSide: BorderSide(color: grey, width: 1),
             borderRadius: BorderRadius.circular(0),
