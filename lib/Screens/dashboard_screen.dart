@@ -22,13 +22,13 @@ class DashBoardScreeen extends StatefulWidget {
 class _DashBoardScreeenState extends State<DashBoardScreeen> {
   DateTime now = DateTime.now(); // Get the current date and time
   String formattedDate = DateFormat(' dd/MM/yyyy    HH:mm:ss').format(DateTime.now());
-
+  final TextEditingController userIdController = TextEditingController();
   Future<void> _confirmSignOut(BuildContext context) async {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Sign Out'),
-        content: Text('Are you sure you want to sign out?'),
+        title: Text('Log Out'),
+        content: Text('Are you sure you want to Log out?'),
         actions: <Widget>[
           TextButton(
             child: Text('No'),
@@ -88,90 +88,123 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              //SizedBox(height: 20,),
+              SizedBox(height: 10,),
               Container(
-                height: 50,
+                height: 70,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('assets/images/user image.png'),
-                  radius: 30,
+                  radius: 25,
                   child: Container(
-                    height: 30,
-                    width: 100,
-                    padding: EdgeInsets.only(left: 25,bottom: 2,top: 10),
+                    width: 100, // Width of the button
+                    height: 30, // Height of the button
+                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 13) ,
                     child: IconButton(
-                      onPressed: () {
-                        _showEditDialog(context);
-                      }, icon: Icon(Icons.edit_outlined,),
+                        color: Colors.black,
+                        iconSize: 15,
+                        padding: EdgeInsets.all(20),
+                        onPressed: () {
+                          _showPopupMenu(context);
+                        }, icon: Icon(Icons.photo_camera_outlined,)
                     ),
-                  ),),),
-              //SizedBox(height: 1,),
-              Text('Personal Info Edit',
-                style: TextStyle(fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontStyle: FontStyle.normal),),
-              SizedBox(height: 7,),
-              Divider(
-                thickness: 4.0,
-                color: Colors.black54,
+                  ),
+                ),
               ),
-              SizedBox(height: 3,),
+
+              SizedBox(height: 5,),
               Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 28,
-                      width: 125,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'mdm',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-                          ),
-                        ),
-                      ),),
-                    SizedBox(width: 5,),
-                    Container(
-                      height: 28,
-                      width: 125,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'wong',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(7),
-                            borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-                          ),
-                        ),
-                      ),),
-                  ]),
-              SizedBox(height: 10,),
-              Container(
-                height: 28,
-                width: 330,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: '7890334',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(7),
-                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                        height: 20,
+                        padding: EdgeInsets.only(left: 12),
+                        child:Text('Personal Info',
+                          style: TextStyle(fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                              fontStyle: FontStyle.normal),)
                     ),
-                    contentPadding: EdgeInsets.all(8),
+                    SizedBox(width: 90,),
+                    GestureDetector(
+                      onTap: (){
+                        _showEditDialog(context);
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Edit',
+                                style: TextStyle(fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.blue,
+                                  fontStyle: FontStyle.normal,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                // Use GestureRecognizer to detect taps
+                              ),
+                            ]),),
+                    )]),
+              SizedBox(height: 7,),
+              Divider(
+                thickness: 1.5,
+                color: Colors.black45,
+              ),
+              SizedBox(height: 3,),
+              Container(
+                height: 32,
+                width: 280,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Background color of the container
+                  border: Border.all(
+                    color: Colors.grey, // Border color
+                    width: 1, // Border width
                   ),
+                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                ),
 
-                ),),
+                child: Row(
+                    children: [
+                      SizedBox(width: 20,),
+                      Text('Mdm',
+                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),]),
+              ),
               SizedBox(height: 10,),
               Container(
-                height: 28,
-                width: 330,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'adinin@gmail.com',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(7),
-                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-                    ),
+                height: 32,
+                width: 280,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Background color of the container
+                  border: Border.all(
+                    color: Colors.grey, // Border color
+                    width: 1, // Border width
                   ),
-                ),),
+                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                ),
+                child: Row(children: [
+                  SizedBox(width: 20,),
+                  Text(
+                    '8056863355',
+                    style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),
+                ]),),
+              SizedBox(height: 10,),
+              Container(
+                width: 280,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: Colors.white, // Background color of the container
+                  border: Border.all(
+                    color: Colors.grey, // Border color
+                    width: 1, // Border width
+                  ),
+                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                ),
+                child:Row(children: [
+                  SizedBox(width: 20,),
+                  Text(
+                    'Adinin@gmail.com',
+                    style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),
+                  ),
+                ]),),
+
               SizedBox(height: 10),
               Row(
                   children: [
@@ -180,7 +213,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       width: 135,
                       child: OutlinedButton(
                         onPressed: () {
-                          changePasswordScreen(username: '',);
+                          Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
                         },
                         style: ButtonStyle(
                           side: MaterialStateProperty.all(
@@ -188,7 +221,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           ),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10), // Rounded corners
+                              borderRadius: BorderRadius.circular(7), // Rounded corners
                             ),
                           ),
                         ),
@@ -196,20 +229,31 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                             fontSize: 10,fontWeight: FontWeight.bold,color: Colors.black)),
                       ),
                     ),
+                    SizedBox(width: 10,),
+                    Container(
+                      height: 30,
+                      width: 110,
+                      child: TextButton(
+                        onPressed: () {
+                          _confirmSignOut(context);
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.yellow,
+                          shape: RoundedRectangleBorder(
 
-                    SizedBox(width: 18,),
-                    Material(
-                        borderRadius: BorderRadius.circular(45),
-                        child: MaterialButton(
-                          onPressed: (){
-                            _confirmSignOut(context);
-                          },
-                          minWidth: 70,
-                          height: 35,
-                          color: yellow,
-                          child: Text('Log out',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
+                            borderRadius: BorderRadius.circular(7), // Rounded corners
+                          ),
                         ),
-                    )
+                        child: Row(
+                            children: [
+                              SizedBox(width: 20,) ,
+                              Text('Logout',style: TextStyle(
+                                  fontSize: 10,fontWeight: FontWeight.bold,color: Colors.black)),
+                              SizedBox(width: 5,) ,
+                              Icon(Icons.logout_outlined),
+                            ]),
+                      ),),
+                    SizedBox(height: 50)
                   ]),
             ],
           ),
@@ -219,8 +263,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 
   void _showEditDialog(BuildContext context) {
-    TextEditingController firstName=TextEditingController();
-    TextEditingController lastName=TextEditingController();
+    TextEditingController fullName=TextEditingController();
     TextEditingController email=TextEditingController();
     TextEditingController position=TextEditingController();
     TextEditingController mobile=TextEditingController();
@@ -259,9 +302,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width:size.width *  0.08,),
-                  Text('First Name', style: TextStyle(fontSize: 14)),
+                  Text('Full Name', style: TextStyle(fontSize: 14)),
                   SizedBox(width: size.width * 0.093,),
-                  Text('Last Name', style: TextStyle(fontSize: 14)),
+                  // Text('Last Name', style: TextStyle(fontSize: 14)),
                 ],
               ),
               SizedBox(height: size.height * 0.007,),
@@ -269,9 +312,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width* 0.080,),
-                  myContainer(context, firstName),
-                  SizedBox(width: size.width * 0.040,),
-                  myContainer(context, lastName),
+                  newContainer(context, fullName),
+                  // myContainer(context, lastName),
                 ],
               ),
               SizedBox(height:size.height * 0.020,),
@@ -325,7 +367,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   SizedBox(width: size.width * 0.040,),
                   Container(
                     width: size.width * 0.10,
-                    height: size.height * 0.032,
+                    height: size.height * 0.038,
                     child: Material(
                       color: Colors.transparent,
                       child: TextField(
@@ -335,7 +377,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           suffixIcon: IconButton(
                             icon: Icon(
                               Icons.calendar_today_outlined,
-                              size: 13,
+                              size: 14,
                               color: Colors.black,
                             ),
                             onPressed: () async {
@@ -358,7 +400,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                             borderSide: BorderSide(color: grey, width: 1),
                             borderRadius: BorderRadius.circular(0),
                           ),
-                          contentPadding: EdgeInsets.all(7),
+                          contentPadding: EdgeInsets.only(bottom: 4),
                         ),
                       ),
                     ),
@@ -391,7 +433,19 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     return HelperClass(
         desktop: Scaffold(
           appBar: AppBar(
-            backgroundColor:bgColor,
+            backgroundColor: Colors.transparent,
+            title: Text(''),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+              ),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(1.0), // Height of the border
+              child: Container(
+                color: Colors.black12, // Border color
+                height: 1.0, // Height of the border
+              ),
+            ),
             actions: [
               Row(
                   children: [
@@ -403,9 +457,29 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         child: Image.asset('assets/images/awe logo.png',fit: BoxFit.contain),),),
                   ]),
               Spacer(), // Pushes the next widgets to the right
-              Icon(Icons.mail_outline_outlined),
+              // Icon(Icons.mail_outline_outlined),
               SizedBox(width: 30), // spacing between icons
               Icon(Icons.notifications_outlined),
+
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20,),
+                    Container(
+                      width: 15.0,  // Set the width
+                      height: 15.0, // Set the height
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,  // Circular shape
+                        color: Colors.yellow,      // Background color
+                      ),
+                      child: Center(
+                        child: Text(
+                          '1',
+                          style: TextStyle(fontSize:9,fontWeight:FontWeight.bold,color: Colors.black),
+                        ),
+                      ),
+                    ),]),
               SizedBox(width: 70), // spacing between icons
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -427,24 +501,35 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 ],
               ),
               SizedBox(width: 30,),
-              Center(
-                child: Container(
-                  height: 50,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/user image.png'),
-                    radius: 30,
-                    child: Container(
-                      height: 30,
-                      width: 100,
-                      padding: EdgeInsets.only(left: 25,bottom: 2,top: 10),
-                      child: IconButton(
-                        onPressed: () {
-                          _showPopupMenu(context);
-                        }, icon: Icon(Icons.edit_outlined,),
-                      ),
-                    ),
-
-                  ),),),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 75,
+                        child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/user image.png'),
+                            radius: 28,
+                            child:Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                //mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    height:22,
+                                    width: 500,
+                                    padding: EdgeInsets.only(left: 24,top: 3,),
+                                    child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.grey.shade300,
+                                            shape: CircleBorder()
+                                        ),
+                                        onPressed: () {
+                                          _showPopupMenu(context);
+                                        }, child: Icon(Icons.edit_outlined,size: 10,color: Colors.black87,)
+                                    ),)])
+                        ),
+                      ),),]),
               SizedBox(width: 30), // spacing between the profile and app bar end
             ],
             toolbarHeight: 75.0,
@@ -507,7 +592,7 @@ Widget newContainer(BuildContext context, TextEditingController controller){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.24,
-    height: size.height * 0.05, // Increase the height for better alignment
+    height: size.height * 0.038, // Increase the height for better alignment
     child: Material(
       color: Colors.transparent,
       child: TextField(
@@ -530,7 +615,7 @@ Widget myContainer(BuildContext context, TextEditingController controller){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.10,
-    height: size.height * 0.036,
+    height: size.height * 0.038,
     child: Material(
       color: Colors.transparent,
       child: TextField(

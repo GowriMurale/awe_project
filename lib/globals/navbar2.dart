@@ -31,8 +31,8 @@ class _DesktopNavbar2State extends State<DesktopNavbar2> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Sign Out'),
-        content: Text('Are you sure you want to sign out?'),
+        title: Text('Log Out'),
+        content: Text('Are you sure you want to Log out?'),
         actions: <Widget>[
           TextButton(
             child: Text('No'),
@@ -100,7 +100,7 @@ class _DesktopNavbar2State extends State<DesktopNavbar2> {
               top: size.height * 0.003,
             ),
             child: Container(
-              width: size.width * 0.125,
+              width: size.width * 0.145,
               decoration: BoxDecoration(),
             child: Image.asset('assets/images/awe logo.png'),
                     ),

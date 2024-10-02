@@ -18,7 +18,15 @@ class _SignupScreenState extends State<changePasswordScreen> {
   TextEditingController  pasword=TextEditingController();
   TextEditingController  newPassword=TextEditingController();
   TextEditingController  confirmPassword=TextEditingController();
+  bool _obscureText = true;
+  bool _isLoading=false;
 
+  // Toggle the visibility of the password
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
   //
   Future<void> _changePassword(BuildContext context) async {
     if (newPassword.text.trim() == confirmPassword.text.trim()) {
@@ -124,7 +132,6 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 width: 330,
                                 child: TextField(
                                   controller: userIdController,
-                                  obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -165,7 +172,6 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 width: 330,
                                 child: TextField(
                                   controller: pasword,
-                                  obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -200,39 +206,42 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             children: [
                               const Text('New Password',style:TextStyle(fontSize: 15,fontWeight: FontWeight.w600,
                                   color: Colors.black,fontStyle: FontStyle.normal)),
-                              Container(
-                                height: 35,
-                                width: 330,
-                                child: TextField(
-                                  controller: newPassword,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: const BorderSide(color: Colors.grey, width: 1.0),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.visibility_off_outlined),
-                                      onPressed: () {},
-                                    ),
+                          Container(
+                            height: 35,
+                            width: 330,
+                            child: TextField(
+                              controller: newPassword,
+                              obscureText: _obscureText, // Use dynamic state here
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade400), // Border when enabled
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade500), // Border when focused
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade500), // Border when there is an error
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade500), // Border when disabled
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined, // Icon changes based on state
                                   ),
-                                ),)
+                                  onPressed: _togglePasswordVisibility, // Toggle visibility when pressed
+                                ),
+                              ),
+                            ),
+                          ),
                             ],
                           ),
                         ),
@@ -251,7 +260,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 padding: const EdgeInsets.only( ),
                                 child: TextField(
                                   controller: confirmPassword,
-                                  obscureText: true,
+                                  obscureText: _obscureText,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -274,8 +283,10 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     suffixIcon: IconButton(
-                                      icon: Icon(Icons.visibility_off_outlined),
-                                      onPressed: () {},
+                                      icon: Icon(
+                                        _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined, // Icon changes based on state
+                                      ),
+                                      onPressed: _togglePasswordVisibility, // Toggle visibility when pressed
                                     ),
                                   ),
                                 ),)
@@ -283,24 +294,37 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ),
                         ),
                         const SizedBox(height: 30),
-                        Container(
-                          child: Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                  _changePassword(context);
-                              },
-                              child: const Text('Update',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.black),),
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 13),
-                                backgroundColor: Colors.yellow,
-                                shape:  RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                              ),
-                            ),
-                          ),
-                          //SizedBox(height: 30)
+                    MaterialButton(
+                      onPressed: _isLoading
+                          ? null // Disable the button while loading
+                          : () async {
+                        setState(() {
+                          _isLoading = true; // Start loading
+                        });
+
+                        await _changePassword(context);
+
+                        setState(() {
+                          _isLoading = false; // Stop loading
+                        });
+                      },
+                      minWidth: size.width * 0.228,
+                      height: size.height * 0.060,
+                      color: yellow,
+                      splashColor: yellow,
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                      )
+                          : Text(
+                        "Update",
+                        style: TextStyle(
+                          color: black,
+                          fontFamily: 'Open Sans',
+                          fontSize: 18,
                         ),
+                      ),
+                    ),
                         SizedBox(height: 80,width: 300,
                           child:  Divider(
 

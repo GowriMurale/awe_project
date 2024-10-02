@@ -44,6 +44,8 @@ dependencies:
   amplify_auth_cognito: ^2.4.1
   amplify_storage_s3: ^2.4.1
   amplify_datastore: ^2.4.1
+  aws_sdk: ^0.0.3
+#  aws_client: ^0.6.0
 
 
 

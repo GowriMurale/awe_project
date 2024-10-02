@@ -25,27 +25,7 @@ void main() async {
   runApp(MyApp());
 }
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//
-//   await _configureAmplify();
-//
-//   runApp(MyApp());
-// }
-// Future<void> _configureAmplify() async {
-//   try {
-//     // Add Amplify plugins
-//     await Amplify.addPlugins([
-//       AmplifyAuthCognito(),
-//
-//     ]);
-//
-//     // Configure Amplify with the backend
-//     await Amplify.configure(amplifyconfig);
-//   } catch (e) {
-//     print('An error occurred configuring Amplify: $e');
-//   }
-// }
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -60,7 +40,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: DashBoardScreeen(),
     );
   }
 }
