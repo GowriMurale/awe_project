@@ -2,10 +2,14 @@ import 'package:awe_project/Components/apply_leave.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar2.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'dashboard_screen.dart';
 class ApplyLeaveScreen extends StatefulWidget {
   @override
   State<ApplyLeaveScreen> createState() => _ApplyLeaveScreenState();
@@ -180,6 +184,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
           body: Container(
             child: Column(
               children: [
+                SizedBox(height: size.height * 0.015,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.15,),
@@ -187,36 +192,36 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                       Get.back();
                     }, icon: Icon(Icons.arrow_back,size: 18,color: Colors.black,)),
                     SizedBox(width: size.width * 0.18,),
-                    Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                    Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                   ],
                 ),
-                SizedBox(height: size.height * 0.015,),
+                SizedBox(height: size.height * 0.020,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.10,),
-                    Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+                    Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.038,),
                     myContainer(context, '0001'),
                     SizedBox(width: size.width * 0.088,),
-                    Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+                    Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.078,),
                     myContainer(context, 'Adinin'),
                   ],
                 ),
-                SizedBox(height: size.height * 0.025,),
+                SizedBox(height: size.height * 0.030,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.09,),
-                    Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+                    Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.033,),
                     myContainer(context, 'Xyz'),
                     SizedBox(width: size.width * 0.085,),
-                    Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
+                    Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.040,),
                     myContainer(context, 'Worker'),
                   ],
                 ),
-                SizedBox(height: size.height * 0.025,),
+                SizedBox(height: size.height * 0.030,),
                 Row(
                   // Align error message properly
                   children: [
@@ -227,7 +232,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         fontFamily: 'Inter',
                         fontSize: 16,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: size.width * 0.013),
@@ -309,7 +313,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         fontFamily: 'Inter',
                         fontSize: 16,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: size.width * 0.010),
@@ -321,7 +324,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                   children: [
                     //Half day
                     SizedBox(width: size.width * 0.10,),
-                    Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                    Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.042,),
                     Container(
                       width: size.width * 0.035,
@@ -354,18 +357,18 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.020,),
+                SizedBox(height: size.height * 0.030,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.25,),
-                    Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                    Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.145,),
-                    Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                    Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.15,),
-                    Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                    Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                   ],
                 ),
-                SizedBox(height: size.height * 0.020,),
+                SizedBox(height: size.height * 0.030,),
                 Row(// Align error messages properly
                   children: [
                     SizedBox(width: size.width * 0.05,),
@@ -375,7 +378,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         fontFamily: 'Inter',
                         fontSize: 16,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: size.width * 0.020),
@@ -395,7 +397,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ),
 
                         Container(
-                          width: size.width * 0.18,
+                          width: size.width * 0.20,
                           height: size.height * 0.038,
                           child: Material(
                             color: Colors.transparent,
@@ -441,7 +443,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ),
 
                         Container(
-                          width: size.width * 0.18,
+                          width: size.width * 0.20,
                           height: size.height * 0.038,
                           child: Material(
                             color: Colors.transparent,
@@ -474,7 +476,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
                     // Days TextField
                     Container(
-                      width: size.width * 0.18,
+                      width: size.width * 0.20,
                       height: size.height * 0.038,
                       child: Material(
                         color: Colors.transparent,
@@ -490,6 +492,263 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.030,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // Aligns error to the left
+                  children: [
+                    // Conditionally show the error message above the checkboxes
+                    if (applyToError != null)
+                      Padding(
+                        padding: EdgeInsets.only(left: size.width * 0.22, bottom: 4), // Align error message
+                        child: Text(
+                          applyToError!,
+                          style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
+                        ),
+                      ),
+
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.10),
+                        Text(
+                          'Apply To:',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: Colors.black,
+
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.035),
+                        Text(
+                          'Manager:',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: Colors.black,
+
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.015),
+                        Transform.scale(
+                          scale: 1.0, // Adjust this value to change the checkbox size
+                          child: Checkbox(
+                            value: isManager,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                isManager = newValue ?? false;
+                              });// Validate all fields when user selects/deselects
+                            },
+                            side: BorderSide(
+                              color: Colors.grey.shade500, // Light grey border color
+                              width: 1,
+                            ),
+                            activeColor: Colors.blue, // Optional: change checkbox color when selected
+                            checkColor: Colors.white, // Optional: checkmark color
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.085),
+                        Text(
+                          'Superior:',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.015),
+                        Transform.scale(
+                          scale: 1.0, // Adjust this value to change the checkbox size
+                          child: Checkbox(
+                            value: isSuperior,
+                            onChanged: (bool? newValue) {
+                              setState(() {
+                                isSuperior = newValue ?? false;
+                              });
+                              // Validate all fields when user selects/deselects
+                            },
+                            side: BorderSide(
+                              color: Colors.grey.shade500,
+                              width: 1,
+                            ),
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.030,),
+                    Row(
+                      // Align error message properly
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(left: size.width * 0.15, bottom: size.height * 0.090),
+                          child: Text(
+                            'Reason:',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.042), // Adjust space between label and text field as needed
+
+                        // Reason TextField
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Error message for Reason
+                            if (reasonError != null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 4), // Adjust padding below error message
+                                child: Text(
+                                  reasonError!,
+                                  style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
+                                ),
+                              ),
+
+                            Container(
+                              width: size.width * 0.3, // Specify the width of the TextField
+                              height: size.height * 0.08, // Specify the height of the TextField
+                              child: TextField(
+                                controller: reason,
+                                style: TextStyle(fontSize: 16), // Adjust text size within the TextField
+                                maxLines: null, // Allows the TextField to expand vertically
+                                expands: true, // Allows the TextField content to fill the available space
+                                textAlignVertical: TextAlignVertical.top, // Centers text vertically
+                                decoration: InputDecoration(
+                                  hintText: 'Text Here',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  contentPadding: EdgeInsets.only(top: size.height * 0.015, left: size.width * 0.010), // Padding inside the TextField
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.0,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.18,),
+                        RichText(
+                          text: TextSpan(
+                            text: 'I have read and accept the ', // First part of the text
+                            style: TextStyle(
+                              color: Colors.black, // Default text color
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'leave policies', // Clickable link
+                                style: TextStyle(
+                                  color: Colors.blue, // Link color
+                                  decoration: TextDecoration.underline, // Underline the link
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () async {
+                                    const url = 'https://commonfiles.s3.ap-southeast-1.amazonaws.com/Policy/INSTRUCTION+FOR+APPLICATION+FOR+LEAVE+.pdf';
+                                    if (await canLaunch(url)) {
+                                      await launch(url, forceSafariVC: false); // Open in browser
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Could not launch the URL'),
+                                        ),
+                                      );
+                                    }
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.040,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.28,),
+                        Material(
+                          borderRadius: BorderRadius.circular(45),
+                          child: MaterialButton(
+                            onPressed: () {
+                              // Validate all fields before applying
+                              if (_validateFields()) {
+                                // All fields are filled, show confirmation popup with Yes and No buttons
+                                Get.defaultDialog(
+                                  title: 'Confirm',
+                                  content: Text('Are you sure you want to apply?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        // Action on No (cancel)
+                                        Get.back(); // Clo  se the dialog
+                                      } ,
+                                      child: Text('No', style: TextStyle(color: Colors.red)),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        // Action on Yes (confirmation)
+                                        Get.off(DashBoardScreeen()); // Close the dialog
+                                        // Proceed with applying leave
+                                      },
+                                      child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                // Show error alert dialog if fields are missing
+                                Get.defaultDialog(
+                                  title: 'Error',
+                                  content: Text('Please fill all required fields.'),
+                                  confirmTextColor: Colors.white,
+                                  onConfirm: () {
+                                    Get.back(); // Close the dialog
+                                  },
+                                );
+                              }
+                            },
+                            minWidth: size.width * 0.195,
+                            height: size.height * 0.06,
+                            color: yellow,
+                            child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                          ),
+                        ),
+
+
+                        SizedBox(width: size.width * 0.03,),
+                        OutlinedButton(
+                          onPressed: () {
+                            Get.off(DashBoardScreeen());
+                          },
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: Size(size.width * 0.005, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                            side: BorderSide(color: grey), // Define the border color for the outlined button
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                            ),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ),
+                          ),
+                        )
+
+                      ],
+                    )
                   ],
                 ),
               ],
@@ -512,7 +771,7 @@ Widget myContainer(BuildContext context,String text){
     ),
     child: Padding(
       padding:  EdgeInsets.all( 2.0),
-      child: Text(text,style: TextStyle(color: Colors.grey.shade500,fontFamily: 'Inter',fontSize: 16),),
+      child: Text(text,style: TextStyle(color: Colors.grey.shade500,fontFamily: 'Inter',fontSize: 13),),
     ),
   );
 }

@@ -24,21 +24,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _signIn(BuildContext context) async {
     try {
+      // Fetch auth session to check if user is already signed in
+      var session = await Amplify.Auth.fetchAuthSession();
+      if (session.isSignedIn) {
+        // User is already signed in, navigate to the dashboard
+        Get.off(() => DashBoardScreeen());
+        return;
+      }
+
+      // Proceed with normal sign-in if user is not already signed in
       SignInResult res = await Amplify.Auth.signIn(
         username: userIdController.text.trim(),
         password: passwordController.text.trim(),
       );
 
       print("Sign-in response: ${res.toString()}");
-        print(res.nextStep.signInStep);
+      print(res.nextStep.signInStep);
+
       if (res.isSignedIn) {
         // User is signed in, navigate to the dashboard
         Get.off(() => DashBoardScreeen());
       } else if (res.nextStep.signInStep == AuthSignInStep.confirmSignInWithNewPassword) {
         // The user needs to set a new password
-
-        print("Next step: Confirm sign in with new password required.");
-          Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
+        print("Next step: Confirm sign-in with new password required.");
+        Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
       } else {
         // Handle other failure reasons (e.g., incorrect password)
         print("Sign-in failed. Next step: ${res.nextStep.signInStep}");
@@ -49,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _showErrorDialog(context, e.message);
     }
   }
+
 
 
 

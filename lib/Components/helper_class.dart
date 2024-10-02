@@ -26,14 +26,7 @@ class HelperClass extends StatelessWidget {
           return
             tablet;
         } else {
-          return Container(
-            width: size.width,
-            alignment: Alignment.center,
-            color: bgColor,
-            padding: EdgeInsets.symmetric(
-                vertical: size.height * 0.05, horizontal: 18),
-            child: mobile,
-          );
+          return mobile;
         }
       },
     );
