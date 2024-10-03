@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+
 class DateField extends StatelessWidget {
   final TextEditingController controller;
   final String? errorMessage;
@@ -28,24 +30,34 @@ class DateField extends StatelessWidget {
               style: const TextStyle(color: Colors.red, fontSize: 12), // Error text styling
             ),
           ),
-        GestureDetector(
-          onTap: () => onTap(context),
-          child: Container(
-            width: size.width * 0.14,
-            height: size.height * 0.040,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade700, width: 1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                controller.text.isEmpty ? 'dd/mm/yyyy' : controller.text, // Display placeholder or entered date
-                style: TextStyle(
-                  color: controller.text.isEmpty ? Colors.grey.shade500 : Colors.black,
-                  fontFamily: 'Inter',
-                  fontSize: 16,
+        Container(
+          width: size.width * 0.125, // Adjust width for better layout
+          height: size.height * 0.042,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade700, width: 1),
+            borderRadius: BorderRadius.circular(1),
+          ),
+          child: Padding(
+            padding:  EdgeInsets.only(left: 4.0,),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  controller.text.isEmpty ? 'dd/mm/yyyy' : controller.text, // Display placeholder or entered date
+                  style: TextStyle(
+                    color: controller.text.isEmpty ? Colors.grey.shade500 : Colors.black,
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                  ),
                 ),
-              ),
+                Padding(
+                  padding:  EdgeInsets.only(bottom: 4.0),
+                  child: IconButton(
+                    icon: Icon(Icons.calendar_today, color: Colors.grey.shade700, size: 18), // Calendar icon
+                    onPressed: () => onTap(context), // Trigger the date picker on tap
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -53,3 +65,42 @@ class DateField extends StatelessWidget {
     );
   }
 }
+
+// Future<void> applyForLeave() async {
+//   if (_selectedLeaveType == null || from.text.isEmpty || to.text.isEmpty || days.text.isEmpty || reason.text.isEmpty) {
+//     // Handle validation errors
+//     return;
+//   }
+//
+//   // Determine the 'applyTo' value based on isManager
+//   final applyTo = isManager ? 'Manager' : 'Superior';
+//
+//   final leaveApplication = LeaveApplication(
+//     leaveType: _selectedLeaveType!,
+//     fromDate: DateTime.parse(from.text),
+//     toDate: DateTime.parse(to.text),
+//     numberOfDays: int.parse(days.text),
+//     applyTo: applyTo, // Add the applyTo value
+//     reason: reason.text,
+//   );
+//
+//   try {
+//     // Save the leave application to AWS
+//     await saveToAWS(leaveApplication);
+//     // Navigate or show success message
+//   } catch (e) {
+//     // Handle errors
+//     print('Error applying for leave: $e');
+//   }
+// }
+//
+// Future<void> saveToAWS(LeaveApplication leaveApplication) async {
+//   try {
+//     // Pass the leaveApplication instance directly
+//     // await Amplify.DataStore.save(leaveApplication);
+//   } catch (e) {
+//     // Handle save error
+//     print('Error saving to AWS: $e');
+//   }
+// }
+

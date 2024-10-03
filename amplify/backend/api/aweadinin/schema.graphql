@@ -1,3 +1,116 @@
+type InterviewSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  date: AWSDate!
+  time: String!
+  venue: String!
+  interviewer: String!
+  interviewType: String!
+  message: String!
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  userName: String!
+  password: String!
+  position: String!
+  department: String!
+  selectType: [String!]
+  setPermissions: [String]
+}
+
+type LeaveStatus @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: ID!
+  leaveType: String!
+  fromDate: AWSDate!
+  toDate: AWSDate!
+  days: Int!
+  applyTo: String!
+  reason: String!
+}
+
+type LabourDetails @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  workPermitType: String!
+  arrivalStampingExpiry: String!
+  employmentPassEndorsement: String!
+  immigrationDeptDate: String!
+  employmentPassExpiry: String!
+  employmentPassStatus: String!
+  overseasMedicalDate: String!
+  overseasMedicalExpiry: String!
+  bruhimsRegistrationDate: String!
+  bruhimsRegistrationNumber: String!
+  bruneiMedicalAppointmentDate: String!
+  bruneiMedicalExpiry: String!
+  passportLocation: String!
+  reEntryVisaApplication: String!
+  immigrationApprovalDate: String!
+  reEntryVisaExpiry: String!
+  airTicketStatus: String!
+  remarks: String!
+  dependentName: String!
+  dependentPassportNumber: String!
+  dependentPassportExpiry: String!
+  relation: String!
+  labourDepositPaidBy: String!
+  labourDepositReceiptNumber: String!
+  labourDepositAmount: Int!
+  labourUploadDoc: [String!]
+}
+
+type WorkInfoSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  dateOfJoin: String!
+  department: String
+  workPosition: String
+  upgradePosition: String!
+  jobDescription: String!
+  skillPool: String!
+  workStatus: String!
+  contractStartDate: String!
+  contractEndDate: String!
+  contractPeriodStatus: String!
+  probationaryStartDate: String!
+  probationaryEndDate: String!
+  normalWorkingHours: String!
+  salaryType: String!
+  employmentWorkStatus: String!
+  resignationDate: String!
+  terminationDate: String!
+  terminationNoticeProbation: String!
+  terminationNoticeConfirmation: String!
+  resignationNoticeProbation: String!
+  resignationNoticeConfirmation: String!
+  reasonOfResignation: String!
+  reasonOfTermination: String!
+  destinationOfEntitlement: String!
+  leavePassageEntitlement: String!
+  dateOfEntitlement: String!
+  durationPeriodEntitlement: String!
+  annualLeaveEntitlement: String!
+  effectiveDateRevision: String!
+  sickLeaveEntitlement: String!
+  jobCategory: String!
+  otherJobCategory: String
+  upgradeDate: String!
+  normalWorkingWeek: String!
+  normalWorkingMonth: String!
+  effectiveDateOfSickLeave: String!
+  positionRevision: String!
+  RevisionsalaryPackage: String!
+  leavePassageEntitlementRevision: String!
+  effectiveDateOfLeavePassage: String!
+  revisionAnnualLeave: String!
+  annualLeaveEffectDate: String!
+  ContractEffectDate: String!
+  contractOfEmployee: String!
+  remarksWorkInfo: String
+}
+
 type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
   id: ID!
   profilePhoto: String!
@@ -18,26 +131,26 @@ type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
   otherRace: String
   religion: String!
   otherReligion: String
-  icNo: String!
-  icExpiry: String!
-  icColour: String!
-  passportNo: String!
+  icNo: String
+  icExpiry: String
+  icColour: String
+  passportNo: String
   alternateNo: String
-  passportIssued: String!
-  passportExpiry: String!
-  passportDestination: String!
+  passportIssued: String
+  passportExpiry: String
+  passportDestination: String
   contactNo: String!
   presentAddress: String!
   permanentAddress: String!
   drivingLicense: String
   language: String!
   familyDetails: [String]
-  educationDetails: [String]
+  educationDetails: [String!]
   workExperience: [String]
   referees: [String]
   relatives: [String]
   description: String
-  emergencyContact: [String]
+  emergencyContact: [String!]
   disease: String
   liquor: String
   crime: String
@@ -46,7 +159,7 @@ type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
   crimeDescription: String
   salaryException: String
   noticePeriod: String!
-  employeStatement: String!
+  employeeStatement: String!
   perInterviewStatus: String!
   perInterviewDescription: String
   supportInfo: String
@@ -71,5 +184,4 @@ type Todo @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
-}
- 
+} 

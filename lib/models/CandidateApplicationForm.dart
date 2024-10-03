@@ -74,7 +74,7 @@ class CandidateApplicationForm extends amplify_core.Model {
   final String? _crimeDescription;
   final String? _salaryException;
   final String? _noticePeriod;
-  final String? _employeStatement;
+  final String? _employeeStatement;
   final String? _perInterviewStatus;
   final String? _perInterviewDescription;
   final String? _supportInfo;
@@ -288,99 +288,36 @@ class CandidateApplicationForm extends amplify_core.Model {
     return _otherReligion;
   }
   
-  String get icNo {
-    try {
-      return _icNo!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get icNo {
+    return _icNo;
   }
   
-  String get icExpiry {
-    try {
-      return _icExpiry!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get icExpiry {
+    return _icExpiry;
   }
   
-  String get icColour {
-    try {
-      return _icColour!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get icColour {
+    return _icColour;
   }
   
-  String get passportNo {
-    try {
-      return _passportNo!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get passportNo {
+    return _passportNo;
   }
   
   String? get alternateNo {
     return _alternateNo;
   }
   
-  String get passportIssued {
-    try {
-      return _passportIssued!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get passportIssued {
+    return _passportIssued;
   }
   
-  String get passportExpiry {
-    try {
-      return _passportExpiry!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get passportExpiry {
+    return _passportExpiry;
   }
   
-  String get passportDestination {
-    try {
-      return _passportDestination!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get passportDestination {
+    return _passportDestination;
   }
   
   String get contactNo {
@@ -508,9 +445,9 @@ class CandidateApplicationForm extends amplify_core.Model {
     }
   }
   
-  String get employeStatement {
+  String get employeeStatement {
     try {
-      return _employeStatement!;
+      return _employeeStatement!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -615,9 +552,9 @@ class CandidateApplicationForm extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const CandidateApplicationForm._internal({required this.id, required profilePhoto, agent, required position, required contractType, required employeeType, required name, chinese, required gender, required age, required email, required countryOfBirth, required nationality, otherNationality, required marital, required race, otherRace, required religion, otherReligion, required icNo, required icExpiry, required icColour, required passportNo, alternateNo, required passportIssued, required passportExpiry, required passportDestination, required contactNo, required presentAddress, required permanentAddress, drivingLicense, required language, familyDetails, educationDetails, workExperience, referees, relatives, description, emergencyContact, disease, liquor, crime, diseaseDescription, liquorDescription, crimeDescription, salaryException, required noticePeriod, required employeStatement, required perInterviewStatus, perInterviewDescription, supportInfo, required uploadResume, required uploadCertificate, required uploadPassport, required dateOfBirth, required tempID, createdAt, updatedAt}): _profilePhoto = profilePhoto, _agent = agent, _position = position, _contractType = contractType, _employeeType = employeeType, _name = name, _chinese = chinese, _gender = gender, _age = age, _email = email, _countryOfBirth = countryOfBirth, _nationality = nationality, _otherNationality = otherNationality, _marital = marital, _race = race, _otherRace = otherRace, _religion = religion, _otherReligion = otherReligion, _icNo = icNo, _icExpiry = icExpiry, _icColour = icColour, _passportNo = passportNo, _alternateNo = alternateNo, _passportIssued = passportIssued, _passportExpiry = passportExpiry, _passportDestination = passportDestination, _contactNo = contactNo, _presentAddress = presentAddress, _permanentAddress = permanentAddress, _drivingLicense = drivingLicense, _language = language, _familyDetails = familyDetails, _educationDetails = educationDetails, _workExperience = workExperience, _referees = referees, _relatives = relatives, _description = description, _emergencyContact = emergencyContact, _disease = disease, _liquor = liquor, _crime = crime, _diseaseDescription = diseaseDescription, _liquorDescription = liquorDescription, _crimeDescription = crimeDescription, _salaryException = salaryException, _noticePeriod = noticePeriod, _employeStatement = employeStatement, _perInterviewStatus = perInterviewStatus, _perInterviewDescription = perInterviewDescription, _supportInfo = supportInfo, _uploadResume = uploadResume, _uploadCertificate = uploadCertificate, _uploadPassport = uploadPassport, _dateOfBirth = dateOfBirth, _tempID = tempID, _createdAt = createdAt, _updatedAt = updatedAt;
+  const CandidateApplicationForm._internal({required this.id, required profilePhoto, agent, required position, required contractType, required employeeType, required name, chinese, required gender, required age, required email, required countryOfBirth, required nationality, otherNationality, required marital, required race, otherRace, required religion, otherReligion, icNo, icExpiry, icColour, passportNo, alternateNo, passportIssued, passportExpiry, passportDestination, required contactNo, required presentAddress, required permanentAddress, drivingLicense, required language, familyDetails, educationDetails, workExperience, referees, relatives, description, emergencyContact, disease, liquor, crime, diseaseDescription, liquorDescription, crimeDescription, salaryException, required noticePeriod, required employeeStatement, required perInterviewStatus, perInterviewDescription, supportInfo, required uploadResume, required uploadCertificate, required uploadPassport, required dateOfBirth, required tempID, createdAt, updatedAt}): _profilePhoto = profilePhoto, _agent = agent, _position = position, _contractType = contractType, _employeeType = employeeType, _name = name, _chinese = chinese, _gender = gender, _age = age, _email = email, _countryOfBirth = countryOfBirth, _nationality = nationality, _otherNationality = otherNationality, _marital = marital, _race = race, _otherRace = otherRace, _religion = religion, _otherReligion = otherReligion, _icNo = icNo, _icExpiry = icExpiry, _icColour = icColour, _passportNo = passportNo, _alternateNo = alternateNo, _passportIssued = passportIssued, _passportExpiry = passportExpiry, _passportDestination = passportDestination, _contactNo = contactNo, _presentAddress = presentAddress, _permanentAddress = permanentAddress, _drivingLicense = drivingLicense, _language = language, _familyDetails = familyDetails, _educationDetails = educationDetails, _workExperience = workExperience, _referees = referees, _relatives = relatives, _description = description, _emergencyContact = emergencyContact, _disease = disease, _liquor = liquor, _crime = crime, _diseaseDescription = diseaseDescription, _liquorDescription = liquorDescription, _crimeDescription = crimeDescription, _salaryException = salaryException, _noticePeriod = noticePeriod, _employeeStatement = employeeStatement, _perInterviewStatus = perInterviewStatus, _perInterviewDescription = perInterviewDescription, _supportInfo = supportInfo, _uploadResume = uploadResume, _uploadCertificate = uploadCertificate, _uploadPassport = uploadPassport, _dateOfBirth = dateOfBirth, _tempID = tempID, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory CandidateApplicationForm({String? id, required String profilePhoto, String? agent, required String position, required String contractType, required String employeeType, required String name, String? chinese, required String gender, required int age, required String email, required String countryOfBirth, required String nationality, String? otherNationality, required String marital, required String race, String? otherRace, required String religion, String? otherReligion, required String icNo, required String icExpiry, required String icColour, required String passportNo, String? alternateNo, required String passportIssued, required String passportExpiry, required String passportDestination, required String contactNo, required String presentAddress, required String permanentAddress, String? drivingLicense, required String language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, required String noticePeriod, required String employeStatement, required String perInterviewStatus, String? perInterviewDescription, String? supportInfo, required String uploadResume, required String uploadCertificate, required String uploadPassport, required String dateOfBirth, required String tempID}) {
+  factory CandidateApplicationForm({String? id, required String profilePhoto, String? agent, required String position, required String contractType, required String employeeType, required String name, String? chinese, required String gender, required int age, required String email, required String countryOfBirth, required String nationality, String? otherNationality, required String marital, required String race, String? otherRace, required String religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, required String contactNo, required String presentAddress, required String permanentAddress, String? drivingLicense, required String language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, required String noticePeriod, required String employeeStatement, required String perInterviewStatus, String? perInterviewDescription, String? supportInfo, required String uploadResume, required String uploadCertificate, required String uploadPassport, required String dateOfBirth, required String tempID}) {
     return CandidateApplicationForm._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       profilePhoto: profilePhoto,
@@ -666,7 +603,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       crimeDescription: crimeDescription,
       salaryException: salaryException,
       noticePeriod: noticePeriod,
-      employeStatement: employeStatement,
+      employeeStatement: employeeStatement,
       perInterviewStatus: perInterviewStatus,
       perInterviewDescription: perInterviewDescription,
       supportInfo: supportInfo,
@@ -732,7 +669,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       _crimeDescription == other._crimeDescription &&
       _salaryException == other._salaryException &&
       _noticePeriod == other._noticePeriod &&
-      _employeStatement == other._employeStatement &&
+      _employeeStatement == other._employeeStatement &&
       _perInterviewStatus == other._perInterviewStatus &&
       _perInterviewDescription == other._perInterviewDescription &&
       _supportInfo == other._supportInfo &&
@@ -798,7 +735,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     buffer.write("crimeDescription=" + "$_crimeDescription" + ", ");
     buffer.write("salaryException=" + "$_salaryException" + ", ");
     buffer.write("noticePeriod=" + "$_noticePeriod" + ", ");
-    buffer.write("employeStatement=" + "$_employeStatement" + ", ");
+    buffer.write("employeeStatement=" + "$_employeeStatement" + ", ");
     buffer.write("perInterviewStatus=" + "$_perInterviewStatus" + ", ");
     buffer.write("perInterviewDescription=" + "$_perInterviewDescription" + ", ");
     buffer.write("supportInfo=" + "$_supportInfo" + ", ");
@@ -814,7 +751,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     return buffer.toString();
   }
   
-  CandidateApplicationForm copyWith({String? profilePhoto, String? agent, String? position, String? contractType, String? employeeType, String? name, String? chinese, String? gender, int? age, String? email, String? countryOfBirth, String? nationality, String? otherNationality, String? marital, String? race, String? otherRace, String? religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, String? contactNo, String? presentAddress, String? permanentAddress, String? drivingLicense, String? language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, String? noticePeriod, String? employeStatement, String? perInterviewStatus, String? perInterviewDescription, String? supportInfo, String? uploadResume, String? uploadCertificate, String? uploadPassport, String? dateOfBirth, String? tempID}) {
+  CandidateApplicationForm copyWith({String? profilePhoto, String? agent, String? position, String? contractType, String? employeeType, String? name, String? chinese, String? gender, int? age, String? email, String? countryOfBirth, String? nationality, String? otherNationality, String? marital, String? race, String? otherRace, String? religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, String? contactNo, String? presentAddress, String? permanentAddress, String? drivingLicense, String? language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, String? noticePeriod, String? employeeStatement, String? perInterviewStatus, String? perInterviewDescription, String? supportInfo, String? uploadResume, String? uploadCertificate, String? uploadPassport, String? dateOfBirth, String? tempID}) {
     return CandidateApplicationForm._internal(
       id: id,
       profilePhoto: profilePhoto ?? this.profilePhoto,
@@ -863,7 +800,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       crimeDescription: crimeDescription ?? this.crimeDescription,
       salaryException: salaryException ?? this.salaryException,
       noticePeriod: noticePeriod ?? this.noticePeriod,
-      employeStatement: employeStatement ?? this.employeStatement,
+      employeeStatement: employeeStatement ?? this.employeeStatement,
       perInterviewStatus: perInterviewStatus ?? this.perInterviewStatus,
       perInterviewDescription: perInterviewDescription ?? this.perInterviewDescription,
       supportInfo: supportInfo ?? this.supportInfo,
@@ -893,26 +830,26 @@ class CandidateApplicationForm extends amplify_core.Model {
     ModelFieldValue<String?>? otherRace,
     ModelFieldValue<String>? religion,
     ModelFieldValue<String?>? otherReligion,
-    ModelFieldValue<String>? icNo,
-    ModelFieldValue<String>? icExpiry,
-    ModelFieldValue<String>? icColour,
-    ModelFieldValue<String>? passportNo,
+    ModelFieldValue<String?>? icNo,
+    ModelFieldValue<String?>? icExpiry,
+    ModelFieldValue<String?>? icColour,
+    ModelFieldValue<String?>? passportNo,
     ModelFieldValue<String?>? alternateNo,
-    ModelFieldValue<String>? passportIssued,
-    ModelFieldValue<String>? passportExpiry,
-    ModelFieldValue<String>? passportDestination,
+    ModelFieldValue<String?>? passportIssued,
+    ModelFieldValue<String?>? passportExpiry,
+    ModelFieldValue<String?>? passportDestination,
     ModelFieldValue<String>? contactNo,
     ModelFieldValue<String>? presentAddress,
     ModelFieldValue<String>? permanentAddress,
     ModelFieldValue<String?>? drivingLicense,
     ModelFieldValue<String>? language,
     ModelFieldValue<List<String>?>? familyDetails,
-    ModelFieldValue<List<String>?>? educationDetails,
+    ModelFieldValue<List<String>>? educationDetails,
     ModelFieldValue<List<String>?>? workExperience,
     ModelFieldValue<List<String>?>? referees,
     ModelFieldValue<List<String>?>? relatives,
     ModelFieldValue<String?>? description,
-    ModelFieldValue<List<String>?>? emergencyContact,
+    ModelFieldValue<List<String>>? emergencyContact,
     ModelFieldValue<String?>? disease,
     ModelFieldValue<String?>? liquor,
     ModelFieldValue<String?>? crime,
@@ -921,7 +858,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     ModelFieldValue<String?>? crimeDescription,
     ModelFieldValue<String?>? salaryException,
     ModelFieldValue<String>? noticePeriod,
-    ModelFieldValue<String>? employeStatement,
+    ModelFieldValue<String>? employeeStatement,
     ModelFieldValue<String>? perInterviewStatus,
     ModelFieldValue<String?>? perInterviewDescription,
     ModelFieldValue<String?>? supportInfo,
@@ -979,7 +916,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       crimeDescription: crimeDescription == null ? this.crimeDescription : crimeDescription.value,
       salaryException: salaryException == null ? this.salaryException : salaryException.value,
       noticePeriod: noticePeriod == null ? this.noticePeriod : noticePeriod.value,
-      employeStatement: employeStatement == null ? this.employeStatement : employeStatement.value,
+      employeeStatement: employeeStatement == null ? this.employeeStatement : employeeStatement.value,
       perInterviewStatus: perInterviewStatus == null ? this.perInterviewStatus : perInterviewStatus.value,
       perInterviewDescription: perInterviewDescription == null ? this.perInterviewDescription : perInterviewDescription.value,
       supportInfo: supportInfo == null ? this.supportInfo : supportInfo.value,
@@ -1039,7 +976,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       _crimeDescription = json['crimeDescription'],
       _salaryException = json['salaryException'],
       _noticePeriod = json['noticePeriod'],
-      _employeStatement = json['employeStatement'],
+      _employeeStatement = json['employeeStatement'],
       _perInterviewStatus = json['perInterviewStatus'],
       _perInterviewDescription = json['perInterviewDescription'],
       _supportInfo = json['supportInfo'],
@@ -1052,7 +989,7 @@ class CandidateApplicationForm extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'profilePhoto': _profilePhoto, 'agent': _agent, 'position': _position, 'contractType': _contractType, 'employeeType': _employeeType, 'name': _name, 'chinese': _chinese, 'gender': _gender, 'age': _age, 'email': _email, 'countryOfBirth': _countryOfBirth, 'nationality': _nationality, 'otherNationality': _otherNationality, 'marital': _marital, 'race': _race, 'otherRace': _otherRace, 'religion': _religion, 'otherReligion': _otherReligion, 'icNo': _icNo, 'icExpiry': _icExpiry, 'icColour': _icColour, 'passportNo': _passportNo, 'alternateNo': _alternateNo, 'passportIssued': _passportIssued, 'passportExpiry': _passportExpiry, 'passportDestination': _passportDestination, 'contactNo': _contactNo, 'presentAddress': _presentAddress, 'permanentAddress': _permanentAddress, 'drivingLicense': _drivingLicense, 'language': _language, 'familyDetails': _familyDetails, 'educationDetails': _educationDetails, 'workExperience': _workExperience, 'referees': _referees, 'relatives': _relatives, 'description': _description, 'emergencyContact': _emergencyContact, 'disease': _disease, 'liquor': _liquor, 'crime': _crime, 'diseaseDescription': _diseaseDescription, 'liquorDescription': _liquorDescription, 'crimeDescription': _crimeDescription, 'salaryException': _salaryException, 'noticePeriod': _noticePeriod, 'employeStatement': _employeStatement, 'perInterviewStatus': _perInterviewStatus, 'perInterviewDescription': _perInterviewDescription, 'supportInfo': _supportInfo, 'uploadResume': _uploadResume, 'uploadCertificate': _uploadCertificate, 'uploadPassport': _uploadPassport, 'dateOfBirth': _dateOfBirth, 'tempID': _tempID, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'profilePhoto': _profilePhoto, 'agent': _agent, 'position': _position, 'contractType': _contractType, 'employeeType': _employeeType, 'name': _name, 'chinese': _chinese, 'gender': _gender, 'age': _age, 'email': _email, 'countryOfBirth': _countryOfBirth, 'nationality': _nationality, 'otherNationality': _otherNationality, 'marital': _marital, 'race': _race, 'otherRace': _otherRace, 'religion': _religion, 'otherReligion': _otherReligion, 'icNo': _icNo, 'icExpiry': _icExpiry, 'icColour': _icColour, 'passportNo': _passportNo, 'alternateNo': _alternateNo, 'passportIssued': _passportIssued, 'passportExpiry': _passportExpiry, 'passportDestination': _passportDestination, 'contactNo': _contactNo, 'presentAddress': _presentAddress, 'permanentAddress': _permanentAddress, 'drivingLicense': _drivingLicense, 'language': _language, 'familyDetails': _familyDetails, 'educationDetails': _educationDetails, 'workExperience': _workExperience, 'referees': _referees, 'relatives': _relatives, 'description': _description, 'emergencyContact': _emergencyContact, 'disease': _disease, 'liquor': _liquor, 'crime': _crime, 'diseaseDescription': _diseaseDescription, 'liquorDescription': _liquorDescription, 'crimeDescription': _crimeDescription, 'salaryException': _salaryException, 'noticePeriod': _noticePeriod, 'employeeStatement': _employeeStatement, 'perInterviewStatus': _perInterviewStatus, 'perInterviewDescription': _perInterviewDescription, 'supportInfo': _supportInfo, 'uploadResume': _uploadResume, 'uploadCertificate': _uploadCertificate, 'uploadPassport': _uploadPassport, 'dateOfBirth': _dateOfBirth, 'tempID': _tempID, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -1103,7 +1040,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     'crimeDescription': _crimeDescription,
     'salaryException': _salaryException,
     'noticePeriod': _noticePeriod,
-    'employeStatement': _employeStatement,
+    'employeeStatement': _employeeStatement,
     'perInterviewStatus': _perInterviewStatus,
     'perInterviewDescription': _perInterviewDescription,
     'supportInfo': _supportInfo,
@@ -1164,7 +1101,7 @@ class CandidateApplicationForm extends amplify_core.Model {
   static final CRIMEDESCRIPTION = amplify_core.QueryField(fieldName: "crimeDescription");
   static final SALARYEXCEPTION = amplify_core.QueryField(fieldName: "salaryException");
   static final NOTICEPERIOD = amplify_core.QueryField(fieldName: "noticePeriod");
-  static final EMPLOYESTATEMENT = amplify_core.QueryField(fieldName: "employeStatement");
+  static final EMPLOYEESTATEMENT = amplify_core.QueryField(fieldName: "employeeStatement");
   static final PERINTERVIEWSTATUS = amplify_core.QueryField(fieldName: "perInterviewStatus");
   static final PERINTERVIEWDESCRIPTION = amplify_core.QueryField(fieldName: "perInterviewDescription");
   static final SUPPORTINFO = amplify_core.QueryField(fieldName: "supportInfo");
@@ -1300,25 +1237,25 @@ class CandidateApplicationForm extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.ICNO,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.ICEXPIRY,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.ICCOLOUR,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.PASSPORTNO,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
@@ -1330,19 +1267,19 @@ class CandidateApplicationForm extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.PASSPORTISSUED,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.PASSPORTEXPIRY,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.PASSPORTDESTINATION,
-      isRequired: true,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
@@ -1473,7 +1410,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: CandidateApplicationForm.EMPLOYESTATEMENT,
+      key: CandidateApplicationForm.EMPLOYEESTATEMENT,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));

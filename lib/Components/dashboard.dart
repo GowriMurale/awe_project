@@ -1,4 +1,6 @@
 
+import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_core/amplify_core.dart';
 import 'package:awe_project/Screens/apply_leave_screen.dart';
 import 'package:awe_project/Screens/leave_view_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
@@ -7,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
+import '../models/LeaveStatus.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -128,7 +132,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.015,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.170,),
+              SizedBox(width: size.width * 0.175,),
              container2('Present', '20.5', purple,context),
               SizedBox(width: size.width * 0.04,),
               container2('Absent Days', '2.5', green,context),
@@ -142,7 +146,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.015,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.170,),
+              SizedBox(width: size.width * 0.175,),
               container2('Annual Leave', '9', purple, context),
               SizedBox(width: size.width * 0.04,),
               container2('Sick Leave', '8', purple, context),
@@ -153,12 +157,12 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           SizedBox(height: size.height * 0.055,),
             Row(
               children: [
-              SizedBox(width: size.width * 0.178),
+              SizedBox(width: size.width * 0.185),
                 Text(
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                SizedBox(width: size.width * 0.326),
+                SizedBox(width: size.width * 0.316),
                 Container(
                   width: size.width * 0.082,
                   height: size.height * 0.034,
@@ -191,7 +195,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     ),
                   ),
                 ),
-                SizedBox(width: size.width * 0.016),
+                SizedBox(width: size.width * 0.018),
                 Container(
                   width: size.width * 0.082,
                   height: size.height * 0.034,
@@ -229,7 +233,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
       Row(
             children: [
               Padding(
-                padding:  EdgeInsets.only(left: size.width * 0.170,top: size.height * 0.02),
+                padding:  EdgeInsets.only(left: size.width * 0.175,top: size.height * 0.02),
                 child: EmployeeTable(),
               ),
             ],
@@ -321,7 +325,7 @@ class _TabletDashboardState extends State<TabletDashboard> {
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.120,),
+            SizedBox(width: size.width * 0.125,),
             tabcontainer2('Present', '20.5', purple,context),
             SizedBox(width: size.width * 0.04,),
             tabcontainer2('Absent Days', '2.5', green,context),
@@ -562,37 +566,7 @@ Widget tabcontainer2(String text,String no, Color color,BuildContext context ){
 // }
 
 // Define your Leave class
-class Leave {
-  final String leaveType;
-  final DateTime fromDate;
-  final DateTime toDate;
-  final int days;
-  final String reason;
-  final String approver;
-  final String status;
 
-  Leave({
-    required this.leaveType,
-    required this.fromDate,
-    required this.toDate,
-    required this.days,
-    required this.reason,
-    required this.approver,
-    required this.status,
-  });
-
-  factory Leave.fromMap(Map<String, dynamic> data) {
-    return Leave(
-      leaveType: data['leaveType'] as String,
-      fromDate: DateTime.parse(data['fromDate'] as String),
-      toDate: DateTime.parse(data['toDate'] as String),
-      days: data['days'] as int,
-      reason: data['reason'] as String,
-      approver: data['approver'] as String,
-      status: data['status'] as String,
-    );
-  }
-}
 
 class TabEmployeeTable extends StatelessWidget {
   @override
@@ -740,44 +714,176 @@ Widget dashContainer(BuildContext context,Color color,String text,IconData icon)
   );
 }
 
-class EmployeeTable extends StatelessWidget {
+
+
+
+
+class EmployeeTable extends StatefulWidget {
+  @override
+  _EmployeeTableState createState() => _EmployeeTableState();
+}
+
+class _EmployeeTableState extends State<EmployeeTable> {
   final ScrollController _scrollController = ScrollController();
+
+  // Sample data rows (initially empty)
+  List<Map<String, String>> leaveData = [];
+
+  // Function to fetch leave data from AWS Amplify GraphQL
+  Future<void> fetchLeaveData() async {
+    try {
+      // Define the GraphQL query
+      final request = ModelQueries.list(LeaveStatus.classType);
+      final response = await Amplify.API.query(request: request).response;
+
+      // Check for errors
+      if (response.errors.isNotEmpty) {
+        print('Errors: ${response.errors}');
+        return;
+      }
+
+      // Parse the leave data
+      List<LeaveStatus?> leaveStatuses = response.data?.items ?? [];
+
+      // Update the leaveData list
+      setState(() {
+        leaveData = leaveStatuses.map((leaveStatus) {
+          return {
+            'Leave Type': leaveStatus!.leaveType,
+            'From': leaveStatus.fromDate.format(), // Format dates
+            'To': leaveStatus.toDate.format(),
+            'Days': leaveStatus.days.toString(),
+            'Reason': leaveStatus.reason,
+            'Approver': leaveStatus.applyTo, // Approver (either manager or superior)
+            'Status':  'Pending', // Add status if available
+          };
+        }).toList();
+      });
+    } catch (e) {
+      print('Failed to fetch leave data: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLeaveData(); // Fetch data when the widget is initialized
+  }
+
+  // Function to handle row deletion
+  void _deleteLeave(int index) {
+    setState(() {
+      leaveData.removeAt(index); // Remove the row from the data list
+    });
+  }
+
+  // Show a cancel dialog with leave details
+  void _showCancelDialog(BuildContext context, int rowIndex, Map<String, String> leave) {
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width: size.width * 0.300,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: size.height * 0.012),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.100),
+                  Text(
+                    'View Form',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 22, color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.085),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014),
+              _buildDetailRow('Name', "Rahul Kumar", size),
+              _buildDetailRow('Job Title', "Trainer", size),
+              _buildDetailRow('Badge', "50598", size),
+              _buildDetailRow('Dept/Div', "50598", size),
+              _buildDetailRow('Leave Type', leave['Leave Type']!, size),
+              _buildDetailRow('Select Date', '${leave['From']} to ${leave['To']}', size),
+              _buildDetailRow('No of Days', '${leave['Days']} days', size),
+              _buildDetailRow('Reason', leave['Reason']!, size),
+              _buildDetailRow('Approver', leave['Approver']!, size),
+              SizedBox(height: size.height * 0.022),
+              MaterialButton(
+                minWidth: size.width * .06,
+                height: size.height * 0.03,
+                onPressed: () {
+                  _deleteLeave(rowIndex);
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(fontSize: 16, fontFamily: 'Inter'),
+                ),
+                color: Colors.yellow,
+                textColor: Colors.black,
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+    );
+  }
+
+  // Helper function to build the detail row
+  Widget _buildDetailRow(String label, String value, Size size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(width: size.width * 0.050),
+        Text(label, style: TextStyle(fontFamily: 'Inter', fontSize: 16, color: Colors.black)),
+        SizedBox(width: size.width * 0.020),
+        Text(value, style: TextStyle(fontFamily: 'Inter', fontSize: 16, color: Colors.black)),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // Define the text style for the header row
+
     TextStyle headerTextStyle = TextStyle(
       fontFamily: 'Inter',
-      fontWeight: FontWeight.bold, // Bold font for header
+      fontWeight: FontWeight.bold,
       fontSize: 14,
       color: Colors.black,
     );
 
-    // Define the text style for the data rows
     TextStyle rowTextStyle = TextStyle(
       fontFamily: 'Inter',
       fontSize: 13,
       color: Colors.black,
     );
 
-    // Create a list of data rows for demonstration
-
-
     return Container(
-      color: Colors.white, // Set the background color to white
+      color: Colors.white,
       child: Column(
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: DataTable(
-              headingRowHeight: size.height * 0.050, // Remove header inside the scrollable table
+              headingRowHeight: size.height * 0.050,
               dataRowHeight: size.height * 0.055,
               columnSpacing: size.width * 0.040,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey, width: 1), // Outline border for the table
-                borderRadius: BorderRadius.circular(10), // Rounded corners for the table
-              ),
               columns: [
                 DataColumn(label: Text('Leave Type', style: headerTextStyle)),
                 DataColumn(label: Text('From', style: headerTextStyle)),
@@ -787,44 +893,24 @@ class EmployeeTable extends StatelessWidget {
                 DataColumn(label: Text('Approver', style: headerTextStyle)),
                 DataColumn(label: Text('Status', style: headerTextStyle)),
               ],
-              rows: [
-                DataRow(cells: [
-                  DataCell(Text('Casual', style: rowTextStyle)),
-                  DataCell(Text('10/06/2024', style: rowTextStyle)),
-                  DataCell(Text('12/06/2024', style: rowTextStyle)),
-                  DataCell(Text('2', style: rowTextStyle)),
-                  DataCell(Text('Traveling to Village', style: rowTextStyle)),
-                  DataCell(Text('Hassan Ali', style: rowTextStyle)),
-                  DataCell(Text('Pending', style: rowTextStyle)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Sick', style: rowTextStyle)),
-                  DataCell(Text('09/06/2024', style: rowTextStyle)),
-                  DataCell(Text('11/06/2024', style: rowTextStyle)),
-                  DataCell(Text('3', style: rowTextStyle)),
-                  DataCell(Text('Fever', style: rowTextStyle)),
-                  DataCell(Text('Muneeb Khan', style: rowTextStyle)),
-                  DataCell(Text('Approved', style: rowTextStyle)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Casual', style: rowTextStyle)),
-                  DataCell(Text('08/06/2024', style: rowTextStyle)),
-                  DataCell(Text('10/06/2024', style: rowTextStyle)),
-                  DataCell(Text('2', style: rowTextStyle)),
-                  DataCell(Text('Wedding', style: rowTextStyle)),
-                  DataCell(Text('Ahmed Raza', style: rowTextStyle)),
-                  DataCell(Text('Approved', style: rowTextStyle)),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('Sick', style: rowTextStyle)),
-                  DataCell(Text('09/06/2024', style: rowTextStyle)),
-                  DataCell(Text('11/06/2024', style: rowTextStyle)),
-                  DataCell(Text('3', style: rowTextStyle)),
-                  DataCell(Text('Fever', style: rowTextStyle)),
-                  DataCell(Text('Muneeb Khan', style: rowTextStyle)),
-                  DataCell(Text('Approved', style: rowTextStyle)),
-                ]),
-              ], // Scrollable data rows
+              rows: List<DataRow>.generate(
+                leaveData.length,
+                    (index) {
+                  var leave = leaveData[index];
+                  return DataRow(
+                    cells: leave.entries.map((entry) {
+                      return DataCell(
+                        GestureDetector(
+                          onDoubleTap: () {
+                            _showCancelDialog(context, index, leave); // Pass leave details to dialog
+                          },
+                          child: Text(entry.value, style: rowTextStyle),
+                        ),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
             ),
           ),
         ],
@@ -832,3 +918,5 @@ class EmployeeTable extends StatelessWidget {
     );
   }
 }
+
+

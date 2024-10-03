@@ -1,4 +1,5 @@
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
 import 'package:awe_project/Screens/termscreen.dart';
@@ -8,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../globals/datefield.dart';
 import '../globals/leave_apply.dart';
+import '../models/LeaveStatus.dart';
 class ApplyLeave extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   TextEditingController to=TextEditingController();
   TextEditingController reason=TextEditingController();
   TextEditingController  days=TextEditingController();
-  // TextEditingController  badge=TextEditingController();
-  // TextEditingController name=TextEditingController();
-  // TextEditingController dept=TextEditingController();
-  // TextEditingController title=TextEditingController();
-  // TextEditingController balance=TextEditingController();
+
+
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
@@ -70,6 +68,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   String? applyToError;
   String? ticketError;
   String? reasonError;
+
+
+
+
+
 
 
   Future<void> _selectDate(BuildContext context, TextEditingController controller, bool isFromDate) async {
@@ -125,22 +128,6 @@ class _DesktopLeaveState extends State<DesktopLeave> {
     }
   }
 
-
-  // bool _validateFields() {
-  //   // Replace 'controller.text' with the actual controllers for each field
-  //   // if (badge.text.isEmpty) return false;
-  //   // if (name.text.isEmpty) return false;
-  //   // if (dept.text.isEmpty) return false;
-  //   // if (title.text.isEmpty) return false;
-  //   if (_selectedLeaveType == null || _selectedLeaveType!.isEmpty) return false;
-  //   if (from.text.isEmpty) return false;
-  //   if (to.text.isEmpty) return false;
-  //   if (days.text.isEmpty) return false;
-  //   if (_selectedRole == null || _selectedRole!.isEmpty) return false;
-  //
-  //   return true; // All fields are valid
-  // }
-
   bool _validateFields() {
     bool isValid = true;
 
@@ -189,39 +176,122 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
   Future<void> applyForLeave() async {
     if (_selectedLeaveType == null || from.text.isEmpty || to.text.isEmpty || days.text.isEmpty || reason.text.isEmpty) {
-      // Handle validation errors
+      // Show validation error dialog
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('Please fill in all required fields.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back(); // Close the dialog
+        },
+      );
       return;
     }
 
-    // Determine the 'applyTo' value based on isManager
-    final applyTo = isManager ? 'Manager' : 'Superior';
-
-    final leaveApplication = LeaveApplication(
-      leaveType: _selectedLeaveType!,
-      fromDate: DateTime.parse(from.text),
-      toDate: DateTime.parse(to.text),
-      numberOfDays: int.parse(days.text),
-      applyTo: applyTo, // Add the applyTo value
-      reason: reason.text,
-    );
-
     try {
-      // Save the leave application to AWS
-      await saveToAWS(leaveApplication);
-      // Navigate or show success message
+      // Parse the from and to dates from the text fields
+      DateTime? fromDate = DateFormat('MM/dd/yyyy').parse(from.text);
+      DateTime? toDate = DateFormat('MM/dd/yyyy').parse(to.text);
+
+      if (fromDate == null || toDate == null || fromDate.isAfter(toDate)) {
+        Get.defaultDialog(
+          title: 'Error',
+          content: Text('Invalid date selection. Please check the from and to dates.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () {
+            Get.back(); // Close the dialog
+          },
+        );
+        return;
+      }
+
+      // Calculate the number of days
+      int numberOfDays = toDate.difference(fromDate).inDays + 1;
+      days.text = numberOfDays.toString(); // Update the days text field
+
+      // Try to submit the leave request
+      final leaveStatus = LeaveStatus(
+        empID: empID,
+        leaveType: _selectedLeaveType!,
+        fromDate: TemporalDate(fromDate),
+        toDate: TemporalDate(toDate),
+        days: int.parse(days.text),
+        applyTo: isManager ? 'Manager' : 'Superior',
+        reason: reason.text,
+      );
+      final request = ModelMutations.create(leaveStatus);
+      final response = await Amplify.API.mutate(request: request).response;
+      print(response);
+
+      if (response.errors.isNotEmpty || response.data == null) {
+        // Show error dialog if mutation failed
+        Get.defaultDialog(
+          title: 'Error',
+          content: Text('Failed to submit the leave application. Please try again.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () {
+            Get.back(); // Close the dialog
+          },
+        );
+      } else {
+        // Show success dialog if mutation succeeded
+        Get.defaultDialog(
+          title: 'Success',
+          content: Text('Your leave application has been submitted successfully.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () {
+            Get.back(); // Close the dialog
+            Get.off(DashBoardScreeen()); // Navigate to Dashboard screen
+          },
+        );
+      }
     } catch (e) {
-      // Handle errors
-      print('Error applying for leave: $e');
+      // Handle any unexpected errors
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('An error occurred: $e'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back(); // Close the dialog
+        },
+      );
     }
   }
 
-  Future<void> saveToAWS(LeaveApplication leaveApplication) async {
+
+
+
+
+// Example of how you would call this when the user selects a date
+
+
+
+  String empID = 'awe101'; // Or fetch it dynamically during login
+  TextEditingController userIdController=TextEditingController();
+  TextEditingController passwordController=TextEditingController();
+  Future<void> _signIn(BuildContext context) async {
     try {
-      // Pass the leaveApplication instance directly
-      // await Amplify.DataStore.save(leaveApplication);
+      // Fetch auth session to check if user is already signed in
+      var session = await Amplify.Auth.fetchAuthSession();
+      if (session.isSignedIn) {
+        // Assuming empID is fetched from attributes or stored in session
+        empID = 'awe101'; // Store the empID once logged in
+        Get.off(() => DashBoardScreeen());
+        return;
+      }
+
+      // Proceed with normal sign-in
+      SignInResult res = await Amplify.Auth.signIn(
+        username: userIdController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (res.isSignedIn) {
+        empID = 'awe101'; // Fetch or assign the employee ID
+        Get.off(() => DashBoardScreeen());
+      }
     } catch (e) {
-      // Handle save error
-      print('Error saving to AWS: $e');
+      print("AuthException: ${e}");
     }
   }
 
@@ -658,26 +728,26 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 Material(
                   borderRadius: BorderRadius.circular(45),
                   child: MaterialButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // Validate all fields before applying
                       if (_validateFields()) {
-                        // All fields are filled, show confirmation popup with Yes and No buttons
+                        // Show confirmation popup with Yes and No buttons
                         Get.defaultDialog(
                           title: 'Confirm',
                           content: Text('Are you sure you want to apply?'),
                           actions: [
                             TextButton(
                               onPressed: () {
-                                // Action on No (cancel)
-                                Get.back(); // Clo  se the dialog
-                              } ,
+                                Get.back(); // Close the dialog
+                              },
                               child: Text('No', style: TextStyle(color: Colors.red)),
                             ),
                             TextButton(
-                              onPressed: () {
-                                // Action on Yes (confirmation)
-                                Get.off(DashBoardScreeen()); // Close the dialog
-                                // Proceed with applying leave
+                              onPressed: () async {
+                                Get.back(); // Close the dialog first
+
+                                // Proceed with creating the leave request
+                                await applyForLeave(); // This will show success/error dialogs based on the result
                               },
                               child: Text('Yes', style: TextStyle(color: Colors.green)),
                             ),
@@ -698,11 +768,17 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                     minWidth: size.width * 0.075,
                     height: size.height * 0.06,
                     color: yellow,
-                    child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 16,fontWeight: FontWeight.bold,color: black),),
+                    child: Text(
+                      'Apply',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: black,
+                      ),
+                    ),
                   ),
                 ),
-
-
                 SizedBox(width: size.width * 0.03,),
                 OutlinedButton(
                   onPressed: () {
@@ -1009,16 +1085,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
   }
 
 // Submit button
-  Widget _buildSubmitButton(Size size) {
-    return ElevatedButton(
-      onPressed: applyForLeave,
-      child: Text('Submit Leave Application'),
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-        textStyle: TextStyle(fontSize: 16),
-      ),
-    );
-  }
+
 
 }
 
@@ -1036,10 +1103,7 @@ class _TabletLeaveState extends State<TabletLeave> {
   TextEditingController to=TextEditingController();
   TextEditingController reason=TextEditingController();
   TextEditingController  days=TextEditingController();
-  // TextEditingController  badge=TextEditingController();
-  // TextEditingController name=TextEditingController();
-  // TextEditingController dept=TextEditingController();
-  // TextEditingController title=TextEditingController();
+
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];

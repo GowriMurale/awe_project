@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class EmployeeTable1 extends StatelessWidget {
+class EmployeeTable extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -206,34 +206,34 @@ class EmployeeTable1 extends StatelessWidget {
 // }
 
 // Define your Leave class
-class Leave {
-  final String leaveType;
-  final DateTime fromDate;
-  final DateTime toDate;
-  final int days;
-  final String reason;
-  final String approver;
-  final String status;
-
-  Leave({
-    required this.leaveType,
-    required this.fromDate,
-    required this.toDate,
-    required this.days,
-    required this.reason,
-    required this.approver,
-    required this.status,
-  });
-
-  factory Leave.fromMap(Map<String, dynamic> data) {
-    return Leave(
-      leaveType: data['leaveType'] as String,
-      fromDate: DateTime.parse(data['fromDate'] as String),
-      toDate: DateTime.parse(data['toDate'] as String),
-      days: data['days'] as int,
-      reason: data['reason'] as String,
-      approver: data['approver'] as String,
-      status: data['status'] as String,
-    );
-  }
-}
+// class Leave {
+//   final String leaveType;
+//   final DateTime fromDate;
+//   final DateTime toDate;
+//   final int days;
+//   final String reason;
+//   final String approver;
+//   final String status;
+//
+//   Leave({
+//     required this.leaveType,
+//     required this.fromDate,
+//     required this.toDate,
+//     required this.days,
+//     required this.reason,
+//     required this.approver,
+//     required this.status,
+//   });
+//
+//   factory Leave.fromMap(Map<String, dynamic> data) {
+//     return Leave(
+//       leaveType: data['leaveType'] as String,
+//       fromDate: DateTime.parse(data['fromDate'] as String),
+//       toDate: DateTime.parse(data['toDate'] as String),
+//       days: data['days'] as int,
+//       reason: data['reason'] as String,
+//       approver: data['approver'] as String,
+//       status: data['status'] as String,
+//     );
+//   }
+// }

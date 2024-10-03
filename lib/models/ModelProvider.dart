@@ -21,18 +21,28 @@
 
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 import 'CandidateApplicationForm.dart';
+import 'InterviewSchema.dart';
+import 'LabourDetails.dart';
+import 'LeaveStatus.dart';
 import 'SampleTest1.dart';
 import 'Todo.dart';
+import 'User.dart';
+import 'WorkInfoSchema.dart';
 
 export 'CandidateApplicationForm.dart';
+export 'InterviewSchema.dart';
+export 'LabourDetails.dart';
+export 'LeaveStatus.dart';
 export 'SampleTest1.dart';
 export 'Todo.dart';
+export 'User.dart';
+export 'WorkInfoSchema.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "a881cc2e1c28a7fa54dcc76a4b6c08fa";
+  String version = "6c7b2edb16510308bc52272c43a0441a";
   @override
-  List<amplify_core.ModelSchema> modelSchemas = [CandidateApplicationForm.schema, SampleTest1.schema, Todo.schema];
+  List<amplify_core.ModelSchema> modelSchemas = [CandidateApplicationForm.schema, InterviewSchema.schema, LabourDetails.schema, LeaveStatus.schema, SampleTest1.schema, Todo.schema, User.schema, WorkInfoSchema.schema];
   @override
   List<amplify_core.ModelSchema> customTypeSchemas = [];
   static final ModelProvider _instance = ModelProvider();
@@ -43,10 +53,20 @@ class ModelProvider implements amplify_core.ModelProviderInterface {
     switch(modelName) {
       case "CandidateApplicationForm":
         return CandidateApplicationForm.classType;
+      case "InterviewSchema":
+        return InterviewSchema.classType;
+      case "LabourDetails":
+        return LabourDetails.classType;
+      case "LeaveStatus":
+        return LeaveStatus.classType;
       case "SampleTest1":
         return SampleTest1.classType;
       case "Todo":
         return Todo.classType;
+      case "User":
+        return User.classType;
+      case "WorkInfoSchema":
+        return WorkInfoSchema.classType;
       default:
         throw Exception("Failed to find model in model provider for model name: " + modelName);
     }
