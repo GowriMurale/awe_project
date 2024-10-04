@@ -1,3 +1,55 @@
+type PaafSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  paafApproveDate: AWSDate!
+  paafFile: String!
+}
+
+type CvevSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  cvecApproveDate: AWSDate!
+  cvecFile: String!
+}
+
+type SelectedCandidateSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  position: String
+  department: String!
+}
+
+type InterviewScheduleSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  date: AWSDate!
+  time: String!
+  venue: String!
+  interviewType: String!
+  interviewer: String!
+  message: String
+}
+
+type EmployeeNonLocalAcco @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  accommodation: String!
+  accommodationAddress: String!
+}
+
+type EmployeeInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  employeeBadgeNumber: String!
+  sapNumber: String!
+  countryOfOrigin: String!
+  educationLevel: String!
+  academicTechnicalQualification: String!
+  nextOfKin: [String!]
+  inductionBriefing: String!
+  previousEmployment: String!
+  previousEmploymentPeriod: String!
+  nationalCategory: String!
+  malaysianIcNumber: String
+  address: String!
+}
+
 type InterviewSchema @model @auth(rules: [{allow: public}]) {
   id: ID!
   date: AWSDate!
@@ -11,12 +63,9 @@ type InterviewSchema @model @auth(rules: [{allow: public}]) {
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   empID: String!
-  userName: String!
-  password: String!
-  position: String!
-  department: String!
   selectType: [String!]
   setPermissions: [String]
+  tempPassword: String!
 }
 
 type LeaveStatus @model @auth(rules: [{allow: public}]) {
@@ -25,7 +74,7 @@ type LeaveStatus @model @auth(rules: [{allow: public}]) {
   leaveType: String!
   fromDate: AWSDate!
   toDate: AWSDate!
-  days: Int!
+  days: Float!
   applyTo: String!
   reason: String!
 }
@@ -57,7 +106,7 @@ type LabourDetails @model @auth(rules: [{allow: public}]) {
   relation: String!
   labourDepositPaidBy: String!
   labourDepositReceiptNumber: String!
-  labourDepositAmount: Int!
+  labourDepositAmount: String!
   labourUploadDoc: [String!]
 }
 
@@ -168,6 +217,7 @@ type CandidateApplicationForm @model @auth(rules: [{allow: public}]) {
   uploadPassport: String!
   dateOfBirth: String!
   tempID: String!
+  experience: String!
 }
 
 type SampleTest1 @model @auth(rules: [{allow: public}]) {
@@ -184,4 +234,5 @@ type Todo @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   description: String
-} 
+}
+ 

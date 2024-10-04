@@ -23,17 +23,16 @@ import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 
 
-/** This is an auto generated class representing the LeaveStatus type in your schema. */
-class LeaveStatus extends amplify_core.Model {
-  static const classType = const _LeaveStatusModelType();
+/** This is an auto generated class representing the InterviewScheduleSchema type in your schema. */
+class InterviewScheduleSchema extends amplify_core.Model {
+  static const classType = const _InterviewScheduleSchemaModelType();
   final String id;
-  final String? _empID;
-  final String? _leaveType;
-  final amplify_core.TemporalDate? _fromDate;
-  final amplify_core.TemporalDate? _toDate;
-  final double? _days;
-  final String? _applyTo;
-  final String? _reason;
+  final amplify_core.TemporalDate? _date;
+  final String? _time;
+  final String? _venue;
+  final String? _interviewType;
+  final String? _interviewer;
+  final String? _message;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -44,15 +43,15 @@ class LeaveStatus extends amplify_core.Model {
   @override
   String getId() => id;
   
-  LeaveStatusModelIdentifier get modelIdentifier {
-      return LeaveStatusModelIdentifier(
+  InterviewScheduleSchemaModelIdentifier get modelIdentifier {
+      return InterviewScheduleSchemaModelIdentifier(
         id: id
       );
   }
   
-  String get empID {
+  amplify_core.TemporalDate get date {
     try {
-      return _empID!;
+      return _date!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -63,9 +62,9 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  String get leaveType {
+  String get time {
     try {
-      return _leaveType!;
+      return _time!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -76,9 +75,9 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  amplify_core.TemporalDate get fromDate {
+  String get venue {
     try {
-      return _fromDate!;
+      return _venue!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -89,9 +88,9 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  amplify_core.TemporalDate get toDate {
+  String get interviewType {
     try {
-      return _toDate!;
+      return _interviewType!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -102,9 +101,9 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  double get days {
+  String get interviewer {
     try {
-      return _days!;
+      return _interviewer!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -115,30 +114,8 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  String get applyTo {
-    try {
-      return _applyTo!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
-  }
-  
-  String get reason {
-    try {
-      return _reason!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  String? get message {
+    return _message;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -149,18 +126,17 @@ class LeaveStatus extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const LeaveStatus._internal({required this.id, required empID, required leaveType, required fromDate, required toDate, required days, required applyTo, required reason, createdAt, updatedAt}): _empID = empID, _leaveType = leaveType, _fromDate = fromDate, _toDate = toDate, _days = days, _applyTo = applyTo, _reason = reason, _createdAt = createdAt, _updatedAt = updatedAt;
+  const InterviewScheduleSchema._internal({required this.id, required date, required time, required venue, required interviewType, required interviewer, message, createdAt, updatedAt}): _date = date, _time = time, _venue = venue, _interviewType = interviewType, _interviewer = interviewer, _message = message, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory LeaveStatus({String? id, required String empID, required String leaveType, required amplify_core.TemporalDate fromDate, required amplify_core.TemporalDate toDate, required double days, required String applyTo, required String reason}) {
-    return LeaveStatus._internal(
+  factory InterviewScheduleSchema({String? id, required amplify_core.TemporalDate date, required String time, required String venue, required String interviewType, required String interviewer, String? message}) {
+    return InterviewScheduleSchema._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
-      empID: empID,
-      leaveType: leaveType,
-      fromDate: fromDate,
-      toDate: toDate,
-      days: days,
-      applyTo: applyTo,
-      reason: reason);
+      date: date,
+      time: time,
+      venue: venue,
+      interviewType: interviewType,
+      interviewer: interviewer,
+      message: message);
   }
   
   bool equals(Object other) {
@@ -170,15 +146,14 @@ class LeaveStatus extends amplify_core.Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is LeaveStatus &&
+    return other is InterviewScheduleSchema &&
       id == other.id &&
-      _empID == other._empID &&
-      _leaveType == other._leaveType &&
-      _fromDate == other._fromDate &&
-      _toDate == other._toDate &&
-      _days == other._days &&
-      _applyTo == other._applyTo &&
-      _reason == other._reason;
+      _date == other._date &&
+      _time == other._time &&
+      _venue == other._venue &&
+      _interviewType == other._interviewType &&
+      _interviewer == other._interviewer &&
+      _message == other._message;
   }
   
   @override
@@ -188,15 +163,14 @@ class LeaveStatus extends amplify_core.Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("LeaveStatus {");
+    buffer.write("InterviewScheduleSchema {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("empID=" + "$_empID" + ", ");
-    buffer.write("leaveType=" + "$_leaveType" + ", ");
-    buffer.write("fromDate=" + (_fromDate != null ? _fromDate!.format() : "null") + ", ");
-    buffer.write("toDate=" + (_toDate != null ? _toDate!.format() : "null") + ", ");
-    buffer.write("days=" + (_days != null ? _days!.toString() : "null") + ", ");
-    buffer.write("applyTo=" + "$_applyTo" + ", ");
-    buffer.write("reason=" + "$_reason" + ", ");
+    buffer.write("date=" + (_date != null ? _date!.format() : "null") + ", ");
+    buffer.write("time=" + "$_time" + ", ");
+    buffer.write("venue=" + "$_venue" + ", ");
+    buffer.write("interviewType=" + "$_interviewType" + ", ");
+    buffer.write("interviewer=" + "$_interviewer" + ", ");
+    buffer.write("message=" + "$_message" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -204,80 +178,74 @@ class LeaveStatus extends amplify_core.Model {
     return buffer.toString();
   }
   
-  LeaveStatus copyWith({String? empID, String? leaveType, amplify_core.TemporalDate? fromDate, amplify_core.TemporalDate? toDate, double? days, String? applyTo, String? reason}) {
-    return LeaveStatus._internal(
+  InterviewScheduleSchema copyWith({amplify_core.TemporalDate? date, String? time, String? venue, String? interviewType, String? interviewer, String? message}) {
+    return InterviewScheduleSchema._internal(
       id: id,
-      empID: empID ?? this.empID,
-      leaveType: leaveType ?? this.leaveType,
-      fromDate: fromDate ?? this.fromDate,
-      toDate: toDate ?? this.toDate,
-      days: days ?? this.days,
-      applyTo: applyTo ?? this.applyTo,
-      reason: reason ?? this.reason);
+      date: date ?? this.date,
+      time: time ?? this.time,
+      venue: venue ?? this.venue,
+      interviewType: interviewType ?? this.interviewType,
+      interviewer: interviewer ?? this.interviewer,
+      message: message ?? this.message);
   }
   
-  LeaveStatus copyWithModelFieldValues({
-    ModelFieldValue<String>? empID,
-    ModelFieldValue<String>? leaveType,
-    ModelFieldValue<amplify_core.TemporalDate>? fromDate,
-    ModelFieldValue<amplify_core.TemporalDate>? toDate,
-    ModelFieldValue<double>? days,
-    ModelFieldValue<String>? applyTo,
-    ModelFieldValue<String>? reason
+  InterviewScheduleSchema copyWithModelFieldValues({
+    ModelFieldValue<amplify_core.TemporalDate>? date,
+    ModelFieldValue<String>? time,
+    ModelFieldValue<String>? venue,
+    ModelFieldValue<String>? interviewType,
+    ModelFieldValue<String>? interviewer,
+    ModelFieldValue<String?>? message
   }) {
-    return LeaveStatus._internal(
+    return InterviewScheduleSchema._internal(
       id: id,
-      empID: empID == null ? this.empID : empID.value,
-      leaveType: leaveType == null ? this.leaveType : leaveType.value,
-      fromDate: fromDate == null ? this.fromDate : fromDate.value,
-      toDate: toDate == null ? this.toDate : toDate.value,
-      days: days == null ? this.days : days.value,
-      applyTo: applyTo == null ? this.applyTo : applyTo.value,
-      reason: reason == null ? this.reason : reason.value
+      date: date == null ? this.date : date.value,
+      time: time == null ? this.time : time.value,
+      venue: venue == null ? this.venue : venue.value,
+      interviewType: interviewType == null ? this.interviewType : interviewType.value,
+      interviewer: interviewer == null ? this.interviewer : interviewer.value,
+      message: message == null ? this.message : message.value
     );
   }
   
-  LeaveStatus.fromJson(Map<String, dynamic> json)  
+  InterviewScheduleSchema.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _empID = json['empID'],
-      _leaveType = json['leaveType'],
-      _fromDate = json['fromDate'] != null ? amplify_core.TemporalDate.fromString(json['fromDate']) : null,
-      _toDate = json['toDate'] != null ? amplify_core.TemporalDate.fromString(json['toDate']) : null,
-      _days = (json['days'] as num?)?.toDouble(),
-      _applyTo = json['applyTo'],
-      _reason = json['reason'],
+      _date = json['date'] != null ? amplify_core.TemporalDate.fromString(json['date']) : null,
+      _time = json['time'],
+      _venue = json['venue'],
+      _interviewType = json['interviewType'],
+      _interviewer = json['interviewer'],
+      _message = json['message'],
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'empID': _empID, 'leaveType': _leaveType, 'fromDate': _fromDate?.format(), 'toDate': _toDate?.format(), 'days': _days, 'applyTo': _applyTo, 'reason': _reason, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'date': _date?.format(), 'time': _time, 'venue': _venue, 'interviewType': _interviewType, 'interviewer': _interviewer, 'message': _message, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
-    'empID': _empID,
-    'leaveType': _leaveType,
-    'fromDate': _fromDate,
-    'toDate': _toDate,
-    'days': _days,
-    'applyTo': _applyTo,
-    'reason': _reason,
+    'date': _date,
+    'time': _time,
+    'venue': _venue,
+    'interviewType': _interviewType,
+    'interviewer': _interviewer,
+    'message': _message,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
 
-  static final amplify_core.QueryModelIdentifier<LeaveStatusModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<LeaveStatusModelIdentifier>();
+  static final amplify_core.QueryModelIdentifier<InterviewScheduleSchemaModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<InterviewScheduleSchemaModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
-  static final EMPID = amplify_core.QueryField(fieldName: "empID");
-  static final LEAVETYPE = amplify_core.QueryField(fieldName: "leaveType");
-  static final FROMDATE = amplify_core.QueryField(fieldName: "fromDate");
-  static final TODATE = amplify_core.QueryField(fieldName: "toDate");
-  static final DAYS = amplify_core.QueryField(fieldName: "days");
-  static final APPLYTO = amplify_core.QueryField(fieldName: "applyTo");
-  static final REASON = amplify_core.QueryField(fieldName: "reason");
+  static final DATE = amplify_core.QueryField(fieldName: "date");
+  static final TIME = amplify_core.QueryField(fieldName: "time");
+  static final VENUE = amplify_core.QueryField(fieldName: "venue");
+  static final INTERVIEWTYPE = amplify_core.QueryField(fieldName: "interviewType");
+  static final INTERVIEWER = amplify_core.QueryField(fieldName: "interviewer");
+  static final MESSAGE = amplify_core.QueryField(fieldName: "message");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "LeaveStatus";
-    modelSchemaDefinition.pluralName = "LeaveStatuses";
+    modelSchemaDefinition.name = "InterviewScheduleSchema";
+    modelSchemaDefinition.pluralName = "InterviewScheduleSchemas";
     
     modelSchemaDefinition.authRules = [
       amplify_core.AuthRule(
@@ -293,44 +261,38 @@ class LeaveStatus extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.EMPID,
-      isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.LEAVETYPE,
-      isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.FROMDATE,
+      key: InterviewScheduleSchema.DATE,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.TODATE,
-      isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.DAYS,
-      isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.double)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.APPLYTO,
+      key: InterviewScheduleSchema.TIME,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: LeaveStatus.REASON,
+      key: InterviewScheduleSchema.VENUE,
       isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: InterviewScheduleSchema.INTERVIEWTYPE,
+      isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: InterviewScheduleSchema.INTERVIEWER,
+      isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: InterviewScheduleSchema.MESSAGE,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
@@ -350,29 +312,29 @@ class LeaveStatus extends amplify_core.Model {
   });
 }
 
-class _LeaveStatusModelType extends amplify_core.ModelType<LeaveStatus> {
-  const _LeaveStatusModelType();
+class _InterviewScheduleSchemaModelType extends amplify_core.ModelType<InterviewScheduleSchema> {
+  const _InterviewScheduleSchemaModelType();
   
   @override
-  LeaveStatus fromJson(Map<String, dynamic> jsonData) {
-    return LeaveStatus.fromJson(jsonData);
+  InterviewScheduleSchema fromJson(Map<String, dynamic> jsonData) {
+    return InterviewScheduleSchema.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'LeaveStatus';
+    return 'InterviewScheduleSchema';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [LeaveStatus] in your schema.
+ * of [InterviewScheduleSchema] in your schema.
  */
-class LeaveStatusModelIdentifier implements amplify_core.ModelIdentifier<LeaveStatus> {
+class InterviewScheduleSchemaModelIdentifier implements amplify_core.ModelIdentifier<InterviewScheduleSchema> {
   final String id;
 
-  /** Create an instance of LeaveStatusModelIdentifier using [id] the primary key. */
-  const LeaveStatusModelIdentifier({
+  /** Create an instance of InterviewScheduleSchemaModelIdentifier using [id] the primary key. */
+  const InterviewScheduleSchemaModelIdentifier({
     required this.id});
   
   @override
@@ -390,7 +352,7 @@ class LeaveStatusModelIdentifier implements amplify_core.ModelIdentifier<LeaveSt
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'LeaveStatusModelIdentifier(id: $id)';
+  String toString() => 'InterviewScheduleSchemaModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -398,7 +360,7 @@ class LeaveStatusModelIdentifier implements amplify_core.ModelIdentifier<LeaveSt
       return true;
     }
     
-    return other is LeaveStatusModelIdentifier &&
+    return other is InterviewScheduleSchemaModelIdentifier &&
       id == other.id;
   }
   

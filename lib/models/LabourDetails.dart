@@ -53,7 +53,7 @@ class LabourDetails extends amplify_core.Model {
   final String? _relation;
   final String? _labourDepositPaidBy;
   final String? _labourDepositReceiptNumber;
-  final int? _labourDepositAmount;
+  final String? _labourDepositAmount;
   final List<String>? _labourUploadDoc;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
@@ -396,7 +396,7 @@ class LabourDetails extends amplify_core.Model {
     }
   }
   
-  int get labourDepositAmount {
+  String get labourDepositAmount {
     try {
       return _labourDepositAmount!;
     } catch(e) {
@@ -423,7 +423,7 @@ class LabourDetails extends amplify_core.Model {
   
   const LabourDetails._internal({required this.id, required empID, required workPermitType, required arrivalStampingExpiry, required employmentPassEndorsement, required immigrationDeptDate, required employmentPassExpiry, required employmentPassStatus, required overseasMedicalDate, required overseasMedicalExpiry, required bruhimsRegistrationDate, required bruhimsRegistrationNumber, required bruneiMedicalAppointmentDate, required bruneiMedicalExpiry, required passportLocation, required reEntryVisaApplication, required immigrationApprovalDate, required reEntryVisaExpiry, required airTicketStatus, required remarks, required dependentName, required dependentPassportNumber, required dependentPassportExpiry, required relation, required labourDepositPaidBy, required labourDepositReceiptNumber, required labourDepositAmount, labourUploadDoc, createdAt, updatedAt}): _empID = empID, _workPermitType = workPermitType, _arrivalStampingExpiry = arrivalStampingExpiry, _employmentPassEndorsement = employmentPassEndorsement, _immigrationDeptDate = immigrationDeptDate, _employmentPassExpiry = employmentPassExpiry, _employmentPassStatus = employmentPassStatus, _overseasMedicalDate = overseasMedicalDate, _overseasMedicalExpiry = overseasMedicalExpiry, _bruhimsRegistrationDate = bruhimsRegistrationDate, _bruhimsRegistrationNumber = bruhimsRegistrationNumber, _bruneiMedicalAppointmentDate = bruneiMedicalAppointmentDate, _bruneiMedicalExpiry = bruneiMedicalExpiry, _passportLocation = passportLocation, _reEntryVisaApplication = reEntryVisaApplication, _immigrationApprovalDate = immigrationApprovalDate, _reEntryVisaExpiry = reEntryVisaExpiry, _airTicketStatus = airTicketStatus, _remarks = remarks, _dependentName = dependentName, _dependentPassportNumber = dependentPassportNumber, _dependentPassportExpiry = dependentPassportExpiry, _relation = relation, _labourDepositPaidBy = labourDepositPaidBy, _labourDepositReceiptNumber = labourDepositReceiptNumber, _labourDepositAmount = labourDepositAmount, _labourUploadDoc = labourUploadDoc, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory LabourDetails({String? id, required String empID, required String workPermitType, required String arrivalStampingExpiry, required String employmentPassEndorsement, required String immigrationDeptDate, required String employmentPassExpiry, required String employmentPassStatus, required String overseasMedicalDate, required String overseasMedicalExpiry, required String bruhimsRegistrationDate, required String bruhimsRegistrationNumber, required String bruneiMedicalAppointmentDate, required String bruneiMedicalExpiry, required String passportLocation, required String reEntryVisaApplication, required String immigrationApprovalDate, required String reEntryVisaExpiry, required String airTicketStatus, required String remarks, required String dependentName, required String dependentPassportNumber, required String dependentPassportExpiry, required String relation, required String labourDepositPaidBy, required String labourDepositReceiptNumber, required int labourDepositAmount, List<String>? labourUploadDoc}) {
+  factory LabourDetails({String? id, required String empID, required String workPermitType, required String arrivalStampingExpiry, required String employmentPassEndorsement, required String immigrationDeptDate, required String employmentPassExpiry, required String employmentPassStatus, required String overseasMedicalDate, required String overseasMedicalExpiry, required String bruhimsRegistrationDate, required String bruhimsRegistrationNumber, required String bruneiMedicalAppointmentDate, required String bruneiMedicalExpiry, required String passportLocation, required String reEntryVisaApplication, required String immigrationApprovalDate, required String reEntryVisaExpiry, required String airTicketStatus, required String remarks, required String dependentName, required String dependentPassportNumber, required String dependentPassportExpiry, required String relation, required String labourDepositPaidBy, required String labourDepositReceiptNumber, required String labourDepositAmount, List<String>? labourUploadDoc}) {
     return LabourDetails._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       empID: empID,
@@ -527,7 +527,7 @@ class LabourDetails extends amplify_core.Model {
     buffer.write("relation=" + "$_relation" + ", ");
     buffer.write("labourDepositPaidBy=" + "$_labourDepositPaidBy" + ", ");
     buffer.write("labourDepositReceiptNumber=" + "$_labourDepositReceiptNumber" + ", ");
-    buffer.write("labourDepositAmount=" + (_labourDepositAmount != null ? _labourDepositAmount!.toString() : "null") + ", ");
+    buffer.write("labourDepositAmount=" + "$_labourDepositAmount" + ", ");
     buffer.write("labourUploadDoc=" + (_labourUploadDoc != null ? _labourUploadDoc!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
@@ -536,7 +536,7 @@ class LabourDetails extends amplify_core.Model {
     return buffer.toString();
   }
   
-  LabourDetails copyWith({String? empID, String? workPermitType, String? arrivalStampingExpiry, String? employmentPassEndorsement, String? immigrationDeptDate, String? employmentPassExpiry, String? employmentPassStatus, String? overseasMedicalDate, String? overseasMedicalExpiry, String? bruhimsRegistrationDate, String? bruhimsRegistrationNumber, String? bruneiMedicalAppointmentDate, String? bruneiMedicalExpiry, String? passportLocation, String? reEntryVisaApplication, String? immigrationApprovalDate, String? reEntryVisaExpiry, String? airTicketStatus, String? remarks, String? dependentName, String? dependentPassportNumber, String? dependentPassportExpiry, String? relation, String? labourDepositPaidBy, String? labourDepositReceiptNumber, int? labourDepositAmount, List<String>? labourUploadDoc}) {
+  LabourDetails copyWith({String? empID, String? workPermitType, String? arrivalStampingExpiry, String? employmentPassEndorsement, String? immigrationDeptDate, String? employmentPassExpiry, String? employmentPassStatus, String? overseasMedicalDate, String? overseasMedicalExpiry, String? bruhimsRegistrationDate, String? bruhimsRegistrationNumber, String? bruneiMedicalAppointmentDate, String? bruneiMedicalExpiry, String? passportLocation, String? reEntryVisaApplication, String? immigrationApprovalDate, String? reEntryVisaExpiry, String? airTicketStatus, String? remarks, String? dependentName, String? dependentPassportNumber, String? dependentPassportExpiry, String? relation, String? labourDepositPaidBy, String? labourDepositReceiptNumber, String? labourDepositAmount, List<String>? labourUploadDoc}) {
     return LabourDetails._internal(
       id: id,
       empID: empID ?? this.empID,
@@ -594,7 +594,7 @@ class LabourDetails extends amplify_core.Model {
     ModelFieldValue<String>? relation,
     ModelFieldValue<String>? labourDepositPaidBy,
     ModelFieldValue<String>? labourDepositReceiptNumber,
-    ModelFieldValue<int>? labourDepositAmount,
+    ModelFieldValue<String>? labourDepositAmount,
     ModelFieldValue<List<String>>? labourUploadDoc
   }) {
     return LabourDetails._internal(
@@ -656,7 +656,7 @@ class LabourDetails extends amplify_core.Model {
       _relation = json['relation'],
       _labourDepositPaidBy = json['labourDepositPaidBy'],
       _labourDepositReceiptNumber = json['labourDepositReceiptNumber'],
-      _labourDepositAmount = (json['labourDepositAmount'] as num?)?.toInt(),
+      _labourDepositAmount = json['labourDepositAmount'],
       _labourUploadDoc = json['labourUploadDoc']?.cast<String>(),
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
@@ -897,7 +897,7 @@ class LabourDetails extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: LabourDetails.LABOURDEPOSITAMOUNT,
       isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.int)
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(

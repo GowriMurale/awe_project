@@ -119,42 +119,75 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
           Row(
           mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: size.width* 0.35,),
+              SizedBox(width: size.width* 0.15,),
               // IconButton(onPressed: (){
               //   Get.back();
               // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
               // SizedBox(width: size.width* 0.14,),
-              Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+              Text('Welcome',style: TextStyle(color: black,fontSize:26 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
               SizedBox(width: size.width * 0.01,),
-              Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+              Text('Nur Hafiza',style: TextStyle(color: griesh,fontFamily:'Inter',fontSize: 28,fontWeight: FontWeight.bold),)
             ],
           ),
           SizedBox(height: size.height * 0.015,),
           Row(
             children: [
-              SizedBox(width: size.width * 0.175,),
-             container2('Present', '20.5', purple,context),
-              SizedBox(width: size.width * 0.04,),
-              container2('Absent Days', '2.5', green,context),
-              SizedBox(width: size.width * 0.04,),
-              container2('Available Leave', '6.5', brown,context),
-              SizedBox(width: size.width * 0.04,),
-              container2('Leave Request', '00', black,context),
+              SizedBox(width: size.width * 0.215,),
+              Container(
+                width: size.width * 0.45,
+                height: size.height * 0.115,
+               color:pink,
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height * 0.015,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.024,),
+                        Text('Employee Type',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+                        SizedBox(width: size.width * 0.024,),
+                        Text('Date of joining',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+                        SizedBox(width: size.width * 0.024,),
+                        Text('Contract Type',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+                        SizedBox(width: size.width * 0.024,),
+                        Text('Department',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+                        SizedBox(width: size.width * 0.024,),
+                        Text('Location',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.010,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.026,),
+                        Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                        SizedBox(width: size.width * 0.056,),
+                        Text('12/10/2024',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                        SizedBox(width: size.width * 0.034,),
+                        Text('Permanent',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                        SizedBox(width: size.width * 0.034,),
+                        Text('Engineer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                        SizedBox(width: size.width * 0.032,),
+                        Text('Offshore',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                      ],
+                    ),
+
+                  ],
+                ),
+              )
 
             ],
           ),
           SizedBox(height: size.height * 0.015,),
-          Row(
-            children: [
-              SizedBox(width: size.width * 0.175,),
-              container2('Annual Leave', '9', purple, context),
-              SizedBox(width: size.width * 0.04,),
-              container2('Sick Leave', '8', purple, context),
-              SizedBox(width: size.width * 0.04,),
-              container2('Unpaid Authorize', '0.5', purple, context),
-            ],
-          ),
-          SizedBox(height: size.height * 0.055,),
+          // Row(
+          //   children: [
+          //     SizedBox(width: size.width * 0.175,),
+          //     container2('Annual Leave', '9', purple, context),
+          //     SizedBox(width: size.width * 0.04,),
+          //     container2('Sick Leave', '8', purple, context),
+          //     SizedBox(width: size.width * 0.04,),
+          //     container2('Unpaid Authorize', '0.5', purple, context),
+          //   ],
+          // ),
+          SizedBox(height: size.height * 0.185,),
             Row(
               children: [
               SizedBox(width: size.width * 0.185),
@@ -718,6 +751,8 @@ Widget dashContainer(BuildContext context,Color color,String text,IconData icon)
 
 
 
+
+
 class EmployeeTable extends StatefulWidget {
   @override
   _EmployeeTableState createState() => _EmployeeTableState();
@@ -727,7 +762,7 @@ class _EmployeeTableState extends State<EmployeeTable> {
   final ScrollController _scrollController = ScrollController();
 
   // Sample data rows (initially empty)
-  List<Map<String, String>> leaveData = [];
+  List<LeaveStatus?> leaveData = [];
 
   // Function to fetch leave data from AWS Amplify GraphQL
   Future<void> fetchLeaveData() async {
@@ -747,21 +782,60 @@ class _EmployeeTableState extends State<EmployeeTable> {
 
       // Update the leaveData list
       setState(() {
-        leaveData = leaveStatuses.map((leaveStatus) {
-          return {
-            'Leave Type': leaveStatus!.leaveType,
-            'From': leaveStatus.fromDate.format(), // Format dates
-            'To': leaveStatus.toDate.format(),
-            'Days': leaveStatus.days.toString(),
-            'Reason': leaveStatus.reason,
-            'Approver': leaveStatus.applyTo, // Approver (either manager or superior)
-            'Status':  'Pending', // Add status if available
-          };
-        }).toList();
+        leaveData = leaveStatuses;
       });
     } catch (e) {
       print('Failed to fetch leave data: $e');
     }
+  }
+
+  // Function to delete leave from AWS DynamoDB
+  Future<void> deleteLeave(LeaveStatus leaveToDelete) async {
+    try {
+      final request = ModelMutations.delete(leaveToDelete);
+      final response = await Amplify.API.mutate(request: request).response;
+
+      // Check for errors
+      if (response.errors.isNotEmpty) {
+        print('Errors deleting leave: ${response.errors}');
+        _showAlertDialog('Error', 'Failed to delete leave request.');
+        return;
+      }
+
+      // Remove leave from the list in the UI
+      setState(() {
+        leaveData.removeWhere((leave) => leave?.id == leaveToDelete.id);
+      });
+
+      // Print the deleted leave details to the terminal
+      print('Leave deleted successfully: ${leaveToDelete.toString()}');
+
+      // Show success dialog
+      _showAlertDialog('Success', 'Leave request deleted successfully.');
+    } catch (e) {
+      print('Failed to delete leave: $e');
+      _showAlertDialog('Error', 'Failed to delete leave request.');
+    }
+  }
+
+
+  // Helper function to show AlertDialog
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close the dialog
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
   }
 
   @override
@@ -770,15 +844,8 @@ class _EmployeeTableState extends State<EmployeeTable> {
     fetchLeaveData(); // Fetch data when the widget is initialized
   }
 
-  // Function to handle row deletion
-  void _deleteLeave(int index) {
-    setState(() {
-      leaveData.removeAt(index); // Remove the row from the data list
-    });
-  }
-
   // Show a cancel dialog with leave details
-  void _showCancelDialog(BuildContext context, int rowIndex, Map<String, String> leave) {
+  void _showCancelDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
     final Size size = MediaQuery.of(context).size;
     Get.dialog(
       Dialog(
@@ -812,47 +879,149 @@ class _EmployeeTableState extends State<EmployeeTable> {
                 ],
               ),
               SizedBox(height: size.height * 0.014),
-              _buildDetailRow('Name', "Rahul Kumar", size),
-              _buildDetailRow('Job Title', "Trainer", size),
-              _buildDetailRow('Badge', "50598", size),
-              _buildDetailRow('Dept/Div', "50598", size),
-              _buildDetailRow('Leave Type', leave['Leave Type']!, size),
-              _buildDetailRow('Select Date', '${leave['From']} to ${leave['To']}', size),
-              _buildDetailRow('No of Days', '${leave['Days']} days', size),
-              _buildDetailRow('Reason', leave['Reason']!, size),
-              _buildDetailRow('Approver', leave['Approver']!, size),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Name',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.043,),
+                  Text('Rahul Kumar',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Job Title',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.030,),
+                  Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Badge',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.041,),
+                  Text('50598',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Dept/Div',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.032,),
+                  Text('5058',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Leave Type',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.020,),
+                  Text(leave.leaveType,style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Select Date',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.020,),
+                  Text('${leave.fromDate.format()} to ${leave.toDate.format()}',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Apply to',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.037,),
+                  Text(leave.applyTo,style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.022,),
+                  Text('${leave.days} days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Reason',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.040,),
+                  Text(leave.reason,style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
               SizedBox(height: size.height * 0.022),
               MaterialButton(
-                minWidth: size.width * .06,
+                minWidth: size.width * .065,
                 height: size.height * 0.03,
                 onPressed: () {
-                  _deleteLeave(rowIndex);
+                  print(leave);
+                  deleteLeave(leave); // Delete leave from AWS DynamoDB
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Cancel',
+                  'Cancel Leave',
                   style: TextStyle(fontSize: 16, fontFamily: 'Inter'),
                 ),
                 color: Colors.yellow,
                 textColor: Colors.black,
               ),
+              SizedBox(height: size.height * 0.014,),
             ],
           ),
         ),
       ),
-      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+      barrierDismissible: false,
     );
   }
 
   // Helper function to build the detail row
-  Widget _buildDetailRow(String label, String value, Size size) {
+  Widget _buildDetailRow(String title, String value, Size size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(width: size.width * 0.050),
-        Text(label, style: TextStyle(fontFamily: 'Inter', fontSize: 16, color: Colors.black)),
-        SizedBox(width: size.width * 0.020),
-        Text(value, style: TextStyle(fontFamily: 'Inter', fontSize: 16, color: Colors.black)),
+        SizedBox(width: size.width * 0.050), // Left padding
+        SizedBox(
+          width: size.width * 0.2, // Adjust title width
+          child: Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        SizedBox(width: size.width * 0.030), // Spacing between title and value
+        SizedBox(
+          width: size.width * 0.2, // Adjust value width
+          child: Text(
+            value,
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 16,
+              color: Colors.black,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -898,16 +1067,23 @@ class _EmployeeTableState extends State<EmployeeTable> {
                     (index) {
                   var leave = leaveData[index];
                   return DataRow(
-                    cells: leave.entries.map((entry) {
-                      return DataCell(
+                    cells: [
+                      DataCell(
                         GestureDetector(
                           onDoubleTap: () {
-                            _showCancelDialog(context, index, leave); // Pass leave details to dialog
+                            _showCancelDialog(context, index, leave!); // Show cancel dialog on double tap
                           },
-                          child: Text(entry.value, style: rowTextStyle),
+                          child: Text(leave!.leaveType, style: rowTextStyle),
                         ),
-                      );
-                    }).toList(),
+                      ),
+
+                      DataCell(Text(leave.fromDate.format(), style: rowTextStyle)),
+                      DataCell(Text(leave.toDate.format(), style: rowTextStyle)),
+                      DataCell(Text('${leave.days} days', style: rowTextStyle)),
+                      DataCell(Text(leave.reason, style: rowTextStyle)),
+                      DataCell(Text(leave.applyTo, style: rowTextStyle)),
+                      DataCell(Text('Pending', style: rowTextStyle)),
+                    ],
                   );
                 },
               ),
@@ -920,3 +1096,20 @@ class _EmployeeTableState extends State<EmployeeTable> {
 }
 
 
+
+// _buildDetailRow('Name', "Rahul Kumar", size),
+// _buildDetailRow('Job Title', "Trainer", size),
+// _buildDetailRow('Badge', "50598", size),
+// _buildDetailRow('Dept/Div', "50598", size),
+// _buildDetailRow('Leave Type', leave['Leave Type']!, size),
+// _buildDetailRow('Select Date', '${leave['From']} to ${leave['To']}', size),
+// _buildDetailRow('No of Days', '${leave['Days']} days', size),
+// _buildDetailRow('Reason', leave['Reason']!, size),
+// _buildDetailRow('Approver', leave['Approver']!, size),
+
+// _buildDetailRow('Leave Type', leave.leaveType, size),
+// _buildDetailRow('Select Date', '${leave.fromDate.format()} to ${leave.toDate.format()}', size),
+// _buildDetailRow('Apply to', leave.applyTo, size),
+// _buildDetailRow('No of days', '${leave.days} days', size),
+// _buildDetailRow('Reason', leave.reason, size),
+// SizedBox(height: size.height * 0.022),

@@ -205,9 +205,8 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         return;
       }
 
-      // Calculate the number of days
-      int numberOfDays = toDate.difference(fromDate).inDays + 1;
-      days.text = numberOfDays.toString(); // Update the days text field
+      double numberOfDays = double.parse(days.text);
+      print("Number of days: $numberOfDays");
 
       // Try to submit the leave request
       final leaveStatus = LeaveStatus(
@@ -215,7 +214,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         leaveType: _selectedLeaveType!,
         fromDate: TemporalDate(fromDate),
         toDate: TemporalDate(toDate),
-        days: int.parse(days.text),
+        days: numberOfDays,
         applyTo: isManager ? 'Manager' : 'Superior',
         reason: reason.text,
       );
@@ -310,18 +309,18 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   Get.back();
                 }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
                 SizedBox(width: size.width * 0.28,),
-                Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold,color: black),),
+                Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 18,fontWeight: FontWeight.bold,color: black),),
               ],
             ),
-            SizedBox(height: size.height * 0.01,),
+            SizedBox(height: size.height * 0.015,),
             Row(
               children: [
                 SizedBox(width: size.width * 0.22,),
-                Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.038,),
                 myContainer(context, '0001'),
                 SizedBox(width: size.width * 0.088,),
-                Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.051,),
                 myContainer(context, 'Adinin'),
               ],
@@ -330,11 +329,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             Row(
               children: [
                 SizedBox(width: size.width * 0.22,),
-                Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.033,),
                 myContainer(context, 'Xyz'),
                 SizedBox(width: size.width * 0.085,),
-                Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.040,),
                 myContainer(context, 'Worker'),
               ],
@@ -348,7 +347,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   'Leave Type:',
                   style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -405,7 +404,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                                     leaveType,
                                     style: TextStyle(
                                       fontFamily: 'Inter',
-                                      fontSize: 15,
+                                      fontSize: 14,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -430,7 +429,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   'Leave balance:',
                   style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -444,7 +443,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
               children: [
                 //Half day
                 SizedBox(width: size.width * 0.22,),
-                Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('Half day:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.042,),
                 Container(
                   width: size.width * 0.018,
@@ -481,11 +480,11 @@ class _DesktopLeaveState extends State<DesktopLeave> {
             Row(
               children: [
                 SizedBox(width: size.width * 0.31,),
-                Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.145,),
-                Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                 SizedBox(width: size.width * 0.15,),
-                Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 18,color: black,fontWeight: FontWeight.bold),),
+                Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
               ],
             ),
             SizedBox(height: size.height * 0.01,),
@@ -497,7 +496,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                   'Select Date:',
                   style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -557,7 +556,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                       'Apply To:',
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -567,7 +566,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                       'Manager:',
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -595,7 +594,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                       'Superior:',
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
@@ -623,7 +622,46 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ],
             ),
-            SizedBox(height: size.height * 0.027,),
+            SizedBox(height: size.height * 0.012,),
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.32),
+                Text(
+                  'If Sick:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.005,),
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.32),
+            Container(
+            width: size.width * 0.14,
+              height: size.height * 0.038,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade700,width: 1)
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.004),
+                  Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: Colors.grey),),
+                  SizedBox(width: size.width * 0.012),
+                  Padding(
+                    padding:  EdgeInsets.only(bottom: size.height * 0.8),
+                    child: IconButton(onPressed: (){}, icon: Icon(Icons.file_upload_outlined,size: 18,color: black,)),
+                  )
+                ],
+              )
+            )
+              ],
+            ),
 
             SizedBox(height: size.height * 0.022,),
             Row(
@@ -635,7 +673,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                     'Reason:',
                     style: TextStyle(
                       fontFamily: 'Inter',
-                      fontSize: 18,
+                      fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -659,10 +697,10 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
                     Container(
                       width: size.width * 0.3, // Specify the width of the TextField
-                      height: size.height * 0.12, // Specify the height of the TextField
+                      height: size.height * 0.11, // Specify the height of the TextField
                       child: TextField(
                         controller: reason,
-                        style: TextStyle(fontSize: 16), // Adjust text size within the TextField
+                        style: TextStyle(fontSize: 14), // Adjust text size within the TextField
                         maxLines: null, // Allows the TextField to expand vertically
                         expands: true, // Allows the TextField content to fill the available space
                         textAlignVertical: TextAlignVertical.top, // Centers text vertically
@@ -721,7 +759,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ],
             ),
-            SizedBox(height: size.height * 0.034,),
+            SizedBox(height: size.height * 0.030,),
             Row(
               children: [
                 SizedBox(width: size.width * 0.38,),
@@ -766,7 +804,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                       }
                     },
                     minWidth: size.width * 0.075,
-                    height: size.height * 0.06,
+                    height: size.height * 0.055,
                     color: yellow,
                     child: Text(
                       'Apply',
@@ -785,7 +823,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                     Get.off(DashBoardScreeen());
                   },
                   style: OutlinedButton.styleFrom(
-                    minimumSize: Size(size.width * 0.075, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                    minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
                     side: BorderSide(color: grey), // Define the border color for the outlined button
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
@@ -1801,7 +1839,7 @@ Widget myContainer(BuildContext context,String text){
   final Size size = MediaQuery.of(context).size;
   return    Container(
     width: size.width * 0.14,
-    height: size.height * 0.040,
+    height: size.height * 0.038,
     decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade700,width: 1)
     ),

@@ -83,6 +83,7 @@ class CandidateApplicationForm extends amplify_core.Model {
   final String? _uploadPassport;
   final String? _dateOfBirth;
   final String? _tempID;
+  final String? _experience;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -544,6 +545,19 @@ class CandidateApplicationForm extends amplify_core.Model {
     }
   }
   
+  String get experience {
+    try {
+      return _experience!;
+    } catch(e) {
+      throw amplify_core.AmplifyCodeGenModelException(
+          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion:
+            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString()
+          );
+    }
+  }
+  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -552,9 +566,9 @@ class CandidateApplicationForm extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const CandidateApplicationForm._internal({required this.id, required profilePhoto, agent, required position, required contractType, required employeeType, required name, chinese, required gender, required age, required email, required countryOfBirth, required nationality, otherNationality, required marital, required race, otherRace, required religion, otherReligion, icNo, icExpiry, icColour, passportNo, alternateNo, passportIssued, passportExpiry, passportDestination, required contactNo, required presentAddress, required permanentAddress, drivingLicense, required language, familyDetails, educationDetails, workExperience, referees, relatives, description, emergencyContact, disease, liquor, crime, diseaseDescription, liquorDescription, crimeDescription, salaryException, required noticePeriod, required employeeStatement, required perInterviewStatus, perInterviewDescription, supportInfo, required uploadResume, required uploadCertificate, required uploadPassport, required dateOfBirth, required tempID, createdAt, updatedAt}): _profilePhoto = profilePhoto, _agent = agent, _position = position, _contractType = contractType, _employeeType = employeeType, _name = name, _chinese = chinese, _gender = gender, _age = age, _email = email, _countryOfBirth = countryOfBirth, _nationality = nationality, _otherNationality = otherNationality, _marital = marital, _race = race, _otherRace = otherRace, _religion = religion, _otherReligion = otherReligion, _icNo = icNo, _icExpiry = icExpiry, _icColour = icColour, _passportNo = passportNo, _alternateNo = alternateNo, _passportIssued = passportIssued, _passportExpiry = passportExpiry, _passportDestination = passportDestination, _contactNo = contactNo, _presentAddress = presentAddress, _permanentAddress = permanentAddress, _drivingLicense = drivingLicense, _language = language, _familyDetails = familyDetails, _educationDetails = educationDetails, _workExperience = workExperience, _referees = referees, _relatives = relatives, _description = description, _emergencyContact = emergencyContact, _disease = disease, _liquor = liquor, _crime = crime, _diseaseDescription = diseaseDescription, _liquorDescription = liquorDescription, _crimeDescription = crimeDescription, _salaryException = salaryException, _noticePeriod = noticePeriod, _employeeStatement = employeeStatement, _perInterviewStatus = perInterviewStatus, _perInterviewDescription = perInterviewDescription, _supportInfo = supportInfo, _uploadResume = uploadResume, _uploadCertificate = uploadCertificate, _uploadPassport = uploadPassport, _dateOfBirth = dateOfBirth, _tempID = tempID, _createdAt = createdAt, _updatedAt = updatedAt;
+  const CandidateApplicationForm._internal({required this.id, required profilePhoto, agent, required position, required contractType, required employeeType, required name, chinese, required gender, required age, required email, required countryOfBirth, required nationality, otherNationality, required marital, required race, otherRace, required religion, otherReligion, icNo, icExpiry, icColour, passportNo, alternateNo, passportIssued, passportExpiry, passportDestination, required contactNo, required presentAddress, required permanentAddress, drivingLicense, required language, familyDetails, educationDetails, workExperience, referees, relatives, description, emergencyContact, disease, liquor, crime, diseaseDescription, liquorDescription, crimeDescription, salaryException, required noticePeriod, required employeeStatement, required perInterviewStatus, perInterviewDescription, supportInfo, required uploadResume, required uploadCertificate, required uploadPassport, required dateOfBirth, required tempID, required experience, createdAt, updatedAt}): _profilePhoto = profilePhoto, _agent = agent, _position = position, _contractType = contractType, _employeeType = employeeType, _name = name, _chinese = chinese, _gender = gender, _age = age, _email = email, _countryOfBirth = countryOfBirth, _nationality = nationality, _otherNationality = otherNationality, _marital = marital, _race = race, _otherRace = otherRace, _religion = religion, _otherReligion = otherReligion, _icNo = icNo, _icExpiry = icExpiry, _icColour = icColour, _passportNo = passportNo, _alternateNo = alternateNo, _passportIssued = passportIssued, _passportExpiry = passportExpiry, _passportDestination = passportDestination, _contactNo = contactNo, _presentAddress = presentAddress, _permanentAddress = permanentAddress, _drivingLicense = drivingLicense, _language = language, _familyDetails = familyDetails, _educationDetails = educationDetails, _workExperience = workExperience, _referees = referees, _relatives = relatives, _description = description, _emergencyContact = emergencyContact, _disease = disease, _liquor = liquor, _crime = crime, _diseaseDescription = diseaseDescription, _liquorDescription = liquorDescription, _crimeDescription = crimeDescription, _salaryException = salaryException, _noticePeriod = noticePeriod, _employeeStatement = employeeStatement, _perInterviewStatus = perInterviewStatus, _perInterviewDescription = perInterviewDescription, _supportInfo = supportInfo, _uploadResume = uploadResume, _uploadCertificate = uploadCertificate, _uploadPassport = uploadPassport, _dateOfBirth = dateOfBirth, _tempID = tempID, _experience = experience, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory CandidateApplicationForm({String? id, required String profilePhoto, String? agent, required String position, required String contractType, required String employeeType, required String name, String? chinese, required String gender, required int age, required String email, required String countryOfBirth, required String nationality, String? otherNationality, required String marital, required String race, String? otherRace, required String religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, required String contactNo, required String presentAddress, required String permanentAddress, String? drivingLicense, required String language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, required String noticePeriod, required String employeeStatement, required String perInterviewStatus, String? perInterviewDescription, String? supportInfo, required String uploadResume, required String uploadCertificate, required String uploadPassport, required String dateOfBirth, required String tempID}) {
+  factory CandidateApplicationForm({String? id, required String profilePhoto, String? agent, required String position, required String contractType, required String employeeType, required String name, String? chinese, required String gender, required int age, required String email, required String countryOfBirth, required String nationality, String? otherNationality, required String marital, required String race, String? otherRace, required String religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, required String contactNo, required String presentAddress, required String permanentAddress, String? drivingLicense, required String language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, required String noticePeriod, required String employeeStatement, required String perInterviewStatus, String? perInterviewDescription, String? supportInfo, required String uploadResume, required String uploadCertificate, required String uploadPassport, required String dateOfBirth, required String tempID, required String experience}) {
     return CandidateApplicationForm._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       profilePhoto: profilePhoto,
@@ -611,7 +625,8 @@ class CandidateApplicationForm extends amplify_core.Model {
       uploadCertificate: uploadCertificate,
       uploadPassport: uploadPassport,
       dateOfBirth: dateOfBirth,
-      tempID: tempID);
+      tempID: tempID,
+      experience: experience);
   }
   
   bool equals(Object other) {
@@ -677,7 +692,8 @@ class CandidateApplicationForm extends amplify_core.Model {
       _uploadCertificate == other._uploadCertificate &&
       _uploadPassport == other._uploadPassport &&
       _dateOfBirth == other._dateOfBirth &&
-      _tempID == other._tempID;
+      _tempID == other._tempID &&
+      _experience == other._experience;
   }
   
   @override
@@ -744,6 +760,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     buffer.write("uploadPassport=" + "$_uploadPassport" + ", ");
     buffer.write("dateOfBirth=" + "$_dateOfBirth" + ", ");
     buffer.write("tempID=" + "$_tempID" + ", ");
+    buffer.write("experience=" + "$_experience" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -751,7 +768,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     return buffer.toString();
   }
   
-  CandidateApplicationForm copyWith({String? profilePhoto, String? agent, String? position, String? contractType, String? employeeType, String? name, String? chinese, String? gender, int? age, String? email, String? countryOfBirth, String? nationality, String? otherNationality, String? marital, String? race, String? otherRace, String? religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, String? contactNo, String? presentAddress, String? permanentAddress, String? drivingLicense, String? language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, String? noticePeriod, String? employeeStatement, String? perInterviewStatus, String? perInterviewDescription, String? supportInfo, String? uploadResume, String? uploadCertificate, String? uploadPassport, String? dateOfBirth, String? tempID}) {
+  CandidateApplicationForm copyWith({String? profilePhoto, String? agent, String? position, String? contractType, String? employeeType, String? name, String? chinese, String? gender, int? age, String? email, String? countryOfBirth, String? nationality, String? otherNationality, String? marital, String? race, String? otherRace, String? religion, String? otherReligion, String? icNo, String? icExpiry, String? icColour, String? passportNo, String? alternateNo, String? passportIssued, String? passportExpiry, String? passportDestination, String? contactNo, String? presentAddress, String? permanentAddress, String? drivingLicense, String? language, List<String>? familyDetails, List<String>? educationDetails, List<String>? workExperience, List<String>? referees, List<String>? relatives, String? description, List<String>? emergencyContact, String? disease, String? liquor, String? crime, String? diseaseDescription, String? liquorDescription, String? crimeDescription, String? salaryException, String? noticePeriod, String? employeeStatement, String? perInterviewStatus, String? perInterviewDescription, String? supportInfo, String? uploadResume, String? uploadCertificate, String? uploadPassport, String? dateOfBirth, String? tempID, String? experience}) {
     return CandidateApplicationForm._internal(
       id: id,
       profilePhoto: profilePhoto ?? this.profilePhoto,
@@ -808,7 +825,8 @@ class CandidateApplicationForm extends amplify_core.Model {
       uploadCertificate: uploadCertificate ?? this.uploadCertificate,
       uploadPassport: uploadPassport ?? this.uploadPassport,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-      tempID: tempID ?? this.tempID);
+      tempID: tempID ?? this.tempID,
+      experience: experience ?? this.experience);
   }
   
   CandidateApplicationForm copyWithModelFieldValues({
@@ -866,7 +884,8 @@ class CandidateApplicationForm extends amplify_core.Model {
     ModelFieldValue<String>? uploadCertificate,
     ModelFieldValue<String>? uploadPassport,
     ModelFieldValue<String>? dateOfBirth,
-    ModelFieldValue<String>? tempID
+    ModelFieldValue<String>? tempID,
+    ModelFieldValue<String>? experience
   }) {
     return CandidateApplicationForm._internal(
       id: id,
@@ -924,7 +943,8 @@ class CandidateApplicationForm extends amplify_core.Model {
       uploadCertificate: uploadCertificate == null ? this.uploadCertificate : uploadCertificate.value,
       uploadPassport: uploadPassport == null ? this.uploadPassport : uploadPassport.value,
       dateOfBirth: dateOfBirth == null ? this.dateOfBirth : dateOfBirth.value,
-      tempID: tempID == null ? this.tempID : tempID.value
+      tempID: tempID == null ? this.tempID : tempID.value,
+      experience: experience == null ? this.experience : experience.value
     );
   }
   
@@ -985,11 +1005,12 @@ class CandidateApplicationForm extends amplify_core.Model {
       _uploadPassport = json['uploadPassport'],
       _dateOfBirth = json['dateOfBirth'],
       _tempID = json['tempID'],
+      _experience = json['experience'],
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'profilePhoto': _profilePhoto, 'agent': _agent, 'position': _position, 'contractType': _contractType, 'employeeType': _employeeType, 'name': _name, 'chinese': _chinese, 'gender': _gender, 'age': _age, 'email': _email, 'countryOfBirth': _countryOfBirth, 'nationality': _nationality, 'otherNationality': _otherNationality, 'marital': _marital, 'race': _race, 'otherRace': _otherRace, 'religion': _religion, 'otherReligion': _otherReligion, 'icNo': _icNo, 'icExpiry': _icExpiry, 'icColour': _icColour, 'passportNo': _passportNo, 'alternateNo': _alternateNo, 'passportIssued': _passportIssued, 'passportExpiry': _passportExpiry, 'passportDestination': _passportDestination, 'contactNo': _contactNo, 'presentAddress': _presentAddress, 'permanentAddress': _permanentAddress, 'drivingLicense': _drivingLicense, 'language': _language, 'familyDetails': _familyDetails, 'educationDetails': _educationDetails, 'workExperience': _workExperience, 'referees': _referees, 'relatives': _relatives, 'description': _description, 'emergencyContact': _emergencyContact, 'disease': _disease, 'liquor': _liquor, 'crime': _crime, 'diseaseDescription': _diseaseDescription, 'liquorDescription': _liquorDescription, 'crimeDescription': _crimeDescription, 'salaryException': _salaryException, 'noticePeriod': _noticePeriod, 'employeeStatement': _employeeStatement, 'perInterviewStatus': _perInterviewStatus, 'perInterviewDescription': _perInterviewDescription, 'supportInfo': _supportInfo, 'uploadResume': _uploadResume, 'uploadCertificate': _uploadCertificate, 'uploadPassport': _uploadPassport, 'dateOfBirth': _dateOfBirth, 'tempID': _tempID, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'profilePhoto': _profilePhoto, 'agent': _agent, 'position': _position, 'contractType': _contractType, 'employeeType': _employeeType, 'name': _name, 'chinese': _chinese, 'gender': _gender, 'age': _age, 'email': _email, 'countryOfBirth': _countryOfBirth, 'nationality': _nationality, 'otherNationality': _otherNationality, 'marital': _marital, 'race': _race, 'otherRace': _otherRace, 'religion': _religion, 'otherReligion': _otherReligion, 'icNo': _icNo, 'icExpiry': _icExpiry, 'icColour': _icColour, 'passportNo': _passportNo, 'alternateNo': _alternateNo, 'passportIssued': _passportIssued, 'passportExpiry': _passportExpiry, 'passportDestination': _passportDestination, 'contactNo': _contactNo, 'presentAddress': _presentAddress, 'permanentAddress': _permanentAddress, 'drivingLicense': _drivingLicense, 'language': _language, 'familyDetails': _familyDetails, 'educationDetails': _educationDetails, 'workExperience': _workExperience, 'referees': _referees, 'relatives': _relatives, 'description': _description, 'emergencyContact': _emergencyContact, 'disease': _disease, 'liquor': _liquor, 'crime': _crime, 'diseaseDescription': _diseaseDescription, 'liquorDescription': _liquorDescription, 'crimeDescription': _crimeDescription, 'salaryException': _salaryException, 'noticePeriod': _noticePeriod, 'employeeStatement': _employeeStatement, 'perInterviewStatus': _perInterviewStatus, 'perInterviewDescription': _perInterviewDescription, 'supportInfo': _supportInfo, 'uploadResume': _uploadResume, 'uploadCertificate': _uploadCertificate, 'uploadPassport': _uploadPassport, 'dateOfBirth': _dateOfBirth, 'tempID': _tempID, 'experience': _experience, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -1049,6 +1070,7 @@ class CandidateApplicationForm extends amplify_core.Model {
     'uploadPassport': _uploadPassport,
     'dateOfBirth': _dateOfBirth,
     'tempID': _tempID,
+    'experience': _experience,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -1110,6 +1132,7 @@ class CandidateApplicationForm extends amplify_core.Model {
   static final UPLOADPASSPORT = amplify_core.QueryField(fieldName: "uploadPassport");
   static final DATEOFBIRTH = amplify_core.QueryField(fieldName: "dateOfBirth");
   static final TEMPID = amplify_core.QueryField(fieldName: "tempID");
+  static final EXPERIENCE = amplify_core.QueryField(fieldName: "experience");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "CandidateApplicationForm";
     modelSchemaDefinition.pluralName = "CandidateApplicationForms";
@@ -1459,6 +1482,12 @@ class CandidateApplicationForm extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: CandidateApplicationForm.TEMPID,
+      isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: CandidateApplicationForm.EXPERIENCE,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));

@@ -10,3 +10,5 @@ Color brown=Color(0xF7B0000).withOpacity(1.0);
 Color darkGrey=Color(0xF6A6D6B).withOpacity(1.0);
 Color bgColor=Color(0xFF7F8F4).withOpacity(1.0);
 Color blue=Color(0xF0070CB).withOpacity(1.0);
+Color griesh=Color(0xF9E9E9E).withOpacity(1.0);
+Color pink=Color(0xFE3E3E3).withOpacity(1.0);

@@ -21,17 +21,15 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:collection/collection.dart';
 
 
-/** This is an auto generated class representing the User type in your schema. */
-class User extends amplify_core.Model {
-  static const classType = const _UserModelType();
+/** This is an auto generated class representing the SelectedCandidateSchema type in your schema. */
+class SelectedCandidateSchema extends amplify_core.Model {
+  static const classType = const _SelectedCandidateSchemaModelType();
   final String id;
-  final String? _empID;
-  final List<String>? _selectType;
-  final List<String>? _setPermissions;
-  final String? _tempPassword;
+  final String? _name;
+  final String? _position;
+  final String? _department;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -42,36 +40,23 @@ class User extends amplify_core.Model {
   @override
   String getId() => id;
   
-  UserModelIdentifier get modelIdentifier {
-      return UserModelIdentifier(
+  SelectedCandidateSchemaModelIdentifier get modelIdentifier {
+      return SelectedCandidateSchemaModelIdentifier(
         id: id
       );
   }
   
-  String get empID {
+  String? get name {
+    return _name;
+  }
+  
+  String? get position {
+    return _position;
+  }
+  
+  String get department {
     try {
-      return _empID!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
-  }
-  
-  List<String>? get selectType {
-    return _selectType;
-  }
-  
-  List<String>? get setPermissions {
-    return _setPermissions;
-  }
-  
-  String get tempPassword {
-    try {
-      return _tempPassword!;
+      return _department!;
     } catch(e) {
       throw amplify_core.AmplifyCodeGenModelException(
           amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
@@ -90,15 +75,14 @@ class User extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const User._internal({required this.id, required empID, selectType, setPermissions, required tempPassword, createdAt, updatedAt}): _empID = empID, _selectType = selectType, _setPermissions = setPermissions, _tempPassword = tempPassword, _createdAt = createdAt, _updatedAt = updatedAt;
+  const SelectedCandidateSchema._internal({required this.id, name, position, required department, createdAt, updatedAt}): _name = name, _position = position, _department = department, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory User({String? id, required String empID, List<String>? selectType, List<String>? setPermissions, required String tempPassword}) {
-    return User._internal(
+  factory SelectedCandidateSchema({String? id, String? name, String? position, required String department}) {
+    return SelectedCandidateSchema._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
-      empID: empID,
-      selectType: selectType != null ? List<String>.unmodifiable(selectType) : selectType,
-      setPermissions: setPermissions != null ? List<String>.unmodifiable(setPermissions) : setPermissions,
-      tempPassword: tempPassword);
+      name: name,
+      position: position,
+      department: department);
   }
   
   bool equals(Object other) {
@@ -108,12 +92,11 @@ class User extends amplify_core.Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is User &&
+    return other is SelectedCandidateSchema &&
       id == other.id &&
-      _empID == other._empID &&
-      DeepCollectionEquality().equals(_selectType, other._selectType) &&
-      DeepCollectionEquality().equals(_setPermissions, other._setPermissions) &&
-      _tempPassword == other._tempPassword;
+      _name == other._name &&
+      _position == other._position &&
+      _department == other._department;
   }
   
   @override
@@ -123,12 +106,11 @@ class User extends amplify_core.Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("User {");
+    buffer.write("SelectedCandidateSchema {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("empID=" + "$_empID" + ", ");
-    buffer.write("selectType=" + (_selectType != null ? _selectType!.toString() : "null") + ", ");
-    buffer.write("setPermissions=" + (_setPermissions != null ? _setPermissions!.toString() : "null") + ", ");
-    buffer.write("tempPassword=" + "$_tempPassword" + ", ");
+    buffer.write("name=" + "$_name" + ", ");
+    buffer.write("position=" + "$_position" + ", ");
+    buffer.write("department=" + "$_department" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -136,62 +118,56 @@ class User extends amplify_core.Model {
     return buffer.toString();
   }
   
-  User copyWith({String? empID, List<String>? selectType, List<String>? setPermissions, String? tempPassword}) {
-    return User._internal(
+  SelectedCandidateSchema copyWith({String? name, String? position, String? department}) {
+    return SelectedCandidateSchema._internal(
       id: id,
-      empID: empID ?? this.empID,
-      selectType: selectType ?? this.selectType,
-      setPermissions: setPermissions ?? this.setPermissions,
-      tempPassword: tempPassword ?? this.tempPassword);
+      name: name ?? this.name,
+      position: position ?? this.position,
+      department: department ?? this.department);
   }
   
-  User copyWithModelFieldValues({
-    ModelFieldValue<String>? empID,
-    ModelFieldValue<List<String>>? selectType,
-    ModelFieldValue<List<String>?>? setPermissions,
-    ModelFieldValue<String>? tempPassword
+  SelectedCandidateSchema copyWithModelFieldValues({
+    ModelFieldValue<String?>? name,
+    ModelFieldValue<String?>? position,
+    ModelFieldValue<String>? department
   }) {
-    return User._internal(
+    return SelectedCandidateSchema._internal(
       id: id,
-      empID: empID == null ? this.empID : empID.value,
-      selectType: selectType == null ? this.selectType : selectType.value,
-      setPermissions: setPermissions == null ? this.setPermissions : setPermissions.value,
-      tempPassword: tempPassword == null ? this.tempPassword : tempPassword.value
+      name: name == null ? this.name : name.value,
+      position: position == null ? this.position : position.value,
+      department: department == null ? this.department : department.value
     );
   }
   
-  User.fromJson(Map<String, dynamic> json)  
+  SelectedCandidateSchema.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _empID = json['empID'],
-      _selectType = json['selectType']?.cast<String>(),
-      _setPermissions = json['setPermissions']?.cast<String>(),
-      _tempPassword = json['tempPassword'],
+      _name = json['name'],
+      _position = json['position'],
+      _department = json['department'],
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'empID': _empID, 'selectType': _selectType, 'setPermissions': _setPermissions, 'tempPassword': _tempPassword, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'name': _name, 'position': _position, 'department': _department, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
-    'empID': _empID,
-    'selectType': _selectType,
-    'setPermissions': _setPermissions,
-    'tempPassword': _tempPassword,
+    'name': _name,
+    'position': _position,
+    'department': _department,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
 
-  static final amplify_core.QueryModelIdentifier<UserModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<UserModelIdentifier>();
+  static final amplify_core.QueryModelIdentifier<SelectedCandidateSchemaModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<SelectedCandidateSchemaModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
-  static final EMPID = amplify_core.QueryField(fieldName: "empID");
-  static final SELECTTYPE = amplify_core.QueryField(fieldName: "selectType");
-  static final SETPERMISSIONS = amplify_core.QueryField(fieldName: "setPermissions");
-  static final TEMPPASSWORD = amplify_core.QueryField(fieldName: "tempPassword");
+  static final NAME = amplify_core.QueryField(fieldName: "name");
+  static final POSITION = amplify_core.QueryField(fieldName: "position");
+  static final DEPARTMENT = amplify_core.QueryField(fieldName: "department");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "User";
-    modelSchemaDefinition.pluralName = "Users";
+    modelSchemaDefinition.name = "SelectedCandidateSchema";
+    modelSchemaDefinition.pluralName = "SelectedCandidateSchemas";
     
     modelSchemaDefinition.authRules = [
       amplify_core.AuthRule(
@@ -207,27 +183,19 @@ class User extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: User.EMPID,
-      isRequired: true,
+      key: SelectedCandidateSchema.NAME,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: User.SELECTTYPE,
+      key: SelectedCandidateSchema.POSITION,
       isRequired: false,
-      isArray: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.collection, ofModelName: amplify_core.ModelFieldTypeEnum.string.name)
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: User.SETPERMISSIONS,
-      isRequired: false,
-      isArray: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.collection, ofModelName: amplify_core.ModelFieldTypeEnum.string.name)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: User.TEMPPASSWORD,
+      key: SelectedCandidateSchema.DEPARTMENT,
       isRequired: true,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
@@ -248,29 +216,29 @@ class User extends amplify_core.Model {
   });
 }
 
-class _UserModelType extends amplify_core.ModelType<User> {
-  const _UserModelType();
+class _SelectedCandidateSchemaModelType extends amplify_core.ModelType<SelectedCandidateSchema> {
+  const _SelectedCandidateSchemaModelType();
   
   @override
-  User fromJson(Map<String, dynamic> jsonData) {
-    return User.fromJson(jsonData);
+  SelectedCandidateSchema fromJson(Map<String, dynamic> jsonData) {
+    return SelectedCandidateSchema.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'User';
+    return 'SelectedCandidateSchema';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [User] in your schema.
+ * of [SelectedCandidateSchema] in your schema.
  */
-class UserModelIdentifier implements amplify_core.ModelIdentifier<User> {
+class SelectedCandidateSchemaModelIdentifier implements amplify_core.ModelIdentifier<SelectedCandidateSchema> {
   final String id;
 
-  /** Create an instance of UserModelIdentifier using [id] the primary key. */
-  const UserModelIdentifier({
+  /** Create an instance of SelectedCandidateSchemaModelIdentifier using [id] the primary key. */
+  const SelectedCandidateSchemaModelIdentifier({
     required this.id});
   
   @override
@@ -288,7 +256,7 @@ class UserModelIdentifier implements amplify_core.ModelIdentifier<User> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'UserModelIdentifier(id: $id)';
+  String toString() => 'SelectedCandidateSchemaModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -296,7 +264,7 @@ class UserModelIdentifier implements amplify_core.ModelIdentifier<User> {
       return true;
     }
     
-    return other is UserModelIdentifier &&
+    return other is SelectedCandidateSchemaModelIdentifier &&
       id == other.id;
   }
   
