@@ -195,7 +195,7 @@ class _DesktopDashboardState extends State<DesktopDashboard> {
                     'My Recent Leave',
                       style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                SizedBox(width: size.width * 0.316),
+                SizedBox(width: size.width * 0.266),
                 Container(
                   width: size.width * 0.082,
                   height: size.height * 0.034,
@@ -825,6 +825,7 @@ class _EmployeeTableState extends State<EmployeeTable> {
       AlertDialog(
         title: Text(title),
         content: Text(content),
+        backgroundColor: Colors.white,
         actions: [
           TextButton(
             onPressed: () {

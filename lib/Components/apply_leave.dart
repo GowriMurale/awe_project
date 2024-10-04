@@ -237,7 +237,9 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         Get.defaultDialog(
           title: 'Success',
           content: Text('Your leave application has been submitted successfully.'),
-          confirmTextColor: Colors.white,
+          confirmTextColor: black,
+          backgroundColor: Colors.white,
+          buttonColor: Colors.grey.shade400,
           onConfirm: () {
             Get.back(); // Close the dialog
             Get.off(DashBoardScreeen()); // Navigate to Dashboard screen
