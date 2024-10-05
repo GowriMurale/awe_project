@@ -1272,7 +1272,6 @@ amplify_analytics_pinpoint_dart
 --------------------------------------------------------------------------------
 amplify_api
 amplify_api_dart
-amplify_datastore
 amplify_db_common_dart
 amplify_secure_storage_dart
 
@@ -1454,7 +1453,6 @@ amplify_secure_storage_dart
 
 --------------------------------------------------------------------------------
 amplify_core
-amplify_datastore_plugin_interface
 amplify_db_common
 amplify_secure_storage
 worker_bee
@@ -10242,6 +10240,7 @@ permissive licensing, and of not having licensing issues being an
 obstacle to adoption, that text has been removed.
 --------------------------------------------------------------------------------
 get
+get_storage
 
 MIT License
 
