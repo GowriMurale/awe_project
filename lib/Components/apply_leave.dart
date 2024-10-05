@@ -49,7 +49,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
   final List<String> _leaveTypes = ['Annual Leave', 'Sick Leave', 'Hospitalisation Leave','Unpaid Authorised Leave','Marriage Leave',
     'Maternity/Paternity Leave','Compassionate Leave','Unpaid Unauthorised Leave'];
-  final List<String> _roles = ['Superior'];
+
   String? _selectedRole;
   String? _selectedLeaveType;
   DateTime? selectedDate;

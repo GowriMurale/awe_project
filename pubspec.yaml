@@ -45,6 +45,7 @@ dependencies:
   amplify_api: ^2.4.1
   amplify_storage_s3: ^2.4.1
   amplify_core: ^2.4.1
+  amplify_datastore: ^2.4.1
 
 
 

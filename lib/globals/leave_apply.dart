@@ -111,3 +111,62 @@
 //     print('Failed to create leave request: $e');
 //   }
 // }
+
+
+// Row(
+// children: [
+// SizedBox(width: size.width * 0.215,),
+// Container(
+// width: size.width * 0.45,
+// height: size.height * 0.115,
+// color:pink,
+// child: Column(
+// children: [
+// SizedBox(height: size.height * 0.015,),
+// Row(
+// children: [
+// SizedBox(width: size.width * 0.024,),
+// Text('Employee Type',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+// SizedBox(width: size.width * 0.024,),
+// Text('Date of joining',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+// SizedBox(width: size.width * 0.024,),
+// Text('Contract Type',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+// SizedBox(width: size.width * 0.024,),
+// Text('Department',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+// SizedBox(width: size.width * 0.024,),
+// Text('Location',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
+// ],
+// ),
+// SizedBox(height: size.height * 0.010,),
+// Row(
+// children: [
+// SizedBox(width: size.width * 0.026,),
+// Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+// SizedBox(width: size.width * 0.056,),
+// Text('12/10/2024',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+// SizedBox(width: size.width * 0.034,),
+// Text('Permanent',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+// SizedBox(width: size.width * 0.034,),
+// Text('Engineer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+// SizedBox(width: size.width * 0.032,),
+// Text('Offshore',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+// ],
+// ),
+//
+// ],
+// ),
+// )
+//
+// ],
+// ),
+// SizedBox(height: size.height * 0.015,),
+// // Row(
+// //   children: [
+// //     SizedBox(width: size.width * 0.175,),
+// //     container2('Annual Leave', '9', purple, context),
+// //     SizedBox(width: size.width * 0.04,),
+// //     container2('Sick Leave', '8', purple, context),
+// //     SizedBox(width: size.width * 0.04,),
+// //     container2('Unpaid Authorize', '0.5', purple, context),
+// //   ],
+// // ),
