@@ -19,6 +19,5 @@ tasks.register("clean", Delete) {
 }
 
 dependencies {
-    classpath 'com.android.tools.build:gradle:7.0.2' // Your Android Gradle Plugin version
 
 }

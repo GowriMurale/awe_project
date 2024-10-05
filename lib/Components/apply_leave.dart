@@ -1496,7 +1496,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                             color: black,
                           ),
                         ),
-                        hintText: '00/00/0000',
+                        hintText: 'dd/mm/yyyy',
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: grey, width: 1),
                           borderRadius: BorderRadius.circular(0),
@@ -1533,7 +1533,7 @@ class _TabletLeaveState extends State<TabletLeave> {
                       controller: to,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(4),
-                        hintText: '00/00/0000',
+                        hintText: 'dd/mm/yyyy',
                         suffixIcon: IconButton(
                           onPressed: () => _selectDate(context, to, false),
                           icon: Icon(

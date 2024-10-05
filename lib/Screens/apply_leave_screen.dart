@@ -184,7 +184,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
           body: Container(
             child: Column(
               children: [
-                SizedBox(height: size.height * 0.015,),
+                SizedBox(height: size.height * 0.035,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.15,),
@@ -195,7 +195,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                   ],
                 ),
-                SizedBox(height: size.height * 0.020,),
+                SizedBox(height: size.height * 0.024,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.10,),
@@ -204,11 +204,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     myContainer(context, '0001'),
                     SizedBox(width: size.width * 0.088,),
                     Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
-                    SizedBox(width: size.width * 0.078,),
+                    SizedBox(width: size.width * 0.118,),
                     myContainer(context, 'Adinin'),
                   ],
                 ),
-                SizedBox(height: size.height * 0.030,),
+                SizedBox(height: size.height * 0.034,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.09,),
@@ -217,11 +217,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     myContainer(context, 'Xyz'),
                     SizedBox(width: size.width * 0.085,),
                     Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
-                    SizedBox(width: size.width * 0.040,),
+                    SizedBox(width: size.width * 0.082,),
                     myContainer(context, 'Worker'),
                   ],
                 ),
-                SizedBox(height: size.height * 0.030,),
+                SizedBox(height: size.height * 0.034,),
                 Row(
                   // Align error message properly
                   children: [
@@ -315,11 +315,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(width: size.width * 0.010),
+                    SizedBox(width: size.width * 0.012),
                     myContainer(context, '04'),
                   ],
                 ),
-                SizedBox(height: size.height * 0.025,),
+                SizedBox(height: size.height * 0.029,),
                 Row(
                   children: [
                     //Half day
@@ -357,18 +357,18 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.030,),
+                SizedBox(height: size.height * 0.034,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.25,),
                     Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                     SizedBox(width: size.width * 0.145,),
                     Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
-                    SizedBox(width: size.width * 0.15,),
+                    SizedBox(width: size.width * 0.20,),
                     Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
                   ],
                 ),
-                SizedBox(height: size.height * 0.030,),
+                SizedBox(height: size.height * 0.008,),
                 Row(// Align error messages properly
                   children: [
                     SizedBox(width: size.width * 0.05,),
@@ -397,12 +397,16 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ),
 
                         Container(
-                          width: size.width * 0.20,
-                          height: size.height * 0.038,
+                          width: size.width * 0.22,
+                          height: size.height * 0.036,
                           child: Material(
                             color: Colors.transparent,
                             child: TextField(
                               controller: from,
+                              style: TextStyle(
+                                fontSize: 10, // Set a smaller font size for the picked date
+                                color: Colors.black, // You can also control the color of the text
+                              ),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(5),
                                 suffixIcon: IconButton(
@@ -443,12 +447,16 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ),
 
                         Container(
-                          width: size.width * 0.20,
-                          height: size.height * 0.038,
+                          width: size.width * 0.22,
+                          height: size.height * 0.036,
                           child: Material(
                             color: Colors.transparent,
                             child: TextField(
                               controller: to,
+                              style: TextStyle(
+                                fontSize: 10, // Set a smaller font size for the picked date
+                                color: Colors.black, // You can also control the color of the text
+                              ),
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(2),
                                 hintText: 'dd/mm/yyyy',
@@ -477,11 +485,15 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     // Days TextField
                     Container(
                       width: size.width * 0.20,
-                      height: size.height * 0.038,
+                      height: size.height * 0.036,
                       child: Material(
                         color: Colors.transparent,
                         child: TextField(
                           controller: days,
+                          style: TextStyle(
+                            fontSize: 12, // Set a smaller font size for the picked date
+                            color: Colors.black, // You can also control the color of the text
+                          ),
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
@@ -494,7 +506,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.030,),
+                SizedBox(height: size.height * 0.038,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start, // Aligns error to the left
                   children: [
@@ -507,7 +519,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
                         ),
                       ),
-
                     Row(
                       children: [
                         SizedBox(width: size.width * 0.10),
@@ -578,7 +589,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.height * 0.030,),
+                    SizedBox(height: size.height * 0.035,),
                     Row(
                       // Align error message properly
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -634,7 +645,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.height * 0.0,),
+                    SizedBox(height: size.height * 0.010,),
                     Row(
                       children: [
                         SizedBox(width: size.width * 0.18,),
@@ -672,7 +683,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.height * 0.040,),
+                    SizedBox(height: size.height * 0.045,),
                     Row(
                       children: [
                         SizedBox(width: size.width * 0.28,),

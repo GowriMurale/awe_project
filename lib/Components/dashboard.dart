@@ -661,48 +661,363 @@ class TabletDashboard extends StatefulWidget {
 }
 
 class _TabletDashboardState extends State<TabletDashboard> {
-  final List<String> _dropdownItems = [
-    'Last 3 months',
-    'Last 6 months',
-    'Last 12 months',
-  ];
 
-  String selectedValue = 'Last 3 months';
+  TextEditingController from = TextEditingController();
+  TextEditingController to = TextEditingController();
+  List<LeaveStatus?> allLeaveData = []; // Your leave data
+  List<LeaveStatus?> filteredLeaveData = [];
+  TextStyle headerTextStyle = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+    color: Colors.black,
+  );
+
+  TextStyle rowTextStyle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 13,
+    color: Colors.black,
+  );
+
+
+  // Filtered leave data based on date range
+
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLeaveData(); // Fetch data when the widget initializes
+  }
+
+  @override
+  void dispose() {
+    from.dispose();
+    to.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      controller.text = DateFormat('dd/MM/yyyy').format(picked);
+      filterLeaveData(); // Call filter function whenever a new date is picked
+    }
+  }
+
+
+
+
+  Future<void> fetchLeaveData() async {
+    try {
+      // Define the GraphQL query
+      final request = ModelQueries.list(LeaveStatus.classType);
+      final response = await Amplify.API.query(request: request).response;
+
+      // Check for errors
+      if (response.errors.isNotEmpty) {
+        print('Errors: ${response.errors}');
+        _showAlertDialog('Error', 'Failed to fetch leave data.');
+        return;
+      }
+
+      // Parse the leave data
+      List<LeaveStatus?> leaveStatuses = response.data?.items ?? [];
+
+      setState(() {
+        allLeaveData = leaveStatuses;
+      });
+
+      // Initially, show all data
+      filterLeaveData();
+    } catch (e) {
+      print('Failed to fetch leave data: $e');
+      _showAlertDialog('Error', 'An unexpected error occurred.');
+    }
+  }
+
+  void filterLeaveData() {
+    if (from.text.isEmpty && to.text.isEmpty) {
+      // If no dates are selected, show all data
+      setState(() {
+        filteredLeaveData = allLeaveData;
+      });
+      return;
+    }
+
+    DateTime? fromDate;
+    DateTime? toDate;
+
+    try {
+      if (from.text.isNotEmpty) {
+        fromDate = DateFormat('dd/MM/yyyy').parse(from.text);
+      }
+      if (to.text.isNotEmpty) {
+        toDate = DateFormat('dd/MM/yyyy').parse(to.text);
+      }
+    } catch (e) {
+      print('Error parsing dates: $e');
+      _showAlertDialog('Error', 'Invalid date format.');
+      return;
+    }
+
+    List<LeaveStatus?> tempFiltered = allLeaveData.where((leave) {
+      if (leave == null || leave.fromDate == null || leave.toDate == null) return false;
+
+      // Convert TemporalDate to DateTime using the 'getDateTime()' method
+      final leaveFromDate = leave.fromDate!.getDateTime(); // Convert TemporalDate to DateTime
+      final leaveToDate = leave.toDate!.getDateTime();     // Convert TemporalDate to DateTime
+
+      bool afterFrom = fromDate != null
+          ? leaveFromDate.isAfter(fromDate!) || leaveFromDate.isAtSameMomentAs(fromDate!)
+          : true;
+      bool beforeTo = toDate != null
+          ? leaveToDate.isBefore(toDate!) || leaveToDate.isAtSameMomentAs(toDate!)
+          : true;
+
+      return afterFrom && beforeTo;
+    }).toList();
+
+    setState(() {
+      filteredLeaveData = tempFiltered;
+    });
+  }
+
+
+  Future<void> deleteLeave(LeaveStatus leaveToDelete) async {
+    try {
+      final request = ModelMutations.delete(leaveToDelete);
+      final response = await Amplify.API.mutate(request: request).response;
+
+      // Check for errors
+      if (response.errors.isNotEmpty) {
+        print('Errors deleting leave: ${response.errors}');
+        _showAlertDialog('Error', 'Failed to delete leave request.');
+        return;
+      }
+
+      // Remove the deleted leave from both lists
+      setState(() {
+        allLeaveData.removeWhere((leave) => leave?.id == leaveToDelete.id);
+        filteredLeaveData.removeWhere((leave) => leave?.id == leaveToDelete.id);
+      });
+
+      print('Leave deleted successfully: ${leaveToDelete.toString()}');
+
+      _showAlertDialog('Success', 'Leave request deleted successfully.');
+    } catch (e) {
+      print('Failed to delete leave: $e');
+      _showAlertDialog('Error', 'An unexpected error occurred.');
+    }
+  }
+
+  /// Show an AlertDialog using GetX
+  void _showAlertDialog(String title, String content) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        backgroundColor: Colors.white,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close the dialog
+            },
+            child: Text('OK'),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  void _showCancelDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width: size.width * 0.300,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: size.height * 0.012),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.100),
+                  Text(
+                    'View Form',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 22, color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.085),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Name',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.043,),
+                  Text('Rahul Kumar',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Job Title',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.030,),
+                  Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Badge',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.041,),
+                  Text('50598',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Dept/Div',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.032,),
+                  Text('5058',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Leave Type',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.020,),
+                  Text(leave.leaveType ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Select Date',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.020,),
+                  Text('${DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())} to ${DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())}',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Apply to',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.037,),
+                  Text(leave.applyTo ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.022,),
+                  Text('${leave.days ?? 0} days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.014,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width *  0.050,),
+                  Text('Reason',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                  SizedBox(width:size.width *  0.040,),
+                  Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                ],
+              ),
+              SizedBox(height: size.height * 0.022),
+              MaterialButton(
+                minWidth: size.width * .065,
+                height: size.height * 0.03,
+                onPressed: () {
+                  print(leave);
+                  deleteLeave(leave); // Delete leave from AWS DynamoDB
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Cancel Leave',
+                  style: TextStyle(fontSize: 16, fontFamily: 'Inter'),
+                ),
+                color: Colors.yellow,
+                textColor: Colors.black,
+              ),
+              SizedBox(height: size.height * 0.014),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
-        SizedBox(height: size.height * 0.02,),
+        SizedBox(height: size.height * 0.01,),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // SizedBox(width: size.width* 0.12,),
+            SizedBox(width: size.width* 0.12,),
             // IconButton(onPressed: (){
             //   Get.back();
             // }, icon: Icon(Icons.arrow_back,size: 20,color: Colors.black,)),
-            SizedBox(width: size.width* 0.35,),
-            Text('Welcome',style: TextStyle(color: black,fontSize:36 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
+            // SizedBox(width: size.width* 0.14,),
+            Text('Welcome',style: TextStyle(color: black,fontSize:26 ,fontWeight: FontWeight.bold,fontFamily: 'Inter'),),
             SizedBox(width: size.width * 0.01,),
-            Text('Nur Hafiza',style: TextStyle(color: lightYellow,fontFamily:'Inter',fontSize: 46,fontWeight: FontWeight.bold),)
+            Text('Nur Hafiza',style: TextStyle(color: griesh,fontFamily:'Inter',fontSize: 28,fontWeight: FontWeight.bold),)
           ],
         ),
-        SizedBox(height: size.height * 0.03,),
+        SizedBox(height: size.height * 0.015,),
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: size.width * 0.125,),
-            tabcontainer2('Present', '20.5', purple,context),
-            SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Absent Days', '2.5', green,context),
-            SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Available Leave', '6.5', brown,context),
-            SizedBox(width: size.width * 0.04,),
-            tabcontainer2('Leave Request', '00', black,context),
-
+           tabemployeeInfoCard(
+              context,
+              'Trainer',          // Employee Type
+              '12/10/2024',       // Date of Joining
+              'Permanent',        // Contract Type
+              'Engineer',         // Department
+              'Offshore',         // Location
+            ),
           ],
         ),
-        SizedBox(height: size.height * 0.06,),
+        SizedBox(height: size.height * 0.185,),
         Row(
           children: [
             SizedBox(width: size.width * 0.145),
@@ -710,30 +1025,175 @@ class _TabletDashboardState extends State<TabletDashboard> {
               'My Recent Leave',
               style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: size.width * 0.435),
-
+            SizedBox(width: size.width * 0.286),
+            Container(
+              width: size.width * 0.082,
+              height: size.height * 0.034,
+              color: Colors.white,
+              child: Material(
+                color: Colors.transparent,
+                child: TextField(
+                  controller: from,
+                  style: TextStyle(
+                    fontSize: 12, // Set a smaller font size for the picked date
+                    color: Colors.black, // You can also control the color of the text
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 5, bottom: 6),
+                    hintText: 'From',
+                    hintStyle: TextStyle(fontSize: 12),
+                    suffixIcon: IconButton(
+                      onPressed: () => _selectDate(context, from), // Correct the onPressed
+                      icon: Icon(
+                        Icons.calendar_month,
+                        size: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: size.width * 0.018),
+            Container(
+              width: size.width * 0.082,
+              height: size.height * 0.034,
+              color: Colors.white,
+              child: Material(
+                color: Colors.transparent,
+                child: TextField(
+                  controller: to,
+                  style: TextStyle(
+                    fontSize: 12, // Set a smaller font size for the picked date
+                    color: Colors.black, // You can also control the color of the text
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(left: 5, bottom: 6),
+                    hintText: 'To',
+                    hintStyle: TextStyle(fontSize: 12),
+                    suffixIcon: IconButton(
+                      onPressed: () => _selectDate(context, to), // Correct the onPressed
+                      icon: Icon(
+                        Icons.calendar_month,
+                        size: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-        SizedBox(height: size.height * 0.015,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.12,),
-            TabEmployeeTable(),
+            Padding(
+              padding:  EdgeInsets.only(left: size.width * 0.145,top: size.height * 0.02),
+              child: Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(
+                        // border: TableBorder.all(color: grey),
+                        headingRowHeight: size.height * 0.050,
+                        dataRowHeight: size.height * 0.055,
+                        columnSpacing: size.width * 0.040,
+                        columns: [
+                          DataColumn(label: Text('Leave Type', style: headerTextStyle)),
+                          DataColumn(label: Text('From', style: headerTextStyle)),
+                          DataColumn(label: Text('To', style: headerTextStyle)),
+                          DataColumn(label: Text('Days', style: headerTextStyle)),
+                          DataColumn(label: Text('Reason', style: headerTextStyle)),
+                          DataColumn(label: Text('Approver', style: headerTextStyle)),
+                          DataColumn(label: Text('Status', style: headerTextStyle)),
+                        ],
+                        rows: filteredLeaveData
+                            .where((leave) => leave != null) // Filter out null values
+                            .map((leave) {
+                          return DataRow(
+                            cells: [
+                              DataCell(GestureDetector(
+                                onDoubleTap: () {
+                                  _showCancelDialog(context, filteredLeaveData.indexOf(leave), leave!);
+                                },
+                                child: Text(leave!.leaveType ?? '', style: rowTextStyle),
+                              )),
+                              DataCell(Text(
+                                leave.fromDate != null
+                                    ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
+                                    : '',
+                                style: rowTextStyle,
+                              )),
+                              DataCell(Text(
+                                leave.toDate != null
+                                    ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
+                                    : '',
+                                style: rowTextStyle,
+                              )),
+                              DataCell(Text('${leave.days ?? 0} days', style: rowTextStyle)),
+                              DataCell(Text(leave.reason ?? '', style: rowTextStyle)),
+                              DataCell(Text(leave.applyTo ?? '', style: rowTextStyle)),
+                              DataCell(Text('Pending', style: rowTextStyle)),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
-        SizedBox(height: size.height * 0.035,),
+        SizedBox(height: size.height * 0.032,),
         Row(
           children: [
-            SizedBox(width: size.width * 0.43,),
+            SizedBox(width: size.width * 0.42,),
             MaterialButton(
               onPressed: (){
                 Get.to(()=>ApplyLeaveScreen());
               },
-              minWidth: size.width * 0.075,
-              height: size.height * 0.055,
+              minWidth: size.width * 0.085,
+              height: size.height * 0.060,
               color: yellow,
               child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
+            ),
+            SizedBox(width: size.width * 0.015,),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Request Ticket",
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 15,
+                      color: blue,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none, // Remove default underline
+                    ),
+                  ),
+                ),
+                // Add space between text and line
+                Container(
+                  height: 1,
+                  color: blue, // Custom underline color
+                  width: size.width * 0.065, // Set the underline width as needed
+                ),
+              ],
             )
+
           ],
         )
       ],
@@ -1206,6 +1666,129 @@ Widget employeeInfoCard(BuildContext context, String employeeType, String joinin
 
 
 
+Widget tabemployeeInfoCard(BuildContext context, String employeeType, String joiningDate, String contractType, String department, String location) {
+  final Size size = MediaQuery.of(context).size;
+
+  return Row(
+    children: [
+      SizedBox(width: size.width * 0.215),
+      Container(
+        width: size.width * 0.515,
+        height: size.height * 0.110,
+        color: pink, // Custom color
+        child: Column(
+          children: [
+            SizedBox(height: size.height * 0.015),
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.024),
+                Text(
+                  'Employee Type',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.024),
+                Text(
+                  'Date of joining',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.024),
+                Text(
+                  'Contract Type',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.024),
+                Text(
+                  'Department',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.024),
+                Text(
+                  'Location',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * 0.010),
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.026),
+                Text(
+                  employeeType,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.056),
+                Text(
+                  joiningDate,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.034),
+                Text(
+                  contractType,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.034),
+                Text(
+                  department,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.032),
+                Text(
+                  location,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
 
 
 

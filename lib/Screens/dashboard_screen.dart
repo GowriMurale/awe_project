@@ -1,4 +1,5 @@
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/dashboard.dart';
@@ -9,9 +10,11 @@ import 'package:awe_project/globals/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 
 import '../globals/navigation_bar.dart';
+import '../models/CandidateApplicationForm.dart';
 import 'apply_leave_screen.dart';
 import 'login_screen.dart';
 class DashBoardScreeen extends StatefulWidget {
@@ -22,7 +25,90 @@ class DashBoardScreeen extends StatefulWidget {
 class _DashBoardScreeenState extends State<DashBoardScreeen> {
   DateTime now = DateTime.now(); // Get the current date and time
   String formattedDate = DateFormat(' dd/MM/yyyy    HH:mm:ss').format(DateTime.now());
+
   final TextEditingController userIdController = TextEditingController();
+  final box = GetStorage();
+  Future<void> storeTempIdLocally() async {
+    final box = GetStorage();
+    box.write('tempId', "TEMP001");  // Hardcoded tempId
+    print("TempId 'TEMP001' stored locally");
+  }
+
+  // Method to retrieve tempId from local storage
+  String? getTempIdFromStorage() {
+    final box = GetStorage();
+    return box.read('tempId');  // Retrieve tempId from local storage
+  }
+
+  // Fetch candidate application data using the stored tempId
+  Future<void> fetchCandidateApplicationData(BuildContext context) async {
+    try {
+      // Get the stored tempId (e.g., 'TEMP001')
+      final box = GetStorage();
+      String tempId = box.read('tempId') ?? '';  // Retrieve tempId from storage
+
+      if (tempId.isEmpty) {
+        _showErrorDialog(context, 'No tempId found in local storage.');
+        return;
+      }
+
+      // Query the API to get candidate application details using tempId
+      final request = ModelQueries.list(
+        CandidateApplicationForm.classType,
+        where: CandidateApplicationForm.TEMPID.eq(tempId), // Query using tempId
+      );
+
+      final response = await Amplify.API.query(request: request).response;
+
+      if (response.errors.isNotEmpty) {
+        print('Errors: ${response.errors}');
+        _showErrorDialog(context, 'Failed to fetch application data.');
+        return;
+      }
+
+      List<CandidateApplicationForm?> candidateApplications = response.data?.items ?? [];
+      print(candidateApplications);
+
+      if (candidateApplications.isNotEmpty && candidateApplications.first != null) {
+        var candidate = candidateApplications.first;
+        print(candidate);
+
+        // Store candidate data locally for later use
+        box.write('name', candidate?.name ?? 'N/A');
+        box.write('email', candidate?.email ?? 'N/A');
+        box.write('contactNo', candidate?.contactNo ?? 'N/A');
+
+        print("Candidate Name: ${candidate?.name}");
+        print("Candidate Email: ${candidate?.email}");
+        print("Candidate Contact No: ${candidate?.contactNo}");
+      } else {
+        _showErrorDialog(context, 'No data found for the provided tempId.');
+      }
+    } catch (e) {
+      print('Failed to fetch candidate data: $e');
+      _showErrorDialog(context, 'An unexpected error occurred.');
+    }
+  }
+
+  String name = 'N/A';
+  String email = 'N/A';
+  String contactNo = 'N/A';
+
+  @override
+  void initState(){
+    super.initState();
+    loadUserData();
+  }
+
+  void loadUserData() {
+    setState(() {
+      name = box.read('name') ?? 'N/A';
+      email = box.read('email') ?? 'N/A';
+      contactNo = box.read('contactNo') ?? 'N/A';
+    });
+  }
+
+
   Future<void> _confirmSignOut(BuildContext context) async {
     showDialog(
       context: context,
@@ -164,7 +250,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 child: Row(
                     children: [
                       SizedBox(width: 20,),
-                      Text('Mdm',
+                      Text('$name',
                         style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),]),
               ),
               SizedBox(height: 10,),
@@ -182,7 +268,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 child: Row(children: [
                   SizedBox(width: 20,),
                   Text(
-                    '8056863355',
+                    '$contactNo',
                     style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),
                 ]),),
               SizedBox(height: 10,),
@@ -200,7 +286,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 child:Row(children: [
                   SizedBox(width: 20,),
                   Text(
-                    'adinin@gmail.com',
+                    '$email',
                     style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),
                   ),
                 ]),),
@@ -496,13 +582,113 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           ),
         ),
         tablet: Scaffold(
+          appBar: AppBar(
+            backgroundColor:bgColor,
+            title: Text(''),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+              ),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(1.0), // Height of the border
+              child: Container(
+                color: Colors.black12, // Border color
+                height: 1.0, // Height of the border
+              ),
+            ),
+            actions: [
+              Row(
+                  children: [
+                    SizedBox(width: 20,),
+                    Center(
+                      child: Container(
+                        height: 190,
+                        width: 190,
+                        child: Image.asset('assets/images/awe logo.png',fit: BoxFit.contain),),),
+                  ]),
+              Spacer(), // Pushes the next widgets to the right
+              // Icon(Icons.mail_outline_outlined),
+              SizedBox(width: 30), // spacing between icons
+              Icon(Icons.notifications_outlined),
+
+              Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20,),
+                    Container(
+                      width: 15.0,  // Set the width
+                      height: 15.0, // Set the height
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,  // Circular shape
+                        color: Colors.yellow,      // Background color
+                      ),
+                      child: Center(
+                        child: Text(
+                          '1',
+                          style: TextStyle(fontSize:9,fontWeight:FontWeight.bold,color: Colors.black),
+                        ),
+                      ),
+                    ),]),
+              SizedBox(width: 70), // spacing between icons
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Welcome Mdm Wong',
+                    style: TextStyle(fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                        fontStyle: FontStyle.normal), // Reduce height between lines
+                  ),
+                  Text(
+                    formattedDate,
+                    style: TextStyle(fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black54,
+                        fontStyle: FontStyle.normal), // Same height to ensure no spacing
+                  ),
+                ],
+              ),
+              SizedBox(width: 30,),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 75,
+                        child: CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/user image.png'),
+                            radius: 28,
+                            child:Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                //mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    height:22,
+                                    width: 500,
+                                    padding: EdgeInsets.only(left: 24,top: 3,),
+                                    child: TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.grey.shade300,
+                                            shape: CircleBorder()
+                                        ),
+                                        onPressed: () {
+                                          _showPopupMenu(context);
+                                        }, child: Icon(Icons.edit_outlined,size: 10,color: Colors.black87,)
+                                    ),)])
+                        ),
+                      ),),]),
+              SizedBox(width: 30), // spacing between the profile and app bar end
+            ],
+            toolbarHeight: 75.0,
+          ),
           backgroundColor: bgColor,
           body: Container(
             child: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
-
-                  Navbar(),
+                children: [
                   Dashboard(),
                 ],
               ),

@@ -1,5 +1,6 @@
 
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
@@ -9,6 +10,9 @@ import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import '../models/CandidateApplicationForm.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -21,44 +25,100 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   bool _isLoading = false;
   bool _isPasswordVisible = false;
+  final box = GetStorage();
+
+  void storeUserData(String userId) {
+    final box = GetStorage();
+    box.write('userId', userId);
+  }
+
+  String? getUserData() {
+    final box = GetStorage();
+    return box.read('userId');
+  }
 
   Future<void> _signIn(BuildContext context) async {
     try {
-      // Fetch auth session to check if user is already signed in
       var session = await Amplify.Auth.fetchAuthSession();
+
+      // Check if user is already signed in
       if (session.isSignedIn) {
-        // User is already signed in, navigate to the dashboard
-        Get.off(() => DashBoardScreeen());
+        String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+        print(userId);
+        storeUserData(userId); // Store user ID locally
+
+        // Fetch candidate application data immediately upon signing in
+        await fetchCandidateApplicationData();
+
+        Get.off(() => DashBoardScreeen()); // Navigate to dashboard
         return;
       }
 
-      // Proceed with normal sign-in if user is not already signed in
+      // Sign in the user
       SignInResult res = await Amplify.Auth.signIn(
         username: userIdController.text.trim(),
         password: passwordController.text.trim(),
       );
 
-      print("Sign-in response: ${res.toString()}");
-      print(res.nextStep.signInStep);
-
       if (res.isSignedIn) {
-        // User is signed in, navigate to the dashboard
-        Get.off(() => DashBoardScreeen());
-      } else if (res.nextStep.signInStep == AuthSignInStep.confirmSignInWithNewPassword) {
-        // The user needs to set a new password
-        print("Next step: Confirm sign-in with new password required.");
-        Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
-      } else {
-        // Handle other failure reasons (e.g., incorrect password)
-        print("Sign-in failed. Next step: ${res.nextStep.signInStep}");
-        _showErrorDialog(context, 'Sign-in failed. Please try again.');
+        String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+        print(userId);
+        storeUserData(userId); // Store user ID locally
+
+        // Fetch candidate application data after successful sign in
+        await fetchCandidateApplicationData();
+
+        Get.off(() => DashBoardScreeen()); // Navigate to dashboard
       }
     } on AuthException catch (e) {
-      print("AuthException: ${e.message}");
       _showErrorDialog(context, e.message);
     }
   }
 
+  Future<void> fetchCandidateApplicationData() async {
+    try {
+      // Get the stored user ID
+      String userId = getUserData() ?? '';
+
+      // Create a new GetStorage instance inside the method
+      final box = GetStorage();
+
+      // Query the API to get candidate application details
+      final request = ModelQueries.list(
+        CandidateApplicationForm.classType,
+        where: CandidateApplicationForm.ID.eq(userId), // Assuming ID is the user ID field
+      );
+
+      final response = await Amplify.API.query(request: request).response;
+      print(response);
+
+      if (response.errors.isNotEmpty) {
+        print('Errors: ${response.errors}');
+        _showErrorDialog(context, 'Failed to fetch application data.');
+        return;
+      }
+
+      List<CandidateApplicationForm?> candidateApplications = response.data?.items ?? [];
+      print(candidateApplications);
+
+      if (candidateApplications.isNotEmpty && candidateApplications.first != null) {
+        var candidate = candidateApplications.first;
+        print(candidate);
+
+        // Store candidate data locally for later use
+        box.write('name', candidate?.name ?? 'N/A');
+        print(candidate?.name);
+        box.write('email', candidate?.email ?? 'N/A');
+        print(candidate?.email);
+        box.write('contactNo', candidate?.contactNo ?? 'N/A');
+      } else {
+        _showErrorDialog(context, 'No data found for the user.');
+      }
+    } catch (e) {
+      print('Failed to fetch candidate data: $e');
+      _showErrorDialog(context, 'An unexpected error occurred.');
+    }
+  }
 
 
 
