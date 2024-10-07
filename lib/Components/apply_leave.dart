@@ -1,8 +1,6 @@
-
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
-import 'package:awe_project/Screens/termscreen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../globals/datefield.dart';
 import '../globals/leave_apply.dart';
 import '../models/LeaveStatus.dart';
@@ -267,7 +264,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
 
 
 
-  String empID = 'awe101'; // Or fetch it dynamically during login
+   String empID = 'awe101'; // Or fetch it dynamically during login
   TextEditingController userIdController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   Future<void> _signIn(BuildContext context) async {
@@ -276,7 +273,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
       var session = await Amplify.Auth.fetchAuthSession();
       if (session.isSignedIn) {
         // Assuming empID is fetched from attributes or stored in session
-        empID = 'awe101'; // Store the empID once logged in
+        // empID = 'awe101'; // Store the empID once logged in
         Get.off(() => DashBoardScreeen());
         return;
       }
@@ -288,7 +285,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
       );
 
       if (res.isSignedIn) {
-        empID = 'awe101'; // Fetch or assign the employee ID
+        // empID = 'awe101'; // Fetch or assign the employee ID
         Get.off(() => DashBoardScreeen());
       }
     } catch (e) {
@@ -721,7 +718,6 @@ class _DesktopLeaveState extends State<DesktopLeave> {
                 ),
               ],
             ),
-
 
             SizedBox(height: size.height * 0.022,),
             Row(
@@ -1399,8 +1395,6 @@ class _TabletLeaveState extends State<TabletLeave> {
             myContainer(context, '04'),
           ],
         ),
-
-
         SizedBox(height: size.height * 0.04,),
         Row(
           children: [
@@ -1575,7 +1569,6 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-
         SizedBox(height: size.height * 0.03,),
         Row(
           children: [
@@ -1648,9 +1641,7 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-
         SizedBox(height: size.height * 0.02,),
-
         SizedBox(height: size.height * 0.025,),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start, // Ensures vertical alignment
@@ -1708,7 +1699,6 @@ class _TabletLeaveState extends State<TabletLeave> {
             ),
           ],
         ),
-
         SizedBox(height: size.width * 0.01,),
         Row(
           children: [

@@ -45,10 +45,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (session.isSignedIn) {
         String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
         print(userId);
-        storeUserData(userId); // Store user ID locally
+        // storeUserData(userId); // Store user ID locally
 
         // Fetch candidate application data immediately upon signing in
-        await fetchCandidateApplicationData();
+        // await fetchCandidateApplicationData();
 
         Get.off(() => DashBoardScreeen()); // Navigate to dashboard
         return;
@@ -63,10 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (res.isSignedIn) {
         String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
         print(userId);
-        storeUserData(userId); // Store user ID locally
+        // storeUserData(userId); // Store user ID locally
 
         // Fetch candidate application data after successful sign in
-        await fetchCandidateApplicationData();
+        // await fetchCandidateApplicationData();
 
         Get.off(() => DashBoardScreeen()); // Navigate to dashboard
       }
@@ -146,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return HelperClass(
+      //DESKTOP VIEW
       desktop: Scaffold(
         backgroundColor: bgColor,
         body:  Row(
@@ -210,55 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding:  EdgeInsets.only(right: size.width * 0.180,top: size.height * 0.01,bottom: size.height * 0.005),
                       child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                     ),
-              Card(
-                elevation: 2,
-                shadowColor: Colors.white,
-                child: Container(
-                  width: size.width *  0.235,
-                  height: size.height * 0.050,
-                  child: Material(
-                    color: Colors.white,
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: !_isPasswordVisible, // Hide or show the password
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: Colors.grey,
-                          size: 21,  // Adjust icon size if needed
-                        ),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 15,
-                          color: Colors.grey,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility_outlined // Show this icon when password is visible
-                                : Icons.visibility_off_outlined, // Show this icon when password is hidden
-                            size: 20,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                    PasswordTextField(controller: passwordController, width:size.width *  0.235,height:  size.height * 0.050,),
                     SizedBox(height: size.height * 0.075,),
                     MaterialButton(
                       onPressed: _isLoading
@@ -267,9 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {
                           _isLoading = true; // Start loading
                         });
-
                         await _signIn(context);
-
                         setState(() {
                           _isLoading = false; // Stop loading
                         });
@@ -291,7 +242,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -301,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
 
 
-
+        //TAB VIEW
         tablet: Scaffold(
           backgroundColor: bgColor,
           body:  Row(
@@ -365,55 +315,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding:  EdgeInsets.only(right: size.width * 0.170,top: size.height * 0.017,bottom: size.height * 0.002),
                         child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black),),
                       ),
-                Card(
-                  elevation: 2,
-                  shadowColor: Colors.white,
-                  child: Container(
-                    width: size.width * 0.26,
-                    height: size.height * 0.04,
-                    child: Material(
-                      color: Colors.white,
-                      child: TextField(
-                        controller: passwordController,
-                        obscureText: !_isPasswordVisible,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(right:size.width * 0.005),  // Align the text vertically with the icon
-                          prefixIcon: Icon(
-                            Icons.lock_outline,
-                            color: Colors.grey.shade500,
-                            size: 18,  // Adjust icon size if needed
-                          ),
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 14,
-                            color: Colors.grey,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isPasswordVisible
-                                  ? Icons.visibility_outlined // Show this icon when password is visible
-                                  : Icons.visibility_off_outlined, // Show this icon when password is hidden
-                              size: 19,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                      PasswordTextField(controller: passwordController, width:size.width * 0.26,
+                          height: size.height * 0.04,),
                       SizedBox(height: size.height * 0.05,),
                       MaterialButton(
                         onPressed: _isLoading
@@ -422,9 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             _isLoading = true; // Start loading
                           });
-
                           await _signIn(context);
-
                           setState(() {
                             _isLoading = false; // Stop loading
                           });
@@ -453,134 +354,90 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
-        mobile: Column(
-          children: [
-         SizedBox(
-           width:size.width * 0.270,
-           height:size.height * 0.080,
-           child: Image.asset('assets/images/awe logo.png'),
-         ),
-            Container(
-              width:size.width * 0.330,
-              height: size.height * 0.340,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/login.png',)
-                )
-              ),
-            ),
-            Card(
-              elevation: 3,
-              shadowColor: Colors.white,
-              child: Container(
-                width: size.width * 0.55,
-                height: size.height * 0.45,
+
+        //MOBILE VIEW
+        mobile: Container(
+          color: bgColor,
+          child: Column(
+            children: [
+           SizedBox(
+             width:size.width * 0.270,
+             height:size.height * 0.080,
+             child: Image.asset('assets/images/awe logo.png'),
+           ),
+              Container(
+                width:size.width * 0.330,
+                height: size.height * 0.340,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/login.png',)
+                  )
                 ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:  EdgeInsets.only(top: size.height * 0.040),
-                      child: Text("Login",style: TextStyle(fontSize: 16,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
-                    ),
-                    Padding(
-                      padding:  EdgeInsets.only(right: size.width * 0.250,top: 8,bottom:size.height * 0.002),
-                      child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
-                    ),
-                    MobileTextField(controller3: userIdController, text3: 'User ID', icon3: Icons.person_outline),
-                    SizedBox(height: size.height * 0.02,),
-                    Padding(
-                      padding:  EdgeInsets.only(right:size.width * 0.250,top:size.height * 0.008,bottom: size.height * 0.002),
-                      child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
-                    ),
+              ),
               Card(
-                elevation: 2,
+                elevation: 3,
                 shadowColor: Colors.white,
                 child: Container(
-                  width: size.width * 0.40,
-                  height: size.height * 0.045,
-                  child: Material(
+                  width: size.width * 0.55,
+                  height: size.height * 0.45,
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: !_isPasswordVisible,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: Colors.grey,
-                          size: 16,  // Adjust icon size if needed
-                        ),
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isPasswordVisible
-                                ? Icons.visibility_outlined // Show this icon when password is visible
-                                : Icons.visibility_off_outlined, // Show this icon when password is hidden
-                            size: 16,
-                            color: Colors.grey,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:  EdgeInsets.only(top: size.height * 0.040),
+                        child: Text("Login",style: TextStyle(fontSize: 16,fontFamily: 'Inter',decoration: TextDecoration.none,color: black),),
+                      ),
+                      Padding(
+                        padding:  EdgeInsets.only(right: size.width * 0.250,top: 8,bottom:size.height * 0.002),
+                        child: Text('User Id',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
+                      ),
+                      MobileTextField(controller3: userIdController, text3: 'User ID', icon3: Icons.person_outline),
+                      SizedBox(height: size.height * 0.02,),
+                      Padding(
+                        padding:  EdgeInsets.only(right:size.width * 0.250,top:size.height * 0.008,bottom: size.height * 0.002),
+                        child: Text('Password',style: TextStyle(fontFamily: 'Inter',fontSize: 13,color: black),),
+                      ),
+                      PasswordTextField(controller: passwordController, width:size.width * 0.40,
+                          height: size.height * 0.045,),
+                      SizedBox(height: size.height * 0.04,),
+                      MaterialButton(
+                        onPressed: _isLoading
+                            ? null // Disable the button while loading
+                            : () async {
+                          setState(() {
+                            _isLoading = true; // Start loading
+                          });
+                          await _signIn(context);
+                          setState(() {
+                            _isLoading = false; // Stop loading
+                          });
+                        },
+                        minWidth: size.width * 0.38,
+                        height: size.height * 0.045,
+                        color: yellow,
+                        splashColor: yellow,
+                        child: _isLoading
+                            ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                        )
+                            : Text(
+                          "Login",
+                          style: TextStyle(
+                            color: black,
+                            fontFamily: 'Open Sans',
+                            fontSize: 16,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
-                            });
-                          },
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ),
-                    SizedBox(height: size.height * 0.04,),
-                    MaterialButton(
-                      onPressed: _isLoading
-                          ? null // Disable the button while loading
-                          : () async {
-                        setState(() {
-                          _isLoading = true; // Start loading
-                        });
-
-                        await _signIn(context);
-
-                        setState(() {
-                          _isLoading = false; // Stop loading
-                        });
-                      },
-                      minWidth: size.width * 0.38,
-                      height: size.height * 0.045,
-                      color: yellow,
-                      splashColor: yellow,
-                      child: _isLoading
-                          ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
-                      )
-                          : Text(
-                        "Login",
-                        style: TextStyle(
-                          color: black,
-                          fontFamily: 'Open Sans',
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
         paddingWidth: size.width * 0.1,
         bgColor: bgColor);
@@ -719,6 +576,81 @@ class MobileTextField extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class PasswordTextField extends StatefulWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final double width;
+  final double height;
+
+  PasswordTextField({
+    required this.controller,
+    this.hintText = 'Password',
+    required this.width,
+    required this.height,
+  });
+
+  @override
+  _PasswordTextFieldState createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool _isPasswordVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shadowColor: Colors.white,
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        child: Material(
+          color: Colors.white,
+          child: TextField(
+            controller: widget.controller,
+            obscureText: !_isPasswordVisible, // Hide or show the password
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 10),  // Align the text vertically with the icon
+              prefixIcon: Icon(
+                Icons.lock_outline,
+                color: Colors.grey,
+                size: 21,  // Adjust icon size if needed
+              ),
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 15,
+                color: Colors.grey,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isPasswordVisible
+                      ? Icons.visibility_outlined // Show this icon when password is visible
+                      : Icons.visibility_off_outlined, // Show this icon when password is hidden
+                  size: 20,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                  });
+                },
               ),
             ),
           ),
