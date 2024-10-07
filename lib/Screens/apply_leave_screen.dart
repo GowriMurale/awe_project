@@ -348,7 +348,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     Text('Apply Leave',style: TextStyle(fontFamily: 'Inter',fontSize: 18,fontWeight: FontWeight.bold,color: black),),
                   ],
                 ),
-                SizedBox(height: size.height * 0.015,),
+                SizedBox(height: size.height * 0.035,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.22,),
@@ -370,7 +370,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     myContainer(context, 'Xyz'),
                     SizedBox(width: size.width * 0.085,),
                     Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
-                    SizedBox(width: size.width * 0.040,),
+                    SizedBox(width: size.width * 0.041,),
                     myContainer(context, 'Worker'),
                   ],
                 ),
@@ -470,7 +470,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: size.width * 0.010),
+                    SizedBox(width: size.width * 0.015),
                     myContainer(context, '04'),
                   ],
                 ),
@@ -658,7 +658,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.012,),
+                SizedBox(height: size.height * 0.028,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.32),
@@ -666,14 +666,14 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                       'If Sick:',
                       style: TextStyle(
                         fontFamily: 'Inter',
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.005,),
+                SizedBox(height: size.height * 0.010,),
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.32),
@@ -687,19 +687,26 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(width: size.width * 0.004),
-                            Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: Colors.grey),),
+                            Align(
+                              alignment: Alignment.center,
+                                child: Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: Colors.grey),)),
                             SizedBox(width: size.width * 0.012),
-                            Padding(
-                              padding:  EdgeInsets.only(bottom: size.height * 0.8),
-                              child: IconButton(onPressed: (){}, icon: Icon(Icons.file_upload_outlined,size: 18,color: black,)),
-                            )
+                            Spacer(), // Space between text and icon
+                            Transform.translate( // Adjust the icon position with Transform.translate
+                              offset: Offset(1, -3), // Adjust the vertical offset as needed
+                              child: IconButton(
+                                onPressed: (){},
+                                icon: Icon(Icons.file_upload_outlined,size: 20,color: black,),
+
+                              ),
+                            ),
                           ],
                         )
                     )
                   ],
                 ),
             
-                SizedBox(height: size.height * 0.022,),
+                SizedBox(height: size.height * 0.030,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
                   children: <Widget>[
@@ -874,9 +881,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ),
                     )
-            
                   ],
-                )
+                ),
+                SizedBox(height: size.height * 0.030,),
               ],
             ),
           )
@@ -1314,7 +1321,53 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     ],
                   ),
                   SizedBox(height: size.height * 0.025,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.32),
+                      Text(
+                        'If Sick:',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.010,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.32),
+                      Container(
+                          width: size.width * 0.22,
+                          height: size.height * 0.038,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade700,width: 1)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: size.width * 0.004),
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: Colors.grey),)),
+                              SizedBox(width: size.width * 0.012),
+                              Spacer(), // Space between text and icon
+                              Transform.translate( // Adjust the icon position with Transform.translate
+                                offset: Offset(1, -3), // Adjust the vertical offset as needed
+                                child: IconButton(
+                                  onPressed: (){},
+                                  icon: Icon(Icons.file_upload_outlined,size: 20,color: black,),
 
+                                ),
+                              ),
+                            ],
+                          )
+                      )
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start, // Ensures vertical alignment
                     children: <Widget>[
@@ -1484,7 +1537,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: size.height * 0.025,),
                 ],
               ),
             ),

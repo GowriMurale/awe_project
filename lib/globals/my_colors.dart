@@ -13,3 +13,4 @@ Color blue=Color(0xF0070CB).withOpacity(1.0);
 Color griesh=Color(0xF9E9E9E).withOpacity(1.0);
 Color pink=Color(0xFFAFAFA).withOpacity(1.0);
 Color dashgrey=Color(0xF858585).withOpacity(1.0);
+Color white=Color(0xFFFFFFF).withOpacity(1.0);

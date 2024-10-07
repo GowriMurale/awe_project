@@ -742,16 +742,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                 ],
               ),
-              SizedBox(height: size.height * 0.014,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width *  0.050,),
-                  Text('Comments',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                  SizedBox(width:size.width *  0.025,),
-                  Text('Not valid',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                ],
-              ),
               SizedBox(height: size.height * 0.022),
               MaterialButton(
                 minWidth: size.width * .065,
@@ -899,16 +889,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Text('Reason',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                   SizedBox(width:size.width *  0.040,),
                   Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                ],
-              ),
-              SizedBox(height: size.height * 0.014,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width *  0.050,),
-                  Text('Comments',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
-                  SizedBox(width:size.width *  0.025,),
-                  Text('Not valid',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                 ],
               ),
               SizedBox(height: size.height * 0.022),
@@ -1061,7 +1041,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       Text('Nur Hafiza',style: TextStyle(color: griesh,fontFamily:'Inter',fontSize: 26,fontWeight: FontWeight.bold),)
                     ],
                   ),
-                  SizedBox(height: size.height * 0.015,),
+                  SizedBox(height: size.height * 0.025,),
                   Row(
                     children: [
                       SizedBox(width: size.width* 0.180,),
@@ -1077,14 +1057,14 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.025,),
+                  SizedBox(height: size.height * 0.040,),
                   Row(
                     children: [
-                      SizedBox(width: size.width * 0.185),
-                      Text('Off Shore',style: TextStyle(color: dashgrey,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),)
+                      SizedBox(width: size.width * 0.188),
+                      Text('OffShore',style: TextStyle(color: dashgrey,fontFamily: 'Inter',fontSize: 20,fontWeight: FontWeight.bold),)
                     ],
                   ),
-                  SizedBox(height: size.height * 0.010,),
+                  SizedBox(height: size.height * 0.020,),
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.183),
@@ -1092,9 +1072,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         width: size.width * 0.6,
                         height: size.height * 0.21,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade200,width: 1),
+                          border: Border.all(color: Colors.grey.shade300,width: 1),
                           borderRadius: BorderRadius.circular(5),
-                          color: pink
+                          color: white
                         ),
                         child: Column(
                           children: [
@@ -1158,7 +1138,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                 Text('Unpaid Authorize',style: TextStyle(color: black,fontFamily: 'Inter',fontSize: 14,fontWeight: FontWeight.bold),),
                                 SizedBox(width: size.width * 0.046),
                                 shoreContainer(context, '0',15),
-                                SizedBox(width: size.width * 0.052),
+                                SizedBox(width: size.width * 0.030),
                                 Text('Leave balance as on\n 31.12.2024:',style: TextStyle(color: black,fontSize: 14,fontWeight: FontWeight.bold),),
                                 SizedBox(width: size.width * 0.030),
                                 shoreContainer(context, '',15),
@@ -1170,10 +1150,10 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       )
                     ],
                   ),
-                  SizedBox(height: size.height * 0.015,),
+                  SizedBox(height: size.height * 0.060,),
                   Row(
                     children: [
-                      SizedBox(width: size.width * 0.185),
+                      SizedBox(width: size.width * 0.190),
                       Text(
                         'My Recent Leave',
                         style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
@@ -1196,10 +1176,11 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'From',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
+                                padding:   EdgeInsets.only(bottom: 0.04),
                                 onPressed: () => _selectDate(context, from), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
-                                  size: 14,
+                                  size: 15,
                                   color: Colors.black,
                                 ),
                               ),
@@ -1207,6 +1188,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                 borderSide: BorderSide(color: grey, width: 1), // Keep border color grey
                                 borderRadius: BorderRadius.circular(0),
                               ),
+
                             ),
                           ),
                         ),
@@ -1229,10 +1211,11 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'To',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
+                                padding: EdgeInsets.only(bottom: 0.04),
                                 onPressed: () => _selectDate(context, to), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
-                                  size: 14,
+                                  size: 15,
                                   color: Colors.black,
                                 ),
                               ),
@@ -1249,7 +1232,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Row(
                     children: [
                       Padding(
-                        padding:  EdgeInsets.only(left: size.width * 0.175,top: size.height * 0.02),
+                        padding:  EdgeInsets.only(left: size.width * 0.175,top: size.height * 0.025),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -1476,7 +1459,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       Text('Nur Hafiza',style: TextStyle(color: griesh,fontFamily:'Inter',fontSize: 28,fontWeight: FontWeight.bold),)
                     ],
                   ),
-                  SizedBox(height: size.height * 0.015,),
+                  SizedBox(height: size.height * 0.025,),
                   Row(
                     children: [
                       SizedBox(width: size.width* 0.14,),
@@ -1484,14 +1467,14 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                          size.height * 0.110,),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.025,),
+                  SizedBox(height: size.height * 0.030,),
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.145),
                       Text('Off Shore',style: TextStyle(color: dashgrey,fontFamily: 'Inter',fontSize: 18,fontWeight: FontWeight.bold),)
                     ],
                   ),
-                  SizedBox(height: size.height * 0.010,),
+                  SizedBox(height: size.height * 0.015,),
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.150),
@@ -1499,9 +1482,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         width: size.width * 0.7,
                         height: size.height * 0.21,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade200,width: 1),
-                            borderRadius: BorderRadius.circular(5),
-                            color: pink
+                            border: Border.all(color: Colors.grey.shade300,width: 1),
+                            borderRadius: BorderRadius.circular(7),
+                            color: white
                         ),
                         child: Column(
                           children: [
@@ -1576,7 +1559,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       )
                     ],
                   ),
-                  SizedBox(height: size.height * 0.015,),
+                  SizedBox(height: size.height * 0.055,),
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.145),
@@ -1602,6 +1585,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'From',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
+                                padding: EdgeInsets.only(bottom: 0.5),
                                 onPressed: () => _selectDate(context, from), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
@@ -1635,6 +1619,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'To',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
+                              padding:   EdgeInsets.only(bottom: 0.5),
                                 onPressed: () => _selectDate(context, to), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
@@ -2232,8 +2217,8 @@ Widget employeeInfoCard(BuildContext context, String employeeType, String joinin
         height: height,
        decoration: BoxDecoration(
          borderRadius: BorderRadius.circular(5),
-         border: Border.all(color: Colors.grey.shade200,width: 1),
-         color: pink
+         border: Border.all(color: Colors.grey.shade300,width: 1),
+         color: white
        ), // Custom color
         child: Column(
           children: [
@@ -2369,7 +2354,11 @@ Widget tabemployeeInfoCard(BuildContext context, String employeeType, String joi
       Container(
        width: width,
         height: height,
-        color: pink, // Custom color
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          border: Border.all(color: Colors.grey.shade300,width: 1),
+          color: white
+        ), // Custom color
         child: Column(
           children: [
             SizedBox(height: size.height * 0.015),
