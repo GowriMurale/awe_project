@@ -14,3 +14,4 @@ Color griesh=Color(0xF9E9E9E).withOpacity(1.0);
 Color pink=Color(0xFFAFAFA).withOpacity(1.0);
 Color dashgrey=Color(0xF858585).withOpacity(1.0);
 Color white=Color(0xFFFFFFF).withOpacity(1.0);
+Color dialog=Color(0xFF1F1F1).withOpacity(1.0);

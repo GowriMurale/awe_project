@@ -233,6 +233,25 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   }
   String empID = 'awe101';
 
+
+  // void _pickFile() async {
+  //   print('File picker started...');
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //
+  //     if (result != null) {
+  //       PlatformFile file = result.files.first;
+  //       print('File Name: ${file.name}');
+  //       print('File Size: ${file.size}');
+  //       print('File Path: ${file.path}');
+  //     } else {
+  //       print('No file selected');
+  //     }
+  //   } catch (e) {
+  //     print('Error occurred while picking file: $e');
+  //   }
+  // }
+
   //NAV BAR METHODS
   Future<void> _confirmSignOut(BuildContext context) async {
     showDialog(
@@ -515,11 +534,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 SizedBox(height: size.height * 0.02,),
                 Row(
                   children: [
-                    SizedBox(width: size.width * 0.31,),
+                    SizedBox(width: size.width * 0.302,),
                     Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
-                    SizedBox(width: size.width * 0.145,),
+                    SizedBox(width: size.width * 0.130,),
                     Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
-                    SizedBox(width: size.width * 0.15,),
+                    SizedBox(width: size.width * 0.14,),
                     Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,fontWeight: FontWeight.bold),),
                   ],
                 ),
@@ -695,7 +714,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                             Transform.translate( // Adjust the icon position with Transform.translate
                               offset: Offset(1, -3), // Adjust the vertical offset as needed
                               child: IconButton(
-                                onPressed: (){},
+                                onPressed: (){
+                                  // _pickFile();
+                                },
                                 icon: Icon(Icons.file_upload_outlined,size: 20,color: black,),
 
                               ),
@@ -805,6 +826,28 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.38,),
+                    OutlinedButton(
+                      onPressed: () {
+                        Get.off(DashBoardScreeen());
+                      },
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
+                        side: BorderSide(color: grey), // Define the border color for the outlined button
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                        ),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: black,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: size.width * 0.03,),
                     Material(
                       borderRadius: BorderRadius.circular(45),
                       child: MaterialButton(
@@ -825,7 +868,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 TextButton(
                                   onPressed: () async {
                                     Get.back(); // Close the dialog first
-            
+
                                     // Proceed with creating the leave request
                                     await applyForLeave(); // This will show success/error dialogs based on the result
                                   },
@@ -859,28 +902,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: size.width * 0.03,),
-                    OutlinedButton(
-                      onPressed: () {
-                        Get.off(DashBoardScreeen());
-                      },
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
-                        side: BorderSide(color: grey), // Define the border color for the outlined button
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                        ),
-                      ),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: black,
-                        ),
-                      ),
-                    )
                   ],
                 ),
                 SizedBox(height: size.height * 0.030,),
@@ -1466,6 +1487,28 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.35,),
+                      OutlinedButton(
+                        onPressed: () {
+                          Get.off(DashBoardScreeen());
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: Size(size.width * 0.11, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                          side: BorderSide(color: grey), // Define the border color for the outlined button
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                          ),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: black,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.02,),
                       Material(
                         borderRadius: BorderRadius.circular(45),
                         color: Colors.transparent,
@@ -1514,28 +1557,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           child: Text('Apply',style: TextStyle(fontFamily: 'Inter',fontSize: 13,fontWeight: FontWeight.bold,color: black),),
                         ),
                       ),
-                      SizedBox(width: size.width * 0.02,),
-                      OutlinedButton(
-                        onPressed: () {
-                          Get.off(DashBoardScreeen());
-                        },
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: Size(size.width * 0.11, size.height * 0.06), // Similar to minWidth and height in MaterialButton
-                          side: BorderSide(color: grey), // Define the border color for the outlined button
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                          ),
-                        ),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: black,
-                          ),
-                        ),
-                      )
                     ],
                   ),
                   SizedBox(height: size.height * 0.025,),
@@ -1731,11 +1752,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                 Row(
                   children: [
                     SizedBox(width: size.width * 0.25,),
-                    Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
-                    SizedBox(width: size.width * 0.145,),
-                    Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
-                    SizedBox(width: size.width * 0.20,),
-                    Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black,),),
+                    Text('From',style: TextStyle(fontFamily: 'Inter',fontSize: 14,color: black,),),
+                    SizedBox(width: size.width * 0.175,),
+                    Text('To',style: TextStyle(fontFamily: 'Inter',fontSize: 14,color: black,),),
+                    SizedBox(width: size.width * 0.22,),
+                    Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 14,color: black,),),
                   ],
                 ),
                 SizedBox(height: size.height * 0.008,),
@@ -1959,7 +1980,53 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.height * 0.035,),
+                    SizedBox(height: size.height * 0.025,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.32),
+                        Text(
+                          'If Sick:',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.010,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.32),
+                        Container(
+                            width: size.width * 0.40,
+                            height: size.height * 0.038,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade700,width: 1)
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(width: size.width * 0.004),
+                                Align(
+                                    alignment: Alignment.center,
+                                    child: Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 11,color: Colors.grey),)),
+                                SizedBox(width: size.width * 0.012),
+                                Spacer(), // Space between text and icon
+                                Transform.translate( // Adjust the icon position with Transform.translate
+                                  offset: Offset(1, -3), // Adjust the vertical offset as needed
+                                  child: IconButton(
+                                    onPressed: (){},
+                                    icon: Icon(Icons.file_upload_outlined,size: 18,color: black,),
+
+                                  ),
+                                ),
+                              ],
+                            )
+                        )
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.025,),
                     Row(
                       // Align error message properly
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1992,7 +2059,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                               ),
 
                             Container(
-                              width: size.width * 0.3, // Specify the width of the TextField
+                              width: size.width * 0.42, // Specify the width of the TextField
                               height: size.height * 0.08, // Specify the height of the TextField
                               child: TextField(
                                 controller: reason,
@@ -2057,6 +2124,28 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                     Row(
                       children: [
                         SizedBox(width: size.width * 0.28,),
+                        OutlinedButton(
+                          onPressed: () {
+                            Get.off(DashBoardScreeen());
+                          },
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: Size(size.width * 0.005, size.height * 0.06), // Similar to minWidth and height in MaterialButton
+                            side: BorderSide(color: grey), // Define the border color for the outlined button
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                            ),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.03,),
                         Material(
                           borderRadius: BorderRadius.circular(45),
                           child: MaterialButton(
@@ -2105,30 +2194,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ),
                         ),
 
-
-                        SizedBox(width: size.width * 0.03,),
-                        OutlinedButton(
-                          onPressed: () {
-                            Get.off(DashBoardScreeen());
-                          },
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(size.width * 0.005, size.height * 0.06), // Similar to minWidth and height in MaterialButton
-                            side: BorderSide(color: grey), // Define the border color for the outlined button
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                            ),
-                          ),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: black,
-                            ),
-                          ),
-                        )
-
                       ],
                     )
                   ],
@@ -2172,3 +2237,4 @@ Widget phoneContainer(BuildContext context,String text){
     ),
   );
 }
+

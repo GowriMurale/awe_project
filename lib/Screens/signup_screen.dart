@@ -5,6 +5,8 @@ import 'package:awe_project/Screens/login_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'dashboard_screen.dart';
 class changePasswordScreen extends StatefulWidget {
   final String username;
   const changePasswordScreen({super.key, required this.username});
@@ -361,31 +363,63 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      Container(
-                        child: Center(
-                          child: isloading
-                              ? CircularProgressIndicator(
-                            color: Colors.yellow,) // Show spinner when loading
-                              : MaterialButton(
-                            onPressed: _handleUpdateButton,
-                            color: Colors.yellow,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 60, vertical: 13),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0),
+                       SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(width: size.width * 0.145,),
+                          OutlinedButton(
+                            onPressed: () {
+                              Get.off(DashBoardScreeen());
+                            },
+                            style: OutlinedButton.styleFrom(
+                              minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
+                              side: BorderSide(color: grey), // Define the border color for the outlined button
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                              ),
                             ),
                             child: Text(
-                              'Update',
+                              'Cancel',
                               style: TextStyle(
+                                fontFamily: 'Inter',
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: black,
                               ),
                             ),
                           ),
-                        ),
-                        //SizedBox(height: 30)
+                          SizedBox(width: size.width * 0.02,),
+                          MaterialButton(
+                            onPressed: _isLoading
+                                ? null // Disable the button while loading
+                                : () async {
+                              setState(() {
+                                _isLoading = true; // Start loading
+                              });
+                              await _changePassword(context);
+                              setState(() {
+                                _isLoading = false; // Stop loading
+                              });
+                            },
+                            minWidth: size.width * 0.078,
+                            height: size.height * 0.055,
+                            color: yellow,
+                            splashColor: yellow,
+                            child: _isLoading
+                                ? CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                            )
+                                : Text(
+                              "Update",
+                              style: TextStyle(
+                                color: black,
+                                fontFamily: 'Open Sans',
+                                fontSize: 16,fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 50, width: 300,
                         child: Divider(
@@ -674,31 +708,62 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 30),
-                        Container(
-                          child: Center(
-                            child: isloading
-                                ? CircularProgressIndicator(
-                              color: Colors.yellow,) // Show spinner when loading
-                                : MaterialButton(
-                              onPressed: _handleUpdateButton,
-                              color: Colors.yellow,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 60, vertical: 13),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
+                         SizedBox(height: 30),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.092,),
+                            OutlinedButton(
+                              onPressed: () {
+                                Get.off(DashBoardScreeen());
+                              },
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
+                                side: BorderSide(color: grey), // Define the border color for the outlined button
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                                ),
                               ),
                               child: Text(
-                                'Update',
+                                'Cancel',
                                 style: TextStyle(
+                                  fontFamily: 'Inter',
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color: black,
                                 ),
                               ),
                             ),
-                          ),
-                          //SizedBox(height: 30)
+                            SizedBox(width: size.width * 0.02,),
+                            MaterialButton(
+                              onPressed: _isLoading
+                                  ? null // Disable the button while loading
+                                  : () async {
+                                setState(() {
+                                  _isLoading = true; // Start loading
+                                });
+                                await _changePassword(context);
+                                setState(() {
+                                  _isLoading = false; // Stop loading
+                                });
+                              },
+                              minWidth: size.width * 0.13,
+                              height: size.height * 0.055,
+                              color: yellow,
+                              splashColor: yellow,
+                              child: _isLoading
+                                  ? CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                              )
+                                  : Text(
+                                "Update",
+                                style: TextStyle(
+                                    color: black,
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 16,fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 50, width: 300,
                           child: Divider(
@@ -977,28 +1042,61 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ),
                         ),
                         SizedBox(height: 25),
-                        Container(
-                          child: Center(
-                            child: isloading
-                                ? CircularProgressIndicator(color: Colors.yellow,) // Show spinner when loading
-                                : MaterialButton(
-                              onPressed: _handleUpdateButton,
-                              color: Colors.yellow,
-                              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 13),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.277,),
+                            OutlinedButton(
+                              onPressed: () {
+                                Get.off(DashBoardScreeen());
+                              },
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
+                                side: BorderSide(color: grey), // Define the border color for the outlined button
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                                ),
                               ),
                               child: Text(
-                                'Update',
+                                'Cancel',
                                 style: TextStyle(
+                                  fontFamily: 'Inter',
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color: black,
                                 ),
                               ),
                             ),
-                          ),
-                          //SizedBox(height: 30)
+                            SizedBox(width: size.width * 0.06,),
+                            MaterialButton(
+                              onPressed: _isLoading
+                                  ? null // Disable the button while loading
+                                  : () async {
+                                setState(() {
+                                  _isLoading = true; // Start loading
+                                });
+                                await _changePassword(context);
+                                setState(() {
+                                  _isLoading = false; // Stop loading
+                                });
+                              },
+                              minWidth: size.width * 0.2,
+                              height: size.height * 0.055,
+                              color: yellow,
+                              splashColor: yellow,
+                              child: _isLoading
+                                  ? CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(yellow), // Set spinner color to yellow
+                              )
+                                  : Text(
+                                "Update",
+                                style: TextStyle(
+                                    color: black,
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 16,fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(height: 50, width: 300,
                           child: Divider(
