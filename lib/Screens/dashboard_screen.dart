@@ -2515,19 +2515,19 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   children: [
                     Center(
                       child: Container(
-                        height: 75,
+                        height: size.height * 0.095,
                         child: CircleAvatar(
                             backgroundImage: AssetImage('assets/images/user image.png'),
-                            radius: 22,
+                            radius: 20,
                             child:Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 //mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    height:25,
-                                    width: 450,
-                                    padding: EdgeInsets.only(left: 20,top: 1,),
+                                    height: size.height * 0.045,
+                                    width:size.width * 0.080,
+                                    padding: EdgeInsets.only(left: size.width * 0.014,top: size.height * 0.011,),
                                     child: TextButton(
                                         style: TextButton.styleFrom(
                                             backgroundColor: Colors.grey.shade300,
@@ -2535,7 +2535,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                         ),
                                         onPressed: () {
                                           _showPopupMenu(context);
-                                        }, child: Icon(Icons.edit_outlined,size: 10,color: Colors.black87,)
+                                        }, child: Icon(Icons.edit_outlined,size: 12,color: Colors.black87,)
                                     ),)])
                         ),
                       ),),]),
