@@ -647,32 +647,34 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              padding: EdgeInsets.all(8),
-              width: size.width * 0.310,
+              width: size.width * 0.305,
               decoration: BoxDecoration(
-                color: Color(0xFF1F1F1).withOpacity(1.0),
-                borderRadius: BorderRadius.circular(5),
+                color: dialog,
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: size.height * 0.012),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: size.width * 0.128),
-                      Text(
-                        'Pending',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 22,fontWeight: FontWeight.bold ,color: Colors.black),
-                      ),
-                      SizedBox(width: size.width * 0.075),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
-                      ),
-                    ],
+                  Container(
+                    height:  size.height * 0.057,
+                    color: Colors.yellow,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: size.width * 0.128),
+                        Text(
+                          'Pending',
+                          style: TextStyle(fontFamily: 'Inter', fontSize: 22,fontWeight: FontWeight.bold ,color: Colors.black),
+                        ),
+                        SizedBox(width: size.width * 0.075),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: size.height * 0.014),
                   Row(
@@ -783,7 +785,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.018),
+                  SizedBox(height: size.height * 0.030),
                 ],
               ),
             ),
@@ -804,32 +806,34 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              padding: EdgeInsets.all(8),
               width: size.width * 0.4,
               decoration: BoxDecoration(
-                color: Color(0xFF1F1F1).withOpacity(1.0),
+                color: dialog,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: size.height * 0.012),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: size.width * 0.160),
-                      Text(
-                        'Pending',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),
-                      ),
-                      SizedBox(width: size.width * 0.110),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
-                      ),
-                    ],
+                  Container(
+                    height:  size.height * 0.057,
+                    color: Colors.yellow,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: size.width * 0.160),
+                        Text(
+                          'Pending',
+                          style: TextStyle(fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),
+                        ),
+                        SizedBox(width: size.width * 0.110),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: size.height * 0.014),
                   Row(
@@ -940,7 +944,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.018),
+                  SizedBox(height: size.height * 0.028),
                 ],
               ),
             ),
@@ -963,7 +967,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              padding: EdgeInsets.all(8),
               width: size.width * 0.65,
               decoration: BoxDecoration(
                 color: dialog,
@@ -972,23 +975,26 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  SizedBox(height: size.height * 0.012),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: size.width * 0.210),
-                      Text(
-                        'Pending',
-                        style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
-                      ),
-                      SizedBox(width: size.width * 0.090),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
-                      ),
-                    ],
+                  Container(
+                    height:  size.height * 0.052,
+                    color: Colors.yellow,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: size.width * 0.245),
+                        Text(
+                          'Pending',
+                          style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
+                        ),
+                        SizedBox(width: size.width * 0.135),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: size.height * 0.014),
                   Row(
@@ -1006,7 +1012,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     children: [
                       SizedBox(width:size.width *  0.063,),
                       Text('Job Title',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                      SizedBox(width:size.width *  0.092,),
+                      SizedBox(width:size.width *  0.094,),
                       Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
                     ],
                   ),
@@ -1056,7 +1062,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     children: [
                       SizedBox(width:size.width *  0.063,),
                       Text('Apply to',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                      SizedBox(width:size.width *  0.095,),
+                      SizedBox(width:size.width *  0.098,),
                       Text(leave.applyTo ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
                     ],
                   ),
@@ -1066,7 +1072,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     children: [
                       SizedBox(width:size.width *  0.063,),
                       Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                      SizedBox(width:size.width *  0.063,),
+                      SizedBox(width:size.width *  0.066,),
                       Text('${leave.days ?? 0} days',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
                     ],
                   ),
@@ -1076,17 +1082,17 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     children: [
                       SizedBox(width:size.width *  0.063,),
                       Text('Reason',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                      SizedBox(width:size.width *  0.097,),
+                      SizedBox(width:size.width *  0.102,),
                       Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
                     ],
                   ),
                   SizedBox(height: size.height * 0.025),
                   Row(
                     children: [
-                      SizedBox(width:size.width *  0.195,),
+                      SizedBox(width:size.width *  0.220,),
                       MaterialButton(
-                        minWidth: size.width * .135,
-                        height: size.height * 0.050,
+                        minWidth: size.width * .150,
+                        height: size.height * 0.047,
                         onPressed: () {
                           _showCancelConfirmation(context, onStatusChanged);
                         },
@@ -1099,7 +1105,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: size.height * 0.018),
+                  SizedBox(height: size.height * 0.028),
                 ],
               ),
             ),
@@ -1169,32 +1175,34 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Container(
-          padding: EdgeInsets.all(8),
-          width: size.width * 0.310,
+          width: size.width * 0.305,
           decoration: BoxDecoration(
-            color: Color(0xFF1F1F1).withOpacity(1.0),
-            borderRadius: BorderRadius.circular(5),
+            color: dialog,
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: size.height * 0.012),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.120),
-                  Text(
-                    'Rejected',
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 22, fontWeight: FontWeight.bold,color: Colors.black),
-                  ),
-                  SizedBox(width: size.width * 0.080),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
-                  ),
-                ],
+              Container(
+                height:  size.height * 0.057,
+                color: Colors.yellow,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: size.width * 0.120),
+                    Text(
+                      'Rejected',
+                      style: TextStyle(fontFamily: 'Inter', fontSize: 22, fontWeight: FontWeight.bold,color: Colors.black),
+                    ),
+                    SizedBox(width: size.width * 0.085),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: size.height * 0.014),
               Row(
@@ -1304,7 +1312,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                  )
                 ],
               ),
-              SizedBox(height: size.height * 0.022),
+              SizedBox(height: size.height * 0.030),
             ],
           ),
         ),
@@ -1319,8 +1327,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: Container(
-          padding: EdgeInsets.all(8),
-          width: size.width * 0.310,
+          width: size.width * 0.305,
           decoration: BoxDecoration(
             color: Color(0xFF1F1F1).withOpacity(1.0),
             borderRadius: BorderRadius.circular(5),
@@ -1328,23 +1335,26 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(height: size.height * 0.012),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: size.width * 0.123),
-                  Text(
-                    'Approved',
-                    style: TextStyle(fontFamily: 'Inter', fontSize: 22, fontWeight: FontWeight.bold,color: Colors.black),
-                  ),
-                  SizedBox(width: size.width * 0.080),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
-                  ),
-                ],
+              Container(
+                height:  size.height * 0.057,
+                color: Colors.yellow,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: size.width * 0.123),
+                    Text(
+                      'Approved',
+                      style: TextStyle(fontFamily: 'Inter', fontSize: 22, fontWeight: FontWeight.bold,color: Colors.black),
+                    ),
+                    SizedBox(width: size.width * 0.080),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.cancel_outlined, size: 26, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: size.height * 0.016),
               Row(
@@ -1436,7 +1446,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                 ],
               ),
-              SizedBox(height: size.height * 0.020),
+              SizedBox(height: size.height * 0.030),
             ],
           ),
         ),
@@ -1615,23 +1625,23 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             actions: [
               Row(
                   children: [
-                    SizedBox(width: 20,),
+                    SizedBox(width:size.width * 0.015,),
                     Center(
                       child: Container(
-                        height: 190,
-                        width: 190,
+                        height:size.height * 0.140,
+                        width:size.width * 0.140,
                         child: Image.asset('assets/images/awe logo.png',fit: BoxFit.contain),),),
                   ]),
               Spacer(), // Pushes the next widgets to the right
               // Icon(Icons.mail_outline_outlined),
-              SizedBox(width: 30), // spacing between icons
+              SizedBox(width: size.width * 0.30), // spacing between icons
               Icon(Icons.notifications_outlined),
 
               Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: 20,),
+                    SizedBox(height:size.height * 0.010,),
                     Container(
                       width: 15.0,  // Set the width
                       height: 15.0, // Set the height
@@ -2805,7 +2815,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 ],
               ),
 
-              SizedBox(height: size.height * 0.025,),
+              SizedBox(height: size.height * 0.028,),
               Row(
                 children: [
                   SizedBox(width: size.width * 0.3,),
@@ -3107,32 +3117,34 @@ void _tabapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-        padding: EdgeInsets.all(8),
-        width: size.width * 0.4,
+        width: size.width * 0.39,
         decoration: BoxDecoration(
-          color: Color(0xFF1F1F1).withOpacity(1.0),
+          color: dialog,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: size.height * 0.012),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: size.width * 0.165),
-                Text(
-                  'Approved',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 20,fontWeight: FontWeight.bold ,color: Colors.black),
-                ),
-                SizedBox(width: size.width * 0.090),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
-                ),
-              ],
+            Container(
+              height:  size.height * 0.057,
+              color: Colors.yellow,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.165),
+                  Text(
+                    'Approved',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 20,fontWeight: FontWeight.bold ,color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.090),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: size.height * 0.016),
             Row(
@@ -3224,7 +3236,7 @@ void _tabapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
                 Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 14,color: black),),
               ],
             ),
-            SizedBox(height: size.height * 0.020),
+            SizedBox(height: size.height * 0.030),
           ],
         ),
       ),
@@ -3239,32 +3251,34 @@ void _tabrejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-        padding: EdgeInsets.all(8),
         width: size.width * 0.4,
         decoration: BoxDecoration(
-            color: Color(0xFF1F1F1).withOpacity(1.0),
-          borderRadius: BorderRadius.circular(5),
+            color: dialog,
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: size.height * 0.012),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: size.width * 0.165),
-                Text(
-                  'Rejected',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),
-                ),
-                SizedBox(width: size.width * 0.090),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
-                ),
-              ],
+            Container(
+              height:  size.height * 0.057,
+              color: Colors.yellow,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.165),
+                  Text(
+                    'Rejected',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.bold,color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.090),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 24, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: size.height * 0.014),
             Row(
@@ -3374,7 +3388,7 @@ void _tabrejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
                 )
               ],
             ),
-            SizedBox(height: size.height * 0.018),
+            SizedBox(height: size.height * 0.028),
           ],
         ),
       ),
@@ -3509,7 +3523,6 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-        padding: EdgeInsets.all(8),
         width: size.width * 0.65,
         decoration: BoxDecoration(
           color: dialog,
@@ -3518,31 +3531,34 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: size.height * 0.012),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: size.width * 0.205),
-                Text(
-                  'Approved',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
-                ),
-                SizedBox(width: size.width * 0.150),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.cancel_outlined, size: 20, color: Colors.black),
-                ),
-              ],
+            Container(
+              height:  size.height * 0.057,
+              color: Colors.yellow,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.235),
+                  Text(
+                    'Approved',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.150),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 20, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: size.height * 0.016),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Name',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.075,),
+                SizedBox(width:size.width *  0.130,),
                 Text('Rahul Kumar',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3550,9 +3566,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Job Title',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.058,),
+                SizedBox(width:size.width *  0.097,),
                 Text('Trainer',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3560,9 +3576,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Badge',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.073,),
+                SizedBox(width:size.width *  0.122,),
                 Text('50598',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3570,9 +3586,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Dept/Div',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.057,),
+                SizedBox(width:size.width *  0.095,),
                 Text('5058',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3580,9 +3596,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Leave Type',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.042,),
+                SizedBox(width:size.width *  0.068,),
                 Text(leave.leaveType ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3590,9 +3606,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Selected Dates',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.016,),
+                SizedBox(width:size.width *  0.020,),
                 Text('${DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())} to ${DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())}',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3600,9 +3616,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Apply to',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.059,),
+                SizedBox(width:size.width *  0.096,),
                 Text(leave.applyTo ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3610,9 +3626,9 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('No of days',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.043,),
+                SizedBox(width:size.width *  0.064,),
                 Text('${leave.days ?? 0} days',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
@@ -3620,13 +3636,13 @@ void _phoneapprovedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width:size.width *  0.061,),
+                SizedBox(width:size.width *  0.080,),
                 Text('Reason',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
-                SizedBox(width:size.width *  0.062,),
+                SizedBox(width:size.width *  0.099,),
                 Text(leave.reason ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: black),),
               ],
             ),
-            SizedBox(height: size.height * 0.020),
+            SizedBox(height: size.height * 0.030),
           ],
         ),
       ),
@@ -3641,7 +3657,6 @@ void _phonerejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-        padding: EdgeInsets.all(8),
         width: size.width * 0.65,
         decoration: BoxDecoration(
           color: dialog,
@@ -3650,23 +3665,26 @@ void _phonerejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(height: size.height * 0.012),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width: size.width * 0.240),
-                Text(
-                  'Rejected',
-                  style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
-                ),
-                SizedBox(width: size.width * 0.150),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
-                ),
-              ],
+            Container(
+              height:  size.height * 0.057,
+              color: Colors.yellow,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: size.width * 0.240),
+                  Text(
+                    'Rejected',
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 18,fontWeight: FontWeight.bold ,color: Colors.black),
+                  ),
+                  SizedBox(width: size.width * 0.150),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.cancel_outlined, size: 22, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: size.height * 0.014),
             Row(
@@ -3776,7 +3794,7 @@ void _phonerejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
                 )
               ],
             ),
-            SizedBox(height: size.height * 0.018),
+            SizedBox(height: size.height * 0.028),
           ],
         ),
       ),

@@ -57,8 +57,53 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: DashBoardScreeen()
     );
   }
 }
+
+
+
+// enum LeaveStatus {
+//   PENDING
+//   APPROVED
+//   REJECTED
+//   CANCELED
+// }
+//
+// # type LeaveApplication @model {
+// id: ID!
+// leaveType: String!
+// fromDate: AWSDateTime!
+// toDate: AWSDateTime!
+// days: double!
+// applyTo: String!
+// reason: String!
+// medicalCertificate: String
+//
+//
+//
+// # Supervisor Approval Details
+// supervisorStatus: LeaveStatus
+// supervisorDate: AWSDateTime
+// supervisorRemarks: String
+//
+// # Manager Approval Details
+// managerStatus: LeaveStatus
+// managerDate: AWSDateTime
+// managerRemarks: String
+//
+// # Employee Cancellation Details
+// employeeStatus: LeaveStatus
+// employeeDate: AWSDateTime
+// employeeRemarks: String
+// }
+//
+// type Employee @model {
+// id: ID!
+// totalLeaves: Int!
+// leaveRequests: Int! # Updated when applying for leave
+// leavesTaken: Int! # Updated when approved by manager
+// remainingLeaves: Int! # Reflects the leaves left for the employee
+// }
 
