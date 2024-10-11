@@ -97,32 +97,32 @@ class _SignupScreenState extends State<changePasswordScreen> {
                 flex: 1,
                 child: Image.asset(
                   'assets/images/lock.png', // Replace with your image URL or asset path
-                  width: 300,
-                  height: 400,
+                  width:size.width * 0.400,
+                  height: size.height * 0.500,
                 ),
               ),
-              SizedBox(height: 30), // Space between image and form
+              SizedBox(height:size.height * 0.030), // Space between image and form
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
+                  padding:  EdgeInsets.all(30),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         color: Colors.transparent,
-                        padding: const EdgeInsets.all(1),
-                        height: 100,
-                        width: 300,
+                        padding:  EdgeInsets.all(1),
+                        height: size.height * 0.105,
+                        width:size.width * 0.300,
                         child: Image(image: AssetImage(
                             'assets/images/awe logo.png'),
                           fit: BoxFit.contain,
                         ),),
                       Center(
                         child: Container(
-                          height: 50,
-                          child: const Text(
+                          height:size.height * 0.050,
+                          child:  Text(
                             'Change Password',
                             style: TextStyle(fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -131,9 +131,9 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ),
                             textAlign: TextAlign.right,
                           ),),),
-                      const SizedBox(height: 10),
+                       SizedBox(height:size.height * 0.010),
                       SizedBox(
-                        width: 360,
+                        width:size.width * 0.230,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -143,8 +143,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal),),
                             Container(
-                              height: 35,
-                              width: 330,
+                              height: size.height * 0.048,
+                              width:size.width * 0.210,
                               child: TextField(
 
                                 decoration: InputDecoration(
@@ -184,7 +184,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        width: 360,
+                        width:size.width * 0.230,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -193,8 +193,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 color: Colors.black, fontStyle: FontStyle.normal),
                             ),
                             Container(
-                              height: 35,
-                              width: 330,
+                              height: size.height * 0.048,
+                              width:size.width * 0.210,
                               child: TextField(
 
                                 decoration: InputDecoration(
@@ -234,7 +234,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        width: 360,
+                        width:size.width * 0.230,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -244,8 +244,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal)),
                             Container(
-                              height: 35,
-                              width: 330,
+                              height: size.height * 0.048,
+                              width:size.width * 0.210,
                               child: TextField(
                                 obscureText: _obscureText,
                                 decoration: InputDecoration(
@@ -299,7 +299,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        width: 360,
+                        width:size.width * 0.230,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -309,8 +309,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal),),
                             Container(
-                              height: 35,
-                              width: 330,
+                              height: size.height * 0.048,
+                              width:size.width * 0.210,
                               padding: const EdgeInsets.only(),
                               child: TextField(
                                 obscureText: _obscure,
@@ -363,7 +363,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ],
                         ),
                       ),
-                       SizedBox(height: 30),
+                       SizedBox(height:size.height * 0.030),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -421,7 +421,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 50, width: 300,
+                      SizedBox(height: size.height * 0.050, width:size.width * 0.300,
                         child: Divider(
                           color: Colors.grey,
                           thickness: 1.0,
@@ -444,30 +444,30 @@ class _SignupScreenState extends State<changePasswordScreen> {
                   flex: 1,
                   child: Image.asset(
                     'assets/images/lock.png', // Replace with your image URL or asset path
-                    width: 300,
-                    height: 400,
+                    width:size.width * 0.350,
+                    height: size.height * 0.450,
                   ),
                 ),
-                SizedBox(height: 30), // Space between image and form
+                SizedBox(height: size.height *0.030), // Space between image and form
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.all(30),
+                    padding:  EdgeInsets.all(30),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(1),
-                          height: 100,
-                          width: 300,
+                          padding:  EdgeInsets.all(1),
+                          height:size.height * 0.090,
+                          width:size.width * 0.2700,
                           child: Image(image: AssetImage(
                               'assets/images/awe logo.png'),
                             fit: BoxFit.contain,
                           ),),
                         Center(
                           child: Container(
-                            height: 50,
+                            height:size.height * 0.050,
                             child: const Text(
                               'Change Password',
                               style: TextStyle(fontSize: 18,
@@ -477,9 +477,9 @@ class _SignupScreenState extends State<changePasswordScreen> {
                               ),
                               textAlign: TextAlign.right,
                             ),),),
-                        const SizedBox(height: 10),
+                         SizedBox(height:size.height * 0.015),
                         SizedBox(
-                          width: 360,
+                          width:size.width * 0.350,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -489,8 +489,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.050,
+                                width:size.width * 0.315,
                                 child: TextField(
 
                                   decoration: InputDecoration(
@@ -530,7 +530,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
-                          width: 360,
+                          width:size.width * 0.350,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -539,8 +539,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                   color: Colors.black, fontStyle: FontStyle.normal),
                               ),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.050,
+                                width:size.width * 0.315,
                                 child: TextField(
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -579,7 +579,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
-                          width: 360,
+                          width:size.width * 0.350,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -589,8 +589,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal)),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.050,
+                                width:size.width * 0.315,
                                 child: TextField(
                                   obscureText: _obscureText,
                                   decoration: InputDecoration(
@@ -644,7 +644,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                         ),
                         const SizedBox(height: 10),
                         SizedBox(
-                          width: 360,
+                          width:size.width * 0.350,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -654,8 +654,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.050,
+                                width:size.width * 0.315,
                                 padding: const EdgeInsets.only(),
                                 child: TextField(
                                   obscureText: _obscure,
@@ -708,7 +708,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                         SizedBox(height: 30),
+                         SizedBox(height:size.height * 0.035),
                         Row(
                           children: [
                             SizedBox(width: size.width * 0.092,),
@@ -765,7 +765,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 50, width: 300,
+                        SizedBox(height:size.height * 0.055, width:size.width * 0.300,
                           child: Divider(
                             color: Colors.grey,
                             thickness: 1.0,
@@ -1160,4 +1160,39 @@ class MyTextField extends StatelessWidget {
       ),
     );
   }
+}
+
+
+Widget customTextFieldContainer(
+    BuildContext context,
+    TextEditingController controller, {
+      double widthFactor = 0.3,
+      double heightFactor = 0.05,
+      String hintText = '',
+    }) {
+  final Size size = MediaQuery.of(context).size;
+
+  return Container(
+    width: size.width * widthFactor,
+    height: size.height * heightFactor,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(color: Colors.grey.shade400, width: 1),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: Colors.grey.shade500,
+            fontSize: 14,
+          ),
+          border: InputBorder.none,
+        ),
+      ),
+    ),
+  );
 }
