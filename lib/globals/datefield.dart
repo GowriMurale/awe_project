@@ -32,9 +32,10 @@ class DateField extends StatelessWidget {
           ),
         Container(
           width: size.width * 0.125, // Adjust width for better layout
-          height: size.height * 0.042,
+          height: size.height * 0.038,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade700, width: 1),
+            color: Colors.white,
+            border: Border.all(color: Colors.grey.shade400, width: 1),
             borderRadius: BorderRadius.circular(1),
           ),
           child: Padding(
@@ -47,13 +48,13 @@ class DateField extends StatelessWidget {
                   style: TextStyle(
                     color: controller.text.isEmpty ? Colors.grey.shade500 : Colors.black,
                     fontFamily: 'Inter',
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(bottom: 4.0),
+                  padding:  EdgeInsets.only(bottom: 18.0),
                   child: IconButton(
-                    icon: Icon(Icons.calendar_today, color: Colors.grey.shade700, size: 18), // Calendar icon
+                    icon: Icon(Icons.calendar_today, color: Colors.grey.shade700, size: 16), // Calendar icon
                     onPressed: () => onTap(context), // Trigger the date picker on tap
                   ),
                 ),
