@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (session.isSignedIn) {
         String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
         print(userId);
-        // storeUserData(userId); // Store user ID locally
+        storeUserData(userId); // Store user ID locally
 
         // Fetch candidate application data immediately upon signing in
         // await fetchCandidateApplicationData();
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (res.isSignedIn) {
         String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
         print(userId);
-        // storeUserData(userId); // Store user ID locally
+        storeUserData(userId); // Store user ID locally
 
         // Fetch candidate application data after successful sign in
         // await fetchCandidateApplicationData();

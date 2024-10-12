@@ -29,6 +29,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   DateTime now = DateTime.now(); // Get the current date and time
   String formattedDate = DateFormat(' dd/MM/yyyy    HH:mm:ss').format(DateTime.now());
 
+  // late  int notificationCount;
   final TextEditingController userIdController = TextEditingController();
   final box = GetStorage();
   Future<void> storeTempIdLocally() async {
@@ -165,6 +166,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 
   void _showPopupMenu(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     showMenu(
       color: Colors.white,
       context: context,
@@ -175,34 +177,34 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 10,),
+              SizedBox(height:size.height * 0.010,),
               Container(
-                height: 70,
+                height:size.height * 0.070,
                 child: CircleAvatar(
                   backgroundImage: AssetImage('assets/images/user image.png'),
                   radius: 25,
                   child: Container(
-                    width: 100, // Width of the button
-                    height: 30, // Height of the button
-                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 13) ,
+                    width:size.width * 0.110, // Width of the button
+                    height:size.height *  0.050, // Height of the button
+                    padding: EdgeInsets.symmetric(vertical:size.height * 0.010,horizontal:size.width * 0.008) ,
                     child: IconButton(
                         color: Colors.black,
                         iconSize: 15,
                         padding: EdgeInsets.all(20),
                         onPressed: () {
-                          _showPopupMenu(context);
+                          // _showPopupMenu(context);
                         }, icon: Icon(Icons.photo_camera_outlined,)
                     ),
                   ),
                 ),
               ),
 
-              SizedBox(height: 5,),
+              SizedBox(height:size.height * 0.005,),
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                        height: 20,
+                        height:size.height * 0.030,
                         padding: EdgeInsets.only(left: 12),
                         child:Text('Personal Info',
                           style: TextStyle(fontSize: 16,
@@ -210,7 +212,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               color: Colors.black87,
                               fontStyle: FontStyle.normal),)
                     ),
-                    SizedBox(width: 90,),
+                    SizedBox(width:size.width * 0.060,),
                     GestureDetector(
                       onTap: (){
                         _showEditDialog(context);
@@ -223,81 +225,80 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                 style: TextStyle(fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.blue,
-                                  fontStyle: FontStyle.normal,
                                   decoration: TextDecoration.underline,
                                 ),
                                 // Use GestureRecognizer to detect taps
                               ),
                             ]),),
                     )]),
-              SizedBox(height: 7,),
+              SizedBox(height:size.height * 0.007,),
               Divider(
                 thickness: 1.5,
                 color: Colors.black45,
               ),
-              SizedBox(height: 3,),
+              SizedBox(height:size.height * 0.003,),
               Container(
-                height: 32,
-                width: 280,
+                height:size.height * 0.040,
+                width:size.width * 0.270,
                 decoration: BoxDecoration(
                   color: Colors.white, // Background color of the container
                   border: Border.all(
                     color: Colors.grey, // Border color
                     width: 1, // Border width
                   ),
-                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                  borderRadius: BorderRadius.circular(5), // Optional: rounded corners
                 ),
 
                 child: Row(
                     children: [
-                      SizedBox(width: 20,),
+                      SizedBox(width:size.width * 0.015,),
                       Text('Nur Hafiza',
                         style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),]),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height:size.height * 0.010,),
               Container(
-                height: 32,
-                width: 280,
+                height:size.height * 0.040,
+                width:size.width * 0.270,
                 decoration: BoxDecoration(
                   color: Colors.white, // Background color of the container
                   border: Border.all(
                     color: Colors.grey, // Border color
                     width: 1, // Border width
                   ),
-                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                  borderRadius: BorderRadius.circular(5), // Optional: rounded corners
                 ),
                 child: Row(children: [
-                  SizedBox(width: 20,),
+                  SizedBox(width:size.width * 0.015,),
                   Text(
                     '8056863355',
                     style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),
                 ]),),
-              SizedBox(height: 10,),
+              SizedBox(height:size.height * 0.010,),
               Container(
-                width: 280,
-                height: 32,
+                height:size.height * 0.040,
+                width:size.width * 0.270,
                 decoration: BoxDecoration(
                   color: Colors.white, // Background color of the container
                   border: Border.all(
                     color: Colors.grey, // Border color
                     width: 1, // Border width
                   ),
-                  borderRadius: BorderRadius.circular(7), // Optional: rounded corners
+                  borderRadius: BorderRadius.circular(5), // Optional: rounded corners
                 ),
                 child:Row(children: [
-                  SizedBox(width: 20,),
+                  SizedBox(width:size.width * 0.015,),
                   Text(
                     'adinin@gmail.com',
                     style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),
                   ),
                 ]),),
 
-              SizedBox(height: 10),
+              SizedBox(height:size.height * 0.010),
               Row(
                   children: [
                     Container(
-                      height: 30,
-                      width: 135,
+                      height:size.height * 0.040,
+                      width:size.width * 0.085,
                       child: OutlinedButton(
                         onPressed: () {
                           Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
@@ -308,7 +309,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           ),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7), // Rounded corners
+                              borderRadius: BorderRadius.circular(5), // Rounded corners
                             ),
                           ),
                         ),
@@ -316,10 +317,10 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                             fontSize: 10,fontWeight: FontWeight.bold,color: Colors.black)),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width:size.width * 0.010,),
                     Container(
-                      height: 30,
-                      width: 110,
+                      height:size.height * 0.038,
+                      width:size.height * 0.150,
                       child: TextButton(
                         onPressed: () {
                           _confirmSignOut(context);
@@ -328,16 +329,16 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           backgroundColor: Colors.yellow,
                           shape: RoundedRectangleBorder(
 
-                            borderRadius: BorderRadius.circular(7), // Rounded corners
+                            borderRadius: BorderRadius.circular(5), // Rounded corners
                           ),
                         ),
                         child: Row(
                             children: [
-                              SizedBox(width: 20,) ,
+                              SizedBox(width:size.width * 0.015,) ,
                               Text('Logout',style: TextStyle(
-                                  fontSize: 10,fontWeight: FontWeight.bold,color: Colors.black)),
-                              SizedBox(width: 5,) ,
-                              Icon(Icons.logout_outlined),
+                                  fontSize: 12,fontWeight: FontWeight.bold,color: Colors.black)),
+                              SizedBox(width:size.width * 0.005,) ,
+                              Icon(Icons.logout_outlined,size: 15,color: black,),
                             ]),
                       ),),
                     SizedBox(height: 50)
@@ -398,7 +399,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width* 0.080,),
-                  newContainer(context, fullName,'Nur Hafiza'),
+                  newContainer(context, fullName,'Nur Hafiza',16),
                   // myContainer(context, lastName),
                 ],
               ),
@@ -415,7 +416,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width * 0.080,),
-                  newContainer(context, mobile,'8056863355')
+                  newContainer(context, mobile,'8056863355',16)
                 ],
               ),
               SizedBox(height:size.height * 0.020,),
@@ -431,7 +432,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(width: size.width * 0.080,),
-                  newContainer(context, email,'adinin@gmail.com')
+                  newContainer(context, email,'adinin@gmail.com',16)
                 ],
               ),
               SizedBox(height:size.height * 0.040,),
@@ -445,6 +446,144 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 color: Colors.yellow,
                 textColor: Colors.black,
               )
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+    );
+  }
+
+  void _requestDialog(BuildContext context) {
+    TextEditingController departure=TextEditingController();
+    TextEditingController arrival=TextEditingController();
+    TextEditingController destination=TextEditingController();
+    TextEditingController remarks=TextEditingController();
+
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width:  size.width * 0.410,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width:size.width * 0.155,),
+                  Text(
+                    "Request Ticket",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                  ),
+                  SizedBox(width: size.width * 0.130,),
+                  IconButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                ],
+              ),
+              Divider(),
+              SizedBox(height: size.height * 0.012,),
+              Container(
+                width: size.width * 0.3,
+                height: size.height * 0.38,
+                decoration: BoxDecoration(
+                  color: ticket
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height * 0.030,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.032,),
+                        Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.012,),
+                        requestContainer(context, departure, size.width * 0.090, size.height * 0.032),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.025,),
+                        requestContainer(context, arrival, size.width * 0.090, size.height * 0.032),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.030,),
+                        requestContainer(context, destination, size.width * 0.090, size.height * 0.032),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.040,),
+                        requestContainer(context, destination, size.width * 0.170, size.height * 0.088),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.035,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.095,),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: grey), // Outline border color
+                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                          ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            minWidth: size.width * 0.052, // Adjust width as needed
+                            height: size.height * 0.043, // Adjust height as needed
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                            ),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: black,
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+                        SizedBox(width: size.width * 0.020,),
+                        MaterialButton(
+                          minWidth: size.width * .06,
+                          height: size.height * 0.048,
+                          onPressed: () {
+                            Get.back(); // Close the dialog
+                          },
+                          child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                          color: Colors.yellow,
+                          textColor: Colors.black,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              SizedBox(height:size.height * 0.040,),
+
             ],
           ),
         ),
@@ -1165,10 +1304,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     );
   }
 
-
-
-
-
   void _rejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
     final Size size = MediaQuery.of(context).size;
     Get.dialog(
@@ -1329,7 +1464,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
         child: Container(
           width: size.width * 0.305,
           decoration: BoxDecoration(
-            color: Color(0xFF1F1F1).withOpacity(1.0),
+            color: dialog,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
@@ -1610,7 +1745,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
         desktop: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: Text(''),
             flexibleSpace: Container(
               decoration: BoxDecoration(
               ),
@@ -1635,34 +1769,18 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               Spacer(), // Pushes the next widgets to the right
               // Icon(Icons.mail_outline_outlined),
               SizedBox(width: size.width * 0.30), // spacing between icons
-              Icon(Icons.notifications_outlined),
-
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height:size.height * 0.010,),
-                    Container(
-                      width: 15.0,  // Set the width
-                      height: 15.0, // Set the height
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,  // Circular shape
-                        color: Colors.yellow,      // Background color
-                      ),
-                      child: Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(fontSize:9,fontWeight:FontWeight.bold,color: Colors.black),
-                        ),
-                      ),
-                    ),]),
-              SizedBox(width: 70), // spacing between icons
+                Badge(
+                  label: Text('1',style: TextStyle(color: black),),
+                    backgroundColor: Colors.yellow,
+                    child: Icon(Icons.notifications,size: 26,color: Colors.black,)),
+              SizedBox(width:size.width * 0.070), // spacing between icons
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'Welcome Nur Hafiza',
                     style: TextStyle(fontSize: 16,
+                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
                         fontStyle: FontStyle.normal), // Reduce height between lines
@@ -1676,39 +1794,42 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                 ],
               ),
-              SizedBox(width: 30,),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
+              SizedBox(width:size.width * 0.030,),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 23,
+                    child: Image.asset('assets/images/user image.png'),
+                  ),
+                  Positioned(
+                    top:size.height * 0.040,
+                    bottom: 0,
+                    right:size.width * 0.003,
+                    child: GestureDetector(
+                      onTap: (){
+                        _showPopupMenu(context);
+                        },
                       child: Container(
-                        height: size.height * 0.095,
-                        child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/user image.png'),
-                            radius: 23,
-                            child:Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                //mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    height:size.height * 0.035,
-                                    width:size.width * 0.070,
-                                    padding: EdgeInsets.only(left: size.width * 0.010,top: size.height * 0.006,),
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            backgroundColor: Colors.grey.shade300,
-                                            shape: CircleBorder()
-                                        ),
-                                        onPressed: () {
-                                          _showPopupMenu(context);
-                                        }, child: Icon(Icons.edit_outlined,size: 10,color: Colors.black87,)
-                                    ),)])
+                        width: size.width * 0.012,
+                        height: size.height * 0.05,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: pink,
+                          border: Border.all(color:white ,width: 1),
                         ),
-                      ),),]),
-              SizedBox(width: 30), // spacing between the profile and app bar end
+                        child: Icon(
+                          Icons.edit,
+                          color: black,
+                          size: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width:size.width * 0.030), // spacing between the profile and app bar end
             ],
-            toolbarHeight: 75.0,
+            toolbarHeight:size.height * 0.090,
           ),
           backgroundColor: Colors.white,
           body:
@@ -2009,7 +2130,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         children: [
                           TextButton(
                             onPressed: () {
-
+                            _requestDialog(context);
                             },
                             child: Text(
                               "Request Ticket",
@@ -2042,7 +2163,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
         tablet: Scaffold(
           appBar: AppBar(
             backgroundColor:bgColor,
-            title: Text(''),
             flexibleSpace: Container(
               decoration: BoxDecoration(
               ),
@@ -2057,90 +2177,76 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             actions: [
               Row(
                   children: [
-                    SizedBox(width: 20,),
+                    SizedBox(width:size.width * 0.020,),
                     Center(
                       child: Container(
-                        height: 190,
-                        width: 190,
+                        height:size.height * 0.165,
+                        width:size.width * 0.165,
                         child: Image.asset('assets/images/awe logo.png',fit: BoxFit.contain),),),
                   ]),
               Spacer(), // Pushes the next widgets to the right
               // Icon(Icons.mail_outline_outlined),
-              SizedBox(width: 30), // spacing between icons
-              Icon(Icons.notifications_outlined),
-
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20,),
-                    Container(
-                      width: 15.0,  // Set the width
-                      height: 15.0, // Set the height
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,  // Circular shape
-                        color: Colors.yellow,      // Background color
-                      ),
-                      child: Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(fontSize:9,fontWeight:FontWeight.bold,color: Colors.black),
-                        ),
-                      ),
-                    ),]),
-              SizedBox(width: 70), // spacing between icons
+              SizedBox(width:size.width* 0.030), // spacing between icons
+              Badge(
+                  label: Text('1',style: TextStyle(color: black),),
+                  backgroundColor: Colors.yellow,
+                  child: Icon(Icons.notifications,size: 23,color: Colors.black,)),
+              SizedBox(width:size.width * 0.070), // spacing between icons
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'Welcome Nur Hafiza',
-                    style: TextStyle(fontSize: 16,
+                    style: TextStyle(fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
                         fontStyle: FontStyle.normal), // Reduce height between lines
                   ),
                   Text(
                     formattedDate,
-                    style: TextStyle(fontSize: 13,
+                    style: TextStyle(fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: Colors.black54,
                         fontStyle: FontStyle.normal), // Same height to ensure no spacing
                   ),
                 ],
               ),
-              SizedBox(width: 30,),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
+              SizedBox(width:size.width * 0.030,),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 21,
+                    child: Image.asset('assets/images/user image.png'),
+                  ),
+                  Positioned(
+                    top:size.height * 0.040,
+                    bottom: 0,
+                    right:size.width * 0.008,
+                    child: GestureDetector(
+                      onTap: (){
+                        _tabPopupMenu(context);
+                      },
                       child: Container(
-                        height: 75,
-                        child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/user image.png'),
-                            radius: 28,
-                            child:Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                //mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    height:22,
-                                    width: 500,
-                                    padding: EdgeInsets.only(left: 24,top: 3,),
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            backgroundColor: Colors.grey.shade300,
-                                            shape: CircleBorder()
-                                        ),
-                                        onPressed: () {
-                                          _showPopupMenu(context);
-                                        }, child: Icon(Icons.edit_outlined,size: 10,color: Colors.black87,)
-                                    ),)])
+                        width: size.width * 0.014,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: pink,
+                          border: Border.all(color:white ,width: 1),
                         ),
-                      ),),]),
-              SizedBox(width: 30), // spacing between the profile and app bar end
+                        child: Icon(
+                          Icons.edit,
+                          color: black,
+                          size: 10,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width:size.width * 0.030), // spacing between the profile and app bar end
             ],
-            toolbarHeight: 75.0,
+            toolbarHeight:size.height * 0.080,
           ),
           backgroundColor: Colors.white,
           body:
@@ -2428,7 +2534,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _tabrequestDialog(context);
+                            },
                             child: Text(
                               "Request Ticket",
                               style: TextStyle(
@@ -2470,36 +2578,20 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             actions: [
               Row(
                   children: [
-                    SizedBox(width: 10,),
+                    SizedBox(width:size.width * 0.012,),
                     Center(
                       child: Container(
-                        height: 130,
-                        width: 130,
+                        height:size.height * 0.260,
+                        width:size.width * 0.260,
                         child: Image.asset('assets/images/awe logo.png',fit: BoxFit.contain),),),
                   ]),
               Spacer(),
-              SizedBox(width: 50), // spacing between icons
-              Icon(Icons.notifications_outlined),
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20,),
-                    Container(
-                      width: 15.0,  // Set the width
-                      height: 15.0, // Set the height
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,  // Circular shape
-                        color: Colors.yellow,      // Background color
-                      ),
-                      child: Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(fontSize:9,fontWeight:FontWeight.bold,color: Colors.black),
-                        ),
-                      ),
-                    ),]),
-              SizedBox(width: 10), // spacing between icons
+              SizedBox(width:size.width * 0.010), // spacing between icons
+              Badge(
+                  label: Text('1',style: TextStyle(color: black),),
+                  backgroundColor: Colors.yellow,
+                  child: Icon(Icons.notifications,size: 21,color: Colors.black,)),
+              SizedBox(width:size.width * 0.045), // spacing between icons
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -2519,44 +2611,47 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                 ],
               ),
-              SizedBox(width: 10,),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
+              SizedBox(width:size.width * 0.010,),
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 18,
+                    child: Image.asset('assets/images/user image.png'),
+                  ),
+                  Positioned(
+                    top:size.height * 0.036,
+                    bottom: 0,
+                    right:size.width * 0.012,
+                    child: GestureDetector(
+                      onTap: (){
+                        _phonePopupMenu(context);
+                      },
                       child: Container(
-                        height: size.height * 0.095,
-                        child: CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/user image.png'),
-                            radius: 20,
-                            child:Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                //mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    height: size.height * 0.045,
-                                    width:size.width * 0.080,
-                                    padding: EdgeInsets.only(left: size.width * 0.014,top: size.height * 0.011,),
-                                    child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            backgroundColor: Colors.grey.shade300,
-                                            shape: CircleBorder()
-                                        ),
-                                        onPressed: () {
-                                          _showPopupMenu(context);
-                                        }, child: Icon(Icons.edit_outlined,size: 12,color: Colors.black87,)
-                                    ),)])
+                        width: size.width * 0.032,
+                        height: size.height * 0.09,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: pink,
+                          border: Border.all(color:white ,width: 1),
                         ),
-                      ),),]),
-              SizedBox(width: 10),
+                        child: Icon(
+                          Icons.edit,
+                          color: black,
+                          size: 8,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width:size.width * 0.010),
             ],
-            toolbarHeight: 75.0,
+            toolbarHeight:size.height * 0.080,
           ),
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              SizedBox(height: size.height * 0.01,),
+              SizedBox(height: size.height * 0.025,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -2573,7 +2668,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   mobileInfoCard(context,'12/10/2024','Engineer', 'offshore'),
                 ],
               ),
-              SizedBox(height: size.height * 0.035,),
+              SizedBox(height: size.height * 0.04,),
               Row(
                 children: [
                   SizedBox(width: size.width * 0.08),
@@ -2662,7 +2757,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   )
                 ],
               ),
-              SizedBox(height: size.height * 0.025,),
+              SizedBox(height: size.height * 0.04,),
               Row(
                 children: [
                   SizedBox(width: size.width * 0.075),
@@ -2753,64 +2848,66 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       child: filteredLeaveData.isNotEmpty
                           ? SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        child: DataTable(
-                          headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.042,
-                          dataRowHeight: size.height * 0.040,
-                          columnSpacing: size.width * 0.026,
-                          columns: [
-                            DataColumn(label: Text('Leave Type', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('From', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('To', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('Days', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('Reason', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('Approver', style: phoneheaderTextStyle)),
-                            DataColumn(label: Text('Status', style: phoneheaderTextStyle)),
-                          ],
-                          rows: filteredLeaveData.map((leave) {
-                            int index = filteredLeaveData.indexOf(leave);
-
-                            return DataRow(
-                              cells: [
-                                DataCell(GestureDetector(
-                                  onTap: () {
-                                    if (leaveStatuses[index] == 'Pending') {
-                                      _phonependingDialog(context, index, leave, (newStatus) {
-                                        setState(() {
-                                          leaveStatuses[index] = newStatus;
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                            headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.042,
+                            dataRowHeight: size.height * 0.040,
+                            columnSpacing: size.width * 0.026,
+                            columns: [
+                              DataColumn(label: Text('Leave Type', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('From', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('To', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('Days', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('Reason', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('Approver', style: phoneheaderTextStyle)),
+                              DataColumn(label: Text('Status', style: phoneheaderTextStyle)),
+                            ],
+                            rows: filteredLeaveData.map((leave) {
+                              int index = filteredLeaveData.indexOf(leave);
+                              return DataRow(
+                                cells: [
+                                  DataCell(GestureDetector(
+                                    onTap: () {
+                                      if (leaveStatuses[index] == 'Pending') {
+                                        _phonependingDialog(context, index, leave, (newStatus) {
+                                          setState(() {
+                                            leaveStatuses[index] = newStatus;
+                                          });
                                         });
-                                      });
-                                    } else if (leaveStatuses[index] == 'Approved') {
-                                      _phoneapprovedDialog(context, index, leave);
-                                    } else if (leaveStatuses[index] == 'Rejected') {
-                                      _phonerejectedDialog(context, index, leave);
-                                    }
-                                  },
-
-                                  child: Text(leave!.leaveType ?? '', style: phonerowTextStyle),
-                                )),
-                                DataCell(Text(
-                                  leave.fromDate != null
-                                      ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
-                                      : '',
-                                  style: phonerowTextStyle,
-                                )),
-                                DataCell(Text(
-                                  leave.toDate != null
-                                      ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
-                                      : '',
-                                  style: phonerowTextStyle,
-                                )),
-                                DataCell(Text('${leave.days ?? 0} days', style: phonerowTextStyle)),
-                                DataCell(Text(leave.reason ?? '', style: phonerowTextStyle)),
-                                DataCell(Text(leave.applyTo ?? '', style: phonerowTextStyle)),
-                                DataCell(Text(leaveStatuses[index], style: phonerowTextStyle)),
-                              ],
-                            );
-                          }).toList(),
+                                      } else if (leaveStatuses[index] == 'Approved') {
+                                        _phoneapprovedDialog(context, index, leave);
+                                      } else if (leaveStatuses[index] == 'Rejected') {
+                                        _phonerejectedDialog(context, index, leave);
+                                      }
+                                    },
+                                    child: Text(leave!.leaveType ?? '', style: phonerowTextStyle),
+                                  )),
+                                  DataCell(Text(
+                                    leave.fromDate != null
+                                        ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
+                                        : '',
+                                    style: phonerowTextStyle,
+                                  )),
+                                  DataCell(Text(
+                                    leave.toDate != null
+                                        ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
+                                        : '',
+                                    style: phonerowTextStyle,
+                                  )),
+                                  DataCell(Text('${leave.days ?? 0} days', style: phonerowTextStyle)),
+                                  DataCell(Text(leave.reason ?? '', style: phonerowTextStyle)),
+                                  DataCell(Text(leave.applyTo ?? '', style: phonerowTextStyle)),
+                                  DataCell(Text(leaveStatuses[index], style: phonerowTextStyle)),
+                                ],
+                              );
+                            }).toList(),
+                          ),
                         ),
                       )
                           : SizedBox(),
                     ),
+
                   ),
                 ],
               ),
@@ -2833,7 +2930,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _phonerequestDialog(context);
+                        },
                         child: Text(
                           "Request Ticket",
                           style: TextStyle(
@@ -2863,7 +2962,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 }
 
-Widget newContainer(BuildContext context, TextEditingController controller,String text){
+Widget newContainer(BuildContext context, TextEditingController controller,String text, double no){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.24,
@@ -2875,6 +2974,7 @@ Widget newContainer(BuildContext context, TextEditingController controller,Strin
         style: TextStyle(fontSize: 16), // Adjust font size if necessary
         decoration: InputDecoration(
           hintText: text,
+          hintStyle: TextStyle(fontSize: no),
           border: OutlineInputBorder(
             borderSide: BorderSide(color: grey, width: 1),
             borderRadius: BorderRadius.circular(0),
@@ -2887,7 +2987,7 @@ Widget newContainer(BuildContext context, TextEditingController controller,Strin
 
 }
 
-Widget myContainer(BuildContext context, TextEditingController controller){
+Widget myContainer(BuildContext context, TextEditingController controller,){
   final Size size = MediaQuery.of(context).size;
   return Container(
     width: size.width * 0.10,
@@ -2907,6 +3007,33 @@ Widget myContainer(BuildContext context, TextEditingController controller){
       ),
     ),
   );
+}
+
+Widget requestContainer(BuildContext context, TextEditingController controller,double width, double height){
+  final Size size = MediaQuery.of(context).size;
+  return Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(color: Colors.grey.shade400,width: 1),
+    ),
+    child: TextField(
+      controller: controller,
+      // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
+      decoration: InputDecoration(
+        isDense: true, // Make the field more compact
+        contentPadding: EdgeInsets.symmetric(
+          vertical: height * 0.1, // Adjust the vertical padding as needed
+          horizontal: width * 0.02, // Adjust the horizontal padding as needed
+        ),
+        border: InputBorder.none,
+      ),
+      textAlignVertical: TextAlignVertical.center,
+      ),
+
+    );
+
 }
 
 Widget employeeInfoCard(BuildContext context, String employeeType, String joiningDate, String contractType, String department, String location,double width, double height) {
@@ -3397,6 +3524,481 @@ void _tabrejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
   );
 }
 
+void _tabrequestDialog(BuildContext context) {
+  TextEditingController departure=TextEditingController();
+  TextEditingController arrival=TextEditingController();
+  TextEditingController destination=TextEditingController();
+  TextEditingController remarks=TextEditingController();
+
+  final Size size = MediaQuery.of(context).size;
+  Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        width:  size.width * 0.455,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:BorderRadius.circular(5),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width * 0.155,),
+                Text(
+                  "Request Ticket",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                ),
+                // SizedBox(width: size.width * 0.130,),
+                // IconButton(onPressed: (){
+                //   Navigator.pop(context);
+                // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+              ],
+            ),
+            Divider(),
+            SizedBox(height: size.height * 0.012,),
+            Container(
+              width: size.width * 0.35,
+              height: size.height * 0.38,
+              decoration: BoxDecoration(
+                  color: ticket
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.030,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.032,),
+                      Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.012,),
+                      requestContainer(context, departure, size.width * 0.105, size.height * 0.032),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.032,),
+                      requestContainer(context, arrival, size.width * 0.105, size.height * 0.032),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.040,),
+                      requestContainer(context, destination, size.width * 0.105, size.height * 0.032),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.055,),
+                      requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.035,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.125,),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: grey), // Outline border color
+                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          minWidth: size.width * 0.052, // Adjust width as needed
+                          height: size.height * 0.043, // Adjust height as needed
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.020,),
+                      MaterialButton(
+                        minWidth: size.width * 0.068,
+                        height: size.height * 0.048,
+                        onPressed: () {
+                          Get.back(); // Close the dialog
+                        },
+                        child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                        color: Colors.yellow,
+                        textColor: Colors.black,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height:size.height * 0.040,),
+
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+  );
+}
+
+void _showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text('Error'),
+      content: Text(message),
+      actions: <Widget>[
+        TextButton(
+          child: Text('Okay'),
+          onPressed: () {
+            Navigator.of(ctx).pop();
+          },
+        ),
+      ],
+    ),
+  );
+}
+Future<void> _signOut(BuildContext context) async {
+  try {
+    await Amplify.Auth.signOut();
+    Get.offAll(() => LoginScreen()); // Redirect to login screen
+  } on AuthException catch (e) {
+    _showErrorDialog(context, e.message);
+  }
+}
+Future<void> _confirmSignOut(BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text('Log Out'),
+      content: Text('Are you sure you want to Log out?'),
+      actions: <Widget>[
+        TextButton(
+          child: Text('No'),
+          onPressed: () {
+            Navigator.of(ctx).pop(); // Just close the dialog
+          },
+        ),
+        TextButton(
+          child: Text('Yes'),
+          onPressed: () async {
+            Navigator.of(ctx).pop(); // Close the dialog before signing out
+            await _signOut(context); // Call the sign out method
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+void _tabEditDialog(BuildContext context) {
+  TextEditingController fullName=TextEditingController();
+  TextEditingController email=TextEditingController();
+  TextEditingController mobile=TextEditingController();
+
+  final Size size = MediaQuery.of(context).size;
+  Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        width:  size.width * 0.415,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:BorderRadius.circular(5),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width * 0.025,),
+                Text(
+                  "Personal Information",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: size.width * 0.190,),
+                IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.cancel_outlined,size: 23,color: black,))
+              ],
+            ),
+            Divider(),
+            SizedBox(height: size.height * 0.012,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width *  0.08,),
+                Text('Full Name', style: TextStyle(fontSize: 14)),
+                SizedBox(width: size.width * 0.093,),
+                // Text('Last Name', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height * 0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width* 0.080,),
+                newContainer(context, fullName,'Nur Hafiza',14),
+                // myContainer(context, lastName),
+              ],
+            ),
+            SizedBox(height:size.height * 0.020,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.080,),
+                Text('Mobile Number', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height *0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.080,),
+                newContainer(context, mobile,'8056863355',14)
+              ],
+            ),
+            SizedBox(height:size.height * 0.020,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.080,),
+                Text('Email Address', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height *0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.080,),
+                newContainer(context, email,'adinin@gmail.com',14)
+              ],
+            ),
+            SizedBox(height:size.height * 0.040,),
+            MaterialButton(
+              minWidth: size.width * .06,
+              height: size.height * 0.03,
+              onPressed: () {
+                Get.back(); // Close the dialog
+              },
+              child: Text('Save',style: TextStyle(fontSize: 16,fontFamily: 'Inter',),),
+              color: Colors.yellow,
+              textColor: Colors.black,
+            )
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+  );
+}
+final TextEditingController userIdController = TextEditingController();
+void _tabPopupMenu(BuildContext context) {
+  final Size size = MediaQuery.of(context).size;
+  showMenu(
+    color: Colors.white,
+    context: context,
+    position: RelativeRect.fromLTRB(100, 70, 5, 300), // Position of the menu
+    items: [
+      PopupMenuItem<int>(
+        value: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height:size.height * 0.010,),
+            Container(
+              height:size.height * 0.070,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/user image.png'),
+                radius: 25,
+                child: Container(
+                  width:size.width * 0.110, // Width of the button
+                  height:size.height *  0.050, // Height of the button
+                  padding: EdgeInsets.symmetric(vertical:size.height * 0.010,horizontal:size.width * 0.008) ,
+                  child: IconButton(
+                      color: Colors.black,
+                      iconSize: 15,
+                      padding: EdgeInsets.all(20),
+                      onPressed: () {
+                        // _showPopupMenu(context);
+                      }, icon: Icon(Icons.photo_camera_outlined,)
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height:size.height * 0.005,),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                      height:size.height * 0.030,
+                      padding: EdgeInsets.only(left: 12),
+                      child:Text('Personal Info',
+                        style: TextStyle(fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            fontStyle: FontStyle.normal),)
+                  ),
+                  SizedBox(width:size.width * 0.090,),
+                  GestureDetector(
+                    onTap: (){
+                      _tabEditDialog(context);
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Edit',
+                              style: TextStyle(fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                              // Use GestureRecognizer to detect taps
+                            ),
+                          ]),),
+                  )]),
+            SizedBox(height:size.height * 0.007,),
+            Divider(
+              thickness: 1.5,
+              color: Colors.black45,
+            ),
+            SizedBox(height:size.height * 0.003,),
+            Container(
+              height:size.height * 0.036,
+              width:size.width * 0.220,
+              decoration: BoxDecoration(
+                color: Colors.white, // Background color of the container
+                border: Border.all(
+                  color: Colors.grey, // Border color
+                  width: 1, // Border width
+                ),
+                borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+              ),
+
+              child: Row(
+                  children: [
+                    SizedBox(width:size.width * 0.015,),
+                    Text('Nur Hafiza',
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),),]),
+            ),
+            SizedBox(height:size.height * 0.010,),
+            Container(
+              height:size.height * 0.036,
+              width:size.width * 0.220,
+              decoration: BoxDecoration(
+                color: Colors.white, // Background color of the container
+                border: Border.all(
+                  color: Colors.grey, // Border color
+                  width: 1, // Border width
+                ),
+                borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+              ),
+              child: Row(children: [
+                SizedBox(width:size.width * 0.015,),
+                Text(
+                  '8056863355',
+                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),),
+              ]),),
+            SizedBox(height:size.height * 0.010,),
+            Container(
+              height:size.height * 0.036,
+              width:size.width * 0.220,
+              decoration: BoxDecoration(
+                color: Colors.white, // Background color of the container
+                border: Border.all(
+                  color: Colors.grey, // Border color
+                  width: 1, // Border width
+                ),
+                borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+              ),
+              child:Row(children: [
+                SizedBox(width:size.width * 0.015,),
+                Text(
+                  'adinin@gmail.com',
+                  style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),
+                ),
+              ]),),
+
+            SizedBox(height:size.height * 0.010),
+            Row(
+                children: [
+                  Container(
+                    height:size.height * 0.038,
+                    width:size.width * 0.125,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
+                      },
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.yellow, width: 3), // Change border color and width
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5), // Rounded corners
+                          ),
+                        ),
+                      ),
+                      child: Text('Change Password',style: TextStyle(
+                          fontSize: 9.5,fontWeight: FontWeight.bold,color: Colors.black)),
+                    ),
+                  ),
+                  SizedBox(width:size.width * 0.010,),
+                  Container(
+                    height:size.height * 0.037,
+                    width:size.height * 0.150,
+                    child: TextButton(
+                      onPressed: () {
+                        _confirmSignOut(context);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.yellow,
+                        shape: RoundedRectangleBorder(
+
+                          borderRadius: BorderRadius.circular(5), // Rounded corners
+                        ),
+                      ),
+                      child: Row(
+                          children: [
+                            SizedBox(width:size.width * 0.015,) ,
+                            Text('Logout',style: TextStyle(
+                                fontSize: 11,fontWeight: FontWeight.bold,color: Colors.black)),
+                            SizedBox(width:size.width * 0.005,) ,
+                            Icon(Icons.logout_outlined,size: 15,color: black,),
+                          ]),
+                    ),),
+                  SizedBox(height: 50)
+                ]),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
 TextStyle tabheaderTextStyle = TextStyle(
   fontFamily: 'Inter',
   fontWeight: FontWeight.bold,
@@ -3803,6 +4405,478 @@ void _phonerejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
   );
 }
 
+void _phonerequestDialog(BuildContext context) {
+  TextEditingController departure=TextEditingController();
+  TextEditingController arrival=TextEditingController();
+  TextEditingController destination=TextEditingController();
+  TextEditingController remarks=TextEditingController();
+
+  final Size size = MediaQuery.of(context).size;
+  Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        width:  size.width * 0.535,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:BorderRadius.circular(5),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width * 0.155,),
+                Text(
+                  "Request Ticket",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                ),
+                // SizedBox(width: size.width * 0.130,),
+                // IconButton(onPressed: (){
+                //   Navigator.pop(context);
+                // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+              ],
+            ),
+            Divider(),
+            SizedBox(height: size.height * 0.012,),
+            Container(
+              width: size.width * 0.45,
+              height: size.height * 0.33,
+              decoration: BoxDecoration(
+                  color: ticket
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.030,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.032,),
+                      Text('Departure Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.012,),
+                      requestContainer(context, departure, size.width * 0.145, size.height * 0.028),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.042,),
+                      requestContainer(context, arrival, size.width * 0.145, size.height * 0.028),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Destination',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.056,),
+                      requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.020,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.030,),
+                      Text('Remarks',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                      SizedBox(width: size.width * 0.080,),
+                      requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
+                    ],
+                  ),
+                  SizedBox(height: size.height * 0.035,),
+                  Row(
+                    children: [
+                      SizedBox(width: size.width * 0.135,),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: grey), // Outline border color
+                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                        ),
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          minWidth: size.width * 0.050, // Adjust width as needed
+                          height: size.height * 0.040, // Adjust height as needed
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.030,),
+                      MaterialButton(
+                        minWidth: size.width * 0.125,
+                        height: size.height * 0.048,
+                        onPressed: () {
+                          Get.back(); // Close the dialog
+                        },
+                        child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                        color: Colors.yellow,
+                        textColor: Colors.black,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height:size.height * 0.010,),
+
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+  );
+}
+
+void _phoneEditDialog(BuildContext context) {
+  TextEditingController fullName=TextEditingController();
+  TextEditingController email=TextEditingController();
+  TextEditingController mobile=TextEditingController();
+
+  final Size size = MediaQuery.of(context).size;
+  Get.dialog(
+    Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        width:  size.width * 0.425,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:BorderRadius.circular(5),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width * 0.028,),
+                Text(
+                  "Personal Information",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: size.width * 0.170,),
+                IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.cancel_outlined,size: 21,color: black,))
+              ],
+            ),
+            Divider(),
+            SizedBox(height: size.height * 0.012,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width:size.width *  0.10,),
+                Text('Full Name', style: TextStyle(fontSize: 14)),
+                SizedBox(width: size.width * 0.093,),
+                // Text('Last Name', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height * 0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width* 0.088,),
+                phonePopContainer(context, fullName,'Nur Hafiza',12),
+                // myContainer(context, lastName),
+              ],
+            ),
+            SizedBox(height:size.height * 0.020,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.088,),
+                Text('Mobile Number', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height *0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.088,),
+                phonePopContainer(context, mobile,'8056863355',12)
+              ],
+            ),
+            SizedBox(height:size.height * 0.020,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.088,),
+                Text('Email Address', style: TextStyle(fontSize: 14)),
+              ],
+            ),
+            SizedBox(height: size.height *0.007,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: size.width * 0.088,),
+                phonePopContainer(context, email,'adinin@gmail.com',12)
+              ],
+            ),
+            SizedBox(height:size.height * 0.040,),
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.198,),
+                MaterialButton(
+                  minWidth: size.width * .06,
+                  height: size.height * 0.03,
+                  onPressed: () {
+                    Get.back(); // Close the dialog
+                  },
+                  child: Text('Save',style: TextStyle(fontSize: 14,fontFamily: 'Inter',),),
+                  color: Colors.yellow,
+                  textColor: Colors.black,
+                ),
+              ],
+            ),
+            SizedBox(height:size.height * 0.010,),
+          ],
+        ),
+      ),
+    ),
+    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+  );
+}
+
+void _phonePopupMenu(BuildContext context) {
+  final Size size = MediaQuery.of(context).size;
+  showMenu(
+    color: Colors.white,
+    context: context,
+    position: RelativeRect.fromLTRB(100, 70, 5, 300), // Position of the menu
+    items: [
+      PopupMenuItem<int>(
+        value: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height:size.height * 0.010,),
+            Container(
+              height:size.height * 0.070,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/user image.png'),
+                radius: 24,
+                child: Container(
+                  width:size.width * 0.110, // Width of the button
+                  height:size.height *  0.050, // Height of the button
+                  padding: EdgeInsets.symmetric(vertical:size.height * 0.010,horizontal:size.width * 0.008) ,
+                  child: IconButton(
+                      color: Colors.black,
+                      iconSize: 15,
+                      padding: EdgeInsets.all(20),
+                      onPressed: () {
+                        // _showPopupMenu(context);
+                      }, icon: Icon(Icons.photo_camera_outlined,)
+                  ),
+                ),
+              ),
+            ),
+
+            SizedBox(height:size.height * 0.005,),
+            Row(
+                children: [
+                  SizedBox(width:size.width * 0.050,),
+                  Container(
+                      height:size.height * 0.030,
+                      padding: EdgeInsets.only(left: 12),
+                      child:Text('Personal Info',
+                        style: TextStyle(fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            fontStyle: FontStyle.normal),)
+                  ),
+                  SizedBox(width:size.width * 0.150,),
+                  GestureDetector(
+                    onTap: (){
+                      _phoneEditDialog(context);
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Edit',
+                              style: TextStyle(fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                              // Use GestureRecognizer to detect taps
+                            ),
+                          ]),),
+                  )]),
+            SizedBox(height:size.height * 0.001,),
+            Divider(
+              thickness: 1.5,
+              color: Colors.black45,
+            ),
+            SizedBox(height:size.height * 0.003,),
+            Row(
+              children: [
+                SizedBox(width:size.width * 0.035,),
+                Container(
+                  height:size.height * 0.034,
+                  width:size.width * 0.405,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Background color of the container
+                    border: Border.all(
+                      color: Colors.grey, // Border color
+                      width: 1, // Border width
+                    ),
+                    borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+                  ),
+
+                  child: Row(
+                      children: [
+                        SizedBox(width:size.width * 0.015,),
+                        Text('Nur Hafiza',
+                          style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),),]),
+                ),
+              ],
+            ),
+            SizedBox(height:size.height * 0.010,),
+            Row(
+              children: [
+                SizedBox(width:size.width * 0.035,),
+                Container(
+                  height:size.height * 0.034,
+                  width:size.width * 0.405,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Background color of the container
+                    border: Border.all(
+                      color: Colors.grey, // Border color
+                      width: 1, // Border width
+                    ),
+                    borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+                  ),
+                  child: Row(children: [
+                    SizedBox(width:size.width * 0.015,),
+                    Text(
+                      '8056863355',
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),),
+                  ]),),
+              ],
+            ),
+            SizedBox(height:size.height * 0.010,),
+            Row(
+              children: [
+                SizedBox(width:size.width * 0.035,),
+                Container(
+                  height:size.height * 0.034,
+                  width:size.width * 0.405,
+                  decoration: BoxDecoration(
+                    color: Colors.white, // Background color of the container
+                    border: Border.all(
+                      color: Colors.grey, // Border color
+                      width: 1, // Border width
+                    ),
+                    borderRadius: BorderRadius.circular(5), // Optional: rounded corners
+                  ),
+                  child:Row(children: [
+                    SizedBox(width:size.width * 0.015,),
+                    Text(
+                      'adinin@gmail.com',
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Colors.black87),
+                    ),
+                  ]),),
+              ],
+            ),
+
+            SizedBox(height:size.height * 0.010),
+            Row(
+                children: [
+                  SizedBox(width:size.width * 0.025,),
+                  Container(
+                    height:size.height * 0.040,
+                    width:size.width * 0.230,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Get.to(() => changePasswordScreen(username: userIdController.text.trim()));
+                      },
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.yellow, width: 3), // Change border color and width
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5), // Rounded corners
+                          ),
+                        ),
+                      ),
+                      child: Text('Change Password',style: TextStyle(
+                          fontSize: 8,fontWeight: FontWeight.bold,color: Colors.black)),
+                    ),
+                  ),
+                  SizedBox(width:size.width * 0.015,),
+                  Container(
+                    height:size.height * 0.037,
+                    width:size.height * 0.130,
+                    child: TextButton(
+                      onPressed: () {
+                        _confirmSignOut(context);
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.yellow,
+                        shape: RoundedRectangleBorder(
+
+                          borderRadius: BorderRadius.circular(5), // Rounded corners
+                        ),
+                      ),
+                      child: Row(
+                          children: [
+                            SizedBox(width:size.width * 0.015,) ,
+                            Text('Logout',style: TextStyle(
+                                fontSize: 10,fontWeight: FontWeight.bold,color: Colors.black)),
+                            SizedBox(width:size.width * 0.015,) ,
+                            Icon(Icons.logout_outlined,size: 15,color: black,),
+                          ]),
+                    ),),
+                  SizedBox(height: 50)
+                ]),
+          ],
+        ),
+      ),
+    ],
+  );
+}
+
+Widget phonePopContainer(BuildContext context, TextEditingController controller,String text, double no){
+  final Size size = MediaQuery.of(context).size;
+  return Container(
+    width: size.width * 0.30,
+    height: size.height * 0.027, // Increase the height for better alignment
+    child: Material(
+      color: Colors.transparent,
+      child: TextField(
+        controller: controller,
+        style: TextStyle(fontSize: 16), // Adjust font size if necessary
+        decoration: InputDecoration(
+          hintText: text,
+          hintStyle: TextStyle(fontSize: no),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: grey, width: 1),
+            borderRadius: BorderRadius.circular(0),
+          ),
+          contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007), // Adjust vertical padding
+        ),
+      ),
+    ),
+  );
+
+}
+
 TextStyle phoneheaderTextStyle = TextStyle(
   fontFamily: 'Inter',
   fontWeight: FontWeight.bold,
@@ -3815,3 +4889,4 @@ TextStyle phonerowTextStyle = TextStyle(
   fontSize: 8.5,
   color: Colors.black,
 );
+

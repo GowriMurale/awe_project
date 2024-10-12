@@ -648,19 +648,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 SizedBox(width: size.width * 0.015),
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: Checkbox(
-                                    value: isManager,
-                                    onChanged: (bool? newValue) {
-                                      setState(() {
-                                        isManager = newValue ?? false;
-                                      });// Validate all fields when user selects/deselects
-                                    },
-                                    side: BorderSide(
-                                      color: Colors.grey.shade500, // Light grey border color
-                                      width: 1,
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Checkbox(
+                                      value: isManager,
+                                      onChanged: (bool? newValue) {
+                                        setState(() {
+                                          isManager = newValue ?? false;
+                                        });// Validate all fields when user selects/deselects
+                                      },
+                                      side: BorderSide(
+                                        color: Colors.grey.shade500, // Light grey border color
+                                        width: 1,
+                                      ),
+                                      activeColor: Colors.blue, // Optional: change checkbox color when selected
+                                      checkColor: Colors.white, // Optional: checkmark color
                                     ),
-                                    activeColor: Colors.blue, // Optional: change checkbox color when selected
-                                    checkColor: Colors.white, // Optional: checkmark color
                                   ),
                                 ),
                                 SizedBox(width: size.width * 0.085),
@@ -676,20 +679,23 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 SizedBox(width: size.width * 0.015),
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: Checkbox(
-                                    value: isSuperior,
-                                    onChanged: (bool? newValue) {
-                                      setState(() {
-                                        isSuperior = newValue ?? false;
-                                      });
-                                      // Validate all fields when user selects/deselects
-                                    },
-                                    side: BorderSide(
-                                      color: Colors.grey.shade500,
-                                      width: 1,
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Checkbox(
+                                      value: isSuperior,
+                                      onChanged: (bool? newValue) {
+                                        setState(() {
+                                          isSuperior = newValue ?? false;
+                                        });
+                                        // Validate all fields when user selects/deselects
+                                      },
+                                      side: BorderSide(
+                                        color: Colors.grey.shade500,
+                                        width: 1,
+                                      ),
+                                      activeColor: Colors.blue,
+                                      checkColor: Colors.white,
                                     ),
-                                    activeColor: Colors.blue,
-                                    checkColor: Colors.white,
                                   ),
                                 ),
                               ],
@@ -925,7 +931,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: size.height * 0.015,),
+                        SizedBox(height: size.height * 0.020,),
                       ],
                     ),
                   ),
@@ -1960,19 +1966,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 SizedBox(width: size.width * 0.015),
                                 Transform.scale(
                                   scale: 1.0, // Adjust this value to change the checkbox size
-                                  child: Checkbox(
-                                    value: isManager,
-                                    onChanged: (bool? newValue) {
-                                      setState(() {
-                                        isManager = newValue ?? false;
-                                      });// Validate all fields when user selects/deselects
-                                    },
-                                    side: BorderSide(
-                                      color: Colors.grey.shade500, // Light grey border color
-                                      width: 1,
+                                  child: Container(
+                                    color: Colors.white,
+                                    child: Checkbox(
+                                      value: isManager,
+                                      onChanged: (bool? newValue) {
+                                        setState(() {
+                                          isManager = newValue ?? false;
+                                        });// Validate all fields when user selects/deselects
+                                      },
+                                      side: BorderSide(
+                                        color: Colors.grey.shade500, // Light grey border color
+                                        width: 1,
+                                      ),
+                                      activeColor: Colors.blue, // Optional: change checkbox color when selected
+                                      checkColor: Colors.white, // Optional: checkmark color
                                     ),
-                                    activeColor: Colors.blue, // Optional: change checkbox color when selected
-                                    checkColor: Colors.white, // Optional: checkmark color
                                   ),
                                 ),
                                 SizedBox(width: size.width * 0.085),
@@ -2162,7 +2171,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                     Get.off(DashBoardScreeen());
                                   },
                                   style: OutlinedButton.styleFrom(
-                                    minimumSize: Size(size.width * 0.020, size.height * 0.045), // Similar to minWidth and height in MaterialButton
+                                    minimumSize: Size(size.width * 0.010, size.height * 0.045), // Similar to minWidth and height in MaterialButton
                                     side: BorderSide(color: grey), // Define the border color for the outlined button
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed

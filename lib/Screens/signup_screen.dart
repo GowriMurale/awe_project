@@ -105,7 +105,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding:  EdgeInsets.all(30),
+                  padding:  EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,6 +125,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           child:  Text(
                             'Change Password',
                             style: TextStyle(fontSize: 18,
+                              fontFamily: 'Inter',
                               fontWeight: FontWeight.w700,
                               color: Colors.black,
                               fontStyle: FontStyle.normal,
@@ -139,6 +140,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           children: [
                             const Text('User ID', style: TextStyle(
                                 fontSize: 15,
+                                fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal),),
@@ -146,7 +148,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                               height: size.height * 0.048,
                               width:size.width * 0.210,
                               child: TextField(
-
+                                  controller: userIdController,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -182,21 +184,21 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                       SizedBox(height:size.height * 0.012),
                       SizedBox(
                         width:size.width * 0.230,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text('Current Password', style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.w600,
+                                fontSize: 15, fontFamily: 'Inter', fontWeight: FontWeight.w600,
                                 color: Colors.black, fontStyle: FontStyle.normal),
                             ),
                             Container(
                               height: size.height * 0.048,
                               width:size.width * 0.210,
                               child: TextField(
-
+                                  controller: pasword,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -232,7 +234,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                       SizedBox(height:size.height * 0.012),
                       SizedBox(
                         width:size.width * 0.230,
                         child: Column(
@@ -240,6 +242,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           children: [
                             const Text('New Password', style: TextStyle(
                                 fontSize: 15,
+                                fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal)),
@@ -247,6 +250,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                               height: size.height * 0.048,
                               width:size.width * 0.210,
                               child: TextField(
+                                controller: newPassword,
                                 obscureText: _obscureText,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -297,7 +301,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                       SizedBox(height:size.height * 0.013),
                       SizedBox(
                         width:size.width * 0.230,
                         child: Column(
@@ -305,14 +309,15 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           children: [
                             const Text('Confirm Password', style: TextStyle(
                                 fontSize: 15,
+                                fontFamily: 'Inter',
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal),),
                             Container(
                               height: size.height * 0.048,
                               width:size.width * 0.210,
-                              padding: const EdgeInsets.only(),
                               child: TextField(
+                                controller: confirmPassword,
                                 obscureText: _obscure,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -382,7 +387,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             child: Text(
                               'Cancel',
                               style: TextStyle(
-                                fontFamily: 'Inter',
+                                fontFamily: 'Open Sans',
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: black,
@@ -421,7 +426,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: size.height * 0.050, width:size.width * 0.300,
+                      SizedBox(height: size.height * 0.050, width:size.width * 0.280,
                         child: Divider(
                           color: Colors.grey,
                           thickness: 1.0,
@@ -452,7 +457,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                 Expanded(
                   flex: 1,
                   child: Padding(
-                    padding:  EdgeInsets.all(30),
+                    padding:  EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -471,7 +476,8 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             child: const Text(
                               'Change Password',
                               style: TextStyle(fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Inter',
                                 color: Colors.black,
                                 fontStyle: FontStyle.normal,
                               ),
@@ -485,6 +491,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             children: [
                               const Text('User ID', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
@@ -492,7 +499,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 height:size.height * 0.050,
                                 width:size.width * 0.315,
                                 child: TextField(
-
+                                  controller: userIdController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -528,20 +535,21 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height:size.height * 0.010),
                         SizedBox(
                           width:size.width * 0.350,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Current Password', style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600,
+                                  fontSize: 15, fontFamily: 'Inter', fontWeight: FontWeight.w600,
                                   color: Colors.black, fontStyle: FontStyle.normal),
                               ),
                               Container(
                                 height:size.height * 0.050,
                                 width:size.width * 0.315,
                                 child: TextField(
+                                  controller: pasword,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -577,7 +585,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height:size.height * 0.010),
                         SizedBox(
                           width:size.width * 0.350,
                           child: Column(
@@ -585,6 +593,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             children: [
                               const Text('New Password', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal)),
@@ -592,6 +601,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 height:size.height * 0.050,
                                 width:size.width * 0.315,
                                 child: TextField(
+                                  controller: newPassword,
                                   obscureText: _obscureText,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -642,7 +652,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
+                         SizedBox(height:size.height *0.010),
                         SizedBox(
                           width:size.width * 0.350,
                           child: Column(
@@ -650,6 +660,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             children: [
                               const Text('Confirm Password', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
@@ -658,6 +669,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 width:size.width * 0.315,
                                 padding: const EdgeInsets.only(),
                                 child: TextField(
+                                  controller: confirmPassword,
                                   obscureText: _obscure,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -711,7 +723,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                          SizedBox(height:size.height * 0.035),
                         Row(
                           children: [
-                            SizedBox(width: size.width * 0.092,),
+                            SizedBox(width: size.width * 0.120,),
                             OutlinedButton(
                               onPressed: () {
                                 Get.off(DashBoardScreeen());
@@ -726,7 +738,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                               child: Text(
                                 'Cancel',
                                 style: TextStyle(
-                                  fontFamily: 'Inter',
+                                  fontFamily: 'Open Sans',
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: black,
@@ -746,7 +758,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                   _isLoading = false; // Stop loading
                                 });
                               },
-                              minWidth: size.width * 0.13,
+                              minWidth: size.width * 0.105,
                               height: size.height * 0.055,
                               color: yellow,
                               splashColor: yellow,
@@ -786,46 +798,46 @@ class _SignupScreenState extends State<changePasswordScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(1.0),
-                          child: Image.asset(
-                            'assets/images/awe logo.png',
-                            // Placeholder image, replace with your image
-                            fit: BoxFit.contain,
-                            height: 100,
-                            width: 270,
-                          ),
+                        Image.asset(
+                          'assets/images/awe logo.png',
+                          // Placeholder image, replace with your image
+                          fit: BoxFit.contain,
+                          height:size.height * 0.185,
+                          width:size.width * 0.360,
                         ),
                         Image(image: AssetImage(
                             'assets/images/lock.png'),
-                          height: 130,
-                          width: 400,
+                          height:size.height * 0.200,
+                          width:size.width * 0.400,
                           fit: BoxFit.contain,
                         ),Center(
                           child: Text(
                             'Change Password',
                             style: TextStyle(fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
                               color: Colors.black,
                               fontStyle: FontStyle.normal,
                             ),
                             textAlign: TextAlign.right,
                           ),),
-                        SizedBox(height: 5),
+                        SizedBox(height:size.height * 0.012),
                         SizedBox(
-                          width: 300,
+                          width: size.width * 0.600,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('User ID', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.052,
+                                width:size.width * 0.588,
                                 child: TextField(
+                                  controller: userIdController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -861,20 +873,21 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 5),
+                         SizedBox(height:size.height * 0.005),
                         SizedBox(
-                          width: 300,
+                          width: size.width * 0.600,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Current Password', style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w600,
+                                  fontSize: 15,   fontFamily: 'Inter', fontWeight: FontWeight.w600,
                                   color: Colors.black, fontStyle: FontStyle.normal),
                               ),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.052,
+                                width:size.width * 0.588,
                                 child: TextField(
+                                  controller: pasword,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -910,21 +923,23 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 5),
+                         SizedBox(height:size.height * 0.005),
                         SizedBox(
-                          width: 300,
+                          width: size.width * 0.600,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('New Password', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal)),
                               Container(
-                                height: 35,
-                                width: 330,
+                                height:size.height * 0.052,
+                                width:size.width * 0.588,
                                 child: TextField(
+                                  controller: newPassword,
                                   obscureText: _obscureText,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -975,22 +990,23 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 5),
+                         SizedBox(height:size.height * 0.005),
                         SizedBox(
-                          width: 300,
+                          width: size.width * 0.600,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('Confirm Password', style: TextStyle(
                                   fontSize: 15,
+                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal),),
                               Container(
-                                height: 35,
-                                width: 330,
-                                padding: const EdgeInsets.only(),
+                                height:size.height * 0.052,
+                                width:size.width * 0.588,
                                 child: TextField(
+                                  controller: confirmPassword,
                                   obscureText: _obscure,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -1041,16 +1057,16 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 25),
+                        SizedBox(height:size.height * 0.033),
                         Row(
                           children: [
-                            SizedBox(width: size.width * 0.277,),
+                            SizedBox(width: size.width * 0.273,),
                             OutlinedButton(
                               onPressed: () {
                                 Get.off(DashBoardScreeen());
                               },
                               style: OutlinedButton.styleFrom(
-                                minimumSize: Size(size.width * 0.075, size.height * 0.055), // Similar to minWidth and height in MaterialButton
+                                minimumSize: Size(size.width * 0.070, size.height * 0.050), // Similar to minWidth and height in MaterialButton
                                 side: BorderSide(color: grey), // Define the border color for the outlined button
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
@@ -1059,7 +1075,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                               child: Text(
                                 'Cancel',
                                 style: TextStyle(
-                                  fontFamily: 'Inter',
+                                  fontFamily: 'Open Sans',
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: black,
@@ -1080,7 +1096,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                                 });
                               },
                               minWidth: size.width * 0.2,
-                              height: size.height * 0.055,
+                              height: size.height * 0.050,
                               color: yellow,
                               splashColor: yellow,
                               child: _isLoading
@@ -1098,7 +1114,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 50, width: 300,
+                        SizedBox(height:size.height * 0.050, width:size.width * 0.600,
                           child: Divider(
                             color: Colors.grey,
                             thickness: 1.0,

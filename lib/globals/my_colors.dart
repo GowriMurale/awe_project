@@ -15,3 +15,4 @@ Color pink=Color(0xFFAFAFA).withOpacity(1.0);
 Color dashgrey=Color(0xF858585).withOpacity(1.0);
 Color white=Color(0xFFFFFFF).withOpacity(1.0);
 Color dialog=Color(0xFF1F1F1).withOpacity(1.0);
+Color ticket=Color(0xFEEEEEE).withOpacity(1.0);
