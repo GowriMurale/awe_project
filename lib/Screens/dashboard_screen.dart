@@ -4,7 +4,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/dashboard.dart';
 import 'package:awe_project/Components/helper_class.dart';
-import 'package:awe_project/Screens/signup_screen.dart';
+import 'package:awe_project/Screens/change_password_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:awe_project/globals/navbar.dart';
 import 'package:flutter/material.dart';
@@ -454,139 +454,292 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     );
   }
 
+  String? departureError;
+  String? arrivalError;
+  String? destinationError;
+  String? remarksError;
+
+  TextEditingController departure=TextEditingController();
+  TextEditingController arrival=TextEditingController();
+  TextEditingController destination=TextEditingController();
+  TextEditingController remarks=TextEditingController();
+
+  bool _validateField(StateSetter setDialogState) {
+    bool isValid = true;
+
+    // Reset all error messages
+    setDialogState(() {
+      departureError = null;
+      arrivalError = null;
+      destinationError = null;
+      remarksError = null;
+    });
+
+    // Validate each field
+    if (departure.text.isEmpty) {
+      setDialogState(() => departureError = '* This field is required');
+      isValid = false;
+    }
+    if (arrival.text.isEmpty) {
+      setDialogState(() => arrivalError = '* This field is required');
+      isValid = false;
+    }
+    if (destination.text.isEmpty) {
+      setDialogState(() => destinationError = '* This field is required');
+      isValid = false;
+    }
+    if (remarks.text.isEmpty) {
+      setDialogState(() => remarksError = '* This field is required');
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+
   void _requestDialog(BuildContext context) {
-    TextEditingController departure=TextEditingController();
-    TextEditingController arrival=TextEditingController();
-    TextEditingController destination=TextEditingController();
-    TextEditingController remarks=TextEditingController();
 
     final Size size = MediaQuery.of(context).size;
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        child: Container(
-          padding: EdgeInsets.all(8),
-          width:  size.width * 0.410,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius:BorderRadius.circular(5),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width * 0.155,),
-                  Text(
-                    "Request Ticket",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
-                  ),
-                  SizedBox(width: size.width * 0.130,),
-                  IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-                ],
+        child: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setDialogState){
+            return Container(
+              padding: EdgeInsets.all(8),
+              width:  size.width * 0.410,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:BorderRadius.circular(5),
               ),
-              Divider(),
-              SizedBox(height: size.height * 0.012,),
-              Container(
-                width: size.width * 0.3,
-                height: size.height * 0.38,
-                decoration: BoxDecoration(
-                  color: ticket
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height * 0.030,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.032,),
-                        Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.012,),
-                        requestContainer(context, departure, size.width * 0.090, size.height * 0.032),
-                      ],
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width:size.width * 0.155,),
+                      Text(
+                        "Request Ticket",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                      ),
+                      SizedBox(width: size.width * 0.130,),
+                      IconButton(onPressed: (){
+                        Navigator.pop(context);
+                      }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: size.height * 0.012,),
+                  Container(
+                    width: size.width * 0.3,
+                    height: size.height * 0.44,
+                    decoration: BoxDecoration(
+                        color: ticket
                     ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
+                    child: Column(
                       children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.025,),
-                        requestContainer(context, arrival, size.width * 0.090, size.height * 0.032),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.030,),
-                        requestContainer(context, destination, size.width * 0.090, size.height * 0.032),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.040,),
-                        requestContainer(context, destination, size.width * 0.170, size.height * 0.088),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.035,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.095,),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: grey), // Outline border color
-                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                          ),
-                          child: MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            minWidth: size.width * 0.052, // Adjust width as needed
-                            height: size.height * 0.043, // Adjust height as needed
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                        SizedBox(height: size.height * 0.030,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.032,),
+                            Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.012,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if ( departureError!= null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      departureError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                requestContainer(context, departure, size.width * 0.090, size.height * 0.032),
+                              ],
                             ),
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: black,
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.025,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (arrivalError != null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      arrivalError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                requestContainer(context, arrival, size.width * 0.090, size.height * 0.032),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.030,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (destinationError != null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      destinationError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                requestContainer(context, destination, size.width * 0.090, size.height * 0.032),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.040,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (remarksError != null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      remarksError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                          Container(
+                          width: size.width * 0.170,
+                         height:size.height * 0.088,
+                          decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey.shade400,width: 1),
+                          ),
+                        child: TextField(
+                        controller: remarks,
+                          // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
+                          decoration: InputDecoration(
+                          hintText: 'Text Here',
+                          hintStyle: TextStyle(fontSize: 12,color: Colors.grey.shade400),
+                            contentPadding: EdgeInsets.all(5),
+                            isDense: true, // Make the field more compact
+                            border: InputBorder.none,
+                            ),
+                            textAlignVertical: TextAlignVertical.center,
+                           ),
+                        ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.035,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.095,),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: grey), // Outline border color
+                                borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                              ),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                minWidth: size.width * 0.052, // Adjust width as needed
+                                height: size.height * 0.043, // Adjust height as needed
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                                ),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: black,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                            SizedBox(width: size.width * 0.020,),
+                            MaterialButton(
+                              onPressed: () async {
+                                // Validate all fields before applying
+                                if (_validateField(setDialogState)) {
+                                  // Show confirmation popup with Yes and No buttons
+                                  Get.defaultDialog(
+                                    title: 'Confirm',
+                                    content: Text('Are you sure you want to apply?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back(); // Close the dialog
+                                        },
+                                        child: Text('No', style: TextStyle(color: Colors.red)),
+                                      ),
+                                      TextButton(
+                                        onPressed: ()  {
+                                          Get.back(); // Close the dialog first
 
-
-                        SizedBox(width: size.width * 0.020,),
-                        MaterialButton(
-                          minWidth: size.width * .06,
-                          height: size.height * 0.048,
-                          onPressed: () {
-                            Get.back(); // Close the dialog
-                          },
-                          child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                          color: Colors.yellow,
-                          textColor: Colors.black,
-                        ),
+                                          // Proceed with creating the leave request
+                                          // This will show success/error dialogs based on the result
+                                        },
+                                        child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  // Show error alert dialog if fields are missing
+                                  Get.defaultDialog(
+                                    title: 'Error',
+                                    content: Text('Please fill all required fields.'),
+                                    confirmTextColor: Colors.white,
+                                    onConfirm: () {
+                                      Get.back(); // Close the dialog
+                                    },
+                                  );
+                                }
+                              },
+                              minWidth: size.width * 0.06,
+                              height: size.height * 0.048,
+                              color: yellow,
+                              child: Text(
+                                'Apply',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+
+                  SizedBox(height:size.height * 0.060,),
+
+                ],
               ),
-
-              SizedBox(height:size.height * 0.040,),
-
-            ],
-          ),
-        ),
+            );
+          },
+        )
       ),
       barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
     );
@@ -637,7 +790,10 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
   Future<void> fetchLeaveData() async {
     try {
-      // Define the GraphQL query
+      // Fetch the current user's ID
+      String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+
+      // Define the GraphQL query to get all leave data
       final request = ModelQueries.list(LeaveStatus.classType);
       final response = await Amplify.API.query(request: request).response;
 
@@ -651,8 +807,11 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       // Parse the leave data
       List<LeaveStatus?> leaveStatuses = response.data?.items ?? [];
 
+      // Filter leave statuses based on the current user's ID
+      List<LeaveStatus?> userLeaveStatuses = leaveStatuses.where((leave) => leave?.empID == userId).toList();
+
       setState(() {
-        allLeaveData = leaveStatuses;
+        allLeaveData = userLeaveStatuses; // Store only the current user's leave data
       });
 
       // Initially, show all data
@@ -662,6 +821,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       _showAlertDialog('Error', 'An unexpected error occurred.');
     }
   }
+
   List<String> leaveStatuses = [];
 
   void filterLeaveData() {
@@ -3030,10 +3190,52 @@ Widget requestContainer(BuildContext context, TextEditingController controller,d
         border: InputBorder.none,
       ),
       textAlignVertical: TextAlignVertical.center,
-      ),
+    ),
 
-    );
+  );
 
+}
+
+String? departureError;
+String? arrivalError;
+String? destinationError;
+String? remarksError;
+
+TextEditingController departure=TextEditingController();
+TextEditingController arrival=TextEditingController();
+TextEditingController destination=TextEditingController();
+TextEditingController remarks=TextEditingController();
+
+bool validateField(StateSetter setDialogState) {
+  bool isValid = true;
+
+  // Reset all error messages
+  setDialogState(() {
+    departureError = null;
+    arrivalError = null;
+    destinationError = null;
+    remarksError = null;
+  });
+
+  // Validate each field
+  if (departure.text.isEmpty) {
+    setDialogState(() => departureError = '* This field is required');
+    isValid = false;
+  }
+  if (arrival.text.isEmpty) {
+    setDialogState(() => arrivalError = '* This field is required');
+    isValid = false;
+  }
+  if (destination.text.isEmpty) {
+    setDialogState(() => destinationError = '* This field is required');
+    isValid = false;
+  }
+  if (remarks.text.isEmpty) {
+    setDialogState(() => remarksError = '* This field is required');
+    isValid = false;
+  }
+
+  return isValid;
 }
 
 Widget employeeInfoCard(BuildContext context, String employeeType, String joiningDate, String contractType, String department, String location,double width, double height) {
@@ -3534,126 +3736,216 @@ void _tabrequestDialog(BuildContext context) {
   Get.dialog(
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      child: Container(
-        padding: EdgeInsets.all(8),
-        width:  size.width * 0.455,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:BorderRadius.circular(5),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width:size.width * 0.155,),
-                Text(
-                  "Request Ticket",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
-                ),
-                // SizedBox(width: size.width * 0.130,),
-                // IconButton(onPressed: (){
-                //   Navigator.pop(context);
-                // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-              ],
-            ),
-            Divider(),
-            SizedBox(height: size.height * 0.012,),
-            Container(
-              width: size.width * 0.35,
-              height: size.height * 0.38,
-              decoration: BoxDecoration(
-                  color: ticket
-              ),
-              child: Column(
+      child: StatefulBuilder(
+        builder: (BuildContext context,StateSetter setDialogState ){
+          return Container(
+          padding: EdgeInsets.all(8),
+          width:  size.width * 0.455,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:BorderRadius.circular(5),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: size.height * 0.030,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.032,),
-                      Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.012,),
-                      requestContainer(context, departure, size.width * 0.105, size.height * 0.032),
-                    ],
+                  SizedBox(width:size.width * 0.155,),
+                  Text(
+                    "Request Ticket",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
                   ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.032,),
-                      requestContainer(context, arrival, size.width * 0.105, size.height * 0.032),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.040,),
-                      requestContainer(context, destination, size.width * 0.105, size.height * 0.032),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.055,),
-                      requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.035,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.125,),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: grey), // Outline border color
-                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                  // SizedBox(width: size.width * 0.130,),
+                  // IconButton(onPressed: (){
+                  //   Navigator.pop(context);
+                  // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                ],
+              ),
+              Divider(),
+              SizedBox(height: size.height * 0.012,),
+              Container(
+                width: size.width * 0.35,
+                height: size.height * 0.43,
+                decoration: BoxDecoration(
+                    color: ticket
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height * 0.030,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.032,),
+                        Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.012,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if ( departureError!= null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                child: Text(
+                                  departureError!,
+                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                ),
+                              ),
+                            requestContainer(context, departure, size.width * 0.105, size.height * 0.032),
+                          ],
                         ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          minWidth: size.width * 0.052, // Adjust width as needed
-                          height: size.height * 0.043, // Adjust height as needed
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.032,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if ( arrivalError!= null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                child: Text(
+                                  arrivalError!,
+                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                ),
+                              ),
+                            requestContainer(context, arrival, size.width * 0.105, size.height * 0.032),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.040,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if ( destinationError!= null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                child: Text(
+                                  destinationError!,
+                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                ),
+                              ),
+                            requestContainer(context, destination, size.width * 0.105, size.height * 0.032),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.020,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.030,),
+                        Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                        SizedBox(width: size.width * 0.055,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if ( remarksError!= null)
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                child: Text(
+                                  remarksError!,
+                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                ),
+                              ),
+                            requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: size.height * 0.035,),
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.125,),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: grey), // Outline border color
+                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
                           ),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: black,
+                          child: MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            minWidth: size.width * 0.052, // Adjust width as needed
+                            height: size.height * 0.043, // Adjust height as needed
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                            ),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: black,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: size.width * 0.020,),
-                      MaterialButton(
-                        minWidth: size.width * 0.068,
-                        height: size.height * 0.048,
-                        onPressed: () {
-                          Get.back(); // Close the dialog
-                        },
-                        child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                        color: Colors.yellow,
-                        textColor: Colors.black,
-                      ),
-                    ],
-                  )
-                ],
+                        SizedBox(width: size.width * 0.020,),
+                        MaterialButton(
+                          minWidth: size.width * 0.068,
+                          height: size.height * 0.048,
+                          onPressed: () async {
+                            // Validate all fields before applying
+                            if (validateField(setDialogState)) {
+                              // Show confirmation popup with Yes and No buttons
+                              Get.defaultDialog(
+                                title: 'Confirm',
+                                content: Text('Are you sure you want to apply?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back(); // Close the dialog
+                                    },
+                                    child: Text('No', style: TextStyle(color: Colors.red)),
+                                  ),
+                                  TextButton(
+                                    onPressed: ()  {
+                                      Get.back(); // Close the dialog first
+
+                                      // Proceed with creating the leave request
+                                      // This will show success/error dialogs based on the result
+                                    },
+                                    child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              // Show error alert dialog if fields are missing
+                              Get.defaultDialog(
+                                title: 'Error',
+                                content: Text('Please fill all required fields.'),
+                                confirmTextColor: Colors.white,
+                                onConfirm: () {
+                                  Get.back(); // Close the dialog
+                                },
+                              );
+                            }
+                          },
+                          child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                          color: Colors.yellow,
+                          textColor: Colors.black,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
 
-            SizedBox(height:size.height * 0.040,),
+              SizedBox(height:size.height * 0.040,),
 
-          ],
-        ),
+            ],
+          ),
+          );
+        },
       ),
     ),
     barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
@@ -4415,127 +4707,217 @@ void _phonerequestDialog(BuildContext context) {
   Get.dialog(
     Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      child: Container(
-        padding: EdgeInsets.all(8),
-        width:  size.width * 0.535,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius:BorderRadius.circular(5),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(width:size.width * 0.155,),
-                Text(
-                  "Request Ticket",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
-                ),
-                // SizedBox(width: size.width * 0.130,),
-                // IconButton(onPressed: (){
-                //   Navigator.pop(context);
-                // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-              ],
+      child: StatefulBuilder(
+        builder: (BuildContext context,StateSetter setDialogState ){
+          return Container(
+            padding: EdgeInsets.all(8),
+            width:  size.width * 0.535,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius:BorderRadius.circular(5),
             ),
-            Divider(),
-            SizedBox(height: size.height * 0.012,),
-            Container(
-              width: size.width * 0.45,
-              height: size.height * 0.33,
-              decoration: BoxDecoration(
-                  color: ticket
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: size.height * 0.030,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.032,),
-                      Text('Departure Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.012,),
-                      requestContainer(context, departure, size.width * 0.145, size.height * 0.028),
-                    ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width:size.width * 0.155,),
+                    Text(
+                      "Request Ticket",
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                    ),
+                    // SizedBox(width: size.width * 0.130,),
+                    // IconButton(onPressed: (){
+                    //   Navigator.pop(context);
+                    // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                  ],
+                ),
+                Divider(),
+                SizedBox(height: size.height * 0.012,),
+                Container(
+                  width: size.width * 0.45,
+                  height: size.height * 0.40,
+                  decoration: BoxDecoration(
+                      color: ticket
                   ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
+                  child: Column(
                     children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.042,),
-                      requestContainer(context, arrival, size.width * 0.145, size.height * 0.028),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Destination',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.056,),
-                      requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.020,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.030,),
-                      Text('Remarks',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                      SizedBox(width: size.width * 0.080,),
-                      requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.035,),
-                  Row(
-                    children: [
-                      SizedBox(width: size.width * 0.135,),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: grey), // Outline border color
-                          borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          minWidth: size.width * 0.050, // Adjust width as needed
-                          height: size.height * 0.040, // Adjust height as needed
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                      SizedBox(height: size.height * 0.030,),
+                      Row(
+                        children: [
+                          SizedBox(width: size.width * 0.032,),
+                          Text('Departure Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                          SizedBox(width: size.width * 0.012,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ( departureError!= null)
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                  child: Text(
+                                    departureError!,
+                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                  ),
+                                ),
+                              requestContainer(context, departure, size.width * 0.145, size.height * 0.028),
+                            ],
                           ),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              color: black,
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.020,),
+                      Row(
+                        children: [
+                          SizedBox(width: size.width * 0.030,),
+                          Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                          SizedBox(width: size.width * 0.042,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ( arrivalError!= null)
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                  child: Text(
+                                    arrivalError!,
+                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                  ),
+                                ),
+                              requestContainer(context, arrival, size.width * 0.145, size.height * 0.028),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.020,),
+                      Row(
+                        children: [
+                          SizedBox(width: size.width * 0.030,),
+                          Text('Destination',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                          SizedBox(width: size.width * 0.056,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ( destinationError!= null)
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                  child: Text(
+                                    destinationError!,
+                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                  ),
+                                ),
+                              requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.020,),
+                      Row(
+                        children: [
+                          SizedBox(width: size.width * 0.030,),
+                          Text('Remarks',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                          SizedBox(width: size.width * 0.080,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if ( remarksError!= null)
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                  child: Text(
+                                    remarksError!,
+                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                  ),
+                                ),
+                              requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.035,),
+                      Row(
+                        children: [
+                          SizedBox(width: size.width * 0.135,),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: grey), // Outline border color
+                              borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              minWidth: size.width * 0.050, // Adjust width as needed
+                              height: size.height * 0.040, // Adjust height as needed
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                              ),
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: size.width * 0.030,),
-                      MaterialButton(
-                        minWidth: size.width * 0.125,
-                        height: size.height * 0.048,
-                        onPressed: () {
-                          Get.back(); // Close the dialog
-                        },
-                        child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                        color: Colors.yellow,
-                        textColor: Colors.black,
-                      ),
+                          SizedBox(width: size.width * 0.030,),
+                          MaterialButton(
+                            minWidth: size.width * 0.125,
+                            height: size.height * 0.048,
+                            onPressed: () async {
+                              // Validate all fields before applying
+                              if (validateField(setDialogState)) {
+                                // Show confirmation popup with Yes and No buttons
+                                Get.defaultDialog(
+                                  title: 'Confirm',
+                                  content: Text('Are you sure you want to apply?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.back(); // Close the dialog
+                                      },
+                                      child: Text('No', style: TextStyle(color: Colors.red)),
+                                    ),
+                                    TextButton(
+                                      onPressed: ()  {
+                                        Get.back(); // Close the dialog first
+
+                                        // Proceed with creating the leave request
+                                        // This will show success/error dialogs based on the result
+                                      },
+                                      child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                // Show error alert dialog if fields are missing
+                                Get.defaultDialog(
+                                  title: 'Error',
+                                  content: Text('Please fill all required fields.'),
+                                  confirmTextColor: Colors.white,
+                                  onConfirm: () {
+                                    Get.back(); // Close the dialog
+                                  },
+                                );
+                              }
+                            },
+                            child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                            color: Colors.yellow,
+                            textColor: Colors.black,
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+
+                SizedBox(height:size.height * 0.010,),
+
+              ],
             ),
-
-            SizedBox(height:size.height * 0.010,),
-
-          ],
-        ),
-      ),
+          );
+        },
+      )
     ),
     barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
   );

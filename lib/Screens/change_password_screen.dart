@@ -15,6 +15,8 @@ class changePasswordScreen extends StatefulWidget {
   State<changePasswordScreen> createState() => _SignupScreenState();
 }
 
+
+
 class _SignupScreenState extends State<changePasswordScreen> {
   TextEditingController userIdController=TextEditingController();
   TextEditingController  pasword=TextEditingController();
@@ -29,21 +31,24 @@ class _SignupScreenState extends State<changePasswordScreen> {
       _obscureText = !_obscureText;
     });
   }
-  //
+
   Future<void> _changePassword(BuildContext context) async {
     if (newPassword.text.trim() == confirmPassword.text.trim()) {
       try {
-        // Confirm the sign-in with the new password
-        SignInResult result = await Amplify.Auth.confirmSignIn(
-          confirmationValue: newPassword.text.trim(),
+        // Change the password using Amplify Auth's updatePassword method
+        await Amplify.Auth.updatePassword(
+          newPassword: newPassword.text.trim(),
+          oldPassword: pasword.text.trim(), // Existing password
         );
 
-        if (result.isSignedIn) {
-          Get.off(() => LoginScreen());
-        } else {
-          _showErrorDialog('Password change failed.');
-        }
+        // Show a success dialog
+        _showSuccessDialog('Password updated successfully.');
+
+        // Navigate back to the login screen after showing the success dialog
+        await Future.delayed(Duration(seconds: 3)); // Optional: delay to allow user to see the success message
+        Get.off(() => DashBoardScreeen());
       } on AuthException catch (e) {
+        // Show an error if the update fails
         _showErrorDialog(e.message);
       }
     } else {
@@ -51,8 +56,26 @@ class _SignupScreenState extends State<changePasswordScreen> {
     }
   }
 
+// Function to show success dialog
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text("Success"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text("Okay"),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-  // Function to show error dialog
+// Function to show error dialog
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -70,6 +93,7 @@ class _SignupScreenState extends State<changePasswordScreen> {
       ),
     );
   }
+
 
   bool _obscureText = true;
   bool _obscure = true;

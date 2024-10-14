@@ -150,7 +150,11 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
     return isValid;
   }
 
+
   Future<void> applyForLeave() async {
+    // Get current user's ID
+    String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+
     if (_selectedLeaveType == null || from.text.isEmpty || to.text.isEmpty || days.text.isEmpty || reason.text.isEmpty) {
       // Show validation error dialog
       Get.defaultDialog(
@@ -186,7 +190,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
       // Try to submit the leave request
       final leaveStatus = LeaveStatus(
-        empID: empID,
+        empID: userId, // Use current user's ID
         leaveType: _selectedLeaveType!,
         fromDate: TemporalDate(fromDate),
         toDate: TemporalDate(toDate),
@@ -234,7 +238,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
       );
     }
   }
-  String empID = 'awe101';
 
 
   void _pickFile() async {
@@ -649,6 +652,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
                                   child: Container(
+                                    width: size.width * 0.014,
+                                    height: size.height * 0.023,
                                     color: Colors.white,
                                     child: Checkbox(
                                       value: isManager,
@@ -680,6 +685,8 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
                                   child: Container(
+                                    width: size.width * 0.014,
+                                    height: size.height * 0.023,
                                     color: Colors.white,
                                     child: Checkbox(
                                       value: isSuperior,
