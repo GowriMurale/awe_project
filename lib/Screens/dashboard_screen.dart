@@ -1750,6 +1750,454 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     );
   }
 
+  bool isRecentLeaveSelected = true; // Tracks the selected tab
+
+  void _toggleTab(bool isRecent) {
+    setState(() {
+      isRecentLeaveSelected = isRecent;
+    });
+  }
+
+  Widget _buildRecentLeaveTable(Size size) {
+    return Padding(
+      padding: EdgeInsets.only(left: size.width * 0.165, top: size.height * 0.025),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.grey, width: 1),
+        ),
+        child: filteredLeaveData.isNotEmpty
+            ? SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: DataTable(
+            headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.050,
+            dataRowHeight: size.height * 0.050,
+            columnSpacing: size.width * 0.042,
+            columns: [
+              DataColumn(label: Text('Leave Type', style: headerTextStyle)),
+              DataColumn(label: Text('From', style: headerTextStyle)),
+              DataColumn(label: Text('To', style: headerTextStyle)),
+              DataColumn(label: Text('Days', style: headerTextStyle)),
+              DataColumn(label: Text('Reason', style: headerTextStyle)),
+              DataColumn(label: Text('Approver', style: headerTextStyle)),
+              DataColumn(label: Text('Status', style: headerTextStyle)),
+            ],
+            rows: filteredLeaveData.map((leave) {
+              int index = filteredLeaveData.indexOf(leave);
+
+              return DataRow(
+                cells: [
+                  DataCell(GestureDetector(
+                    onTap: () {
+                      if (leaveStatuses[index] == 'Pending') {
+                        _pendingDialog(context, index, leave, (newStatus) {
+                          setState(() {
+                            leaveStatuses[index] = newStatus;
+                          });
+                        });
+                      } else if (leaveStatuses[index] == 'Approved') {
+                        _approvedDialog(context, index, leave);
+                      } else if (leaveStatuses[index] == 'Rejected') {
+                        _rejectedDialog(context, index, leave);
+                      }
+                    },
+                    child: Text(leave!.leaveType ?? '', style: rowTextStyle),
+                  )),
+                  DataCell(Text(
+                    leave.fromDate != null
+                        ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
+                        : '',
+                    style: rowTextStyle,
+                  )),
+                  DataCell(Text(
+                    leave.toDate != null
+                        ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
+                        : '',
+                    style: rowTextStyle,
+                  )),
+                  DataCell(Text('${leave.days ?? 0} days', style: rowTextStyle)),
+                  DataCell(Text(leave.reason ?? '', style: rowTextStyle)),
+                  DataCell(Text(leave.applyTo ?? '', style: rowTextStyle)),
+                  DataCell(Text(leaveStatuses[index], style: rowTextStyle)),
+                ],
+              );
+            }).toList(),
+          ),
+        )
+            : SizedBox(),
+      ),
+    );
+  }
+
+  Widget _buildReviewTicketTable(Size size) {
+    // Implement the table for Employee Review Ticket similarly
+    return Padding(
+      padding: EdgeInsets.only(left: size.width * 0.160, top: size.height * 0.025),
+      child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey, width: 1),
+          ),
+          child:
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                headingRowHeight:  size.height * 0.050,
+                dataRowHeight: size.height * 0.048,
+                columnSpacing: size.width * 0.025,
+                columns: [
+                  DataColumn(label: Text('Name', style: headerTextStyle)),
+                  DataColumn(label: Text('Badge Number', style: headerTextStyle)),
+                  DataColumn(label: Text('Department', style: headerTextStyle)),
+                  DataColumn(label: Text('Position', style: headerTextStyle)),
+                  DataColumn(label: Text('Destination', style: headerTextStyle)),
+                  DataColumn(label: Text('Departure Date', style: headerTextStyle)),
+                  DataColumn(label: Text('Arrival Date', style: headerTextStyle)),
+                  DataColumn(label: Text('Status', style: headerTextStyle)),
+                  DataColumn(label: Text('Remarks', style: headerTextStyle)),
+
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: rowTextStyle,)),
+                    DataCell(Text('50598',style: rowTextStyle,)),
+                    DataCell(Text('Welding',style: rowTextStyle,)),
+                    DataCell(Text('Trainer',style: rowTextStyle,)),
+                    DataCell(Text('Singapore',style: rowTextStyle,)),
+                    DataCell(Text('16/10/2024',style: rowTextStyle,)),
+                    DataCell(Text('19/10/2024',style: rowTextStyle,)),
+                    DataCell(Text('pending',style: rowTextStyle,)),
+                    DataCell(Text('',style: rowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: rowTextStyle,)),
+                    DataCell(Text('50598',style:  rowTextStyle,)),
+                    DataCell(Text('Welding',style:  rowTextStyle,)),
+                    DataCell(Text('Trainer',style:  rowTextStyle,)),
+                    DataCell(Text('Singapore',style:  rowTextStyle,)),
+                    DataCell(Text('16/08/2024',style:  rowTextStyle,)),
+                    DataCell(Text('19/08/2024',style:  rowTextStyle,)),
+                    DataCell(Text('Approved',style:  rowTextStyle,)),
+                    DataCell(Text('',style:  rowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style:  rowTextStyle,)),
+                    DataCell(Text('50598',style:  rowTextStyle,)),
+                    DataCell(Text('Welding',style:  rowTextStyle,)),
+                    DataCell(Text('Trainer',style:  rowTextStyle,)),
+                    DataCell(Text('Singapore',style:  rowTextStyle,)),
+                    DataCell(Text('16/08/2024',style:  rowTextStyle,)),
+                    DataCell(Text('19/08/2024',style:  rowTextStyle,)),
+                    DataCell(Text('Approved',style:  rowTextStyle,)),
+                    DataCell(Text('Reason for \n that',style:  rowTextStyle,)),
+                  ]),
+                ],
+              ),
+            ),
+          )
+      ),
+    );
+  }
+
+  Widget _tabRecentLeaveTable(Size size) {
+    return Padding(
+      padding:  EdgeInsets.only(left: size.width * 0.115,top: size.height * 0.02),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.grey, width: 1),
+        ),
+        child: filteredLeaveData.isNotEmpty
+            ? SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: DataTable(
+            headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.050,
+            dataRowHeight: size.height * 0.048,
+            columnSpacing: size.width * 0.038,
+            columns: [
+              DataColumn(label: Text('Leave Type', style: tabheaderTextStyle)),
+              DataColumn(label: Text('From', style: tabheaderTextStyle)),
+              DataColumn(label: Text('To', style: tabheaderTextStyle)),
+              DataColumn(label: Text('Days', style: tabheaderTextStyle)),
+              DataColumn(label: Text('Reason', style: tabheaderTextStyle)),
+              DataColumn(label: Text('Approver', style: tabheaderTextStyle)),
+              DataColumn(label: Text('Status', style: tabheaderTextStyle)),
+            ],
+            rows: filteredLeaveData.map((leave) {
+              int index = filteredLeaveData.indexOf(leave);
+
+              return DataRow(
+                cells: [
+                  DataCell(GestureDetector(
+                    onTap: () {
+                      if (leaveStatuses[index] == 'Pending') {
+                        _tabpendingDialog(context, index, leave, (newStatus) {
+                          setState(() {
+                            leaveStatuses[index] = newStatus;
+                          });
+                        });
+                      } else if (leaveStatuses[index] == 'Approved') {
+                        _tabapprovedDialog(context, index, leave);
+                      } else if (leaveStatuses[index] == 'Rejected') {
+                        _tabrejectedDialog(context, index, leave);
+                      }
+                    },
+                    child: Text(leave!.leaveType ?? '', style: tabrowTextStyle),
+                  )),
+                  DataCell(Text(
+                    leave.fromDate != null
+                        ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
+                        : '',
+                    style: tabrowTextStyle,
+                  )),
+                  DataCell(Text(
+                    leave.toDate != null
+                        ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
+                        : '',
+                    style: tabrowTextStyle,
+                  )),
+                  DataCell(Text('${leave.days ?? 0} days', style: tabrowTextStyle)),
+                  DataCell(Text(leave.reason ?? '', style: tabrowTextStyle)),
+                  DataCell(Text(leave.applyTo ?? '', style: tabrowTextStyle)),
+                  DataCell(Text(leaveStatuses[index], style: rowTextStyle)), // Display the status dynamically
+                ],
+              );
+            }).toList(),
+          ),
+        )
+            : SizedBox(),
+      ),
+    );
+  }
+
+  Widget _tabReviewTicketTable(Size size) {
+    // Implement the table for Employee Review Ticket similarly
+    return Padding(
+      padding: EdgeInsets.only(left: size.width * 0.120, top: size.height * 0.025),
+      child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey, width: 1),
+          ),
+          child:
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                headingRowHeight:  size.height * 0.050,
+                dataRowHeight: size.height * 0.048,
+                columnSpacing: size.width * 0.020,
+                columns: [
+                  DataColumn(label: Text('Name', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Badge Number', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Department', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Position', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Destination', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Departure Date', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Arrival Date', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Status', style: tabheaderTextStyle)),
+                  DataColumn(label: Text('Remarks', style: tabheaderTextStyle)),
+
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: tabrowTextStyle,)),
+                    DataCell(Text('50598',style: tabrowTextStyle,)),
+                    DataCell(Text('Welding',style: tabrowTextStyle,)),
+                    DataCell(Text('Trainer',style: tabrowTextStyle,)),
+                    DataCell(Text('Singapore',style: tabrowTextStyle,)),
+                    DataCell(Text('16/10/2024',style: tabrowTextStyle,)),
+                    DataCell(Text('19/10/2024',style: tabrowTextStyle,)),
+                    DataCell(Text('pending',style: tabrowTextStyle,)),
+                    DataCell(Text('',style: tabrowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: tabrowTextStyle,)),
+                    DataCell(Text('50598',style:  tabrowTextStyle,)),
+                    DataCell(Text('Welding',style:  tabrowTextStyle,)),
+                    DataCell(Text('Trainer',style:  tabrowTextStyle,)),
+                    DataCell(Text('Singapore',style:  tabrowTextStyle,)),
+                    DataCell(Text('16/08/2024',style:  tabrowTextStyle,)),
+                    DataCell(Text('19/08/2024',style:  tabrowTextStyle,)),
+                    DataCell(Text('Approved',style:  tabrowTextStyle,)),
+                    DataCell(Text('',style:  tabrowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style:  tabrowTextStyle,)),
+                    DataCell(Text('50598',style:  tabrowTextStyle,)),
+                    DataCell(Text('Welding',style:  tabrowTextStyle,)),
+                    DataCell(Text('Trainer',style:  tabrowTextStyle,)),
+                    DataCell(Text('Singapore',style:  tabrowTextStyle,)),
+                    DataCell(Text('16/08/2024',style:  tabrowTextStyle,)),
+                    DataCell(Text('19/08/2024',style:  tabrowTextStyle,)),
+                    DataCell(Text('Approved',style:  tabrowTextStyle,)),
+                    DataCell(Text('Reason for \n that',style:  tabrowTextStyle,)),
+                  ]),
+                ],
+              ),
+            ),
+          )
+      ),
+    );
+  }
+
+  Widget _phoneRecentLeaveTable(Size size) {
+    return  Padding(
+      padding:  EdgeInsets.only(left: size.width * 0.030,top: size.height * 0.02),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.grey, width: 1),
+        ),
+        child: filteredLeaveData.isNotEmpty
+            ? SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.042,
+              dataRowHeight: size.height * 0.040,
+              columnSpacing: size.width * 0.026,
+              columns: [
+                DataColumn(label: Text('Leave Type', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('From', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('To', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('Days', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('Reason', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('Approver', style: phoneheaderTextStyle)),
+                DataColumn(label: Text('Status', style: phoneheaderTextStyle)),
+              ],
+              rows: filteredLeaveData.map((leave) {
+                int index = filteredLeaveData.indexOf(leave);
+                return DataRow(
+                  cells: [
+                    DataCell(GestureDetector(
+                      onTap: () {
+                        if (leaveStatuses[index] == 'Pending') {
+                          _phonependingDialog(context, index, leave, (newStatus) {
+                            setState(() {
+                              leaveStatuses[index] = newStatus;
+                            });
+                          });
+                        } else if (leaveStatuses[index] == 'Approved') {
+                          _phoneapprovedDialog(context, index, leave);
+                        } else if (leaveStatuses[index] == 'Rejected') {
+                          _phonerejectedDialog(context, index, leave);
+                        }
+                      },
+                      child: Text(leave!.leaveType ?? '', style: phonerowTextStyle),
+                    )),
+                    DataCell(Text(
+                      leave.fromDate != null
+                          ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
+                          : '',
+                      style: phonerowTextStyle,
+                    )),
+                    DataCell(Text(
+                      leave.toDate != null
+                          ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
+                          : '',
+                      style: phonerowTextStyle,
+                    )),
+                    DataCell(Text('${leave.days ?? 0} days', style: phonerowTextStyle)),
+                    DataCell(Text(leave.reason ?? '', style: phonerowTextStyle)),
+                    DataCell(Text(leave.applyTo ?? '', style: phonerowTextStyle)),
+                    DataCell(Text(leaveStatuses[index], style: phonerowTextStyle)),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
+        )
+            : SizedBox(),
+      ),
+
+    );
+  }
+
+  Widget _phoneReviewTicketTable(Size size) {
+    // Implement the table for Employee Review Ticket similarly
+    return Padding(
+      padding: EdgeInsets.only(left: size.width * 0.017, top: size.height * 0.02),
+      child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey, width: 1),
+          ),
+          child:
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                headingRowHeight:  size.height * 0.042,
+                dataRowHeight: size.height * 0.040,
+                columnSpacing: size.width * 0.015,
+                columns: [
+                  DataColumn(label: Text('Name', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Badge Number', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Department', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Position', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Destination', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Departure Date', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Arrival Date', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Status', style: phoneheaderTextStyle)),
+                  DataColumn(label: Text('Remarks', style: phoneheaderTextStyle)),
+
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: phonerowTextStyle,)),
+                    DataCell(Text('50598',style: phonerowTextStyle,)),
+                    DataCell(Text('Welding',style: phonerowTextStyle,)),
+                    DataCell(Text('Trainer',style: phonerowTextStyle,)),
+                    DataCell(Text('Singapore',style: phonerowTextStyle,)),
+                    DataCell(Text('16/10/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('19/10/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('pending',style: phonerowTextStyle,)),
+                    DataCell(Text('',style: phonerowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: phonerowTextStyle,)),
+                    DataCell(Text('50598',style: phonerowTextStyle,)),
+                    DataCell(Text('Welding',style: phonerowTextStyle,)),
+                    DataCell(Text('Trainer',style: phonerowTextStyle,)),
+                    DataCell(Text('Singapore',style: phonerowTextStyle,)),
+                    DataCell(Text('16/08/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('19/08/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('Approved',style: phonerowTextStyle,)),
+                    DataCell(Text('',style: phonerowTextStyle,)),
+                  ]),
+                  DataRow(cells: [
+                    DataCell(Text('Rahul',style: phonerowTextStyle,)),
+                    DataCell(Text('50598',style: phonerowTextStyle,)),
+                    DataCell(Text('Welding',style: phonerowTextStyle,)),
+                    DataCell(Text('Trainer',style: phonerowTextStyle,)),
+                    DataCell(Text('Singapore',style: phonerowTextStyle,)),
+                    DataCell(Text('16/08/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('19/08/2024',style: phonerowTextStyle,)),
+                    DataCell(Text('Approved',style: phonerowTextStyle,)),
+                    DataCell(Text('Reason for \n that',style: phonerowTextStyle,)),
+                  ]),
+                ],
+              ),
+            ),
+          )
+      ),
+    );
+
+  }
+
+
 
   void _tabCancelDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
     final Size size = MediaQuery.of(context).size;
@@ -2119,14 +2567,55 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   SizedBox(height: size.height * 0.060,),
                   Row(
                     children: [
-                      SizedBox(width: size.width * 0.190),
-                      Text(
-                        'My Recent Leave',
-                        style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
+                      SizedBox(width: size.width * 0.180),
+                      GestureDetector(
+                        onTap: () => _toggleTab(true),
+                        child: Column(
+                          children: [
+                            Text(
+                              'My Recent Leave',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (isRecentLeaveSelected)
+                              Container(
+                                height: 3.5,
+                                width: size.width * 0.08,
+                                color: Colors.yellow,
+                              ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: size.width * 0.328),
+                      SizedBox(width: size.width * 0.015),
+                      GestureDetector(
+                        onTap: () => _toggleTab(false),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Employee Review Ticket',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (!isRecentLeaveSelected)
+                              Container(
+                                height: 3.5,
+                                width: size.width * 0.11,
+                                color: Colors.yellow,
+                              ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.220),
                       Container(
-                        width: size.width * 0.082,
+                        width: size.width * 0.078,
                         height: size.height * 0.034,
                         color: Colors.white,
                         child: Material(
@@ -2161,7 +2650,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                       SizedBox(width: size.width * 0.018),
                       Container(
-                        width: size.width * 0.082,
+                        width: size.width * 0.078,
                         height: size.height * 0.034,
                         color: Colors.white,
                         child: Material(
@@ -2195,80 +2684,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                     ],
                   ),
-
-
                   Row(
                     children: [
-                      Padding(
-                        padding:  EdgeInsets.only(left: size.width * 0.175,top: size.height * 0.025),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: filteredLeaveData.isNotEmpty
-                              ? SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: DataTable(
-                              headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.050,
-                              dataRowHeight: size.height * 0.055,
-                              columnSpacing: size.width * 0.045,
-                              columns: [
-                                DataColumn(label: Text('Leave Type', style: headerTextStyle)),
-                                DataColumn(label: Text('From', style: headerTextStyle)),
-                                DataColumn(label: Text('To', style: headerTextStyle)),
-                                DataColumn(label: Text('Days', style: headerTextStyle)),
-                                DataColumn(label: Text('Reason', style: headerTextStyle)),
-                                DataColumn(label: Text('Approver', style: headerTextStyle)),
-                                DataColumn(label: Text('Status', style: headerTextStyle)),
-                              ],
-                              rows: filteredLeaveData.map((leave) {
-                                int index = filteredLeaveData.indexOf(leave);
-
-                                return DataRow(
-                                  cells: [
-                                    DataCell(GestureDetector(
-                                      onTap: () {
-                                        if (leaveStatuses[index] == 'Pending') {
-                                          _pendingDialog(context, index, leave, (newStatus) {
-                                            setState(() {
-                                              leaveStatuses[index] = newStatus;
-                                            });
-                                          });
-                                        } else if (leaveStatuses[index] == 'Approved') {
-                                          _approvedDialog(context, index, leave);
-                                        } else if (leaveStatuses[index] == 'Rejected') {
-                                          _rejectedDialog(context, index, leave);
-                                        }
-                                      },
-                                      child: Text(leave!.leaveType ?? '', style: rowTextStyle),
-                                    )),
-                                    DataCell(Text(
-                                      leave.fromDate != null
-                                          ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
-                                          : '',
-                                      style: rowTextStyle,
-                                    )),
-                                    DataCell(Text(
-                                      leave.toDate != null
-                                          ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
-                                          : '',
-                                      style: rowTextStyle,
-                                    )),
-                                    DataCell(Text('${leave.days ?? 0} days', style: rowTextStyle)),
-                                    DataCell(Text(leave.reason ?? '', style: rowTextStyle)),
-                                    DataCell(Text(leave.applyTo ?? '', style: rowTextStyle)),
-                                    DataCell(Text(leaveStatuses[index], style: rowTextStyle)), // Display the status dynamically
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          )
-                              : SizedBox(),
-                        ),
-
-                      ),
+                      isRecentLeaveSelected ? _buildRecentLeaveTable(size) : _buildReviewTicketTable(size),
                     ],
                   ),
                   SizedBox(height: size.height * 0.032,),
@@ -2529,13 +2947,54 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Row(
                     children: [
                       SizedBox(width: size.width * 0.145),
-                      Text(
-                        'My Recent Leave',
-                        style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.bold),
+                      GestureDetector(
+                        onTap: () => _toggleTab(true),
+                        child: Column(
+                          children: [
+                            Text(
+                              'My Recent Leave',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (isRecentLeaveSelected)
+                              Container(
+                                height: 3.5,
+                                width: size.width * 0.10,
+                                color: Colors.yellow,
+                              ),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: size.width * 0.376),
+                      SizedBox(width: size.width * 0.015),
+                      GestureDetector(
+                        onTap: () => _toggleTab(false),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Employee Review Ticket',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            if (!isRecentLeaveSelected)
+                              Container(
+                                height: 3.5,
+                                width: size.width * 0.14,
+                                color: Colors.yellow,
+                              ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.235),
                       Container(
-                        width: size.width * 0.094,
+                        width: size.width * 0.093,
                         height: size.height * 0.034,
                         color: Colors.white,
                         child: Material(
@@ -2569,7 +3028,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ),
                       SizedBox(width: size.width * 0.018),
                       Container(
-                        width: size.width * 0.094,
+                        width: size.width * 0.093,
                         height: size.height * 0.034,
                         color: Colors.white,
                         child: Material(
@@ -2605,75 +3064,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                   Row(
                     children: [
-                      Padding(
-                        padding:  EdgeInsets.only(left: size.width * 0.115,top: size.height * 0.02),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey, width: 1),
-                          ),
-                          child: filteredLeaveData.isNotEmpty
-                              ? SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: DataTable(
-                              headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.050,
-                              dataRowHeight: size.height * 0.048,
-                              columnSpacing: size.width * 0.038,
-                              columns: [
-                                DataColumn(label: Text('Leave Type', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('From', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('To', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('Days', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('Reason', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('Approver', style: tabheaderTextStyle)),
-                                DataColumn(label: Text('Status', style: tabheaderTextStyle)),
-                              ],
-                              rows: filteredLeaveData.map((leave) {
-                                int index = filteredLeaveData.indexOf(leave);
-
-                                return DataRow(
-                                  cells: [
-                                    DataCell(GestureDetector(
-                                      onTap: () {
-                                        if (leaveStatuses[index] == 'Pending') {
-                                          _tabpendingDialog(context, index, leave, (newStatus) {
-                                            setState(() {
-                                              leaveStatuses[index] = newStatus;
-                                            });
-                                          });
-                                        } else if (leaveStatuses[index] == 'Approved') {
-                                          _tabapprovedDialog(context, index, leave);
-                                        } else if (leaveStatuses[index] == 'Rejected') {
-                                          _tabrejectedDialog(context, index, leave);
-                                        }
-                                      },
-                                      child: Text(leave!.leaveType ?? '', style: tabrowTextStyle),
-                                    )),
-                                    DataCell(Text(
-                                      leave.fromDate != null
-                                          ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
-                                          : '',
-                                      style: tabrowTextStyle,
-                                    )),
-                                    DataCell(Text(
-                                      leave.toDate != null
-                                          ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
-                                          : '',
-                                      style: tabrowTextStyle,
-                                    )),
-                                    DataCell(Text('${leave.days ?? 0} days', style: tabrowTextStyle)),
-                                    DataCell(Text(leave.reason ?? '', style: tabrowTextStyle)),
-                                    DataCell(Text(leave.applyTo ?? '', style: tabrowTextStyle)),
-                                    DataCell(Text(leaveStatuses[index], style: rowTextStyle)), // Display the status dynamically
-                                  ],
-                                );
-                              }).toList(),
-                            ),
-                          )
-                              : SizedBox(),
-                        ),
-                      ),
+                      isRecentLeaveSelected ? _tabRecentLeaveTable(size) : _tabReviewTicketTable(size),
                     ],
                   ),
                   SizedBox(height: size.height * 0.032,),
@@ -2920,15 +3311,56 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               SizedBox(height: size.height * 0.04,),
               Row(
                 children: [
-                  SizedBox(width: size.width * 0.075),
-                  Text(
-                    'My Recent Leave',
-                    style: TextStyle(color: Colors.black, fontFamily: 'Inter', fontSize: 13, fontWeight: FontWeight.bold),
+                  SizedBox(width: size.width * 0.052),
+                  GestureDetector(
+                    onTap: () => _toggleTab(true),
+                    child: Column(
+                      children: [
+                        Text(
+                          'My Recent Leave',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Inter',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        if (isRecentLeaveSelected)
+                          Container(
+                            height: 3.5,
+                            width: size.width * 0.09,
+                            color: Colors.yellow,
+                          ),
+                      ],
+                    ),
                   ),
-                  SizedBox(width: size.width * 0.266),
+                  SizedBox(width: size.width * 0.015),
+                  GestureDetector(
+                    onTap: () => _toggleTab(false),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Employee Review Ticket',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Inter',
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        if (!isRecentLeaveSelected)
+                          Container(
+                            height: 3.5,
+                            width: size.width * 0.12,
+                            color: Colors.yellow,
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.155),
                   Container(
-                    width: size.width * 0.180,
-                    height: size.height * 0.030,
+                    width: size.width * 0.170,
+                    height: size.height * 0.024,
                     color: Colors.white,
                     child: Material(
                       color: Colors.transparent,
@@ -2941,9 +3373,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 5, bottom: 6),
                           hintText: 'From',
-                          hintStyle: TextStyle(fontSize: 11),
+                          hintStyle: TextStyle(fontSize: 9),
                           suffixIcon: IconButton(
-                            padding: EdgeInsets.only(bottom: 0.05),
+                            padding: EdgeInsets.only(bottom: 0.05,left: 10),
                             onPressed: () => _selectDate(context, from), // Correct the onPressed
                             icon: Icon(
                               Icons.calendar_month,
@@ -2961,8 +3393,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                   SizedBox(width: size.width * 0.018),
                   Container(
-                    width: size.width * 0.180,
-                    height: size.height * 0.030,
+                    width: size.width * 0.170,
+                    height: size.height * 0.024,
                     color: Colors.white,
                     child: Material(
                       color: Colors.transparent,
@@ -2975,9 +3407,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: 5, bottom: 6),
                           hintText: 'To',
-                          hintStyle: TextStyle(fontSize: 11),
+                          hintStyle: TextStyle(fontSize: 9),
                           suffixIcon: IconButton(
-                            padding: EdgeInsets.only(bottom: 0.05),
+                            padding: EdgeInsets.only(bottom: 0.05,left: 10),
                             onPressed: () => _selectDate(context, to), // Correct the onPressed
                             icon: Icon(
                               Icons.calendar_month,
@@ -2997,78 +3429,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               ),
               Row(
                 children: [
-                  Padding(
-                    padding:  EdgeInsets.only(left: size.width * 0.030,top: size.height * 0.02),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey, width: 1),
-                      ),
-                      child: filteredLeaveData.isNotEmpty
-                          ? SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: DataTable(
-                            headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.042,
-                            dataRowHeight: size.height * 0.040,
-                            columnSpacing: size.width * 0.026,
-                            columns: [
-                              DataColumn(label: Text('Leave Type', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('From', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('To', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('Days', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('Reason', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('Approver', style: phoneheaderTextStyle)),
-                              DataColumn(label: Text('Status', style: phoneheaderTextStyle)),
-                            ],
-                            rows: filteredLeaveData.map((leave) {
-                              int index = filteredLeaveData.indexOf(leave);
-                              return DataRow(
-                                cells: [
-                                  DataCell(GestureDetector(
-                                    onTap: () {
-                                      if (leaveStatuses[index] == 'Pending') {
-                                        _phonependingDialog(context, index, leave, (newStatus) {
-                                          setState(() {
-                                            leaveStatuses[index] = newStatus;
-                                          });
-                                        });
-                                      } else if (leaveStatuses[index] == 'Approved') {
-                                        _phoneapprovedDialog(context, index, leave);
-                                      } else if (leaveStatuses[index] == 'Rejected') {
-                                        _phonerejectedDialog(context, index, leave);
-                                      }
-                                    },
-                                    child: Text(leave!.leaveType ?? '', style: phonerowTextStyle),
-                                  )),
-                                  DataCell(Text(
-                                    leave.fromDate != null
-                                        ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
-                                        : '',
-                                    style: phonerowTextStyle,
-                                  )),
-                                  DataCell(Text(
-                                    leave.toDate != null
-                                        ? DateFormat('dd/MM/yyyy').format(leave.toDate!.getDateTime())
-                                        : '',
-                                    style: phonerowTextStyle,
-                                  )),
-                                  DataCell(Text('${leave.days ?? 0} days', style: phonerowTextStyle)),
-                                  DataCell(Text(leave.reason ?? '', style: phonerowTextStyle)),
-                                  DataCell(Text(leave.applyTo ?? '', style: phonerowTextStyle)),
-                                  DataCell(Text(leaveStatuses[index], style: phonerowTextStyle)),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      )
-                          : SizedBox(),
-                    ),
-
-                  ),
+                  isRecentLeaveSelected ? _phoneRecentLeaveTable(size) : _phoneReviewTicketTable(size),
                 ],
               ),
 
@@ -3080,8 +3441,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     onPressed: (){
                       Get.to(()=>ApplyLeaveScreen());
                     },
-                    minWidth: size.width * 0.075,
-                    height: size.height * 0.055,
+                    minWidth: size.width * 0.070,
+                    height: size.height * 0.050,
                     color: yellow,
                     child: Text('Apply Leave',style: TextStyle(fontFamily: 'Inter,',fontSize: 15,fontWeight: FontWeight.bold,color: black),),
                   ),
