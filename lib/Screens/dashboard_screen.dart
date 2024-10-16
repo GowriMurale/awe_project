@@ -2507,7 +2507,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     DataCell(Text('Singapore',style:  rowTextStyle,)),
                     DataCell(Text('16/08/2024',style:  rowTextStyle,)),
                     DataCell(Text('19/08/2024',style:  rowTextStyle,)),
-                    DataCell(Text('Approved',style:  rowTextStyle,)),
+                    DataCell(Text('Rejected',style:  rowTextStyle,)),
                     DataCell(Text('Reason for \n that',style:  rowTextStyle,)),
                   ]),
                 ],
