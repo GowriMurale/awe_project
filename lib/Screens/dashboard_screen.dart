@@ -32,85 +32,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   // late  int notificationCount;
   final TextEditingController userIdController = TextEditingController();
   final box = GetStorage();
-  Future<void> storeTempIdLocally() async {
-    final box = GetStorage();
-    box.write('tempId', "TEMP001");  // Hardcoded tempId
-    print("TempId 'TEMP001' stored locally");
-  }
 
-  // Method to retrieve tempId from local storage
-  String? getTempIdFromStorage() {
-    final box = GetStorage();
-    return box.read('tempId');  // Retrieve tempId from local storage
-  }
-
-  // Fetch candidate application data using the stored tempId
-  Future<void> fetchCandidateApplicationData(BuildContext context) async {
-    try {
-      // Get the stored tempId (e.g., 'TEMP001')
-      final box = GetStorage();
-      String tempId = box.read('tempId') ?? '';  // Retrieve tempId from storage
-
-      if (tempId.isEmpty) {
-        _showErrorDialog(context, 'No tempId found in local storage.');
-        return;
-      }
-
-      // Query the API to get candidate application details using tempId
-      final request = ModelQueries.list(
-        CandidateApplicationForm.classType,
-        where: CandidateApplicationForm.TEMPID.eq(tempId), // Query using tempId
-      );
-
-      final response = await Amplify.API.query(request: request).response;
-
-      if (response.errors.isNotEmpty) {
-        print('Errors: ${response.errors}');
-        _showErrorDialog(context, 'Failed to fetch application data.');
-        return;
-      }
-
-      List<CandidateApplicationForm?> candidateApplications = response.data?.items ?? [];
-      print(candidateApplications);
-
-      if (candidateApplications.isNotEmpty && candidateApplications.first != null) {
-        var candidate = candidateApplications.first;
-        print(candidate);
-
-        // Store candidate data locally for later use
-        box.write('name', candidate?.name ?? 'N/A');
-        box.write('email', candidate?.email ?? 'N/A');
-        box.write('contactNo', candidate?.contactNo ?? 'N/A');
-
-        print("Candidate Name: ${candidate?.name}");
-        print("Candidate Email: ${candidate?.email}");
-        print("Candidate Contact No: ${candidate?.contactNo}");
-      } else {
-        _showErrorDialog(context, 'No data found for the provided tempId.');
-      }
-    } catch (e) {
-      print('Failed to fetch candidate data: $e');
-      _showErrorDialog(context, 'An unexpected error occurred.');
-    }
-  }
-
-  String name = 'N/A';
-  String email = 'N/A';
-  String contactNo = 'N/A';
-
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   loadUserData();
-  // }
-
-  void loadUserData() {
-    setState(() {
-      name = box.read('name') ?? 'N/A';
-      email = box.read('email') ?? 'N/A';
-      contactNo = box.read('contactNo') ?? 'N/A';
-    });
-  }
+  // late String employeeName;
+  // late String employeeEmail;
 
 
   Future<void> _confirmSignOut(BuildContext context) async {
@@ -252,7 +176,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 child: Row(
                     children: [
                       SizedBox(width:size.width * 0.015,),
-                      Text('Nur Hafiza',
+                      Text('Nur hafiza',
                         style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Colors.black87),),]),
               ),
               SizedBox(height:size.height * 0.010,),
@@ -524,11 +448,11 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
                       ),
                       SizedBox(width: size.width * 0.130,),
-                      IconButton(onPressed: (){
-                        Navigator.pop(context);
-                      }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-                    ],
-                  ),
+                  //     IconButton(onPressed: (){
+                  //       Navigator.pop(context);
+                  //     }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                  //   ],
+                  // ),
                   Divider(),
                   SizedBox(height: size.height * 0.012,),
                   Container(
@@ -803,6 +727,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
                 ],
               ),
+              ]
+              )
             );
           },
         )
@@ -1006,7 +932,26 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                       style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
                                     ),
                                   ),
-                                requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
+                                Container(
+                                  width: size.width * 0.170,
+                                  height:size.height * 0.075,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.grey.shade400,width: 1),
+                                  ),
+                                  child: TextField(
+                                    controller: remarks,
+                                    // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
+                                    decoration: InputDecoration(
+                                      hintText: 'Text Here',
+                                      hintStyle: TextStyle(fontSize: 10,color: Colors.grey.shade400),
+                                      contentPadding: EdgeInsets.all(5),
+                                      isDense: true, // Make the field more compact
+                                      border: InputBorder.none,
+                                    ),
+                                    textAlignVertical: TextAlignVertical.center,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -1046,7 +991,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               height: size.height * 0.048,
                               onPressed: () async {
                                 // Validate all fields before applying
-                                if (validateField(setDialogState)) {
+                                if (_validateField(setDialogState)) {
                                   // Show confirmation popup with Yes and No buttons
                                   Get.defaultDialog(
                                     title: 'Confirm',
@@ -1117,7 +1062,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             builder: (BuildContext context,StateSetter setDialogState ){
               return Container(
                 padding: EdgeInsets.all(8),
-                width:  size.width * 0.535,
+                width:  size.width * 0.545,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:BorderRadius.circular(5),
@@ -1142,7 +1087,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     Divider(),
                     SizedBox(height: size.height * 0.012,),
                     Container(
-                      width: size.width * 0.45,
+                      width: size.width * 0.48,
                       height: size.height * 0.40,
                       decoration: BoxDecoration(
                           color: ticket
@@ -1167,8 +1112,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                       ),
                                     ),
                                   Container(
-                                    width: size.width * 0.105,
-                                    height: size.height * 0.0340,
+                                    width: size.width * 0.172,
+                                    height: size.height * 0.032,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(color: Colors.grey.shade400,width: 1)
@@ -1176,23 +1121,23 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                     child: Material(
                                       color: Colors.transparent,
                                       child: TextField(
-                                        controller: departure,
+                                        controller: arrival,
                                         style: TextStyle(
-                                          fontSize: 09, // Set a smaller font size for the picked date
+                                          fontSize: 7, // Set a smaller font size for the picked date
                                           color: Colors.black, // You can also control the color of the text
                                         ),
                                         textAlignVertical: TextAlignVertical.center,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                          contentPadding: EdgeInsets.only(left: 2, bottom: 20),
                                           hintText: 'dd/mm/yy',
-                                          hintStyle: TextStyle(fontSize: 10),
+                                          hintStyle: TextStyle(fontSize: 7),
                                           suffixIcon: IconButton(
-                                            padding: EdgeInsets.only(bottom: 0.5,left: 10),
-                                            onPressed: () => _selectDate(context, departure), // Correct the onPressed
+                                            padding: EdgeInsets.only(bottom: 0.5,left: 14),
+                                            onPressed: () => _selectDate(context, arrival), // Correct the onPressed
                                             icon: Icon(
                                               Icons.calendar_month,
-                                              size: 12,
+                                              size: 10,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -1222,8 +1167,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                       ),
                                     ),
                                   Container(
-                                    width: size.width * 0.155,
-                                    height: size.height * 0.026,
+                                    width: size.width * 0.172,
+                                    height: size.height * 0.032,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(color: Colors.grey.shade400,width: 1)
@@ -1231,7 +1176,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                     child: Material(
                                       color: Colors.transparent,
                                       child: TextField(
-                                        controller: arrival,
+                                        controller: departure,
                                         style: TextStyle(
                                           fontSize: 7, // Set a smaller font size for the picked date
                                           color: Colors.black, // You can also control the color of the text
@@ -1239,12 +1184,12 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                         textAlignVertical: TextAlignVertical.center,
                                         decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(left: 5, bottom: 17),
+                                          contentPadding: EdgeInsets.only(left: 2, bottom: 20),
                                           hintText: 'dd/mm/yy',
-                                          hintStyle: TextStyle(fontSize: 9),
+                                          hintStyle: TextStyle(fontSize: 7),
                                           suffixIcon: IconButton(
-                                            padding: EdgeInsets.only(bottom: 0.5,left: 10),
-                                            onPressed: () => _selectDate(context, arrival), // Correct the onPressed
+                                            padding: EdgeInsets.only(bottom: 0.5,left: 14),
+                                            onPressed: () => _selectDate(context, departure), // Correct the onPressed
                                             icon: Icon(
                                               Icons.calendar_month,
                                               size: 10,
@@ -1276,7 +1221,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                         style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
                                       ),
                                     ),
-                                  requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
+                                  requestContainer(context, destination, size.width * 0.170, size.height * 0.028),
                                 ],
                               ),
                             ],
@@ -1298,7 +1243,26 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                         style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
                                       ),
                                     ),
-                                  requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
+                                  Container(
+                                    width: size.width * 0.200,
+                                    height:size.height * 0.055,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey.shade400,width: 1),
+                                    ),
+                                    child: TextField(
+                                      controller: remarks,
+                                      // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
+                                      decoration: InputDecoration(
+                                        hintText: 'Text Here',
+                                        hintStyle: TextStyle(fontSize: 8,color: Colors.grey.shade400),
+                                        contentPadding: EdgeInsets.all(2),
+                                        isDense: true, // Make the field more compact
+                                        border: InputBorder.none,
+                                      ),
+                                      textAlignVertical: TextAlignVertical.center,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -1338,7 +1302,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                 height: size.height * 0.048,
                                 onPressed: () async {
                                   // Validate all fields before applying
-                                  if (validateField(setDialogState)) {
+                                  if (_validateField(setDialogState)) {
                                     // Show confirmation popup with Yes and No buttons
                                     Get.defaultDialog(
                                       title: 'Confirm',
@@ -1417,8 +1381,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   @override
   void initState() {
     super.initState();
-    fetchLeaveData(); // Fetch data when the widget initializes
+    fetchLeaveData();
   }
+
   @override
   void dispose() {
     from.dispose();
@@ -2700,7 +2665,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
   Widget _phoneRecentLeaveTable(Size size) {
     return  Padding(
-      padding:  EdgeInsets.only(left: size.width * 0.030,top: size.height * 0.02),
+      padding:  EdgeInsets.only(left: size.width * 0.027,top: size.height * 0.02),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -2715,7 +2680,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             child: DataTable(
               headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.042,
               dataRowHeight: size.height * 0.040,
-              columnSpacing: size.width * 0.026,
+              columnSpacing: size.width * 0.022,
               columns: [
                 DataColumn(label: Text('Leave Type', style: phoneheaderTextStyle)),
                 DataColumn(label: Text('From', style: phoneheaderTextStyle)),
@@ -2776,7 +2741,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   Widget _phoneReviewTicketTable(Size size) {
     // Implement the table for Employee Review Ticket similarly
     return Padding(
-      padding: EdgeInsets.only(left: size.width * 0.017, top: size.height * 0.02),
+      padding: EdgeInsets.only(left: size.width * 0.015, top: size.height * 0.02),
       child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -3642,10 +3607,10 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           ],
                         ),
                       ),
-                      SizedBox(width: size.width * 0.235),
+                      SizedBox(width: size.width * 0.210),
                       Container(
-                        width: size.width * 0.093,
-                        height: size.height * 0.034,
+                        width: size.width * 0.106,
+                        height: size.height * 0.030,
                         color: Colors.white,
                         child: Material(
                           color: Colors.transparent,
@@ -3660,7 +3625,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'From',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
-                                padding: EdgeInsets.only(bottom: 0.5),
+                                padding: EdgeInsets.only(bottom: 0.5,left: 14),
                                 onPressed: () => _selectDate(context, from), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
@@ -3676,10 +3641,10 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: size.width * 0.018),
+                      SizedBox(width: size.width * 0.016),
                       Container(
-                        width: size.width * 0.093,
-                        height: size.height * 0.034,
+                        width: size.width * 0.106,
+                        height: size.height * 0.030,
                         color: Colors.white,
                         child: Material(
                           color: Colors.transparent,
@@ -3694,7 +3659,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               hintText: 'To',
                               hintStyle: TextStyle(fontSize: 12),
                               suffixIcon: IconButton(
-                              padding:   EdgeInsets.only(bottom: 0.5),
+                              padding:   EdgeInsets.only(bottom: 0.5,left: 14),
                                 onPressed: () => _selectDate(context, to), // Correct the onPressed
                                 icon: Icon(
                                   Icons.calendar_month,
@@ -4007,9 +3972,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       ],
                     ),
                   ),
-                  SizedBox(width: size.width * 0.155),
+                  SizedBox(width: size.width * 0.150),
                   Container(
-                    width: size.width * 0.170,
+                    width: size.width * 0.173,
                     height: size.height * 0.024,
                     color: Colors.white,
                     child: Material(
@@ -4017,7 +3982,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       child: TextField(
                         controller: from,
                         style: TextStyle(
-                          fontSize: 7.5, // Set a smaller font size for the picked date
+                          fontSize: 7, // Set a smaller font size for the picked date
                           color: Colors.black, // You can also control the color of the text
                         ),
                         decoration: InputDecoration(
@@ -4025,7 +3990,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           hintText: 'From',
                           hintStyle: TextStyle(fontSize: 9),
                           suffixIcon: IconButton(
-                            padding: EdgeInsets.only(bottom: 0.05,left: 10),
+                            padding: EdgeInsets.only(bottom: 0.05,left: 18),
                             onPressed: () => _selectDate(context, from), // Correct the onPressed
                             icon: Icon(
                               Icons.calendar_month,
@@ -4043,7 +4008,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                   SizedBox(width: size.width * 0.018),
                   Container(
-                    width: size.width * 0.170,
+                    width: size.width * 0.173,
                     height: size.height * 0.024,
                     color: Colors.white,
                     child: Material(
@@ -4051,7 +4016,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       child: TextField(
                         controller: to,
                         style: TextStyle(
-                          fontSize: 7.5, // Set a smaller font size for the picked date
+                          fontSize: 7, // Set a smaller font size for the picked date
                           color: Colors.black, // You can also control the color of the text
                         ),
                         decoration: InputDecoration(
@@ -4059,7 +4024,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           hintText: 'To',
                           hintStyle: TextStyle(fontSize: 9),
                           suffixIcon: IconButton(
-                            padding: EdgeInsets.only(bottom: 0.05,left: 10),
+                            padding: EdgeInsets.only(bottom: 0.05,left: 18),
                             onPressed: () => _selectDate(context, to), // Correct the onPressed
                             icon: Icon(
                               Icons.calendar_month,

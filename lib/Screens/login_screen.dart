@@ -1,18 +1,15 @@
 
 
-import 'package:amplify_api/amplify_api.dart';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
 import 'package:awe_project/Screens/dashboard_screen.dart';
-import 'package:awe_project/Screens/change_password_screen.dart';
 import 'package:awe_project/globals/my_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import '../models/CandidateApplicationForm.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -47,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
         print(userId);
         storeUserData(userId); // Store user ID locally
 
-        // Fetch candidate application data immediately upon signing in
-        // await fetchCandidateApplicationData();
+        // Fetch employee personal info immediately upon signing in
+        // await fetchEmployeePersonalInfo(context);
 
         Get.off(() => DashBoardScreeen()); // Navigate to dashboard
         return;
@@ -65,60 +62,62 @@ class _LoginScreenState extends State<LoginScreen> {
         print(userId);
         storeUserData(userId); // Store user ID locally
 
-        // Fetch candidate application data after successful sign in
-        // await fetchCandidateApplicationData();
+        // Fetch employee personal info after successful sign in
+        // await fetchEmployeePersonalInfo(context);
 
         Get.off(() => DashBoardScreeen()); // Navigate to dashboard
       }
     } on AuthException catch (e) {
-      _showErrorDialog(context, e.message);
+      _showErrorDialog(context, e.message); // Show error dialog if sign-in fails
     }
   }
 
-  Future<void> fetchCandidateApplicationData() async {
-    try {
-      // Get the stored user ID
-      String userId = getUserData() ?? '';
+  // Future<void> fetchEmployeePersonalInfo(BuildContext context) async {
+  //   try {
+  //     // Get the stored user ID
+  //     String userId = getUserData() ?? '';
+  //
+  //     // Create a new GetStorage instance inside the method
+  //     final box = GetStorage();
+  //
+  //     // Query the API to get employee personal details
+  //     final request = ModelQueries.list(
+  //       EmployeePersonalInfo.classType,
+  //       where: EmployeePersonalInfo.ID.eq(userId),
+  //     );
+  //
+  //     final response = await Amplify.API.query(request: request).response;
+  //     print(response);
+  //
+  //     if (response.errors.isNotEmpty) {
+  //       print('Errors: ${response.errors}');
+  //       _showErrorDialog(context, 'Failed to fetch personal information data.');
+  //       return;
+  //     }
+  //
+  //     List<EmployeePersonalInfo?> employeeInfos = response.data?.items ?? [];
+  //     print(employeeInfos);
+  //
+  //     if (employeeInfos.isNotEmpty && employeeInfos.first != null) {
+  //       var employeeInfo = employeeInfos.first;
+  //       print(employeeInfo);
+  //
+  //       // Store employee data locally for later use
+  //       box.write('name', employeeInfo?.name ?? 'N/A');
+  //       print(employeeInfo?.name);
+  //       box.write('email', employeeInfo?.email ?? 'N/A');
+  //       print(employeeInfo?.email);
+  //     } else {
+  //       _showErrorDialog(context, 'No data found for the user.');
+  //     }
+  //   } catch (e) {
+  //     print('Failed to fetch employee personal info: $e');
+  //     _showErrorDialog(context, 'An unexpected error occurred.');
+  //   }
+  // }
 
-      // Create a new GetStorage instance inside the method
-      final box = GetStorage();
 
-      // Query the API to get candidate application details
-      final request = ModelQueries.list(
-        CandidateApplicationForm.classType,
-        where: CandidateApplicationForm.ID.eq(userId), // Assuming ID is the user ID field
-      );
 
-      final response = await Amplify.API.query(request: request).response;
-      print(response);
-
-      if (response.errors.isNotEmpty) {
-        print('Errors: ${response.errors}');
-        _showErrorDialog(context, 'Failed to fetch application data.');
-        return;
-      }
-
-      List<CandidateApplicationForm?> candidateApplications = response.data?.items ?? [];
-      print(candidateApplications);
-
-      if (candidateApplications.isNotEmpty && candidateApplications.first != null) {
-        var candidate = candidateApplications.first;
-        print(candidate);
-
-        // Store candidate data locally for later use
-        box.write('name', candidate?.name ?? 'N/A');
-        print(candidate?.name);
-        box.write('email', candidate?.email ?? 'N/A');
-        print(candidate?.email);
-        box.write('contactNo', candidate?.contactNo ?? 'N/A');
-      } else {
-        _showErrorDialog(context, 'No data found for the user.');
-      }
-    } catch (e) {
-      print('Failed to fetch candidate data: $e');
-      _showErrorDialog(context, 'An unexpected error occurred.');
-    }
-  }
 
 
 
