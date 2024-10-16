@@ -556,7 +556,40 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                       style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
                                     ),
                                   ),
-                                requestContainer(context, departure, size.width * 0.090, size.height * 0.032),
+                                Container(
+                                  width: size.width * 0.093,
+                                  height: size.height * 0.034,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.grey.shade400,width: 1)
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: TextField(
+                                      controller: departure,
+                                      style: TextStyle(
+                                        fontSize: 11, // Set a smaller font size for the picked date
+                                        color: Colors.black, // You can also control the color of the text
+                                      ),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(left: 5, bottom: 16),
+                                        hintText: 'dd/mm/yy',
+                                        hintStyle: TextStyle(fontSize: 12),
+                                        suffixIcon: IconButton(
+                                          padding: EdgeInsets.only(bottom: 0.5,left: 8),
+                                          onPressed: () => _selectDate(context, departure), // Correct the onPressed
+                                          icon: Icon(
+                                            Icons.calendar_month,
+                                            size: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -578,7 +611,40 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                                       style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
                                     ),
                                   ),
-                                requestContainer(context, arrival, size.width * 0.090, size.height * 0.032),
+                                Container(
+                                  width: size.width * 0.093,
+                                  height: size.height * 0.034,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey.shade400,width: 1)
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: TextField(
+                                      controller: arrival,
+                                      style: TextStyle(
+                                        fontSize: 11, // Set a smaller font size for the picked date
+                                        color: Colors.black, // You can also control the color of the text
+                                      ),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(left: 5, bottom: 16),
+                                        hintText: 'dd/mm/yy',
+                                        hintStyle: TextStyle(fontSize: 12),
+                                        suffixIcon: IconButton(
+                                          padding: EdgeInsets.only(bottom: 0.5,left: 8),
+                                          onPressed: () => _selectDate(context, arrival), // Correct the onPressed
+                                          icon: Icon(
+                                            Icons.calendar_month,
+                                            size: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -740,6 +806,590 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             );
           },
         )
+      ),
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+    );
+  }
+
+  void _tabrequestDialog(BuildContext context) {
+    TextEditingController departure=TextEditingController();
+    TextEditingController arrival=TextEditingController();
+    TextEditingController destination=TextEditingController();
+    TextEditingController remarks=TextEditingController();
+
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        child: StatefulBuilder(
+          builder: (BuildContext context,StateSetter setDialogState ){
+            return Container(
+              padding: EdgeInsets.all(8),
+              width:  size.width * 0.455,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:BorderRadius.circular(5),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width:size.width * 0.155,),
+                      Text(
+                        "Request Ticket",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                      ),
+                      // SizedBox(width: size.width * 0.130,),
+                      // IconButton(onPressed: (){
+                      //   Navigator.pop(context);
+                      // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: size.height * 0.012,),
+                  Container(
+                    width: size.width * 0.35,
+                    height: size.height * 0.43,
+                    decoration: BoxDecoration(
+                        color: ticket
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: size.height * 0.030,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.032,),
+                            Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.012,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if ( departureError!= null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      departureError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                Container(
+                                  width: size.width * 0.105,
+                                  height: size.height * 0.0340,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey.shade400,width: 1)
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: TextField(
+                                      controller: departure,
+                                      style: TextStyle(
+                                        fontSize: 09, // Set a smaller font size for the picked date
+                                        color: Colors.black, // You can also control the color of the text
+                                      ),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                        hintText: 'dd/mm/yy',
+                                        hintStyle: TextStyle(fontSize: 10),
+                                        suffixIcon: IconButton(
+                                          padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                          onPressed: () => _selectDate(context, departure), // Correct the onPressed
+                                          icon: Icon(
+                                            Icons.calendar_month,
+                                            size: 12,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.032,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if ( arrivalError!= null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      arrivalError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                Container(
+                                  width: size.width * 0.105,
+                                  height: size.height * 0.030,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey.shade400,width: 1)
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: TextField(
+                                      controller: arrival,
+                                      style: TextStyle(
+                                        fontSize: 09, // Set a smaller font size for the picked date
+                                        color: Colors.black, // You can also control the color of the text
+                                      ),
+                                      textAlignVertical: TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                        hintText: 'dd/mm/yy',
+                                        hintStyle: TextStyle(fontSize: 10),
+                                        suffixIcon: IconButton(
+                                          padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                          onPressed: () => _selectDate(context, arrival), // Correct the onPressed
+                                          icon: Icon(
+                                            Icons.calendar_month,
+                                            size: 12,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.040,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if ( destinationError!= null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      destinationError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                requestContainer(context, destination, size.width * 0.105, size.height * 0.032),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.020,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.030,),
+                            Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                            SizedBox(width: size.width * 0.055,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if ( remarksError!= null)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                    child: Text(
+                                      remarksError!,
+                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                    ),
+                                  ),
+                                requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.035,),
+                        Row(
+                          children: [
+                            SizedBox(width: size.width * 0.125,),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: grey), // Outline border color
+                                borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                              ),
+                              child: MaterialButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                minWidth: size.width * 0.052, // Adjust width as needed
+                                height: size.height * 0.043, // Adjust height as needed
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                                ),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: size.width * 0.020,),
+                            MaterialButton(
+                              minWidth: size.width * 0.068,
+                              height: size.height * 0.048,
+                              onPressed: () async {
+                                // Validate all fields before applying
+                                if (validateField(setDialogState)) {
+                                  // Show confirmation popup with Yes and No buttons
+                                  Get.defaultDialog(
+                                    title: 'Confirm',
+                                    content: Text('Are you sure you want to apply?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back(); // Close the dialog
+                                        },
+                                        child: Text('No', style: TextStyle(color: Colors.red)),
+                                      ),
+                                      TextButton(
+                                        onPressed: ()  {
+                                          Get.back(); // Close the dialog first
+
+                                          // Proceed with creating the leave request
+                                          // This will show success/error dialogs based on the result
+                                        },
+                                        child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  // Show error alert dialog if fields are missing
+                                  Get.defaultDialog(
+                                    title: 'Error',
+                                    content: Text('Please fill all required fields.'),
+                                    confirmTextColor: Colors.white,
+                                    onConfirm: () {
+                                      Get.back(); // Close the dialog
+                                    },
+                                  );
+                                }
+                              },
+                              child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                              color: Colors.yellow,
+                              textColor: Colors.black,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height:size.height * 0.040,),
+
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
+    );
+  }
+
+  void _phonerequestDialog(BuildContext context) {
+    TextEditingController departure=TextEditingController();
+    TextEditingController arrival=TextEditingController();
+    TextEditingController destination=TextEditingController();
+    TextEditingController remarks=TextEditingController();
+
+    final Size size = MediaQuery.of(context).size;
+    Get.dialog(
+      Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: StatefulBuilder(
+            builder: (BuildContext context,StateSetter setDialogState ){
+              return Container(
+                padding: EdgeInsets.all(8),
+                width:  size.width * 0.535,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:BorderRadius.circular(5),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width:size.width * 0.155,),
+                        Text(
+                          "Request Ticket",
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                        ),
+                        // SizedBox(width: size.width * 0.130,),
+                        // IconButton(onPressed: (){
+                        //   Navigator.pop(context);
+                        // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
+                      ],
+                    ),
+                    Divider(),
+                    SizedBox(height: size.height * 0.012,),
+                    Container(
+                      width: size.width * 0.45,
+                      height: size.height * 0.40,
+                      decoration: BoxDecoration(
+                          color: ticket
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height: size.height * 0.030,),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.032,),
+                              Text('Departure Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                              SizedBox(width: size.width * 0.012,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if ( departureError!= null)
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                      child: Text(
+                                        departureError!,
+                                        style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                      ),
+                                    ),
+                                  Container(
+                                    width: size.width * 0.105,
+                                    height: size.height * 0.0340,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade400,width: 1)
+                                    ),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: TextField(
+                                        controller: departure,
+                                        style: TextStyle(
+                                          fontSize: 09, // Set a smaller font size for the picked date
+                                          color: Colors.black, // You can also control the color of the text
+                                        ),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                          hintText: 'dd/mm/yy',
+                                          hintStyle: TextStyle(fontSize: 10),
+                                          suffixIcon: IconButton(
+                                            padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                            onPressed: () => _selectDate(context, departure), // Correct the onPressed
+                                            icon: Icon(
+                                              Icons.calendar_month,
+                                              size: 12,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.020,),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.030,),
+                              Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                              SizedBox(width: size.width * 0.042,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if ( arrivalError!= null)
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                      child: Text(
+                                        arrivalError!,
+                                        style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                      ),
+                                    ),
+                                  Container(
+                                    width: size.width * 0.155,
+                                    height: size.height * 0.026,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.grey.shade400,width: 1)
+                                    ),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: TextField(
+                                        controller: arrival,
+                                        style: TextStyle(
+                                          fontSize: 7, // Set a smaller font size for the picked date
+                                          color: Colors.black, // You can also control the color of the text
+                                        ),
+                                        textAlignVertical: TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(left: 5, bottom: 17),
+                                          hintText: 'dd/mm/yy',
+                                          hintStyle: TextStyle(fontSize: 9),
+                                          suffixIcon: IconButton(
+                                            padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                            onPressed: () => _selectDate(context, arrival), // Correct the onPressed
+                                            icon: Icon(
+                                              Icons.calendar_month,
+                                              size: 10,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.020,),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.030,),
+                              Text('Destination',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                              SizedBox(width: size.width * 0.056,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if ( destinationError!= null)
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                      child: Text(
+                                        destinationError!,
+                                        style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                      ),
+                                    ),
+                                  requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.020,),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.030,),
+                              Text('Remarks',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
+                              SizedBox(width: size.width * 0.080,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if ( remarksError!= null)
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                      child: Text(
+                                        remarksError!,
+                                        style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                      ),
+                                    ),
+                                  requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: size.height * 0.035,),
+                          Row(
+                            children: [
+                              SizedBox(width: size.width * 0.135,),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: grey), // Outline border color
+                                  borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
+                                ),
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  minWidth: size.width * 0.050, // Adjust width as needed
+                                  height: size.height * 0.040, // Adjust height as needed
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(0), // Keep border radius consistent
+                                  ),
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: size.width * 0.030,),
+                              MaterialButton(
+                                minWidth: size.width * 0.125,
+                                height: size.height * 0.048,
+                                onPressed: () async {
+                                  // Validate all fields before applying
+                                  if (validateField(setDialogState)) {
+                                    // Show confirmation popup with Yes and No buttons
+                                    Get.defaultDialog(
+                                      title: 'Confirm',
+                                      content: Text('Are you sure you want to apply?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Get.back(); // Close the dialog
+                                          },
+                                          child: Text('No', style: TextStyle(color: Colors.red)),
+                                        ),
+                                        TextButton(
+                                          onPressed: ()  {
+                                            Get.back(); // Close the dialog first
+
+                                            // Proceed with creating the leave request
+                                            // This will show success/error dialogs based on the result
+                                          },
+                                          child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    // Show error alert dialog if fields are missing
+                                    Get.defaultDialog(
+                                      title: 'Error',
+                                      content: Text('Please fill all required fields.'),
+                                      confirmTextColor: Colors.white,
+                                      onConfirm: () {
+                                        Get.back(); // Close the dialog
+                                      },
+                                    );
+                                  }
+                                },
+                                child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
+                                color: Colors.yellow,
+                                textColor: Colors.black,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height:size.height * 0.010,),
+
+                  ],
+                ),
+              );
+            },
+          )
       ),
       barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
     );
@@ -4087,231 +4737,7 @@ void _tabrejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave) {
   );
 }
 
-void _tabrequestDialog(BuildContext context) {
-  TextEditingController departure=TextEditingController();
-  TextEditingController arrival=TextEditingController();
-  TextEditingController destination=TextEditingController();
-  TextEditingController remarks=TextEditingController();
 
-  final Size size = MediaQuery.of(context).size;
-  Get.dialog(
-    Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      child: StatefulBuilder(
-        builder: (BuildContext context,StateSetter setDialogState ){
-          return Container(
-          padding: EdgeInsets.all(8),
-          width:  size.width * 0.455,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius:BorderRadius.circular(5),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width:size.width * 0.155,),
-                  Text(
-                    "Request Ticket",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
-                  ),
-                  // SizedBox(width: size.width * 0.130,),
-                  // IconButton(onPressed: (){
-                  //   Navigator.pop(context);
-                  // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-                ],
-              ),
-              Divider(),
-              SizedBox(height: size.height * 0.012,),
-              Container(
-                width: size.width * 0.35,
-                height: size.height * 0.43,
-                decoration: BoxDecoration(
-                    color: ticket
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height * 0.030,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.032,),
-                        Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.012,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if ( departureError!= null)
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                child: Text(
-                                  departureError!,
-                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                ),
-                              ),
-                            requestContainer(context, departure, size.width * 0.105, size.height * 0.032),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.032,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if ( arrivalError!= null)
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                child: Text(
-                                  arrivalError!,
-                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                ),
-                              ),
-                            requestContainer(context, arrival, size.width * 0.105, size.height * 0.032),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.040,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if ( destinationError!= null)
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                child: Text(
-                                  destinationError!,
-                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                ),
-                              ),
-                            requestContainer(context, destination, size.width * 0.105, size.height * 0.032),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.020,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.030,),
-                        Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                        SizedBox(width: size.width * 0.055,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if ( remarksError!= null)
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                child: Text(
-                                  remarksError!,
-                                  style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                ),
-                              ),
-                            requestContainer(context, remarks, size.width * 0.170, size.height * 0.075),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.035,),
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.125,),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: grey), // Outline border color
-                            borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                          ),
-                          child: MaterialButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            minWidth: size.width * 0.052, // Adjust width as needed
-                            height: size.height * 0.043, // Adjust height as needed
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0), // Keep border radius consistent
-                            ),
-                            child: Text(
-                              'Cancel',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: black,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: size.width * 0.020,),
-                        MaterialButton(
-                          minWidth: size.width * 0.068,
-                          height: size.height * 0.048,
-                          onPressed: () async {
-                            // Validate all fields before applying
-                            if (validateField(setDialogState)) {
-                              // Show confirmation popup with Yes and No buttons
-                              Get.defaultDialog(
-                                title: 'Confirm',
-                                content: Text('Are you sure you want to apply?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Get.back(); // Close the dialog
-                                    },
-                                    child: Text('No', style: TextStyle(color: Colors.red)),
-                                  ),
-                                  TextButton(
-                                    onPressed: ()  {
-                                      Get.back(); // Close the dialog first
-
-                                      // Proceed with creating the leave request
-                                      // This will show success/error dialogs based on the result
-                                    },
-                                    child: Text('Yes', style: TextStyle(color: Colors.green)),
-                                  ),
-                                ],
-                              );
-                            } else {
-                              // Show error alert dialog if fields are missing
-                              Get.defaultDialog(
-                                title: 'Error',
-                                content: Text('Please fill all required fields.'),
-                                confirmTextColor: Colors.white,
-                                onConfirm: () {
-                                  Get.back(); // Close the dialog
-                                },
-                              );
-                            }
-                          },
-                          child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                          color: Colors.yellow,
-                          textColor: Colors.black,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-
-              SizedBox(height:size.height * 0.040,),
-
-            ],
-          ),
-          );
-        },
-      ),
-    ),
-    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
-  );
-}
 
 void _showErrorDialog(BuildContext context, String message) {
   showDialog(
@@ -5058,231 +5484,7 @@ void _phonerejectedDialog(BuildContext context, int rowIndex, LeaveStatus leave)
   );
 }
 
-void _phonerequestDialog(BuildContext context) {
-  TextEditingController departure=TextEditingController();
-  TextEditingController arrival=TextEditingController();
-  TextEditingController destination=TextEditingController();
-  TextEditingController remarks=TextEditingController();
 
-  final Size size = MediaQuery.of(context).size;
-  Get.dialog(
-    Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      child: StatefulBuilder(
-        builder: (BuildContext context,StateSetter setDialogState ){
-          return Container(
-            padding: EdgeInsets.all(8),
-            width:  size.width * 0.535,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius:BorderRadius.circular(5),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(width:size.width * 0.155,),
-                    Text(
-                      "Request Ticket",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
-                    ),
-                    // SizedBox(width: size.width * 0.130,),
-                    // IconButton(onPressed: (){
-                    //   Navigator.pop(context);
-                    // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
-                  ],
-                ),
-                Divider(),
-                SizedBox(height: size.height * 0.012,),
-                Container(
-                  width: size.width * 0.45,
-                  height: size.height * 0.40,
-                  decoration: BoxDecoration(
-                      color: ticket
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.height * 0.030,),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.032,),
-                          Text('Departure Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                          SizedBox(width: size.width * 0.012,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if ( departureError!= null)
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                  child: Text(
-                                    departureError!,
-                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                  ),
-                                ),
-                              requestContainer(context, departure, size.width * 0.145, size.height * 0.028),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.020,),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.030,),
-                          Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                          SizedBox(width: size.width * 0.042,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if ( arrivalError!= null)
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                  child: Text(
-                                    arrivalError!,
-                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                  ),
-                                ),
-                              requestContainer(context, arrival, size.width * 0.145, size.height * 0.028),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.020,),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.030,),
-                          Text('Destination',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                          SizedBox(width: size.width * 0.056,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if ( destinationError!= null)
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                  child: Text(
-                                    destinationError!,
-                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                  ),
-                                ),
-                              requestContainer(context, destination, size.width * 0.145, size.height * 0.028),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.020,),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.030,),
-                          Text('Remarks',style: TextStyle(color: black,fontSize: 12, fontFamily: 'Inter'),),
-                          SizedBox(width: size.width * 0.080,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if ( remarksError!= null)
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
-                                  child: Text(
-                                    remarksError!,
-                                    style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                  ),
-                                ),
-                              requestContainer(context, remarks, size.width * 0.190, size.height * 0.055),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.035,),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.135,),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: grey), // Outline border color
-                              borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                            ),
-                            child: MaterialButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              minWidth: size.width * 0.050, // Adjust width as needed
-                              height: size.height * 0.040, // Adjust height as needed
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0), // Keep border radius consistent
-                              ),
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.030,),
-                          MaterialButton(
-                            minWidth: size.width * 0.125,
-                            height: size.height * 0.048,
-                            onPressed: () async {
-                              // Validate all fields before applying
-                              if (validateField(setDialogState)) {
-                                // Show confirmation popup with Yes and No buttons
-                                Get.defaultDialog(
-                                  title: 'Confirm',
-                                  content: Text('Are you sure you want to apply?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Get.back(); // Close the dialog
-                                      },
-                                      child: Text('No', style: TextStyle(color: Colors.red)),
-                                    ),
-                                    TextButton(
-                                      onPressed: ()  {
-                                        Get.back(); // Close the dialog first
-
-                                        // Proceed with creating the leave request
-                                        // This will show success/error dialogs based on the result
-                                      },
-                                      child: Text('Yes', style: TextStyle(color: Colors.green)),
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                // Show error alert dialog if fields are missing
-                                Get.defaultDialog(
-                                  title: 'Error',
-                                  content: Text('Please fill all required fields.'),
-                                  confirmTextColor: Colors.white,
-                                  onConfirm: () {
-                                    Get.back(); // Close the dialog
-                                  },
-                                );
-                              }
-                            },
-                            child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                            color: Colors.yellow,
-                            textColor: Colors.black,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-
-                SizedBox(height:size.height * 0.010,),
-
-              ],
-            ),
-          );
-        },
-      )
-    ),
-    barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
-  );
-}
 
 void _phoneEditDialog(BuildContext context) {
   TextEditingController fullName=TextEditingController();
