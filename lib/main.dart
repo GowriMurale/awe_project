@@ -72,16 +72,15 @@ class _MyAppState extends State<MyApp> {
 //   CANCELED
 // }
 //
-// # type LeaveApplication @model {
-// id: ID!
+// type LeaveApplication @model {
+// empID: empID!
 // leaveType: String!
 // fromDate: AWSDateTime!
 // toDate: AWSDateTime!
 // days: double!
-// applyTo: String!
+// applyTo: [String!]!
 // reason: String!
 // medicalCertificate: String
-// status: LeaveStatus
 //
 //
 // # Supervisor Approval Details
@@ -95,13 +94,27 @@ class _MyAppState extends State<MyApp> {
 // managerRemarks: String
 //
 // # Employee Cancellation Details
-// employeeStatus: LeaveStatus
-// employeeDate: AWSDateTime
-// employeeRemarks: String
+// empStatus: LeaveStatus
+// empDate: AWSDateTime
+// empRemarks: String
 //
-// #Hr ticket Approval Details
-//  hrStatus : TicketStatus
-//  hrDate:AWSDateTime
-//  hrRemarks:String
-
-
+// }
+//
+//
+// enum TicketStatus {
+//   PENDING
+//   APPROVED
+//   REJECTED
+// }
+// type TicketRequest {
+// departureDate: AWSDateTime
+// arrivalDate: AWSDateTime
+// destination: String
+// remarks: String
+//
+// # HR Approval Details for Leave
+// hrStatus: TicketStatus
+// hrDate: AWSDateTime
+// hrRemarks: String
+//
+// }
