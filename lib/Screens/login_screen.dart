@@ -1,6 +1,7 @@
 
 
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:awe_project/Components/helper_class.dart';
@@ -10,6 +11,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import '../models/EmployeePersonalInfo.dart';
+import '../models/EmployeeWorkInfo.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -77,17 +81,12 @@ class _LoginScreenState extends State<LoginScreen> {
   //     // Get the stored user ID
   //     String userId = getUserData() ?? '';
   //
-  //     // Create a new GetStorage instance inside the method
+  //     // Create a new GetStorage instance
   //     final box = GetStorage();
   //
-  //     // Query the API to get employee personal details
-  //     final request = ModelQueries.list(
-  //       EmployeePersonalInfo.classType,
-  //       where: EmployeePersonalInfo.ID.eq(userId),
-  //     );
-  //
+  //     // Query the API to get all employee personal details
+  //     final request = ModelQueries.list(EmployeePersonalInfo.classType);
   //     final response = await Amplify.API.query(request: request).response;
-  //     print(response);
   //
   //     if (response.errors.isNotEmpty) {
   //       print('Errors: ${response.errors}');
@@ -96,27 +95,33 @@ class _LoginScreenState extends State<LoginScreen> {
   //     }
   //
   //     List<EmployeePersonalInfo?> employeeInfos = response.data?.items ?? [];
-  //     print(employeeInfos);
   //
-  //     if (employeeInfos.isNotEmpty && employeeInfos.first != null) {
-  //       var employeeInfo = employeeInfos.first;
-  //       print(employeeInfo);
+  //     if (employeeInfos.isNotEmpty) {
+  //       // Get the specific employee data by filtering with empID
+  //       EmployeePersonalInfo? employeeInfo = employeeInfos.firstWhere(
+  //             (e) => e?.empID == userIdController.text.trim(), // Use the entered empID to filter
+  //         orElse: () => null,
+  //       );
   //
-  //       // Store employee data locally for later use
-  //       box.write('name', employeeInfo?.name ?? 'N/A');
-  //       print(employeeInfo?.name);
-  //       box.write('email', employeeInfo?.email ?? 'N/A');
-  //       print(employeeInfo?.email);
+  //       if (employeeInfo != null) {
+  //         // Store employee data locally for later use
+  //         box.write('name', employeeInfo.name ?? 'N/A');
+  //         box.write('email', employeeInfo.email ?? 'N/A');
+  //
+  //         // You can store more details as needed
+  //         box.write('gender', employeeInfo.gender ?? 'N/A');
+  //         box.write('nationality', employeeInfo.nationality ?? 'N/A');
+  //       } else {
+  //         _showErrorDialog(context, 'No matching employee data found.');
+  //       }
   //     } else {
-  //       _showErrorDialog(context, 'No data found for the user.');
+  //       _showErrorDialog(context, 'No employee data found.');
   //     }
   //   } catch (e) {
   //     print('Failed to fetch employee personal info: $e');
   //     _showErrorDialog(context, 'An unexpected error occurred.');
   //   }
   // }
-
-
 
 
 

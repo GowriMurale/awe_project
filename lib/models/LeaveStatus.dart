@@ -21,6 +21,7 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
+import 'package:collection/collection.dart';
 
 
 /** This is an auto generated class representing the LeaveStatus type in your schema. */
@@ -32,8 +33,18 @@ class LeaveStatus extends amplify_core.Model {
   final amplify_core.TemporalDate? _fromDate;
   final amplify_core.TemporalDate? _toDate;
   final double? _days;
-  final String? _applyTo;
+  final List<String>? _applyTo;
   final String? _reason;
+  final String? _medicalCertificate;
+  final String? _supervisorStatus;
+  final amplify_core.TemporalDate? _supervisorDate;
+  final String? _supervisorRemarks;
+  final String? _managerStatus;
+  final amplify_core.TemporalDate? _managerDate;
+  final String? _managerRemarks;
+  final String? _empStatus;
+  final amplify_core.TemporalDate? _empDate;
+  final String? _empRemarks;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -115,17 +126,8 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
-  String get applyTo {
-    try {
-      return _applyTo!;
-    } catch(e) {
-      throw amplify_core.AmplifyCodeGenModelException(
-          amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion:
-            amplify_core.AmplifyExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString()
-          );
-    }
+  List<String>? get applyTo {
+    return _applyTo;
   }
   
   String get reason {
@@ -141,6 +143,46 @@ class LeaveStatus extends amplify_core.Model {
     }
   }
   
+  String? get medicalCertificate {
+    return _medicalCertificate;
+  }
+  
+  String? get supervisorStatus {
+    return _supervisorStatus;
+  }
+  
+  amplify_core.TemporalDate? get supervisorDate {
+    return _supervisorDate;
+  }
+  
+  String? get supervisorRemarks {
+    return _supervisorRemarks;
+  }
+  
+  String? get managerStatus {
+    return _managerStatus;
+  }
+  
+  amplify_core.TemporalDate? get managerDate {
+    return _managerDate;
+  }
+  
+  String? get managerRemarks {
+    return _managerRemarks;
+  }
+  
+  String? get empStatus {
+    return _empStatus;
+  }
+  
+  amplify_core.TemporalDate? get empDate {
+    return _empDate;
+  }
+  
+  String? get empRemarks {
+    return _empRemarks;
+  }
+  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -149,9 +191,9 @@ class LeaveStatus extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const LeaveStatus._internal({required this.id, required empID, required leaveType, required fromDate, required toDate, required days, required applyTo, required reason, createdAt, updatedAt}): _empID = empID, _leaveType = leaveType, _fromDate = fromDate, _toDate = toDate, _days = days, _applyTo = applyTo, _reason = reason, _createdAt = createdAt, _updatedAt = updatedAt;
+  const LeaveStatus._internal({required this.id, required empID, required leaveType, required fromDate, required toDate, required days, applyTo, required reason, medicalCertificate, supervisorStatus, supervisorDate, supervisorRemarks, managerStatus, managerDate, managerRemarks, empStatus, empDate, empRemarks, createdAt, updatedAt}): _empID = empID, _leaveType = leaveType, _fromDate = fromDate, _toDate = toDate, _days = days, _applyTo = applyTo, _reason = reason, _medicalCertificate = medicalCertificate, _supervisorStatus = supervisorStatus, _supervisorDate = supervisorDate, _supervisorRemarks = supervisorRemarks, _managerStatus = managerStatus, _managerDate = managerDate, _managerRemarks = managerRemarks, _empStatus = empStatus, _empDate = empDate, _empRemarks = empRemarks, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory LeaveStatus({String? id, required String empID, required String leaveType, required amplify_core.TemporalDate fromDate, required amplify_core.TemporalDate toDate, required double days, required String applyTo, required String reason}) {
+  factory LeaveStatus({String? id, required String empID, required String leaveType, required amplify_core.TemporalDate fromDate, required amplify_core.TemporalDate toDate, required double days, List<String>? applyTo, required String reason, String? medicalCertificate, String? supervisorStatus, amplify_core.TemporalDate? supervisorDate, String? supervisorRemarks, String? managerStatus, amplify_core.TemporalDate? managerDate, String? managerRemarks, String? empStatus, amplify_core.TemporalDate? empDate, String? empRemarks}) {
     return LeaveStatus._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       empID: empID,
@@ -159,8 +201,18 @@ class LeaveStatus extends amplify_core.Model {
       fromDate: fromDate,
       toDate: toDate,
       days: days,
-      applyTo: applyTo,
-      reason: reason);
+      applyTo: applyTo != null ? List<String>.unmodifiable(applyTo) : applyTo,
+      reason: reason,
+      medicalCertificate: medicalCertificate,
+      supervisorStatus: supervisorStatus,
+      supervisorDate: supervisorDate,
+      supervisorRemarks: supervisorRemarks,
+      managerStatus: managerStatus,
+      managerDate: managerDate,
+      managerRemarks: managerRemarks,
+      empStatus: empStatus,
+      empDate: empDate,
+      empRemarks: empRemarks);
   }
   
   bool equals(Object other) {
@@ -177,8 +229,18 @@ class LeaveStatus extends amplify_core.Model {
       _fromDate == other._fromDate &&
       _toDate == other._toDate &&
       _days == other._days &&
-      _applyTo == other._applyTo &&
-      _reason == other._reason;
+      DeepCollectionEquality().equals(_applyTo, other._applyTo) &&
+      _reason == other._reason &&
+      _medicalCertificate == other._medicalCertificate &&
+      _supervisorStatus == other._supervisorStatus &&
+      _supervisorDate == other._supervisorDate &&
+      _supervisorRemarks == other._supervisorRemarks &&
+      _managerStatus == other._managerStatus &&
+      _managerDate == other._managerDate &&
+      _managerRemarks == other._managerRemarks &&
+      _empStatus == other._empStatus &&
+      _empDate == other._empDate &&
+      _empRemarks == other._empRemarks;
   }
   
   @override
@@ -195,8 +257,18 @@ class LeaveStatus extends amplify_core.Model {
     buffer.write("fromDate=" + (_fromDate != null ? _fromDate!.format() : "null") + ", ");
     buffer.write("toDate=" + (_toDate != null ? _toDate!.format() : "null") + ", ");
     buffer.write("days=" + (_days != null ? _days!.toString() : "null") + ", ");
-    buffer.write("applyTo=" + "$_applyTo" + ", ");
+    buffer.write("applyTo=" + (_applyTo != null ? _applyTo!.toString() : "null") + ", ");
     buffer.write("reason=" + "$_reason" + ", ");
+    buffer.write("medicalCertificate=" + "$_medicalCertificate" + ", ");
+    buffer.write("supervisorStatus=" + "$_supervisorStatus" + ", ");
+    buffer.write("supervisorDate=" + (_supervisorDate != null ? _supervisorDate!.format() : "null") + ", ");
+    buffer.write("supervisorRemarks=" + "$_supervisorRemarks" + ", ");
+    buffer.write("managerStatus=" + "$_managerStatus" + ", ");
+    buffer.write("managerDate=" + (_managerDate != null ? _managerDate!.format() : "null") + ", ");
+    buffer.write("managerRemarks=" + "$_managerRemarks" + ", ");
+    buffer.write("empStatus=" + "$_empStatus" + ", ");
+    buffer.write("empDate=" + (_empDate != null ? _empDate!.format() : "null") + ", ");
+    buffer.write("empRemarks=" + "$_empRemarks" + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -204,7 +276,7 @@ class LeaveStatus extends amplify_core.Model {
     return buffer.toString();
   }
   
-  LeaveStatus copyWith({String? empID, String? leaveType, amplify_core.TemporalDate? fromDate, amplify_core.TemporalDate? toDate, double? days, String? applyTo, String? reason}) {
+  LeaveStatus copyWith({String? empID, String? leaveType, amplify_core.TemporalDate? fromDate, amplify_core.TemporalDate? toDate, double? days, List<String>? applyTo, String? reason, String? medicalCertificate, String? supervisorStatus, amplify_core.TemporalDate? supervisorDate, String? supervisorRemarks, String? managerStatus, amplify_core.TemporalDate? managerDate, String? managerRemarks, String? empStatus, amplify_core.TemporalDate? empDate, String? empRemarks}) {
     return LeaveStatus._internal(
       id: id,
       empID: empID ?? this.empID,
@@ -213,7 +285,17 @@ class LeaveStatus extends amplify_core.Model {
       toDate: toDate ?? this.toDate,
       days: days ?? this.days,
       applyTo: applyTo ?? this.applyTo,
-      reason: reason ?? this.reason);
+      reason: reason ?? this.reason,
+      medicalCertificate: medicalCertificate ?? this.medicalCertificate,
+      supervisorStatus: supervisorStatus ?? this.supervisorStatus,
+      supervisorDate: supervisorDate ?? this.supervisorDate,
+      supervisorRemarks: supervisorRemarks ?? this.supervisorRemarks,
+      managerStatus: managerStatus ?? this.managerStatus,
+      managerDate: managerDate ?? this.managerDate,
+      managerRemarks: managerRemarks ?? this.managerRemarks,
+      empStatus: empStatus ?? this.empStatus,
+      empDate: empDate ?? this.empDate,
+      empRemarks: empRemarks ?? this.empRemarks);
   }
   
   LeaveStatus copyWithModelFieldValues({
@@ -222,8 +304,18 @@ class LeaveStatus extends amplify_core.Model {
     ModelFieldValue<amplify_core.TemporalDate>? fromDate,
     ModelFieldValue<amplify_core.TemporalDate>? toDate,
     ModelFieldValue<double>? days,
-    ModelFieldValue<String>? applyTo,
-    ModelFieldValue<String>? reason
+    ModelFieldValue<List<String>>? applyTo,
+    ModelFieldValue<String>? reason,
+    ModelFieldValue<String?>? medicalCertificate,
+    ModelFieldValue<String?>? supervisorStatus,
+    ModelFieldValue<amplify_core.TemporalDate?>? supervisorDate,
+    ModelFieldValue<String?>? supervisorRemarks,
+    ModelFieldValue<String?>? managerStatus,
+    ModelFieldValue<amplify_core.TemporalDate?>? managerDate,
+    ModelFieldValue<String?>? managerRemarks,
+    ModelFieldValue<String?>? empStatus,
+    ModelFieldValue<amplify_core.TemporalDate?>? empDate,
+    ModelFieldValue<String?>? empRemarks
   }) {
     return LeaveStatus._internal(
       id: id,
@@ -233,7 +325,17 @@ class LeaveStatus extends amplify_core.Model {
       toDate: toDate == null ? this.toDate : toDate.value,
       days: days == null ? this.days : days.value,
       applyTo: applyTo == null ? this.applyTo : applyTo.value,
-      reason: reason == null ? this.reason : reason.value
+      reason: reason == null ? this.reason : reason.value,
+      medicalCertificate: medicalCertificate == null ? this.medicalCertificate : medicalCertificate.value,
+      supervisorStatus: supervisorStatus == null ? this.supervisorStatus : supervisorStatus.value,
+      supervisorDate: supervisorDate == null ? this.supervisorDate : supervisorDate.value,
+      supervisorRemarks: supervisorRemarks == null ? this.supervisorRemarks : supervisorRemarks.value,
+      managerStatus: managerStatus == null ? this.managerStatus : managerStatus.value,
+      managerDate: managerDate == null ? this.managerDate : managerDate.value,
+      managerRemarks: managerRemarks == null ? this.managerRemarks : managerRemarks.value,
+      empStatus: empStatus == null ? this.empStatus : empStatus.value,
+      empDate: empDate == null ? this.empDate : empDate.value,
+      empRemarks: empRemarks == null ? this.empRemarks : empRemarks.value
     );
   }
   
@@ -244,13 +346,23 @@ class LeaveStatus extends amplify_core.Model {
       _fromDate = json['fromDate'] != null ? amplify_core.TemporalDate.fromString(json['fromDate']) : null,
       _toDate = json['toDate'] != null ? amplify_core.TemporalDate.fromString(json['toDate']) : null,
       _days = (json['days'] as num?)?.toDouble(),
-      _applyTo = json['applyTo'],
+      _applyTo = json['applyTo']?.cast<String>(),
       _reason = json['reason'],
+      _medicalCertificate = json['medicalCertificate'],
+      _supervisorStatus = json['supervisorStatus'],
+      _supervisorDate = json['supervisorDate'] != null ? amplify_core.TemporalDate.fromString(json['supervisorDate']) : null,
+      _supervisorRemarks = json['supervisorRemarks'],
+      _managerStatus = json['managerStatus'],
+      _managerDate = json['managerDate'] != null ? amplify_core.TemporalDate.fromString(json['managerDate']) : null,
+      _managerRemarks = json['managerRemarks'],
+      _empStatus = json['empStatus'],
+      _empDate = json['empDate'] != null ? amplify_core.TemporalDate.fromString(json['empDate']) : null,
+      _empRemarks = json['empRemarks'],
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'empID': _empID, 'leaveType': _leaveType, 'fromDate': _fromDate?.format(), 'toDate': _toDate?.format(), 'days': _days, 'applyTo': _applyTo, 'reason': _reason, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'empID': _empID, 'leaveType': _leaveType, 'fromDate': _fromDate?.format(), 'toDate': _toDate?.format(), 'days': _days, 'applyTo': _applyTo, 'reason': _reason, 'medicalCertificate': _medicalCertificate, 'supervisorStatus': _supervisorStatus, 'supervisorDate': _supervisorDate?.format(), 'supervisorRemarks': _supervisorRemarks, 'managerStatus': _managerStatus, 'managerDate': _managerDate?.format(), 'managerRemarks': _managerRemarks, 'empStatus': _empStatus, 'empDate': _empDate?.format(), 'empRemarks': _empRemarks, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -262,6 +374,16 @@ class LeaveStatus extends amplify_core.Model {
     'days': _days,
     'applyTo': _applyTo,
     'reason': _reason,
+    'medicalCertificate': _medicalCertificate,
+    'supervisorStatus': _supervisorStatus,
+    'supervisorDate': _supervisorDate,
+    'supervisorRemarks': _supervisorRemarks,
+    'managerStatus': _managerStatus,
+    'managerDate': _managerDate,
+    'managerRemarks': _managerRemarks,
+    'empStatus': _empStatus,
+    'empDate': _empDate,
+    'empRemarks': _empRemarks,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -275,6 +397,16 @@ class LeaveStatus extends amplify_core.Model {
   static final DAYS = amplify_core.QueryField(fieldName: "days");
   static final APPLYTO = amplify_core.QueryField(fieldName: "applyTo");
   static final REASON = amplify_core.QueryField(fieldName: "reason");
+  static final MEDICALCERTIFICATE = amplify_core.QueryField(fieldName: "medicalCertificate");
+  static final SUPERVISORSTATUS = amplify_core.QueryField(fieldName: "supervisorStatus");
+  static final SUPERVISORDATE = amplify_core.QueryField(fieldName: "supervisorDate");
+  static final SUPERVISORREMARKS = amplify_core.QueryField(fieldName: "supervisorRemarks");
+  static final MANAGERSTATUS = amplify_core.QueryField(fieldName: "managerStatus");
+  static final MANAGERDATE = amplify_core.QueryField(fieldName: "managerDate");
+  static final MANAGERREMARKS = amplify_core.QueryField(fieldName: "managerRemarks");
+  static final EMPSTATUS = amplify_core.QueryField(fieldName: "empStatus");
+  static final EMPDATE = amplify_core.QueryField(fieldName: "empDate");
+  static final EMPREMARKS = amplify_core.QueryField(fieldName: "empRemarks");
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "LeaveStatus";
     modelSchemaDefinition.pluralName = "LeaveStatuses";
@@ -324,13 +456,74 @@ class LeaveStatus extends amplify_core.Model {
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: LeaveStatus.APPLYTO,
-      isRequired: true,
-      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+      isRequired: false,
+      isArray: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.collection, ofModelName: amplify_core.ModelFieldTypeEnum.string.name)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
       key: LeaveStatus.REASON,
       isRequired: true,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.MEDICALCERTIFICATE,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.SUPERVISORSTATUS,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.SUPERVISORDATE,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.SUPERVISORREMARKS,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.MANAGERSTATUS,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.MANAGERDATE,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.MANAGERREMARKS,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.EMPSTATUS,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.EMPDATE,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.date)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: LeaveStatus.EMPREMARKS,
+      isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     

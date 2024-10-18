@@ -1,39 +1,80 @@
-type PersonalDetails @model @auth(rules: [{allow: public}]) {
+type TicketRequest @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  icNo: String
-  icExpiry: String
-  icColour: String
-  passportNo: String
+  empID: String!
+  departureDate: AWSDate
+  arrivalDate: AWSDate
+  destination: String
+  remarks: String
+  hrStatus: String
+  hrDate: AWSDate
+  hrRemarks: String
+  }
+
+type EducationDetails @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  empID: String!
+  crime: String
+  crimeDescription: String
+  emergencyContact: [String!]
+  experience: String!
+  employeeStatement: String!
+  description: String
+  disease: String
+  diseaseDescription: String
+  liquor: String
+  liquorDescription: String
+  noticePeriod: String!
+  perInterviewStatus: String!
+  perInterviewDescription: String
+  referees: [String]
+  relatives: [String]
+  salaryException: String
+  supportInfo: String
+  uploadResume: String!
+  uploadCertificate: String!
+  uploadPassport: String!
+}
+
+type PersonalDetails @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  empID: String!
+  age: Int!
   alternateNo: String
+  agent: String
+  contactNo: String!
+  countryOfBirth: String!
+  contractType: String!
+  chinese: String
+  dateOfBirth: String!
+  drivingLicense: String
+  email: String!
+  employeeType: String!
+  educationDetails: [String!]
+  familyDetails: [String]
+  gender: String!
+  bruneiIcNo: String
+  bruneiIcExpiry: String
+  bruneiIcColour: String
+  marital: String!
+  name: String!
+  nationality: String!
+  otherNationality: String
+  otherRace: String
+  otherReligion: String
+  passportNo: String
   passportIssued: String
   passportExpiry: String
   passportDestination: String
-  contactNo: String!
   presentAddress: String!
-}
-
-type ApplicantDetails @model @auth(rules: [{allow: public}]) {
-  id: ID!
+  permanentAddress: String!
   profilePhoto: String!
-  agent: String
   position: String!
-  contractType: String!
-  name: String!
-  chinese: String
-  gender: String!
-  age: Int!
-  email: String!
-  countryOfBirth: String!
-  nationality: String!
-  otherNationality: String
-  marital: String!
   race: String!
-  otherRace: String
-  religion: String!
-  otherReligion: String
+  religion: String! 
+  workExperience: [String]
 }
 
-type EmployeePersonalDoc @model @auth(rules: [{allow: public}]) {
+type EmployeePersonalDoc @model @auth(rules: [{ allow: public }]) {
   id: ID!
   passportNo: String
   passportIssued: String
@@ -55,7 +96,7 @@ type EmployeePersonalDoc @model @auth(rules: [{allow: public}]) {
   empID: String!
 }
 
-type EmployeePersonalInfo @model @auth(rules: [{allow: public}]) {
+type EmployeePersonalInfo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   empID: String!
   name: String!
@@ -75,7 +116,7 @@ type EmployeePersonalInfo @model @auth(rules: [{allow: public}]) {
   EmployeePersonalDoc: EmployeePersonalDoc @hasOne
 }
 
-type LabourDependentPass @model @auth(rules: [{allow: public}]) {
+type LabourDependentPass @model @auth(rules: [{ allow: public }]) {
   id: ID!
   passportLocation: String!
   reEntryVisaApplication: String!
@@ -92,7 +133,7 @@ type LabourDependentPass @model @auth(rules: [{allow: public}]) {
   empID: String!
 }
 
-type LabourMedicalInfo @model @auth(rules: [{allow: public}]) {
+type LabourMedicalInfo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   overseasMedicalDate: String!
   overseasMedicalExpiry: String!
@@ -103,7 +144,7 @@ type LabourMedicalInfo @model @auth(rules: [{allow: public}]) {
   empID: String!
 }
 
-type LocalMobilization @model @auth(rules: [{allow: public}]) {
+type LocalMobilization @model @auth(rules: [{ allow: public }]) {
   id: ID!
   tempID: String
   mobSignDate: AWSDate
@@ -119,7 +160,7 @@ type LocalMobilization @model @auth(rules: [{allow: public}]) {
   cvecFile: String
 }
 
-type LabourWorkPass @model @auth(rules: [{allow: public}]) {
+type LabourWorkPass @model @auth(rules: [{ allow: public }]) {
   id: ID!
   empID: String!
   workPermitType: String!
@@ -134,7 +175,7 @@ type LabourWorkPass @model @auth(rules: [{allow: public}]) {
   LabourDependentPass: LabourDependentPass @hasOne
 }
 
-type LeaveWorkInfo @model @auth(rules: [{allow: public}]) {
+type LeaveWorkInfo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   leavePassageEntitlement: String!
   annualLeaveEntitlement: String!
@@ -153,7 +194,7 @@ type LeaveWorkInfo @model @auth(rules: [{allow: public}]) {
   empID: String!
 }
 
-type TerminationWorkInfo @model @auth(rules: [{allow: public}]) {
+type TerminationWorkInfo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   resignationDate: String!
   terminationDate: String!
@@ -169,7 +210,7 @@ type TerminationWorkInfo @model @auth(rules: [{allow: public}]) {
   empID: String!
 }
 
-type EmployeeWorkInfo @model @auth(rules: [{allow: public}]) {
+type EmployeeWorkInfo @model @auth(rules: [{ allow: public }]) {
   id: ID!
   empID: String!
   dateOfJoin: String!
@@ -196,7 +237,7 @@ type EmployeeWorkInfo @model @auth(rules: [{allow: public}]) {
   LeaveWorkInfo: LeaveWorkInfo @hasOne
 }
 
-type InterviewScheduleSchema @model @auth(rules: [{allow: public}]) {
+type InterviewScheduleSchema @model @auth(rules: [{ allow: public }]) {
   id: ID!
   date: AWSDate!
   time: String!
@@ -209,14 +250,14 @@ type InterviewScheduleSchema @model @auth(rules: [{allow: public}]) {
   department: String
 }
 
-type EmployeeNonLocalAcco @model @auth(rules: [{allow: public}]) {
+type EmployeeNonLocalAcco @model @auth(rules: [{ allow: public }]) {
   id: ID!
   accommodation: String!
   accommodationAddress: String!
   empID: String!
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   empID: String!
   selectType: String!
@@ -224,18 +265,28 @@ type User @model @auth(rules: [{allow: public}]) {
   password: String!
 }
 
-type LeaveStatus @model @auth(rules: [{allow: public}]) {
+type LeaveStatus @model @auth(rules: [{ allow: public }]) {
   id: ID!
   empID: ID!
   leaveType: String!
   fromDate: AWSDate!
   toDate: AWSDate!
   days: Float!
-  applyTo: String!
+  applyTo: [String!]
   reason: String!
+  medicalCertificate: String
+  supervisorStatus: String
+  supervisorDate: AWSDate
+  supervisorRemarks: String
+  managerStatus: String
+  managerDate: AWSDate
+  managerRemarks: String
+  empStatus: String
+  empDate: AWSDate
+  empRemarks: String
 }
 
-type SampleTest1 @model @auth(rules: [{allow: public}]) {
+type SampleTest1 @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   email: String
@@ -244,4 +295,3 @@ type SampleTest1 @model @auth(rules: [{allow: public}]) {
   password: String
   tempID: String
 }
- 

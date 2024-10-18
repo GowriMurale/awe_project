@@ -202,7 +202,7 @@ class EmployeePersonalInfo extends amplify_core.Model {
     return _malaysianIcExpiry;
   }
   
- awe_epd.EmployeePersonalDoc? get EmployeePersonalDoc {
+  awe_epd.EmployeePersonalDoc? get EmployeePersonalDoc {
     return _EmployeePersonalDoc;
   }
   
@@ -302,7 +302,7 @@ class EmployeePersonalInfo extends amplify_core.Model {
     return buffer.toString();
   }
   
-  EmployeePersonalInfo copyWith({String? empID, String? name, String? gender, String? dateOfBirth, String? email, String? nationality, String? otherNationality, String? religion, String? marital, String? race, String? bruneiIcNo, String? bruneiIcColour, String? bruneiIcExpiry, String? malaysianIcNumber, String? malaysianIcExpiry, awe_epd.EmployeePersonalDoc? EmployeePersonalDoc, String? employeePersonalInfoEmployeePersonalDocId}) {
+  EmployeePersonalInfo copyWith({String? empID, String? name, String? gender, String? dateOfBirth, String? email, String? nationality, String? otherNationality, String? religion, String? marital, String? race, String? bruneiIcNo, String? bruneiIcColour, String? bruneiIcExpiry, String? malaysianIcNumber, String? malaysianIcExpiry,awe_epd.EmployeePersonalDoc? EmployeePersonalDoc, String? employeePersonalInfoEmployeePersonalDocId}) {
     return EmployeePersonalInfo._internal(
       id: id,
       empID: empID ?? this.empID,
@@ -385,7 +385,7 @@ class EmployeePersonalInfo extends amplify_core.Model {
       _EmployeePersonalDoc = json['EmployeePersonalDoc'] != null
         ? json['EmployeePersonalDoc']['serializedData'] != null
           ? awe_epd.EmployeePersonalDoc.fromJson(new Map<String, dynamic>.from(json['EmployeePersonalDoc']['serializedData']))
-          : awe_epd.EmployeePersonalDoc.fromJson(new Map<String, dynamic>.from(json['EmployeePersonalDoc']))
+          :awe_epd.EmployeePersonalDoc.fromJson(new Map<String, dynamic>.from(json['EmployeePersonalDoc']))
         : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null,

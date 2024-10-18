@@ -308,11 +308,11 @@ class EmployeeWorkInfo extends amplify_core.Model {
     }
   }
   
- awe_twi.TerminationWorkInfo? get TerminationWorkInfo {
+  awe_twi.TerminationWorkInfo? get TerminationWorkInfo {
     return _TerminationWorkInfo;
   }
   
- awe_lwi.LeaveWorkInfo? get LeaveWorkInfo {
+  awe_lwi.LeaveWorkInfo? get LeaveWorkInfo {
     return _LeaveWorkInfo;
   }
   
@@ -552,12 +552,12 @@ class EmployeeWorkInfo extends amplify_core.Model {
       _TerminationWorkInfo = json['TerminationWorkInfo'] != null
         ? json['TerminationWorkInfo']['serializedData'] != null
           ? awe_twi.TerminationWorkInfo.fromJson(new Map<String, dynamic>.from(json['TerminationWorkInfo']['serializedData']))
-          : awe_twi.TerminationWorkInfo.fromJson(new Map<String, dynamic>.from(json['TerminationWorkInfo']))
+          :awe_twi.TerminationWorkInfo.fromJson(new Map<String, dynamic>.from(json['TerminationWorkInfo']))
         : null,
       _LeaveWorkInfo = json['LeaveWorkInfo'] != null
         ? json['LeaveWorkInfo']['serializedData'] != null
-          ?awe_lwi.LeaveWorkInfo.fromJson(new Map<String, dynamic>.from(json['LeaveWorkInfo']['serializedData']))
-          :awe_lwi.LeaveWorkInfo.fromJson(new Map<String, dynamic>.from(json['LeaveWorkInfo']))
+          ? awe_lwi.LeaveWorkInfo.fromJson(new Map<String, dynamic>.from(json['LeaveWorkInfo']['serializedData']))
+          : awe_lwi.LeaveWorkInfo.fromJson(new Map<String, dynamic>.from(json['LeaveWorkInfo']))
         : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null,

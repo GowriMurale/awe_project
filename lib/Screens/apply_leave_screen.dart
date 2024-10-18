@@ -118,19 +118,19 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
       // Validate Leave Type
       if (_selectedLeaveType == null || _selectedLeaveType!.isEmpty) {
-        leaveTypeError = '* This field is required';
+        leaveTypeError = '* Please Select Type';
         isValid = false;
       }
 
       // Validate From Date
       if (from.text.isEmpty) {
-        fromDateError = '* This field is required';
+        fromDateError = '* Please select Date';
         isValid = false;
       }
 
       // Validate To Date
       if (to.text.isEmpty) {
-        toDateError = '* This field is required';
+        toDateError = '* Please select Date';
         isValid = false;
       }
 
@@ -142,7 +142,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
       // Validate Reason
       if (reason.text.isEmpty) {
-        reasonError = '* This field is required';
+        reasonError = '* Please give your reason';
         isValid = false;
       }
     });
@@ -150,6 +150,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
     return isValid;
   }
 
+  List<String> applyTo = [];
+  List<String> _getApplyToList() {
+    applyTo.clear(); // Clear the list to avoid duplications
+
+    // Check if Manager checkbox is selected
+    if (isManager) {
+      applyTo.add('Manager');
+    }
+
+    // Check if Superior checkbox is selected
+    if (isSuperior) {
+      applyTo.add('Superior');
+    }
+
+    return applyTo; // Return the list of selected roles
+  }
 
   Future<void> applyForLeave() async {
     // Get current user's ID
@@ -192,12 +208,17 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
       final leaveStatus = LeaveStatus(
         empID: userId, // Use current user's ID
         leaveType: _selectedLeaveType!,
-        fromDate: TemporalDate(fromDate),
-        toDate: TemporalDate(toDate),
+        fromDate: TemporalDate(fromDate), // Parse the date correctly
+        toDate: TemporalDate(toDate),     // Parse the date correctly
         days: numberOfDays,
-        applyTo: isManager ? 'Manager' : 'Superior',
+        applyTo: _getApplyToList(), // List of who to apply to (Manager, Superior, or both)
         reason: reason.text,
+        medicalCertificate: null, // If you're not using it yet, keep it null
+        supervisorStatus: null, // Status will be updated later
+        managerStatus: null,    // Status will be updated later
+        // Other fields you can set later, or keep as null for now
       );
+
       final request = ModelMutations.create(leaveStatus);
       final response = await Amplify.API.mutate(request: request).response;
       print(response);
@@ -240,21 +261,29 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   }
 
 
+  String? fileName; // Variable to hold the file name
+
   void _pickFile() async {
     print('File picker started...');
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      // Specify allowed file types (images and PDFs)
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      );
 
       if (result != null) {
         PlatformFile file = result.files.first;
 
-        print(file.name);
-        print(file.bytes);
-        print(file.size);
-        print(file.extension);
-        print(file.path);
-      }
-       else {
+        setState(() {
+          fileName = file.name; // Update the file name state
+        });
+
+        print('File name: ${file.name}');
+        print('File size: ${file.size}');
+        print('File extension: ${file.extension}');
+        print('File path: ${file.path}');
+      } else {
         print('No file selected');
       }
     } catch (e) {
@@ -396,9 +425,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                             Text('Badge #:',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
                             SizedBox(width: size.width * 0.038,),
                             myContainer(context, '0001'),
-                            SizedBox(width: size.width * 0.088,),
+                            SizedBox(width: size.width * 0.083,),
                             Text('Name:',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
-                            SizedBox(width: size.width * 0.049,),
+                            SizedBox(width: size.width * 0.055,),
                             myContainer(context, 'Adinin'),
                           ],
                         ),
@@ -409,9 +438,9 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                             Text('Dept/Dev:',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
                             SizedBox(width: size.width * 0.033,),
                             myContainer(context, 'Xyz'),
-                            SizedBox(width: size.width * 0.085,),
+                            SizedBox(width: size.width * 0.082,),
                             Text('Job Title:',style: TextStyle(fontFamily: 'Inter',fontSize: 15,color: black,fontWeight: FontWeight.bold),),
-                            SizedBox(width: size.width * 0.040,),
+                            SizedBox(width: size.width * 0.044,),
                             myContainer(context, 'Worker'),
                           ],
                         ),
@@ -470,6 +499,10 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                         onChanged: (String? newValue) {
                                           setState(() {
                                             _selectedLeaveType = newValue;
+                                            // Clear error message if a valid selection is made
+                                            if (newValue != null && newValue.isNotEmpty) {
+                                              leaveTypeError = null; // Clear error when valid selection is made
+                                            }
                                           });
                                         },
                                         items: _leaveTypes.map((String leaveType) {
@@ -493,7 +526,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                           size: 25,
                                           color: Colors.black,
                                         ),
-                                        isExpanded: true, // Ensures the dropdown takes full width
+                                        isExpanded: true,
                                       ),
                                     ),
                                   ),
@@ -585,12 +618,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                               controller: from,
                               errorMessage: fromDateError,
                               onTap: (context) => _selectDate(context, from, true),
+                              onFieldTapped: () {
+                                setState(() {
+                                  fromDateError = null; // Clear the error message when tapping the field
+                                });
+                              },
                             ),
                             SizedBox(width: size.width * 0.040),
                             DateField(
                               controller: to,
                               errorMessage: toDateError,
                               onTap: (context) => _selectDate(context, to, false),
+                              onFieldTapped: () {
+                                setState(() {
+                                  toDateError = null; // Clear the error message when tapping the field
+                                });
+                              },
                             ),
                             SizedBox(width: size.width * 0.046),
                             // Days TextField
@@ -625,7 +668,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                   style: TextStyle(color: Colors.red, fontSize: 12), // Styling for error message
                                 ),
                               ),
-                    
+
                             Row(
                               children: [
                                 SizedBox(width: size.width * 0.06),
@@ -651,23 +694,43 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 SizedBox(width: size.width * 0.015),
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: Container(
-                                    width: size.width * 0.014,
-                                    height: size.height * 0.023,
-                                    color: Colors.white,
-                                    child: Checkbox(
-                                      value: isManager,
-                                      onChanged: (bool? newValue) {
-                                        setState(() {
-                                          isManager = newValue ?? false;
-                                        });// Validate all fields when user selects/deselects
-                                      },
-                                      side: BorderSide(
-                                        color: Colors.grey.shade500, // Light grey border color
-                                        width: 1,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isManager = !isManager; // Toggle the value
+                                        // Update the applyTo list
+                                        if (isManager) {
+                                          applyTo.add('Manager'); // Add Manager if selected
+                                        } else {
+                                          applyTo.remove('Manager'); // Remove Manager if deselected
+                                        }
+                                        applyToError = null; // Clear the error message when interacting
+                                      });
+                                    },
+                                    child: Container(
+                                      width: size.width * 0.014,
+                                      height: size.height * 0.023,
+                                      color: Colors.white,
+                                      child: Checkbox(
+                                        value: isManager,
+                                        onChanged: (bool? newValue) {
+                                          setState(() {
+                                            isManager = newValue ?? false;
+                                            if (isManager) {
+                                              applyTo.add('Manager');
+                                            } else {
+                                              applyTo.remove('Manager');
+                                            }
+                                            applyToError = null; // Clear the error message
+                                          });
+                                        },
+                                        side: BorderSide(
+                                          color: Colors.grey.shade500, // Light grey border color
+                                          width: 1,
+                                        ),
+                                        activeColor: Colors.blue, // Optional: change checkbox color when selected
+                                        checkColor: Colors.white, // Optional: checkmark color
                                       ),
-                                      activeColor: Colors.blue, // Optional: change checkbox color when selected
-                                      checkColor: Colors.white, // Optional: checkmark color
                                     ),
                                   ),
                                 ),
@@ -684,31 +747,51 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 SizedBox(width: size.width * 0.015),
                                 Transform.scale(
                                   scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: Container(
-                                    width: size.width * 0.014,
-                                    height: size.height * 0.023,
-                                    color: Colors.white,
-                                    child: Checkbox(
-                                      value: isSuperior,
-                                      onChanged: (bool? newValue) {
-                                        setState(() {
-                                          isSuperior = newValue ?? false;
-                                        });
-                                        // Validate all fields when user selects/deselects
-                                      },
-                                      side: BorderSide(
-                                        color: Colors.grey.shade500,
-                                        width: 1,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isSuperior = !isSuperior; // Toggle the value
+                                        // Update the applyTo list
+                                        if (isSuperior) {
+                                          applyTo.add('Superior'); // Add Superior if selected
+                                        } else {
+                                          applyTo.remove('Superior'); // Remove Superior if deselected
+                                        }
+                                        applyToError = null; // Clear the error message when interacting
+                                      });
+                                    },
+                                    child: Container(
+                                      width: size.width * 0.014,
+                                      height: size.height * 0.023,
+                                      color: Colors.white,
+                                      child: Checkbox(
+                                        value: isSuperior,
+                                        onChanged: (bool? newValue) {
+                                          setState(() {
+                                            isSuperior = newValue ?? false;
+                                            if (isSuperior) {
+                                              applyTo.add('Superior');
+                                            } else {
+                                              applyTo.remove('Superior');
+                                            }
+                                            applyToError = null; // Clear the error message
+                                          });
+                                        },
+                                        side: BorderSide(
+                                          color: Colors.grey.shade500,
+                                          width: 1,
+                                        ),
+                                        activeColor: Colors.blue,
+                                        checkColor: Colors.white,
                                       ),
-                                      activeColor: Colors.blue,
-                                      checkColor: Colors.white,
                                     ),
                                   ),
                                 ),
                               ],
-                            ),
+                            )
                           ],
                         ),
+
                         SizedBox(height: size.height * 0.028,),
                         Row(
                           children: [
@@ -725,41 +808,50 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                           ],
                         ),
                         SizedBox(height: size.height * 0.010,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.14),
-                            Container(
-                                width: size.width * 0.14,
-                                height: size.height * 0.040,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                    border: Border.all(color: Colors.grey.shade400,width: 1)
+                    Row(
+                      children: [
+                        SizedBox(width: size.width * 0.14),
+                        Container(
+                          width: size.width * 0.14,
+                          height: size.height * 0.040,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey.shade400, width: 1),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: size.width * 0.004),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  fileName != null ? fileName! : 'Upload Medical Certificate', // Display file name or placeholder text
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 12,
+                                    color: fileName != null ? Colors.black : Colors.grey, // Change color based on whether file is selected
+                                  ),
+                                  overflow: TextOverflow.ellipsis, // Ensure long file names are truncated
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(width: size.width * 0.004),
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: Text('Upload Medical Certificate',style: TextStyle(fontFamily: 'Inter',fontSize: 12,color: Colors.grey),)),
-                                    SizedBox(width: size.width * 0.012),
-                                    Spacer(), // Space between text and icon
-                                    Transform.translate( // Adjust the icon position with Transform.translate
-                                      offset: Offset(1, -3), // Adjust the vertical offset as needed
-                                      child: IconButton(
-                                        onPressed: (){
-                                          _pickFile();
-                                        },
-                                        icon: Icon(Icons.file_upload_outlined,size: 21,color: black,),
-                    
-                                      ),
-                                    ),
-                                  ],
-                                )
-                            )
-                          ],
-                        ),
-                    
+                              ),
+                              SizedBox(width: size.width * 0.012),
+                              Spacer(),
+                              Transform.translate(
+                                offset: Offset(1, -3),
+                                child: IconButton(
+                                  onPressed: _pickFile,
+                                  icon: Icon(
+                                    Icons.file_upload_outlined,
+                                    size: 21,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                         SizedBox(height: size.height * 0.030,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start, // Align error message properly
@@ -791,13 +883,13 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                       style: TextStyle(color: Colors.red, fontSize: 12), // Error text styling
                                     ),
                                   ),
-                    
+
                                 Container(
                                   width: size.width * 0.3, // Specify the width of the TextField
                                   height: size.height * 0.10,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
-                                    border: Border.all(color:Colors.grey.shade400,width: 1),
+                                    border: Border.all(color: Colors.grey.shade400, width: 1),
                                   ),
                                   child: TextField(
                                     controller: reason,
@@ -805,16 +897,23 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                     maxLines: null, // Allows the TextField to expand vertically
                                     expands: true, // Allows the TextField content to fill the available space
                                     textAlignVertical: TextAlignVertical.top, // Centers text vertically
+                                    onChanged: (text) {
+                                      // Clear the error message when the user types in the TextField
+                                      setState(() {
+                                        reasonError = null;
+                                      });
+                                    },
                                     decoration: InputDecoration(
                                       hintText: 'Text Here',
                                       hintStyle: TextStyle(color: Colors.grey),
                                       contentPadding: EdgeInsets.only(top: size.height * 0.015, left: size.width * 0.010), // Padding inside the TextField
-                                     border: InputBorder.none
+                                      border: InputBorder.none,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
+
                           ],
                         ),
                     

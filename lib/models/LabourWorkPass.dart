@@ -158,7 +158,7 @@ class LabourWorkPass extends amplify_core.Model {
     return _remarks;
   }
   
-  awe_lmi.LabourMedicalInfo? get LabourMedicalInfo {
+ awe_lmi.LabourMedicalInfo? get LabourMedicalInfo {
     return _LabourMedicalInfo;
   }
   
@@ -184,7 +184,7 @@ class LabourWorkPass extends amplify_core.Model {
   
   const LabourWorkPass._internal({required this.id, required empID, required workPermitType, required arrivalStampingExpiry, required employmentPassEndorsement, required immigrationDeptDate, required employmentPassExpiry, required employmentPassStatus, labourUploadDoc, remarks, LabourMedicalInfo, LabourDependentPass, createdAt, updatedAt, labourWorkPassLabourMedicalInfoId, labourWorkPassLabourDependentPassId}): _empID = empID, _workPermitType = workPermitType, _arrivalStampingExpiry = arrivalStampingExpiry, _employmentPassEndorsement = employmentPassEndorsement, _immigrationDeptDate = immigrationDeptDate, _employmentPassExpiry = employmentPassExpiry, _employmentPassStatus = employmentPassStatus, _labourUploadDoc = labourUploadDoc, _remarks = remarks, _LabourMedicalInfo = LabourMedicalInfo, _LabourDependentPass = LabourDependentPass, _createdAt = createdAt, _updatedAt = updatedAt, _labourWorkPassLabourMedicalInfoId = labourWorkPassLabourMedicalInfoId, _labourWorkPassLabourDependentPassId = labourWorkPassLabourDependentPassId;
   
-  factory LabourWorkPass({String? id, required String empID, required String workPermitType, required String arrivalStampingExpiry, required String employmentPassEndorsement, required String immigrationDeptDate, required String employmentPassExpiry, required String employmentPassStatus, List<String>? labourUploadDoc, String? remarks,awe_lmi.LabourMedicalInfo? LabourMedicalInfo,awe_ldp.LabourDependentPass? LabourDependentPass, String? labourWorkPassLabourMedicalInfoId, String? labourWorkPassLabourDependentPassId}) {
+  factory LabourWorkPass({String? id, required String empID, required String workPermitType, required String arrivalStampingExpiry, required String employmentPassEndorsement, required String immigrationDeptDate, required String employmentPassExpiry, required String employmentPassStatus, List<String>? labourUploadDoc, String? remarks,awe_lmi.LabourMedicalInfo? LabourMedicalInfo, awe_ldp.LabourDependentPass? LabourDependentPass, String? labourWorkPassLabourMedicalInfoId, String? labourWorkPassLabourDependentPassId}) {
     return LabourWorkPass._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       empID: empID,
@@ -253,7 +253,7 @@ class LabourWorkPass extends amplify_core.Model {
     return buffer.toString();
   }
   
-  LabourWorkPass copyWith({String? empID, String? workPermitType, String? arrivalStampingExpiry, String? employmentPassEndorsement, String? immigrationDeptDate, String? employmentPassExpiry, String? employmentPassStatus, List<String>? labourUploadDoc, String? remarks, awe_lmi.LabourMedicalInfo? LabourMedicalInfo, awe_ldp.LabourDependentPass? LabourDependentPass, String? labourWorkPassLabourMedicalInfoId, String? labourWorkPassLabourDependentPassId}) {
+  LabourWorkPass copyWith({String? empID, String? workPermitType, String? arrivalStampingExpiry, String? employmentPassEndorsement, String? immigrationDeptDate, String? employmentPassExpiry, String? employmentPassStatus, List<String>? labourUploadDoc, String? remarks,awe_lmi.LabourMedicalInfo? LabourMedicalInfo,awe_ldp.LabourDependentPass? LabourDependentPass, String? labourWorkPassLabourMedicalInfoId, String? labourWorkPassLabourDependentPassId}) {
     return LabourWorkPass._internal(
       id: id,
       empID: empID ?? this.empID,
@@ -318,12 +318,12 @@ class LabourWorkPass extends amplify_core.Model {
       _LabourMedicalInfo = json['LabourMedicalInfo'] != null
         ? json['LabourMedicalInfo']['serializedData'] != null
           ? awe_lmi.LabourMedicalInfo.fromJson(new Map<String, dynamic>.from(json['LabourMedicalInfo']['serializedData']))
-          :awe_lmi.LabourMedicalInfo.fromJson(new Map<String, dynamic>.from(json['LabourMedicalInfo']))
+          : awe_lmi.LabourMedicalInfo.fromJson(new Map<String, dynamic>.from(json['LabourMedicalInfo']))
         : null,
       _LabourDependentPass = json['LabourDependentPass'] != null
         ? json['LabourDependentPass']['serializedData'] != null
-          ? awe_ldp.LabourDependentPass.fromJson(new Map<String, dynamic>.from(json['LabourDependentPass']['serializedData']))
-          : awe_ldp.LabourDependentPass.fromJson(new Map<String, dynamic>.from(json['LabourDependentPass']))
+          ?awe_ldp.LabourDependentPass.fromJson(new Map<String, dynamic>.from(json['LabourDependentPass']['serializedData']))
+          :awe_ldp.LabourDependentPass.fromJson(new Map<String, dynamic>.from(json['LabourDependentPass']))
         : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null,
@@ -455,7 +455,7 @@ class LabourWorkPass extends amplify_core.Model {
       key: LabourWorkPass.LABOURDEPENDENTPASS,
       isRequired: false,
       ofModelName: 'LabourDependentPass',
-      associatedKey: awe_ldp.LabourDependentPass.ID
+      associatedKey:awe_ldp.LabourDependentPass.ID
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(

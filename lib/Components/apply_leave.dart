@@ -212,7 +212,7 @@ class _DesktopLeaveState extends State<DesktopLeave> {
         fromDate: TemporalDate(fromDate),
         toDate: TemporalDate(toDate),
         days: numberOfDays,
-        applyTo: isManager ? 'Manager' : 'Superior',
+        // applyTo: isManager ? 'Manager' : 'Superior',
         reason: reason.text,
       );
       final request = ModelMutations.create(leaveStatus);
