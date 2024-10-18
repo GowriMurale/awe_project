@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'Screens/signup_dummy.dart';
+
 import 'amplifyconfiguration.dart';
 import 'globals/navigation_bar.dart';
 import 'models/ModelProvider.dart';
+
 
 
 

@@ -1,0 +1,247 @@
+type PersonalDetails @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  icNo: String
+  icExpiry: String
+  icColour: String
+  passportNo: String
+  alternateNo: String
+  passportIssued: String
+  passportExpiry: String
+  passportDestination: String
+  contactNo: String!
+  presentAddress: String!
+}
+
+type ApplicantDetails @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  profilePhoto: String!
+  agent: String
+  position: String!
+  contractType: String!
+  name: String!
+  chinese: String
+  gender: String!
+  age: Int!
+  email: String!
+  countryOfBirth: String!
+  nationality: String!
+  otherNationality: String
+  marital: String!
+  race: String!
+  otherRace: String
+  religion: String!
+  otherReligion: String
+}
+
+type EmployeePersonalDoc @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  passportNo: String
+  passportIssued: String
+  passportExpiry: String
+  passportDestination: String
+  contactNo: String!
+  address: String!
+  employeeBadgeNumber: String!
+  sapNumber: String!
+  nationalCategory: String!
+  countryOfOrigin: String!
+  otherCountryOfOrigin: String
+  educationLevel: String!
+  academicTechnicalQualification: String!
+  nextOfKin: [String!]
+  inductionBriefing: String!
+  previousEmployment: String!
+  previousEmploymentPeriod: String!
+  empID: String!
+}
+
+type EmployeePersonalInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  name: String!
+  gender: String!
+  dateOfBirth: String!
+  email: String!
+  nationality: String!
+  otherNationality: String
+  religion: String!
+  marital: String!
+  race: String!
+  bruneiIcNo: String
+  bruneiIcColour: String
+  bruneiIcExpiry: String
+  malaysianIcNumber: String
+  malaysianIcExpiry: String
+  EmployeePersonalDoc: EmployeePersonalDoc @hasOne
+}
+
+type LabourDependentPass @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  passportLocation: String!
+  reEntryVisaApplication: String!
+  immigrationApprovalDate: String!
+  reEntryVisaExpiry: String!
+  airTicketStatus: String!
+  dependentName: String!
+  dependentPassportNumber: String!
+  dependentPassportExpiy: String!
+  relation: String!
+  labourDepositPaidBy: String!
+  labourDepositReceiptNumber: String!
+  labourDepositAmount: String!
+  empID: String!
+}
+
+type LabourMedicalInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  overseasMedicalDate: String!
+  overseasMedicalExpiry: String!
+  bruhimsRegistrationDate: String!
+  bruhimsRegistrationNumber: String!
+  bruneiMedicalAppointmentDate: String!
+  bruneiMedicalExpiry: String!
+  empID: String!
+}
+
+type LocalMobilization @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  tempID: String
+  mobSignDate: AWSDate
+  mobFile: String
+  paafApproveDate: AWSDate
+  paafFile: String
+  loiIssueDate: AWSDate
+  loiAcceptDate: AWSDate
+  loiDeclineDate: AWSDate
+  declineReason: String
+  loiFile: String
+  cvecApproveDate: AWSDate
+  cvecFile: String
+}
+
+type LabourWorkPass @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  workPermitType: String!
+  arrivalStampingExpiry: String!
+  employmentPassEndorsement: String!
+  immigrationDeptDate: String!
+  employmentPassExpiry: String!
+  employmentPassStatus: String!
+  labourUploadDoc: [String!]
+  remarks: String
+  LabourMedicalInfo: LabourMedicalInfo @hasOne
+  LabourDependentPass: LabourDependentPass @hasOne
+}
+
+type LeaveWorkInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  leavePassageEntitlement: String!
+  annualLeaveEntitlement: String!
+  annualLeaveEffectDate: String!
+  sickLeaveEntitlement: String!
+  effectiveDateOfSickLeave: String!
+  positionRevision: String!
+  revisionSalaryPackage: String!
+  leavePassageEntitlementRevision: String!
+  effectiveDateOfLeavePassage: String!
+  revisionAnnualLeave: String!
+  annualEntitlementeffectiveDate: String!
+  contractEffectDate: String!
+  contractOfEmployee: String!
+  remarksWorkInfo: String
+  empID: String!
+}
+
+type TerminationWorkInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  resignationDate: String!
+  terminationDate: String!
+  terminationNoticeProbation: String!
+  terminationNoticeConfirmation: String!
+  resignationNoticeProbation: String!
+  resignationNoticeConfirmation: String!
+  reasonOfResignation: String!
+  reasonOfTermination: String!
+  destinationOfEntitlement: String!
+  durationPeriodEntitlement: String!
+  dateOfEntitlement: String!
+  empID: String!
+}
+
+type EmployeeWorkInfo @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  dateOfJoin: String!
+  department: String
+  workPosition: String
+  upgradePosition: String!
+  jobDescription: String!
+  skillPool: String!
+  workStatus: String!
+  contractStartDate: String!
+  contractEndDate: String!
+  contractPeriodStatus: String!
+  ProbationaryStartDate: String!
+  ProbationaryEndDate: String!
+  normalWorkingHours: String!
+  normalWorkingWeek: String!
+  salaryType: String!
+  normalWorkingMonth: String
+  employmentWorkStatus: String!
+  jobCategory: String!
+  otherJobCategory: String
+  upgradeDate: String!
+  TerminationWorkInfo: TerminationWorkInfo @hasOne
+  LeaveWorkInfo: LeaveWorkInfo @hasOne
+}
+
+type InterviewScheduleSchema @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  date: AWSDate!
+  time: String!
+  venue: String!
+  interviewType: String!
+  interviewer: String!
+  message: String
+  tempID: String!
+  candidateStatus: String
+  department: String
+}
+
+type EmployeeNonLocalAcco @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  accommodation: String!
+  accommodationAddress: String!
+  empID: String!
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: String!
+  selectType: String!
+  setPermissions: [String]
+  password: String!
+}
+
+type LeaveStatus @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  empID: ID!
+  leaveType: String!
+  fromDate: AWSDate!
+  toDate: AWSDate!
+  days: Float!
+  applyTo: String!
+  reason: String!
+}
+
+type SampleTest1 @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  email: String
+  gender: String
+  empID: String
+  password: String
+  tempID: String
+}
+ 
