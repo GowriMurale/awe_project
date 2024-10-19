@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -11,6 +13,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import '../models/LeaveStatus.dart';
+import '../models/TicketRequest.dart';
 import 'apply_leave_screen.dart';
 import 'login_screen.dart';
 class DashBoardScreeen extends StatefulWidget {
@@ -150,7 +153,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                 ),
               ),
-
               SizedBox(height:size.height * 0.005,),
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -406,47 +408,14 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     );
   }
 
-  String? departureError;
-  String? arrivalError;
-  String? destinationError;
-  String? remarksError;
+
 
   TextEditingController departure=TextEditingController();
   TextEditingController arrival=TextEditingController();
   TextEditingController destination=TextEditingController();
   TextEditingController remarks=TextEditingController();
 
-  bool _validateField(StateSetter setDialogState) {
-    bool isValid = true;
 
-    // Reset all error messages
-    setDialogState(() {
-      departureError = null;
-      arrivalError = null;
-      destinationError = null;
-      remarksError = null;
-    });
-
-    // Validate each field
-    if (departure.text.isEmpty) {
-      setDialogState(() => departureError = '* Please select date');
-      isValid = false;
-    }
-    if (arrival.text.isEmpty) {
-      setDialogState(() => arrivalError = '* Please select date');
-      isValid = false;
-    }
-    if (destination.text.isEmpty) {
-      setDialogState(() => destinationError = '* This field is required');
-      isValid = false;
-    }
-    if (remarks.text.isEmpty) {
-      setDialogState(() => remarksError = '* This field is required');
-      isValid = false;
-    }
-
-    return isValid;
-  }
 
   Future<void> _selectedDate(BuildContext context, TextEditingController controller, String fieldType) async {
     final DateTime today = DateTime.now();
@@ -484,6 +453,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       ),
       child: TextField(
         controller: controller,
+        style: TextStyle(fontSize: 13),
         decoration: InputDecoration(
           hintStyle: TextStyle(fontSize: 10, color: Colors.grey.shade400),
           contentPadding: EdgeInsets.all(5),
@@ -491,36 +461,227 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           border: InputBorder.none,
         ),
         textAlignVertical: TextAlignVertical.center,
-        onChanged: (value) {
-          if (value.isNotEmpty) {
-            // Invoke setDialogState to update the error
-            setDialogState(() {
-              destinationError = null; // Clear the error message
-            });
-          }
-        },
+
+
       ),
     );
   }
 
+  List<TicketRequest> ticketRequests = [];
+  List<TicketRequest?> filteredTicketRequests = [];
+  bool isLoading = true;
+
+  Future<void> applyTicketRequest(String departureText, String arrivalText, String destinationText, String remarksText) async {
+    // Get current user's ID
+    String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+
+    // Validate input fields
+    if (departureText.isEmpty || arrivalText.isEmpty || destinationText.isEmpty || remarksText.isEmpty) {
+      // Show validation error dialog
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('Please fill all required fields.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back(); // Close the dialog
+        },
+      );
+      return;
+    }
+
+    DateTime? fromDate;
+    DateTime? toDate;
+    try {
+      fromDate = DateFormat('dd/MM/yyyy').parse(departureText);
+      toDate = DateFormat('dd/MM/yyyy').parse(arrivalText); // Ensure this matches your input field
+    } catch (e) {
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('Invalid date format. Please use dd/MM/yyyy.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back();
+        },
+      );
+      return;
+    }
+
+    if (fromDate == null || toDate == null || fromDate.isAfter(toDate)) {
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('Invalid date selection. Please check the from and to dates.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back(); // Close the dialog
+        },
+      );
+      return;
+    }
+
+
+    // Submit the ticket request
+    final ticketRequest = TicketRequest(
+      empID: userId, // Use current user's ID
+      departureDate: TemporalDate(fromDate),
+      arrivalDate: TemporalDate(toDate),
+      destination: destinationText,
+      remarks: remarksText,
+      hrStatus: null,
+    );
+
+    final request = ModelMutations.create(ticketRequest);
+    final response = await Amplify.API.mutate(request: request).response;
+    print(response);
+
+    // Close loading dialog
+    Get.back(); // Close loading dialog
+
+    if (response.errors.isNotEmpty || response.data == null) {
+      // Show error dialog if mutation failed
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('Failed to submit the ticket request. Please try again.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          Get.back();
+        },
+      );
+    } else {
+      // Success feedback
+      Get.defaultDialog(
+        title: 'Success',
+        content: Text('Ticket request submitted successfully.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () {
+          // Clear the fields or take other actions as needed
+          // For example, you might want to reset the input fields here.
+          Get.back(); // Close the dialog
+        },
+      );
+    }
+  }
+
+  Future<void> fetchTicketRequests() async {
+    try {
+      // Get the current user's ticket requests
+      String userId = await Amplify.Auth.getCurrentUser().then((user) => user.userId);
+
+      final request = ModelQueries.list(
+        TicketRequest.classType,
+        where: TicketRequest.EMPID.eq(userId), // Fetch tickets for the current user
+      );
+
+      final response = await Amplify.API.query(request: request).response;
+
+      // Check for errors in the response
+      if (response.errors.isNotEmpty || response.data == null) {
+        Get.defaultDialog(
+          title: 'Error',
+          content: Text('Failed to fetch the ticket requests. Please try again.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () => Get.back(),
+        );
+        return;
+      }
+
+      // If successful, process the data
+      setState(() {
+        ticketRequests = response.data!.items.where((ticket) => ticket != null).cast<TicketRequest>().toList();
+        filteredTicketRequests = List.from(ticketRequests); // Initially show all ticket requests
+        isLoading = false;
+      });
+
+      if (ticketRequests.isEmpty) {
+        Get.defaultDialog(
+          title: 'No Requests',
+          content: Text('No ticket requests found.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () => Get.back(),
+        );
+      }
+    } catch (e) {
+      // Handle general errors
+      setState(() {
+        isLoading = false;
+      });
+      Get.defaultDialog(
+        title: 'Error',
+        content: Text('An error occurred. Please try again.'),
+        confirmTextColor: Colors.white,
+        onConfirm: () => Get.back(),
+      );
+    }
+  }
+
+
+
+
   void _requestDialog(BuildContext context) {
-    TextEditingController departure=TextEditingController();
-    TextEditingController arrival=TextEditingController();
-    TextEditingController destination=TextEditingController();
-    TextEditingController remarks=TextEditingController();
+    // Define TextEditingControllers for each field
+    TextEditingController departure = TextEditingController();
+    TextEditingController arrival = TextEditingController();
+    TextEditingController destination = TextEditingController();
+    TextEditingController remarks = TextEditingController();
+
+    // Define variables to hold error messages for each field
+    String? departureError;
+    String? arrivalError;
+    String? destinationError;
+    String? remarksError;
 
     final Size size = MediaQuery.of(context).size;
+
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         child: StatefulBuilder(
-          builder: (BuildContext context,StateSetter setDialogState ){
+          builder: (BuildContext context, StateSetter setDialogState) {
+            // Function to validate all fields
+            void validateFields() {
+              setDialogState(() {
+                departureError = departure.text.isEmpty ? 'This field is required' : null;
+                arrivalError = arrival.text.isEmpty ? 'This field is required' : null;
+                destinationError = destination.text.isEmpty ? 'This field is required' : null;
+                remarksError = remarks.text.isEmpty ? 'This field is required' : null;
+              });
+            }
+
+            // Function to clear error when user starts typing
+            void clearErrorOnChange(TextEditingController controller, String? errorField, String fieldName) {
+              controller.addListener(() {
+                setDialogState(() {
+                  if (controller.text.isNotEmpty) {
+                    switch (fieldName) {
+                      case 'departure':
+                        departureError = null;
+                        break;
+                      case 'arrival':
+                        arrivalError = null;
+                        break;
+                      case 'destination':
+                        destinationError = null;
+                        break;
+                      case 'remarks':
+                        remarksError = null;
+                        break;
+                    }
+                  }
+                });
+              });
+            }
+
+            // Attach listeners to each field to dynamically clear the error
+            clearErrorOnChange(departure, departureError, 'departure');
+            clearErrorOnChange(arrival, arrivalError, 'arrival');
+            clearErrorOnChange(destination, destinationError, 'destination');
+            clearErrorOnChange(remarks, remarksError, 'remarks');
+
             return Container(
               padding: EdgeInsets.all(8),
-              width:  size.width * 0.425,
+              width: size.width * 0.425,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius:BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -528,313 +689,275 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width:size.width * 0.155,),
+                      SizedBox(width: size.width * 0.155),
                       Text(
                         "Request Ticket",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,fontFamily:  'Inter'),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Inter'),
                       ),
-                      // SizedBox(width: size.width * 0.130,),
-                      // IconButton(onPressed: (){
-                      //   Navigator.pop(context);
-                      // }, icon: Icon(Icons.cancel_outlined,size: 25,color: black,))
                     ],
                   ),
                   Divider(),
-                  SizedBox(height: size.height * 0.012,),
-                  Container(
-                    width: size.width * 0.30,
-                    height: size.height * 0.43,
-                    decoration: BoxDecoration(
-                        color: ticket
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: size.height * 0.030,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.032,),
-                            Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                            SizedBox(width: size.width * 0.010,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (departureError != null) // Show error if exists
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding for error text
-                                    child: Text(
-                                      departureError!,
-                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                    ),
-                                  ),
-                                Container(
-                                  width: size.width * 0.090,
-                                  height: size.height * 0.034,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey.shade400, width: 1),
-                                  ),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: TextField(
-                                      controller: departure, // Use departure controller
-                                      style: TextStyle(
-                                        fontSize: 9, // Smaller font size for the date
-                                        color: Colors.black, // Text color
-                                      ),
-                                      textAlignVertical: TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(left: 5, bottom: 19),
-                                        hintText: 'dd/mm/yy',
-                                        hintStyle: TextStyle(fontSize: 10),
-                                        suffixIcon: IconButton(
-                                          padding: EdgeInsets.only(bottom: 0.5, left: 10),
-                                          onPressed: () => _selectedDate(context, departure,'departure'), // Date picker for departure
-                                          icon: Icon(
-                                            Icons.calendar_month,
-                                            size: 12,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      onChanged: (value) {
-                                        // If the input is not empty, clear the error
-                                        if (value.isNotEmpty) {
-                                          setState(() {
-                                            departureError = null;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.020,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.030,),
-                            Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                            SizedBox(width: size.width * 0.022,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (arrivalError != null) // Show error if exists
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 2), // Adjust padding for error text
-                                    child: Text(
-                                      arrivalError!,
-                                      style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
-                                    ),
-                                  ),
-                                Container(
-                                  width: size.width * 0.090,
-                                  height: size.height * 0.034,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey.shade400, width: 1),
-                                  ),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: TextField(
-                                      controller: arrival, // Use arrival controller
-                                      style: TextStyle(
-                                        fontSize: 9, // Smaller font size for the date
-                                        color: Colors.black, // Text color
-                                      ),
-                                      textAlignVertical: TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding: EdgeInsets.only(left: 5, bottom: 19),
-                                        hintText: 'dd/mm/yy',
-                                        hintStyle: TextStyle(fontSize: 10),
-                                        suffixIcon: IconButton(
-                                          padding: EdgeInsets.only(bottom: 0.5, left: 10),
-                                          onPressed: () => _selectedDate(context, arrival,'arrival'), // Date picker for arrival
-                                          icon: Icon(
-                                            Icons.calendar_month,
-                                            size: 12,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                      onChanged: (value) {
-                                        // If the input is not empty, clear the error
-                                        if (value.isNotEmpty) {
-                                          setState(() {
-                                            arrivalError = null;
-                                          });
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.020,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.030,),
-                            Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                            SizedBox(width: size.width * 0.029,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (destinationError != null)
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 2),
-                                    child: Text(
-                                      destinationError!,
-                                      style: TextStyle(color: Colors.red, fontSize: 9),
-                                    ),
-                                  ),
-                                requestContainer(context, destination, size.width * 0.090, size.height * 0.034,setDialogState),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.020,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.030,),
-                            Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
-                            SizedBox(width: size.width * 0.039,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (remarksError != null)
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 2),
-                                    child: Text(
-                                      remarksError!,
-                                      style: TextStyle(color: Colors.red, fontSize: 9),
-                                    ),
-                                  ),
-                                Container(
-                                  width: size.width * 0.160,
-                                  height: size.height * 0.075,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey.shade400, width: 1),
-                                  ),
-                                  child: TextField(
-                                    controller: remarks,
-                                    decoration: InputDecoration(
-                                      hintText: 'Text Here',
-                                      hintStyle: TextStyle(fontSize: 10, color: Colors.grey.shade400),
-                                      contentPadding: EdgeInsets.all(5),
-                                      isDense: true, // Make the field more compact
-                                      border: InputBorder.none,
-                                    ),
-                                    textAlignVertical: TextAlignVertical.center,
-                                    onChanged: (value) {
-                                      if (value.isNotEmpty) {
-                                        setDialogState(() {
-                                          remarksError = null; // Clear error message when user inputs valid text
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: size.height * 0.035,),
-                        Row(
-                          children: [
-                            SizedBox(width: size.width * 0.095,),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: grey), // Outline border color
-                                borderRadius: BorderRadius.circular(0), // Adjust the border radius as needed
-                              ),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                minWidth: size.width * 0.052, // Adjust width as needed
-                                height: size.height * 0.043, // Adjust height as needed
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0), // Keep border radius consistent
-                                ),
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: size.width * 0.020,),
-                            MaterialButton(
-                              minWidth: size.width * 0.068,
-                              height: size.height * 0.048,
-                              onPressed: () async {
-                                // Validate all fields before applying
-                                if (_validateField(setDialogState)) {
-                                  // Show confirmation popup with Yes and No buttons
-                                  Get.defaultDialog(
-                                    title: 'Confirm',
-                                    content: Text('Are you sure you want to apply?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back(); // Close the dialog
-                                        },
-                                        child: Text('No', style: TextStyle(color: Colors.red)),
-                                      ),
-                                      TextButton(
-                                        onPressed: ()  {
-                                          Get.back(); // Close the dialog first
+                  SizedBox(height: size.height * 0.012),
+                 Container(
+                   width: size.width * 0.35,
+                   height: size.height * 0.43,
+                   decoration: BoxDecoration(
+                       color: ticket
+                   ),
+                   child: Column(
+                     children: [
+                       Row(
+                         children: [
+                           SizedBox(width: size.width * 0.032,),
+                           Text('Departure Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                           SizedBox(width: size.width * 0.012,),
+                           Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               if ( departureError!= null)
+                                 Padding(
+                                   padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                   child: Text(
+                                     departureError!,
+                                     style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                   ),
+                                 ),
+                               Container(
+                                 width: size.width * 0.105,
+                                 height: size.height * 0.0340,
+                                 decoration: BoxDecoration(
+                                     color: Colors.white,
+                                     border: Border.all(color: Colors.grey.shade400,width: 1)
+                                 ),
+                                 child: Material(
+                                   color: Colors.transparent,
+                                   child: TextField(
+                                     controller: departure,
+                                     style: TextStyle(
+                                       fontSize: 09, // Set a smaller font size for the picked date
+                                       color: Colors.black, // You can also control the color of the text
+                                     ),
+                                     textAlignVertical: TextAlignVertical.center,
+                                     decoration: InputDecoration(
+                                       border: InputBorder.none,
+                                       contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                       hintText: 'dd/mm/yy',
+                                       hintStyle: TextStyle(fontSize: 10),
+                                       suffixIcon: IconButton(
+                                         padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                         onPressed: () => _selectDate(context, departure), // Correct the onPressed
+                                         icon: Icon(
+                                           Icons.calendar_month,
+                                           size: 12,
+                                           color: Colors.black,
+                                         ),
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: size.height * 0.020),
 
-                                          // Proceed with creating the leave request
-                                          // This will show success/error dialogs based on the result
-                                        },
-                                        child: Text('Yes', style: TextStyle(color: Colors.green)),
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  // Show error alert dialog if fields are missing
-                                  Get.defaultDialog(
-                                    title: 'Error',
-                                    content: Text('Please fill all required fields.'),
-                                    confirmTextColor: Colors.white,
-                                    onConfirm: () {
-                                      Get.back(); // Close the dialog
-                                    },
-                                  );
-                                }
-                              },
-                              child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
-                              color: Colors.yellow,
-                              textColor: Colors.black,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                       // Arrival Date Field with Error
+                       Row(
+                         children: [
+                           SizedBox(width: size.width * 0.030,),
+                           Text('Arrival  Date ',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                           SizedBox(width: size.width * 0.032,),
+                           Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               if ( arrivalError!= null)
+                                 Padding(
+                                   padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                   child: Text(
+                                     arrivalError!,
+                                     style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                   ),
+                                 ),
+                               Container(
+                                 width: size.width * 0.105,
+                                 height: size.height * 0.030,
+                                 decoration: BoxDecoration(
+                                     color: Colors.white,
+                                     border: Border.all(color: Colors.grey.shade400,width: 1)
+                                 ),
+                                 child: Material(
+                                   color: Colors.transparent,
+                                   child: TextField(
+                                     controller: arrival,
+                                     style: TextStyle(
+                                       fontSize: 09, // Set a smaller font size for the picked date
+                                       color: Colors.black, // You can also control the color of the text
+                                     ),
+                                     textAlignVertical: TextAlignVertical.center,
+                                     decoration: InputDecoration(
+                                       border: InputBorder.none,
+                                       contentPadding: EdgeInsets.only(left: 5, bottom: 19),
+                                       hintText: 'dd/mm/yy',
+                                       hintStyle: TextStyle(fontSize: 10),
+                                       suffixIcon: IconButton(
+                                         padding: EdgeInsets.only(bottom: 0.5,left: 10),
+                                         onPressed: () => _selectDate(context, arrival), // Correct the onPressed
+                                         icon: Icon(
+                                           Icons.calendar_month,
+                                           size: 12,
+                                           color: Colors.black,
+                                         ),
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: size.height * 0.020),
 
-                  SizedBox(height:size.height * 0.040,),
+                       // Destination Field with Error
+                       Row(
+                         children: [
+                           SizedBox(width: size.width * 0.030,),
+                           Text('Destination',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                           SizedBox(width: size.width * 0.040,),
+                           Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               if ( destinationError!= null)
+                                 Padding(
+                                   padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                   child: Text(
+                                     destinationError!,
+                                     style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                   ),
+                                 ),
+                               requestContainer(context, destination, size.width * 0.105, size.height * 0.032,setDialogState),
+                             ],
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: size.height * 0.020),
 
+                       // Remarks Field with Error
+                       Row(
+                         children: [
+                           SizedBox(width: size.width * 0.030,),
+                           Text('Remarks',style: TextStyle(color: black,fontSize: 14, fontFamily: 'Inter'),),
+                           SizedBox(width: size.width * 0.055,),
+                           Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               if ( remarksError!= null)
+                                 Padding(
+                                   padding: EdgeInsets.only(bottom: 2), // Adjust padding below error message
+                                   child: Text(
+                                     remarksError!,
+                                     style: TextStyle(color: Colors.red, fontSize: 9), // Error text styling
+                                   ),
+                                 ),
+                               Container(
+                                 width: size.width * 0.170,
+                                 height:size.height * 0.075,
+                                 decoration: BoxDecoration(
+                                   color: Colors.white,
+                                   border: Border.all(color: Colors.grey.shade400,width: 1),
+                                 ),
+                                 child: TextField(
+                                   controller: remarks,
+                                   // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
+                                   decoration: InputDecoration(
+                                     hintText: 'Text Here',
+                                     hintStyle: TextStyle(fontSize: 10,color: Colors.grey.shade400),
+                                     contentPadding: EdgeInsets.all(5),
+                                     isDense: true, // Make the field more compact
+                                     border: InputBorder.none,
+                                   ),
+                                   textAlignVertical: TextAlignVertical.center,
+                                 ),
+                               ),
+                             ],
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: size.height * 0.035),
+
+                       // Apply and Cancel Buttons
+                       Row(
+                         children: [
+                           SizedBox(width: size.width * 0.095),
+                           MaterialButton(
+                             onPressed: () {
+                               Navigator.pop(context); // Cancel button action
+                             },
+                             minWidth: size.width * 0.052,
+                             height: size.height * 0.043,
+                             child: Text(
+                               'Cancel',
+                               style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, fontFamily: 'Inter', color: Colors.black),
+                             ),
+                           ),
+                           SizedBox(width: size.width * 0.045),
+                           MaterialButton(
+                             minWidth: size.width * 0.052,
+                             height: size.height * 0.043,
+                             onPressed: () {
+                               validateFields(); // Validate fields before submitting
+                               if (departureError == null &&
+                                   arrivalError == null &&
+                                   destinationError == null &&
+                                   remarksError == null) {
+                                 // Show confirmation dialog before applying
+                                 showDialog(
+                                   context: context,
+                                   builder: (BuildContext context) {
+                                     return AlertDialog(
+                                       title: Text('Confirm Submission'),
+                                       content: Text('Are you sure you want to apply?'),
+                                       actions: [
+                                         TextButton(
+                                           onPressed: () {
+                                             Navigator.of(context).pop(); // Dismiss the dialog
+                                           },
+                                           child: Text('No', style: TextStyle(color: Colors.red)),
+                                         ),
+                                         TextButton(
+                                           onPressed: () {
+                                             Navigator.of(context).pop();
+                                             // Call your apply function here with the provided input
+                                           },
+                                           child: Text('Yes', style: TextStyle(color: Colors.green)),
+                                         ),
+                                       ],
+                                     );
+                                   },
+                                 );
+                               }
+                             },
+                             color: Colors.black,
+                             child: Text('Apply', style: TextStyle(fontSize: 13, color: Colors.white, fontFamily: 'Inter')),
+                           ),
+                         ],
+                       ),
+                     ],
+                   ),
+                 ),
+                  SizedBox(height: size.height * 0.025),
                 ],
               ),
             );
           },
         ),
       ),
-      barrierDismissible: false, // Prevents dismissing the dialog by tapping outside
     );
   }
+
+
+
 
   void _tabrequestDialog(BuildContext context) {
     TextEditingController departure=TextEditingController();
@@ -1088,43 +1211,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                             MaterialButton(
                               minWidth: size.width * 0.068,
                               height: size.height * 0.048,
-                              onPressed: () async {
-                                // Validate all fields before applying
-                                if (_validateField(setDialogState)) {
-                                  // Show confirmation popup with Yes and No buttons
-                                  Get.defaultDialog(
-                                    title: 'Confirm',
-                                    content: Text('Are you sure you want to apply?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back(); // Close the dialog
-                                        },
-                                        child: Text('No', style: TextStyle(color: Colors.red)),
-                                      ),
-                                      TextButton(
-                                        onPressed: ()  {
-                                          Get.back(); // Close the dialog first
-
-                                          // Proceed with creating the leave request
-                                          // This will show success/error dialogs based on the result
-                                        },
-                                        child: Text('Yes', style: TextStyle(color: Colors.green)),
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  // Show error alert dialog if fields are missing
-                                  Get.defaultDialog(
-                                    title: 'Error',
-                                    content: Text('Please fill all required fields.'),
-                                    confirmTextColor: Colors.white,
-                                    onConfirm: () {
-                                      Get.back(); // Close the dialog
-                                    },
-                                  );
-                                }
-                              },
+                              onPressed: (){},
                               child: Text('Apply',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
                               color: Colors.yellow,
                               textColor: Colors.black,
@@ -1399,43 +1486,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                               MaterialButton(
                                 minWidth: size.width * 0.125,
                                 height: size.height * 0.048,
-                                onPressed: () async {
-                                  // Validate all fields before applying
-                                  if (_validateField(setDialogState)) {
-                                    // Show confirmation popup with Yes and No buttons
-                                    Get.defaultDialog(
-                                      title: 'Confirm',
-                                      content: Text('Are you sure you want to apply?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Get.back(); // Close the dialog
-                                          },
-                                          child: Text('No', style: TextStyle(color: Colors.red)),
-                                        ),
-                                        TextButton(
-                                          onPressed: ()  {
-                                            Get.back(); // Close the dialog first
-
-                                            // Proceed with creating the leave request
-                                            // This will show success/error dialogs based on the result
-                                          },
-                                          child: Text('Yes', style: TextStyle(color: Colors.green)),
-                                        ),
-                                      ],
-                                    );
-                                  } else {
-                                    // Show error alert dialog if fields are missing
-                                    Get.defaultDialog(
-                                      title: 'Error',
-                                      content: Text('Please fill all required fields.'),
-                                      confirmTextColor: Colors.white,
-                                      onConfirm: () {
-                                        Get.back(); // Close the dialog
-                                      },
-                                    );
-                                  }
-                                },
+                                onPressed: (){},
                                 child: Text('Apply',style: TextStyle(fontSize: 11,fontWeight: FontWeight.bold,fontFamily: 'Inter',),),
                                 color: Colors.yellow,
                                 textColor: Colors.black,
@@ -1487,6 +1538,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     department = box.read('department') ?? 'Department not found';
     workPosition = box.read('workPosition') ?? 'Work Position not found';
     fetchLeaveData();  // Assuming you have a method to fetch leave data
+    fetchTicketRequests();
   }
 
   @override
@@ -1524,6 +1576,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       ).then((selectedDate) {
         if (selectedDate != null) {
           controller.text = DateFormat('dd/MM/yyyy').format(selectedDate);
+          filterLeaveData();
         }
       });
     }
@@ -1564,43 +1617,41 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     }
   }
 
-  List<String> leaveStatuses = [];
+
 
   void filterLeaveData() {
+    // Check if both from and to date fields are empty
     if (from.text.isEmpty && to.text.isEmpty) {
       setState(() {
+        // Reset both leave data and ticket requests when no filter is applied
         filteredLeaveData = allLeaveData;
-        // Initialize leaveStatuses based on the length of filteredLeaveData
-        leaveStatuses = List.generate(filteredLeaveData.length, (index) {
-          if (index % 3 == 0) {
-            return 'Pending';
-          } else if (index % 3 == 1) {
-            return 'Approved';
-          } else {
-            return 'Rejected';
-          }
-        });
+        filteredTicketRequests = ticketRequests;
       });
-      return;
+      return; // Exit the function since no filtering is needed
     }
 
+    // Variables to store parsed dates
     DateTime? fromDate;
     DateTime? toDate;
 
     try {
+      // Parse the 'from' date if it's not empty
       if (from.text.isNotEmpty) {
         fromDate = DateFormat('dd/MM/yyyy').parse(from.text);
       }
+      // Parse the 'to' date if it's not empty
       if (to.text.isNotEmpty) {
         toDate = DateFormat('dd/MM/yyyy').parse(to.text);
       }
     } catch (e) {
+      // Handle invalid date format errors
       print('Error parsing dates: $e');
       _showAlertDialog('Error', 'Invalid date format.');
       return;
     }
 
-    List<LeaveStatus?> tempFiltered = allLeaveData.where((leave) {
+    // Filter LeaveStatus data based on the from and to dates
+    List<LeaveStatus?> tempFilteredLeave = allLeaveData.where((leave) {
       if (leave == null || leave.fromDate == null || leave.toDate == null) return false;
 
       final leaveFromDate = leave.fromDate!.getDateTime();
@@ -1608,28 +1659,39 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
       bool afterFrom = fromDate != null
           ? leaveFromDate.isAfter(fromDate) || leaveFromDate.isAtSameMomentAs(fromDate)
-          : true;
+          : true; // Include all data if no 'from' date
       bool beforeTo = toDate != null
           ? leaveToDate.isBefore(toDate.add(Duration(days: 1)))
-          : true;
+          : true; // Include all data if no 'to' date
 
-      return afterFrom && beforeTo;
+      return afterFrom && beforeTo; // Return true if within the date range
     }).toList();
 
+    // Filter TicketRequest data based on the from and to dates
+    List<TicketRequest?> tempFilteredTickets = ticketRequests.where((ticket) {
+      if (ticket == null || ticket.departureDate == null || ticket.arrivalDate == null) return false;
+
+      final ticketDepartureDate = ticket.departureDate!.getDateTime();
+      final ticketArrivalDate = ticket.arrivalDate!.getDateTime();
+
+      bool afterFrom = fromDate != null
+          ? ticketDepartureDate.isAfter(fromDate) || ticketDepartureDate.isAtSameMomentAs(fromDate)
+          : true; // Include all data if no 'from' date
+      bool beforeTo = toDate != null
+          ? ticketArrivalDate.isBefore(toDate.add(Duration(days: 1)))
+          : true; // Include all data if no 'to' date
+
+      return afterFrom && beforeTo; // Return true if within the date range
+    }).toList();
+
+    // Update the filtered data in the state
     setState(() {
-      filteredLeaveData = tempFiltered;
-      // Initialize leaveStatuses based on the length of filteredLeaveData
-      leaveStatuses = List.generate(filteredLeaveData.length, (index) {
-        if (index % 3 == 0) {
-          return 'Pending';
-        } else if (index % 3 == 1) {
-          return 'Approved';
-        } else {
-          return 'Rejected';
-        }
-      });
+      filteredLeaveData = tempFilteredLeave; // Update filtered leave data
+      filteredTicketRequests = tempFilteredTickets; // Update filtered ticket request data
     });
   }
+
+
 
   Future<void> deleteLeave(LeaveStatus leaveToDelete) async {
     try {
@@ -2090,7 +2152,13 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
     );
   }
 
-  void _pendingDialog(BuildContext context, int rowIndex, LeaveStatus leave, Function(String) onStatusChanged) {
+  void updateLeaveStatus(int rowIndex, String newStatus) {
+    // Update your leave data model to set the new status
+    // This might involve setting the status in your `filteredLeaveData[rowIndex]`
+    // filteredLeaveData[rowIndex]?.empStatus = newStatus; // Assuming empStatus is your status field
+  }
+
+  void _pendingDialog(BuildContext context, int rowIndex, LeaveStatus leave, ) {
     final Size size = MediaQuery.of(context).size;
     String status = 'Pending'; // Initialize the status locally
 
@@ -2196,7 +2264,11 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                       SizedBox(width:size.width *  0.050,),
                       Text('Apply to',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
                       SizedBox(width:size.width *  0.048,),
-                     // Text(leave.applyTo ?? 'N/A',style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),),
+                      Text(
+                        leave.applyTo != null && leave.applyTo is List
+                            ? (leave.applyTo as List).join(', ')
+                            : leave.applyTo?.toString() ?? '',
+                        style: TextStyle(fontFamily: 'Inter',fontSize: 16,color: black),)
                     ],
                   ),
                   SizedBox(height: size.height * 0.014,),
@@ -2227,7 +2299,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                         minWidth: size.width * 0.062,
                         height: size.height * 0.052,
                         onPressed: () {
-                          _showCancelConfirmation(context, onStatusChanged);
                         },
                         child: Text(
                           'Cancel',
@@ -2248,6 +2319,31 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
       barrierDismissible: false,
     );
   }
+
+  void _showCancelConfirmation(BuildContext context, Function onConfirmed) {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Confirm Cancel'),
+        content: Text('Are you sure you want to cancel this leave request?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the confirmation dialog
+            },
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              onConfirmed(); // Perform the cancellation
+              Navigator.pop(context); // Close the confirmation dialog
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
 
   void _tabpendingDialog(BuildContext context, int rowIndex, LeaveStatus leave,Function(String) onStatusChanged) {
     final Size size = MediaQuery.of(context).size;
@@ -2878,31 +2974,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 
 // Confirmation dialog before canceling the request
-  void _showCancelConfirmation(BuildContext context, Function(String) onStatusChanged) {
-    Get.dialog(
-      AlertDialog(
-        title: Text('Cancel'),
-        content: Text('Are you sure want to cancel leave request'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the confirmation dialog
-            },
-            child: Text('No',style: TextStyle(color: Colors.red),),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the confirmation dialog
-              onStatusChanged('Cancelled');
-              _showCancelSuccess(context);
-            },
-            child: Text('Yes',style: TextStyle(color: Colors.green),),
-          ),
-        ],
-      ),
-      barrierDismissible: false,
-    );
-  }
+
 
 // Success dialog after cancellation
   void _showCancelSuccess(BuildContext context) {
@@ -3243,7 +3315,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
   Widget _buildRecentLeaveTable(Size size) {
     return Padding(
-      padding: EdgeInsets.only(left: size.width * 0.165, top: size.height * 0.025),
+      padding: EdgeInsets.only(left: size.width * 0.175, top: size.height * 0.025),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -3256,7 +3328,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
           child: DataTable(
             headingRowHeight: filteredLeaveData.isEmpty ? 0 : size.height * 0.050,
             dataRowHeight: size.height * 0.048,
-            columnSpacing: size.width * 0.040,
+            columnSpacing: size.width * 0.047,
             columns: [
               DataColumn(label: Text('Leave Type', style: headerTextStyle)),
               DataColumn(label: Text('From', style: headerTextStyle)),
@@ -3271,26 +3343,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
               return DataRow(
                 cells: [
-                  DataCell(GestureDetector(
-                    onTap: () {
-                      if (leaveStatuses[index] == 'Pending') {
-                        _pendingDialog(context, index, leave, (newStatus) {
-                          setState(() {
-                            leaveStatuses[index] = newStatus;
-                          });
-                        });
-                      } else if (leaveStatuses[index] == 'Approved') {
-                        _approvedDialog(context, index, leave, (newStatus) {
-                          setState(() {
-                            leaveStatuses[index] = newStatus;
-                          });
-                        });
-                      } else if (leaveStatuses[index] == 'Rejected') {
-                        _rejectedDialog(context, index, leave);
-                      }
-                    },
-                    child: Text(leave!.leaveType ?? '', style: rowTextStyle),
-                  )),
+                  DataCell(Text(leave!.leaveType ?? '', style: rowTextStyle)),
                   DataCell(Text(
                     leave.fromDate != null
                         ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
@@ -3305,8 +3358,17 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   )),
                   DataCell(Text('${leave.days ?? 0} days', style: rowTextStyle)),
                   DataCell(Text(leave.reason ?? '', style: rowTextStyle)),
-                  //DataCell(Text(leave.applyTo ?? '', style: rowTextStyle)),
-                  DataCell(Text(leaveStatuses[index], style: rowTextStyle)),
+                  DataCell(Text(
+                    leave.applyTo != null && leave.applyTo is List
+                        ? (leave.applyTo as List).join(', ')
+                        : leave.applyTo?.toString() ?? '',
+                    style: rowTextStyle,
+                  )),
+                  DataCell(GestureDetector(
+                    onTap: (){
+                        _pendingDialog(context, index, leave);
+                    },
+                      child: Text(leave?.empStatus?.toString() ?? 'Pending', style: rowTextStyle))),
                 ],
               );
             }).toList(),
@@ -3342,100 +3404,55 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
   }
 
   Widget _buildReviewTicketTable(Size size) {
-    // Implement the table for Employee Review Ticket similarly
     return Padding(
       padding: EdgeInsets.only(left: size.width * 0.170, top: size.height * 0.025),
       child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.grey, width: 1),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.grey, width: 1),
+        ),
+        child: filteredTicketRequests.isNotEmpty // Ensure proper condition check
+            ? SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: DataTable(
+            headingRowHeight: filteredTicketRequests.isEmpty ? 0 : size.height * 0.050,
+            dataRowHeight: size.height * 0.050,
+            columnSpacing: size.width * 0.032,
+            columns: [
+              DataColumn(label: Text('Name', style: headerTextStyle)),
+              DataColumn(label: Text('Badge Number', style: headerTextStyle)),
+              DataColumn(label: Text('Department', style: headerTextStyle)),
+              DataColumn(label: Text('Position', style: headerTextStyle)),
+              DataColumn(label: Text('Destination', style: headerTextStyle)),
+              DataColumn(label: Text('Departure Date', style: headerTextStyle)),
+              DataColumn(label: Text('Arrival Date', style: headerTextStyle)),
+              DataColumn(label: Text('Status', style: headerTextStyle)),
+            ],
+            rows: filteredTicketRequests.map((request) {
+              return DataRow(cells: [
+                DataCell(Text('Rahul', style: rowTextStyle)), // Static Name
+                DataCell(Text('50598', style: rowTextStyle)), // Static Badge Number
+                DataCell(Text('Welding', style: rowTextStyle)), // Static Department
+                DataCell(Text('Trainer', style: rowTextStyle)), // Static Position
+                DataCell(Text(request?.destination ?? 'Unknown', style: rowTextStyle)), // Dynamic Destination
+                DataCell(Text(request?.departureDate != null
+                    ? DateFormat('dd/MM/yyyy').format(request!.departureDate!.getDateTime())
+                    : 'N/A', style: rowTextStyle)), // Dynamic Departure Date
+                DataCell(Text(request!.arrivalDate != null
+                    ? DateFormat('dd/MM/yyyy').format(request.arrivalDate!.getDateTime())
+                    : 'N/A', style: rowTextStyle)), // Dynamic Arrival Date
+                DataCell(Text(request?.hrStatus ?? 'Pending', style: rowTextStyle)),
+              ]);
+            }).toList(),
           ),
-          child:
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                headingRowHeight:  size.height * 0.052,
-                dataRowHeight: size.height * 0.050,
-                columnSpacing: size.width * 0.032,
-                columns: [
-                  DataColumn(label: Text('Name', style: headerTextStyle)),
-                  DataColumn(label: Text('Badge Number', style: headerTextStyle)),
-                  DataColumn(label: Text('Department', style: headerTextStyle)),
-                  DataColumn(label: Text('Position', style: headerTextStyle)),
-                  DataColumn(label: Text('Destination', style: headerTextStyle)),
-                  DataColumn(label: Text('Departure Date', style: headerTextStyle)),
-                  DataColumn(label: Text('Arrival Date', style: headerTextStyle)),
-                  DataColumn(label: Text('Status', style: headerTextStyle)),
-
-
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('Rahul',style: rowTextStyle,)),
-                    DataCell(Text('50598',style:  rowTextStyle,)),
-                    DataCell(Text('Welding',style:  rowTextStyle,)),
-                    DataCell(Text('Trainer',style:  rowTextStyle,)),
-                    DataCell(Text('Singapore',style:  rowTextStyle,)),
-                    DataCell(Text('16/08/2024',style:  rowTextStyle,)),
-                    DataCell(Text('19/08/2024',style:  rowTextStyle,)),
-                    DataCell(
-                      GestureDetector(
-                        onTap: () {
-                          _ticketpendingDialog(context, (newStatus) {
-                            setState(() {
-                              status1 = newStatus; // Update status
-                            });
-                          });
-                        },
-                        child: Text(status1, style: rowTextStyle),
-                      ),
-                    ),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Rahul',style: rowTextStyle,)),
-                    DataCell(Text('50598',style:  rowTextStyle,)),
-                    DataCell(Text('Welding',style:  rowTextStyle,)),
-                    DataCell(Text('Trainer',style:  rowTextStyle,)),
-                    DataCell(Text('Singapore',style:  rowTextStyle,)),
-                    DataCell(Text('16/08/2024',style:  rowTextStyle,)),
-                    DataCell(Text('19/08/2024',style:  rowTextStyle,)),
-                    DataCell(
-                      GestureDetector(
-                        onTap: () {
-                          _ticketapprovedDialog(context, (newStatus) {
-                            setState(() {
-                              status2 = newStatus; // Update status
-                            });
-                          });
-                        },
-                        child: Text(status2, style: rowTextStyle),
-                      ),
-                    ),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Rahul',style:  rowTextStyle,)),
-                    DataCell(Text('50598',style:  rowTextStyle,)),
-                    DataCell(Text('Welding',style:  rowTextStyle,)),
-                    DataCell(Text('Trainer',style:  rowTextStyle,)),
-                    DataCell(Text('Singapore',style:  rowTextStyle,)),
-                    DataCell(Text('16/08/2024',style:  rowTextStyle,)),
-                    DataCell(Text('19/08/2024',style:  rowTextStyle,)),
-                    DataCell(GestureDetector(
-                      onTap: (){
-                        _ticketrejectedDialog(context);
-                      },
-                        child: Text('Rejected',style:  rowTextStyle,))),
-                  ]),
-                ],
-              ),
-            ),
-          )
+        )
+            : SizedBox(), // Correctly handling empty state
       ),
     );
   }
+
+
 
   Widget _tabRecentLeaveTable(Size size) {
     return Padding(
@@ -3467,26 +3484,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
 
               return DataRow(
                 cells: [
-                  DataCell(GestureDetector(
-                    onTap: () {
-                      if (leaveStatuses[index] == 'Pending') {
-                        _tabpendingDialog(context, index, leave, (newStatus) {
-                          setState(() {
-                            leaveStatuses[index] = newStatus;
-                          });
-                        });
-                      } else if (leaveStatuses[index] == 'Approved') {
-                        _tabapprovedDialog(context, index, leave, (newStatus) {
-                          setState(() {
-                            leaveStatuses[index] = newStatus;
-                          });
-                        });
-                      } else if (leaveStatuses[index] == 'Rejected') {
-                        _tabrejectedDialog(context, index, leave);
-                      }
-                    },
-                    child: Text(leave!.leaveType ?? '', style: tabrowTextStyle),
-                  )),
+                  DataCell(Text(leave!.leaveType ?? '', style: tabrowTextStyle)),
                   DataCell(Text(
                     leave.fromDate != null
                         ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
@@ -3501,8 +3499,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   )),
                   DataCell(Text('${leave.days ?? 0} days', style: tabrowTextStyle)),
                   DataCell(Text(leave.reason ?? '', style: tabrowTextStyle)),
-                  //DataCell(Text(leave.applyTo ?? '', style: tabrowTextStyle)),
-                  DataCell(Text(leaveStatuses[index], style: rowTextStyle)), // Display the status dynamically
+                  DataCell(Text(leave?.applyTo?.toString() ?? '', style: rowTextStyle)),
+                  DataCell(Text(leave?.empStatus?.toString() ?? '', style: rowTextStyle)),
+                   // Display the status dynamically
                 ],
               );
             }).toList(),
@@ -3628,26 +3627,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                 int index = filteredLeaveData.indexOf(leave);
                 return DataRow(
                   cells: [
-                    DataCell(GestureDetector(
-                      onTap: () {
-                        if (leaveStatuses[index] == 'Pending') {
-                          _phonependingDialog(context, index, leave, (newStatus) {
-                            setState(() {
-                              leaveStatuses[index] = newStatus;
-                            });
-                          });
-                        } else if (leaveStatuses[index] == 'Approved') {
-                          _phoneapprovedDialog(context, index, leave, (newStatus) {
-                            setState(() {
-                              leaveStatuses[index] = newStatus;
-                            });
-                          });
-                        } else if (leaveStatuses[index] == 'Rejected') {
-                          _phonerejectedDialog(context, index, leave);
-                        }
-                      },
-                      child: Text(leave!.leaveType ?? '', style: phonerowTextStyle),
-                    )),
+                    DataCell(Text(leave!.leaveType ?? '', style: phonerowTextStyle)),
                     DataCell(Text(
                       leave.fromDate != null
                           ? DateFormat('dd/MM/yyyy').format(leave.fromDate!.getDateTime())
@@ -3662,8 +3642,8 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                     )),
                     DataCell(Text('${leave.days ?? 0} days', style: phonerowTextStyle)),
                     DataCell(Text(leave.reason ?? '', style: phonerowTextStyle)),
-                    //DataCell(Text(leave.applyTo ?? '', style: phonerowTextStyle)),
-                    DataCell(Text(leaveStatuses[index], style: phonerowTextStyle)),
+                    DataCell(Text(leave?.applyTo?.toString() ?? '', style: rowTextStyle)),
+                    DataCell(Text(leave?.empStatus?.toString() ?? '', style: rowTextStyle)),
                   ],
                 );
               }).toList(),
@@ -4177,7 +4157,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                           ],
                         ),
                       ),
-                      SizedBox(width: size.width * 0.220),
+                      SizedBox(width: size.width * 0.215),
                       Container(
                         width: size.width * 0.078,
                         height: size.height * 0.034,
@@ -4245,8 +4225,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   SizedBox(height: size.height * 0.032,),
                   Row(
                     children: [
-                      SizedBox(width: size.width * 0.42,),
+                      SizedBox(width: size.width * 0.45),
                       if (isRecentLeaveSelected)
+                      // Show "Apply Leave" button when on the "My Recent Leave" tab
                         MaterialButton(
                           onPressed: () {
                             Get.to(() => ApplyLeaveScreen());
@@ -4264,35 +4245,37 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                             ),
                           ),
                         ),
-                      SizedBox(width: size.width * (isRecentLeaveSelected ? 0.010 : 0.005)),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              _requestDialog(context);
-                            },
-                            child: Text(
-                              "Request Ticket",
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 15,
-                                color: blue,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.none, // Remove default underline
+                      if (!isRecentLeaveSelected)
+                      // Show "Request Ticket" button when on the "Employee Review Ticket" tab
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                _requestDialog(context);
+                              },
+                              child: Text(
+                                "Request Ticket",
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 15,
+                                  color: blue,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.none, // Remove default underline
+                                ),
                               ),
                             ),
-                          ),
-                          // Add space between text and line
-                          Container(
-                            height: 1,
-                            color: blue, // Custom underline color
-                            width: size.width * 0.065, // Set the underline width as needed
-                          ),
-                        ],
-                      )
+                            // Add space between text and line
+                            Container(
+                              height: 1,
+                              color: blue, // Custom underline color
+                              width: size.width * 0.065, // Set the underline width as needed
+                            ),
+                          ],
+                        ),
                     ],
                   ),
+
                   SizedBox(height: size.height * 0.022,),
                 ],
               ),

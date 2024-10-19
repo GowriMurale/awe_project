@@ -151,6 +151,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
   }
 
   List<String> applyTo = [];
+
   List<String> _getApplyToList() {
     applyTo.clear(); // Clear the list to avoid duplications
 
@@ -166,6 +167,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
     return applyTo; // Return the list of selected roles
   }
+
 
   Future<void> applyForLeave() async {
     // Get current user's ID
@@ -186,8 +188,22 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
 
     try {
       // Parse the from and to dates from the text fields
-      DateTime? fromDate = DateFormat('dd/MM/yyyy').parse(from.text);
-      DateTime? toDate = DateFormat('dd/MM/yyyy').parse(to.text);
+      DateTime? fromDate;
+      DateTime? toDate;
+      try {
+        fromDate = DateFormat('dd/MM/yyyy').parse(from.text);
+        toDate = DateFormat('dd/MM/yyyy').parse(to.text);
+      } catch (e) {
+        Get.defaultDialog(
+          title: 'Error',
+          content: Text('Invalid date format. Please use dd/MM/yyyy.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () {
+            Get.back();
+          },
+        );
+        return;
+      }
 
       if (fromDate == null || toDate == null || fromDate.isAfter(toDate)) {
         Get.defaultDialog(
@@ -201,8 +217,26 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
         return;
       }
 
-      double numberOfDays = double.parse(days.text);
-      print("Number of days: $numberOfDays");
+      double numberOfDays;
+      try {
+        numberOfDays = double.parse(days.text);
+      } catch (e) {
+        Get.defaultDialog(
+          title: 'Error',
+          content: Text('Invalid number of days. Please enter a valid number.'),
+          confirmTextColor: Colors.white,
+          onConfirm: () {
+            Get.back();
+          },
+        );
+        return;
+      }
+
+      // If sick leave is selected, ensure medical certificate is provided
+      String? medicalCertificate = null;
+      // if (_selectedLeaveType == 'Sick Leave') {
+      //   medicalCertificate = selectedMedicalCertificatePath ?? '';  // Assuming you're managing certificate upload
+      // }
 
       // Try to submit the leave request
       final leaveStatus = LeaveStatus(
@@ -213,15 +247,14 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
         days: numberOfDays,
         applyTo: _getApplyToList(), // List of who to apply to (Manager, Superior, or both)
         reason: reason.text,
-        medicalCertificate: null, // If you're not using it yet, keep it null
+        medicalCertificate: medicalCertificate,
         supervisorStatus: null, // Status will be updated later
-        managerStatus: null,    // Status will be updated later
-        // Other fields you can set later, or keep as null for now
+        managerStatus: null,
+        empStatus: null,// Status will be updated later
       );
 
       final request = ModelMutations.create(leaveStatus);
       final response = await Amplify.API.mutate(request: request).response;
-      print(response);
 
       if (response.errors.isNotEmpty || response.data == null) {
         // Show error dialog if mutation failed
@@ -238,9 +271,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
         Get.defaultDialog(
           title: 'Success',
           content: Text('Your leave application has been submitted successfully.'),
-          confirmTextColor: black,
-          backgroundColor: Colors.white,
-          buttonColor: Colors.grey.shade400,
+          confirmTextColor: Colors.white,
           onConfirm: () {
             Get.back(); // Close the dialog
             Get.off(DashBoardScreeen()); // Navigate to Dashboard screen
@@ -259,6 +290,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
       );
     }
   }
+
 
 
   String? fileName; // Variable to hold the file name
@@ -669,126 +701,104 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                 ),
                               ),
 
-                            Row(
-                              children: [
-                                SizedBox(width: size.width * 0.06),
-                                Text(
-                                  'Apply To:',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: size.width * 0.035),
-                                Text(
-                                  'Manager:',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: size.width * 0.015),
-                                Transform.scale(
-                                  scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isManager = !isManager; // Toggle the value
-                                        // Update the applyTo list
-                                        if (isManager) {
-                                          applyTo.add('Manager'); // Add Manager if selected
-                                        } else {
-                                          applyTo.remove('Manager'); // Remove Manager if deselected
-                                        }
-                                        applyToError = null; // Clear the error message when interacting
-                                      });
-                                    },
-                                    child: Container(
-                                      width: size.width * 0.014,
-                                      height: size.height * 0.023,
-                                      color: Colors.white,
-                                      child: Checkbox(
-                                        value: isManager,
-                                        onChanged: (bool? newValue) {
-                                          setState(() {
-                                            isManager = newValue ?? false;
-                                            if (isManager) {
-                                              applyTo.add('Manager');
-                                            } else {
-                                              applyTo.remove('Manager');
-                                            }
-                                            applyToError = null; // Clear the error message
-                                          });
-                                        },
-                                        side: BorderSide(
-                                          color: Colors.grey.shade500, // Light grey border color
-                                          width: 1,
-                                        ),
-                                        activeColor: Colors.blue, // Optional: change checkbox color when selected
-                                        checkColor: Colors.white, // Optional: checkmark color
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: size.width * 0.085),
-                                Text(
-                                  'Superior:',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: size.width * 0.015),
-                                Transform.scale(
-                                  scale: 1.4, // Adjust this value to change the checkbox size
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isSuperior = !isSuperior; // Toggle the value
-                                        // Update the applyTo list
-                                        if (isSuperior) {
-                                          applyTo.add('Superior'); // Add Superior if selected
-                                        } else {
-                                          applyTo.remove('Superior'); // Remove Superior if deselected
-                                        }
-                                        applyToError = null; // Clear the error message when interacting
-                                      });
-                                    },
-                                    child: Container(
-                                      width: size.width * 0.014,
-                                      height: size.height * 0.023,
-                                      color: Colors.white,
-                                      child: Checkbox(
-                                        value: isSuperior,
-                                        onChanged: (bool? newValue) {
-                                          setState(() {
-                                            isSuperior = newValue ?? false;
-                                            if (isSuperior) {
-                                              applyTo.add('Superior');
-                                            } else {
-                                              applyTo.remove('Superior');
-                                            }
-                                            applyToError = null; // Clear the error message
-                                          });
-                                        },
-                                        side: BorderSide(
-                                          color: Colors.grey.shade500,
-                                          width: 1,
-                                        ),
-                                        activeColor: Colors.blue,
-                                        checkColor: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+            Row(
+              children: [
+                SizedBox(width: size.width * 0.06),
+                Text(
+                  'Apply To:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.035),
+                Text(
+                  'Manager:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.015),
+                Transform.scale(
+                  scale: 1.4, // Adjust this value to change the checkbox size
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isManager = !isManager; // Toggle the value
+                        applyToError = null; // Clear the error message when interacting
+                      });
+                    },
+                    child: Container(
+                      width: size.width * 0.014,
+                      height: size.height * 0.023,
+                      color: Colors.white,
+                      child: Checkbox(
+                        value: isManager,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            isManager = newValue ?? false;
+                            applyToError = null; // Clear the error message
+                          });
+                        },
+                        side: BorderSide(
+                          color: Colors.grey.shade500, // Light grey border color
+                          width: 1,
+                        ),
+                        activeColor: Colors.blue, // Optional: change checkbox color when selected
+                        checkColor: Colors.white, // Optional: checkmark color
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: size.width * 0.085),
+                Text(
+                  'Superior:',
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: size.width * 0.015),
+                Transform.scale(
+                  scale: 1.4, // Adjust this value to change the checkbox size
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSuperior = !isSuperior; // Toggle the value
+                        applyToError = null; // Clear the error message when interacting
+                      });
+                    },
+                    child: Container(
+                      width: size.width * 0.014,
+                      height: size.height * 0.023,
+                      color: Colors.white,
+                      child: Checkbox(
+                        value: isSuperior,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            isSuperior = newValue ?? false;
+                            applyToError = null; // Clear the error message
+                          });
+                        },
+                        side: BorderSide(
+                          color: Colors.grey.shade500,
+                          width: 1,
+                        ),
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
                           ],
                         ),
 
