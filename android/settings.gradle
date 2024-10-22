@@ -1,4 +1,4 @@
-pluginManagement {
+final def management = pluginManagement {
     def flutterSdkPath = {
         def properties = new Properties()
         file("local.properties").withInputStream { properties.load(it) }
@@ -16,6 +16,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+management
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
