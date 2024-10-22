@@ -2745,7 +2745,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                     });
                                   },
                                   child: Container(
-                                    color: Colors.white,
+                                    color: Colors.transparent,
                                     child: Checkbox(
                                       value: isManager,
                                       onChanged: (bool? newValue) {
@@ -2792,7 +2792,7 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                                     });
                                   },
                                   child: Container(
-                                    color: Colors.white,
+                                    color: Colors.transparent,
                                     child: Checkbox(
                                       value: isSuperior,
                                       onChanged: (bool? newValue) {
@@ -2903,7 +2903,6 @@ class _ApplyLeaveScreenState extends State<ApplyLeaveScreen> {
                               SizedBox(
                                   width: size.width *
                                       0.040), // Adjust space between label and text field as needed
-
                               // Reason TextField
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

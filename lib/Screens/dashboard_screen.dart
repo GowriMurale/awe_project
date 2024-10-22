@@ -1978,407 +1978,6 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
                   ),
                 ),
               );
-
-              /*return Container(
-                padding: EdgeInsets.all(20),
-                width: size.width * 0.899,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.155,
-                        ),
-                        Text(
-                          "Request Ticket",
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Inter'),
-                        ),
-                      ],
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height: size.height * 0.001,
-                    ),
-                    Container(
-                      width: size.width * 0.69,
-                      height: size.height * 0.28,
-                      decoration: BoxDecoration(color: ticket),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: size.height * 0.015,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.035,
-                              ),
-                              Text(
-                                'Departure Date ',
-                                style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter'),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.003,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (departureError != null)
-                                    // Adjust padding below error message
-                                    Container(
-                                      height: size.height * 0.013,
-                                      child: Text(
-                                        departureError!,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 9), // Error text styling
-                                      ),
-                                    ),
-                                  Container(
-                                    width: size.width * 0.393,
-                                    height: size.height * 0.029,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400,
-                                            width: 1)),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: TextField(
-                                        controller: departure,
-                                        style: TextStyle(
-                                          fontSize:
-                                              09, // Set a smaller font size for the picked date
-                                          color: Colors
-                                              .black, // You can also control the color of the text
-                                        ),
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 5, bottom: 19),
-                                          hintText: 'dd/mm/yy',
-                                          hintStyle: TextStyle(fontSize: 10),
-                                          suffixIcon: IconButton(
-                                            padding: EdgeInsets.only(
-                                                bottom: 0.5, left: 20),
-                                            onPressed: () => _selectDate(
-                                                context,
-                                                departure), // Correct the onPressed
-                                            icon: Icon(
-                                              Icons.calendar_month,
-                                              size: 12,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: size.height * 0.002,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.035,
-                              ),
-                              Text(
-                                ' Arrival  Date ',
-                                style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter'),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.032,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (arrivalError != null)
-                                    Container(
-                                      height: size.height *
-                                          0.019, // Adjust padding below error message
-                                      child: Text(
-                                        arrivalError!,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 9), // Error text styling
-                                      ),
-                                    ),
-                                  Container(
-                                    width: size.width * 0.40,
-                                    height: size.height * 0.032,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400,
-                                            width: 1)),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: TextField(
-                                        controller: arrival,
-                                        style: TextStyle(
-                                          fontSize:
-                                              09, // Set a smaller font size for the picked date
-                                          color: Colors
-                                              .black, // You can also control the color of the text
-                                        ),
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 5, bottom: 19),
-                                          hintText: 'dd/mm/yy',
-                                          hintStyle: TextStyle(fontSize: 10),
-                                          suffixIcon: IconButton(
-                                            padding: EdgeInsets.only(
-                                                bottom: 0.5, left: 10),
-                                            onPressed: () => _selectDate(
-                                                context,
-                                                arrival), // Correct the onPressed
-                                            icon: Icon(
-                                              Icons.calendar_month,
-                                              size: 12,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: size.height * 0.002,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.040,
-                              ),
-                              Text(
-                                'Destination',
-                                style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter'),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.056,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (destinationError != null)
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          bottom:
-                                              0), // Adjust padding below error message
-                                      child: Text(
-                                        destinationError!,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 9), // Error text styling
-                                      ),
-                                    ),
-                                  requestContainer(
-                                      context,
-                                      destination,
-                                      size.width * 0.40,
-                                      size.height * 0.032,
-                                      setDialogState),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: size.height * 0.002,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.040,
-                              ),
-                              Text(
-                                'Remarks',
-                                style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                    fontFamily: 'Inter'),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.093,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (remarksError != null)
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom:
-                                              0), // Adjust padding below error message
-                                      child: Text(
-                                        remarksError!,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 9), // Error text styling
-                                      ),
-                                    ),
-                                  Container(
-                                    width: size.width * 0.400,
-                                    height: size.height * 0.055,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: Colors.grey.shade400,
-                                          width: 1),
-                                    ),
-                                    child: TextField(
-                                      controller: remarks,
-                                      // contentPadding: EdgeInsets.symmetric(vertical: size.height * 0.010, horizontal: size.width * 0.007),
-                                      decoration: InputDecoration(
-                                        hintText: 'Text Here',
-                                        hintStyle: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey.shade400),
-                                        contentPadding: EdgeInsets.all(5),
-                                        isDense:
-                                            true, // Make the field more compact
-                                        border: InputBorder.none,
-                                      ),
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: size.height * 0.001,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.215,
-                              ),
-                              Container(
-                                width:
-                                    size.width * 0.17, // Adjust width as needed
-                                height: size.height *
-                                    0.035, // Adjust height as needed
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: grey), // Outline border color
-                                  borderRadius: BorderRadius.circular(
-                                      0), // Adjust the border radius as needed
-                                ),
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        0), // Keep border radius consistent
-                                  ),
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold,
-                                      color: black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.030,
-                              ),
-                              MaterialButton(
-                                minWidth: size.width * 0.125,
-                                height: size.height * 0.035,
-                                onPressed: () {
-                                  validateFields(); // Validate fields before submitting
-                                  if (departureError == null &&
-                                      arrivalError == null &&
-                                      destinationError == null &&
-                                      remarksError == null) {
-                                    // Show confirmation dialog before applying
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Confirm Submission'),
-                                          content: Text(
-                                              'Are you sure you want to apply?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop(); // Dismiss the dialog
-                                              },
-                                              child: Text('No',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                            ),
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                                // Call your apply function here with the provided input
-                                              },
-                                              child: Text('Yes',
-                                                  style: TextStyle(
-                                                      color: Colors.green)),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  'Apply',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Inter',
-                                  ),
-                                ),
-                                color: Colors.yellow,
-                                textColor: Colors.black,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );*/
             },
           )),
       barrierDismissible:
@@ -3356,7 +2955,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              width: size.width * 0.260,
+              width: size.width * 0.960,
               decoration: BoxDecoration(
                 color: dialog,
                 borderRadius: BorderRadius.circular(8),
@@ -4778,7 +4377,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              width: size.width * 0.65,
+              width: size.width * 0.70,
               decoration: BoxDecoration(
                 color: dialog,
                 borderRadius: BorderRadius.circular(5),
@@ -7766,7 +7365,7 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               Row(
                 children: [
                   SizedBox(
-                    width: size.width * 0.045,
+                    width: size.width * 0.053,
                   ),
                   mobileInfoCard(context, '12/10/2024', 'Engineer', 'offshore'),
                 ],
@@ -7792,9 +7391,9 @@ class _DashBoardScreeenState extends State<DashBoardScreeen> {
               ),
               Row(
                 children: [
-                  SizedBox(width: size.width * 0.070),
+                  SizedBox(width: size.width * 0.0499),
                   Container(
-                    width: size.width * 0.88,
+                    width: size.width * 0.91,
                     height: size.height * 0.175,
                     decoration: BoxDecoration(
                         border:
@@ -9414,7 +9013,7 @@ Widget mobileInfoCard(BuildContext context, String joinindate,
         SizedBox(height: size.height * 0.015),
         Row(
           children: [
-            SizedBox(width: size.width * 0.100),
+            SizedBox(width: size.width * 0.078),
             Text(
               'Date of joining',
               style: TextStyle(
@@ -9468,7 +9067,7 @@ Widget mobileInfoCard(BuildContext context, String joinindate,
                 color: Colors.black,
               ),
             ),
-            SizedBox(width: size.width * 0.148),
+            SizedBox(width: size.width * 0.123),
             Text(
               location,
               style: TextStyle(
@@ -10002,7 +9601,7 @@ void _phonePopupMenu(BuildContext context) {
                     right: size.width * 0.015,
                     child: GestureDetector(
                       onTap: () {
-                        // _pickFile();
+                        //_pickFile();
                       },
                       child: Container(
                         width: size.width * 0.060,
@@ -10023,30 +9622,6 @@ void _phonePopupMenu(BuildContext context) {
                 ],
               ),
             ),
-            /*Container(
-              height: size.height * 0.070,
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/user image.png'),
-                radius: 24,
-                child: Container(
-                  width: size.width * 0.110, // Width of the button
-                  height: size.height * 0.03, // Height of the button
-                  padding: EdgeInsets.symmetric(
-                      vertical: size.height * 0.010,
-                      horizontal: size.width * 0.008),
-                  child: IconButton(
-                      color: Colors.black,
-                      iconSize: 15,
-                      padding: EdgeInsets.all(20),
-                      onPressed: () {
-                        _pickFile(); // Call the file picker// Call the file picker,
-                      },
-                      icon: Icon(
-                        Icons.photo_camera_outlined,
-                      )),
-                ),
-              ),
-            ),*/
             SizedBox(
               height: size.height * 0.005,
             ),
