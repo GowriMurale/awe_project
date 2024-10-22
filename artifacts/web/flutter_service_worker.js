@@ -5,10 +5,10 @@ const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "adinin%20logo.png": "3442e93529e23f67392a1b20b74a93c5",
-"main.dart.js": "5f13c3adcefaf5c96b29267399b9300d",
+"main.dart.js": "74b576897c935083e1d0697240f14b84",
 "assets/FontManifest.json": "866b9b20ab0e8c30ffe220d2a2d66abe",
 "assets/AssetManifest.bin": "4579192af421d53f0050402a73de5b4c",
-"assets/fonts/MaterialIcons-Regular.otf": "4bdaa3128ab571767941ad35e86cbb12",
+"assets/fonts/MaterialIcons-Regular.otf": "c11093c3968f82311093eed0c3461882",
 "assets/packages/syncfusion_flutter_pdfviewer/assets/underline.png": "c94a4441e753e4744e2857f0c4359bf0",
 "assets/packages/syncfusion_flutter_pdfviewer/assets/fonts/RobotoMono-Regular.ttf": "5b04fdfec4c8c36e8ca574e40b7148bb",
 "assets/packages/syncfusion_flutter_pdfviewer/assets/squiggly.png": "c9602bfd4aa99590ca66ce212099885f",
@@ -57,7 +57,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "version.json": "5e76247e7dfd8043a6e58c7708a3621f",
-"flutter_bootstrap.js": "e2a91af172931bdbd43c74f9852dba96"};
+"flutter_bootstrap.js": "f42244bbc7bf6c0601bd0d2484aadf96"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
